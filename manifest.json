@@ -5,6 +5,10 @@
     "version": "1.0",
     "action": {
       "default_popup": "src/index.html",
-      "default_icon": "public/icon.png"
+      "default_icon": "public/logos/icon.png"
+    },
+    "content_security_policy": {
+      "extension_pages": "script-src 'self'; object-src 'self'"
     }
+    
 }

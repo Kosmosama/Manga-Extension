@@ -1,9 +1,86 @@
-<html>
-    <head>
-        <link href="./output.css" rel="stylesheet">
-    </head>
-    <body class="bg-blue-900">
-        <h1 class="">Hello World!</h1>
-        <script src="script.js"></script>
-    </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="./output.css" rel="stylesheet">
+</head>
+<body class="h-96 w-96 text-sm">
+    <header class="flex flex-row border-b border-b-blue-400 border-solid h-12">
+        <div>
+            <button href="settings.html">
+                <img src="../public/icons/settings.svg" class="h-8 w-8 mt-1 ml-1">
+            </button>
+        </div>
+        <h1 class="mr-36 ml-auto pt-2 text-base font-semibold">Manga Library</h1>
+    </header>
+    <nav class="flex flex-row align-middle h-10 px-2 py-1">        
+        <button class="mr-2">
+            <img src="../public/icons/menu.svg" class="h-8 w-8">
+        </button>
+        <input type="text" placeholder="Search..." class="h-8 flex-grow border rounded-md border-gray-300 focus:outline-none focus:border-gray-400 px-2">
+        <button class="ml-2">
+            <img src="../public/icons/search.svg" class="h-8 w-8">
+        </button>
+    </nav>
+
+    <!--Caps-->
+    <section class="h-[calc(96rem-5.5rem)] overflow-y-auto">
+        <div class="p-2">
+            <!-- Tarjeta (puede repetirse para múltiples tarjetas) -->
+            <div class="relative flex items-center bg-white rounded-full shadow-md p-2 pr-3 w-full mb-2 group">
+                <div class="w-8 h-8 rounded-full overflow-hidden mr-2">
+                    <img src="../public/icons/portada/portada.jpg" alt="Portada" class="w-full h-full object-cover">
+                </div>
+                <div class="flex-grow">
+                    <h3 class="text-xs font-semibold">Title</h3>
+                    <p class="text-xs text-gray-500">Chapter xxx</p>
+                </div>
+                <div class="text-gray-400 text-base">+</div>
+                <!-- Estrella que aparece en hover -->
+                <div class="absolute -top-1 -left-1 w-4 h-4 bg-green-500 rounded-full items-center justify-center hidden group-hover:flex">
+                    <span class="text-white text-[0.5rem] font-bold">★</span>
+                </div>
+            </div>
+            <!-- Repite la tarjeta aquí para mostrar múltiples -->
+        </div>
+    </section>
+    <!--Settings-->
+    <section id="settings" class="hidden absolute top-0 left-0 w-96 h-96 bg-gray-600 text-white p-4 overflow-y-auto">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-lg font-semibold">Settings</h2>
+            <button id="closeSettings">
+                <img src="../public/icons/x.svg" class="h-5 w-5">
+            </button>
+        </div>
+        <div class="flex flex-col space-y-2 bg-gray-500 p-3 rounded-md">
+            <div class="flex items-center">
+                <label class="text-gray-200 mr-2 text-xs">No tengo idea de qué poner en settings xd</label>
+                <input type="checkbox" class="h-4 w-4">
+            </div>
+            <div class="flex items-center">
+                <label class="text-gray-200 mr-2 text-xs">Cosas</label>
+                <input type="checkbox" class="h-4 w-4">
+            </div>
+            <div class="flex items-center">
+                <label class="text-gray-200 mr-2 text-xs">Feliz</label>
+                <input type="checkbox" class="h-4 w-4">
+            </div>
+            <div class="flex items-center">
+                <label class="text-gray-200 mr-2 text-xs">Sexo</label>
+                <label class="text-gray-200 mr-2 text-xs">Si</label>
+                <input type="checkbox" class="h-4 w-4">
+                <label class="text-gray-200 mr-2 text-xs">Si, por favor</label>
+                <input type="checkbox" class="h-4 w-4">
+            </div>
+        </div>
+    </section>
+    <!--End settings-->
+    <footer class="fixed bottom-4 left-1/2 transform -translate-x-1/2">
+        <button class="bg-amber-500 rounded-lg p-2 shadow-lg hover:bg-amber-600 transition-colors">
+            <img src="../public/icons/plus.svg" class="w-6 h-6">
+        </button>
+    </footer>
+    <script src="script.js"></script>
+</body>
 </html>
