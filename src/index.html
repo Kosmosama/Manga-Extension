@@ -3,6 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        #formContainer {
+            display: none;
+        }
+        #dropdown {
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-bottom: 0.5rem;
+        }
+    </style>
     <link href="./output.css" rel="stylesheet">
 </head>
 <body class="h-96 w-96 text-sm">
@@ -46,12 +58,43 @@
             <!-- Repite la tarjeta aquí para mostrar múltiples -->
         </div>
     </section>
-    
     <footer class="fixed bottom-4 left-1/2 transform -translate-x-1/2">
-        <button class="bg-amber-500 rounded-lg p-2 shadow-lg hover:bg-amber-600 transition-colors">
+        <button class="bg-amber-500 rounded-lg p-2 shadow-lg hover:bg-amber-600 transition-colors" id="addButton">
             <img src="../public/icons/plus.svg" class="w-6 h-6">
         </button>
+        <div id="dropdown" class="hidden mt-2 bg-white rounded-lg shadow-lg">
+            <button id="loadChapter" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Cargar Capítulo</button>
+        </div>
     </footer>
+</div>
+
+<!-- Formulario de Cargar Capítulo -->
+<div id="formContainer" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
+    <div class="bg-white rounded-lg p-6 w-80">
+        <h2 class="text-lg font-semibold mb-4">Cargar Capítulo</h2>
+        <form id="chapterForm">
+            <div class="mb-4">
+                <label for="image" class="block text-sm font-medium text-gray-700">Imagen (opcional, solo links de imgur)</label>
+                <input type="text" id="image" name="image" placeholder="Ingrese la URL de la imagen" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50">
+            </div>
+            <div class="mb-4">
+                <label for="title" class="block text-sm font-medium text-gray-700">Título</label>
+                <input type="text" id="title" name="title" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50" required>
+            </div>
+            <div class="mb-4">
+                <label for="readChapters" class="block text-sm font-medium text-gray-700">Capítulos leídos</label>
+                <input type="number" id="readChapters" name="readChapters" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50" required>
+            </div>
+            <div class="mb-4">
+                <label for="totalChapters" class="block text-sm font-medium text-gray-700">Capítulos totales</label>
+                <input type="number" id="totalChapters" name="totalChapters" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50" required>
+            </div>
+            <div class="flex justify-end">
+                <button type="button" id="cancelButton" class="mr-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-1 px-4 rounded">Cancelar</button>
+                <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 px-4 rounded">Guardar</button>
+            </div>
+        </form>
+    </div>
 </div>
         <!--Settings-->
     <section id="settings" class="hidden absolute top-0 left-0 w-96 h-96 bg-gray-600 text-white p-4 overflow-y-auto">
@@ -85,5 +128,6 @@
     </section>
     <!--End settings-->
     <script src="script.js"></script>
+    <script src="settingsBtn.js"></script>
 </body>
 </html>
