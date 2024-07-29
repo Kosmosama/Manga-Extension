@@ -6,9 +6,10 @@
     <link href="./output.css" rel="stylesheet">
 </head>
 <body class="h-96 w-96 text-sm">
+ <div id="notSettings" class="">
     <header class="flex flex-row border-b border-b-blue-400 border-solid h-12">
         <div>
-            <button href="settings.html">
+            <button href="settings.html" id="openBtn">
                 <img src="../public/icons/settings.svg" class="h-8 w-8 mt-1 ml-1">
             </button>
         </div>
@@ -45,11 +46,18 @@
             <!-- Repite la tarjeta aquí para mostrar múltiples -->
         </div>
     </section>
-    <!--Settings-->
+    
+    <footer class="fixed bottom-4 left-1/2 transform -translate-x-1/2">
+        <button class="bg-amber-500 rounded-lg p-2 shadow-lg hover:bg-amber-600 transition-colors">
+            <img src="../public/icons/plus.svg" class="w-6 h-6">
+        </button>
+    </footer>
+</div>
+        <!--Settings-->
     <section id="settings" class="hidden absolute top-0 left-0 w-96 h-96 bg-gray-600 text-white p-4 overflow-y-auto">
         <div class="flex justify-between items-center mb-4">
             <h2 class="text-lg font-semibold">Settings</h2>
-            <button id="closeSettings">
+            <button id="closeBtn">
                 <img src="../public/icons/x.svg" class="h-5 w-5">
             </button>
         </div>
@@ -76,11 +84,6 @@
         </div>
     </section>
     <!--End settings-->
-    <footer class="fixed bottom-4 left-1/2 transform -translate-x-1/2">
-        <button class="bg-amber-500 rounded-lg p-2 shadow-lg hover:bg-amber-600 transition-colors">
-            <img src="../public/icons/plus.svg" class="w-6 h-6">
-        </button>
-    </footer>
     <script src="script.js"></script>
 </body>
 </html>
