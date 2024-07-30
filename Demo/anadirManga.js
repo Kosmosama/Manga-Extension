@@ -1,3 +1,5 @@
+// En vez de "add-manga-button", poner el botón que abre la ventana de adición de nuevo manga
+// y retocar la función para que pase los datos del formulario a "anadirManga()"
 document.getElementById('add-manga-button').onclick = function() {
     const nombre = prompt("Nombre del manga:");
     const link = prompt("Link del manga:");
