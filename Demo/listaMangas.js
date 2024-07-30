@@ -1,20 +1,5 @@
 // La lista empieza vacia realmente, esto es una prueba hasta que tengamos hecho la carga desde json
-let mangas = [
-	{
-		nombre: "Manga1",
-		link: "http://example.com/manga1",
-		linkImagen: "http://example.com/manga1.jpg",
-		numCapitulos: 10,
-		favorito: true
-	},
-	{
-		nombre: "Manga2",
-		link: "http://example.com/manga2",
-		linkImagen: "http://example.com/manga2.jpg",
-		numCapitulos: 20,
-		favorito: false
-	}
-];
+let mangas = [];
 
 // Muestra todos los mangas de la lista en un div (Sin el formato que queremos actualmente)
 function cargarListaMangas() {
