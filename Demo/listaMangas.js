@@ -1,4 +1,4 @@
-// La lista empieza vacia r ealmente, ésto es una prueba hasta que tengamos hecho la carga desde json
+// La lista empieza vacia realmente, ésto es una prueba hasta que tengamos hecha la carga desde json
 let mangas = [];
 
 // Muestra todos los mangas de la lista en un div (Sin el formato que queremos actualmente)
@@ -49,5 +49,4 @@ function cargarListaMangas() {
 		listaMangasDiv.appendChild(mangaDiv);
 	});
 }
-//esto no sé que hace
 document.addEventListener("DOMContentLoaded", cargarListaMangas);

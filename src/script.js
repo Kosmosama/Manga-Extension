@@ -1,13 +1,36 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Cargar la lista de mangas al iniciar la extensión
-    chrome.storage.local.get('mangaList', function(result) {
-        mangaList = result.mangaList || [];
-        console.log('Loaded manga list:', mangaList);
+    recuperarMangas();
 
-        mangaList.forEach(manga => {
-          //Lógica para cargar el manga
+    function recuperarMangas() {
+        chrome.storage.local.get('mangaList', function(result) {
+            mangaList = result.mangaList || [];
+            console.log('Loaded manga list:', mangaList);
+            cargarMangas(mangaList);
         });
-    });
+    }
+
+    function cargarMangas(mangaList) {
+        var mangaListContainer = document.getElementById('mangaListContainer');
+        mangaListContainer.innerHTML = ''; // Limpiar el contenedor antes de agregar nuevos elementos
+        
+        mangaList.forEach(function(manga) {
+            var mangaItemHTML = '<div class="relative flex items-center bg-white rounded-full shadow-md p-2 pr-3 w-full mb-2 group">' +
+                '<div class="w-8 h-8 rounded-full overflow-hidden mr-2">' +
+                    '<img src="' + manga.image + '" alt="Portada" class="w-full h-full object-cover">' +
+                '</div>' +
+                '<div class="flex-grow">' +
+                    '<h3 class="text-xs font-semibold">' + manga.title + '</h3>' +
+                    '<p class="text-xs text-gray-500">Chapter ' + manga.readChapters + '/' + manga.totalChapters + '</p>' +
+                '</div>' +
+                '<div class="text-gray-400 text-base">+</div>' +
+                '<div class="absolute -top-1 -left-1 w-4 h-4 bg-green-500 rounded-full items-center justify-center hidden group-hover:flex">' +
+                    '<span class="text-white text-[0.5rem] font-bold">★</span>' +
+                '</div>' +
+            '</div>';
+            mangaListContainer.innerHTML += mangaItemHTML;
+        });
+    }
 
     // Añadir eventos a los botones y el formulario
     document.getElementById('addButton').addEventListener('click', function() {
@@ -28,6 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('chapterForm').addEventListener('submit', async function(event) {
         event.preventDefault();
+        
         var today = new Date();
         var dd = String(today.getDate()).padStart(2, '0');
         var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
@@ -44,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Obtener la lista de mangas guardada anteriormente
         chrome.storage.local.get('mangaList', function(result) {
-            mangaList = result.mangaList || [];
+            var mangaList = result.mangaList || [];
             mangaList.push(formMangaValues);
 
             // Guardar la nueva lista ordenada por fecha
@@ -54,9 +78,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log('Manga list updated and saved to local storage.');
                 
                 // Actualizar la UI con el nuevo manga
-                let mangaItem = document.createElement('div');
-                mangaItem.textContent = `${formMangaValues.title} - ${formMangaValues.readChapters}/${formMangaValues.totalChapters}`;
-                document.getElementById('mangaListContainer').appendChild(mangaItem);
+                cargarMangas(mangaList);
             });
         });
 
