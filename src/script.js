@@ -34,14 +34,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Añadir eventos a los botones y el formulario
     document.getElementById('addButton').addEventListener('click', function() {
-        var dropdown = document.getElementById('dropdown');
-        dropdown.classList.toggle('hidden');
-    });
-
-    document.getElementById('loadChapter').addEventListener('click', function() {
         var formContainer = document.getElementById('formContainer');
         formContainer.style.display = 'flex';
-        document.getElementById('dropdown').classList.add('hidden');
     });
 
     document.getElementById('cancelButton').addEventListener('click', function() {
