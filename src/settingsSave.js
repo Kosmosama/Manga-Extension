@@ -1,8 +1,8 @@
-// Seleccionar todas las casillas de verificación con el nombre 'settings' usando querySelectorAll.
+// Seleccionar todas las checkbox con el nombre 'settings' usando querySelectorAll.
 var checkboxes = document.querySelectorAll("input[type=checkbox][id=cajita]");
 let enabledSettings = [];
 
-// Agregar el evento 'change' a cada casilla de verificación.
+// Agregar el evento 'change' a cada checkbox.
 checkboxes.forEach(function(checkbox) {
   checkbox.addEventListener('change', function() {
     enabledSettings = 
@@ -23,7 +23,7 @@ function loadSettings() {
   chrome.storage.local.get('settings', function(result) {
     enabledSettings = result.settings || [];
     console.log('Loaded settings:', enabledSettings);
-    // Actualizar el estado de las casillas de verificación basándose en los datos cargados.
+    // Actualizar el estado de las checkbox basándose en los datos cargados.
     checkboxes.forEach((checkbox, index) => {
       if (enabledSettings[index] !== undefined) {
         checkbox.checked = enabledSettings[index].checked;
