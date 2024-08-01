@@ -1,9 +1,9 @@
 function cargarMangas() {
     const storedMangas = localStorage.getItem('mangas');
     if (storedMangas) {
-        mangas = JSON.parse(storedMangas);
+      mangas = JSON.parse(storedMangas);
     }
-    cargarListaMangas();
-}
+    cargarListaMangas(mangas);
+  }
 
 document.addEventListener("DOMContentLoaded", cargarMangas);
