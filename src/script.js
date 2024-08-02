@@ -1,3 +1,6 @@
+var mangaList = []; // Variable global para la lista de mangas
+var cargarMangas; // Variable global para la función cargarMangas
+
 document.addEventListener('DOMContentLoaded', function() {
     // Cargar la lista de mangas al iniciar la extensión
     recuperarMangas();
@@ -10,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    function cargarMangas(mangaList) {
+    cargarMangas = function(mangaList) {
         var mangaListContainer = document.getElementById('mangaListContainer');
         mangaListContainer.innerHTML = ''; // Limpiar el contenedor antes de agregar nuevos elementos
         
@@ -30,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
             '</div>';
             mangaListContainer.innerHTML += mangaItemHTML;
         });
-    }
+    };
 
     // Añadir eventos a los botones y el formulario
     document.getElementById('addButton').addEventListener('click', function() {
