@@ -7,7 +7,7 @@ function cargarListaMangas(resultados) {
     listaMangasDiv.innerHTML = ""; // Limpiar resultados anteriores
   
     resultados.forEach((manga, index) => {
-      const mangaDiv = document.createElement("div");
+      const mangaDiv = document.createElement("div"); // uwu
       mangaDiv.innerHTML = `
         <h3>${manga.nombre}</h3>
         <p>Link: <a href="${manga.link}">${manga.link}</a></p>
