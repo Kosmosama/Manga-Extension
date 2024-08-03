@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 '</div>' +
                 '<div class="text-gray-400 text-base">+</div>' +
                 '<button id="edit">Edit</button>'+
+                '<button id="delete">Delete</button>'+
                 '<div class="absolute -top-1 -left-1 w-4 h-4 bg-green-500 rounded-full items-center justify-center hidden group-hover:flex">' +
                     '<span class="text-white text-[0.5rem] font-bold">★</span>' +
                 '</div>' +
