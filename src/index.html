@@ -73,10 +73,40 @@
             </form>
         </div>
     </div>
-
+    <!-- Formulario de Edit Manga -->
+    <div id="editFormContainer" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center" style="display: none;">
+        <div class="bg-white rounded-lg p-6 w-80">
+            <h2 class="text-lg font-semibold mb-4">Editar Manga</h2>
+            <form id="editForm">
+                <div class="mb-4">
+                    <label for="image" class="block text-sm font-medium text-gray-700">Imagen (opcional, solo links de imgur)</label>
+                    <input type="text" id="editImage" name="image" placeholder="Ingrese la URL de la imagen" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50">
+                </div>
+                <div class="mb-4">
+                    <label for="title" class="block text-sm font-medium text-gray-700">Título</label>
+                    <input type="text" id="editTitle" name="title" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50" required>
+                </div>
+                <div class="mb-4">
+                    <label for="readChapters" class="block text-sm font-medium text-gray-700">Capítulos leídos</label>
+                    <input type="number" id="editReadChapters" name="readChapters" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50" required>
+                </div>
+                <div class="mb-4">
+                    <label for="totalChapters" class="block text-sm font-medium text-gray-700">Capítulos totales</label>
+                    <input type="number" id="editTotalChapters" name="totalChapters" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50" required>
+                </div>
+                <div class="flex justify-end">
+                    <button type="button" id="cancelEdit" class="mr-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-1 px-4 rounded">Cancelar</button>
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 px-4 rounded">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+   
     <script src="script.js"></script>
     <script src="settingsBtn.js"></script>
     <script src="settingsSave.js"></script>
     <script src="searchBar.js"></script>
+    <script src="editManga.js"></script>
 </body>
 </html>
