@@ -6,7 +6,6 @@ var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
 var yyyy = today.getFullYear();
 today = mm + '/' + dd + '/' + yyyy;
 
-
 document.addEventListener('DOMContentLoaded', function() {
     // Cargar la lista de mangas al iniciar la extensión
     recuperarMangas();
@@ -23,7 +22,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var mangaListContainer = document.getElementById('mangaListContainer');
         mangaListContainer.innerHTML = ''; // Limpiar el contenedor antes de agregar nuevos elementos
         
-        mangaList.forEach(function(manga) {
+        mangaList.forEach(function(manga, index) {
             var mangaItemHTML = '<div class="relative flex items-center bg-white rounded-full shadow-md p-2 pr-3 w-full mb-2 group">' +
                 '<div class="w-8 h-8 rounded-full overflow-hidden mr-2">' +
                     '<img src="' + manga.image + '" alt="Portada" class="w-full h-full object-cover">' +
@@ -32,15 +31,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     '<h3 class="text-xs font-semibold">' + manga.title + '</h3>' +
                     '<p class="text-xs text-gray-500">Chapter ' + manga.readChapters + '/' + manga.totalChapters + '</p>' +
                 '</div>' +
-                '<div class="text-gray-400 text-base">+</div>' +
-                '<button id="edit">Edit</button>'+
-                '<button id="delete">Delete</button>'+
+                '<button id="edit" data-index="' + index + '">Edit</button>' +
+                '<button id="delete" data-index="' + index + '">Delete</button>' +
                 '<div class="absolute -top-1 -left-1 w-4 h-4 bg-green-500 rounded-full items-center justify-center hidden group-hover:flex">' +
                     '<span class="text-white text-[0.5rem] font-bold">★</span>' +
                 '</div>' +
             '</div>';
             mangaListContainer.innerHTML += mangaItemHTML;
         });
+
+        // Llamar a los event listeners después de cargar los mangas
+        eventListeners();
     };
 
     // Añadir eventos a los botones y el formulario
@@ -67,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Obtener la lista de mangas guardada anteriormente
         chrome.storage.local.get('mangaList', function(result) {
-            var mangaList = result.mangaList || [];
+            mangaList = result.mangaList || [];
             mangaList.push(formMangaValues);
 
             // Guardar la nueva lista ordenada por fecha

@@ -13,7 +13,7 @@ function eventListeners() {
 function handleMangaDelete(event) {
     var index = event.target.getAttribute('data-index');
     console.log(index);
-    confirmDelete(index); // Llama a la función de confirmación
+    confirmDelete(index);
 }
 
 function confirmDelete(index) {
@@ -35,11 +35,11 @@ function confirmDelete(index) {
 
 function eliminarManga(index) {
     mangaList.splice(index, 1); // Elimina solo un elemento en la posición 'index'
-    cargarMangas(mangaList);
-    // Vuelve a agregar los event listeners para actualizar los índices
-    eventListeners();
     chrome.storage.local.set({ mangaList: mangaList }, function() {
         console.log('Manga list updated and saved to local storage.');
+        cargarMangas(mangaList);
+        // Vuelve a agregar los event listeners para actualizar los índices
+        eventListeners();
     });
 }
 
