@@ -23,5 +23,5 @@ function anadirManga(nombre, link, linkImagen, numCapitulos, favorito) {
       favorito: favorito
     };
     mangas.push(nuevoManga);
-    cargarListaMangas();
+    actualizarLista();
 }

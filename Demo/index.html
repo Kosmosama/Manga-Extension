@@ -10,7 +10,16 @@
     <header>
         <h1>This would be the header</h1>
         <input type="text" id="searchBar" placeholder="Buscar manga por nombre..."><br>
-        <button id="add-manga-button">Añadir Manga</button>
+        <button id="add-manga-button">Añadir Manga</button><br>
+        <select id="sortOption">
+            <option value="favoritos">Favoritos primero</option>
+            <option value="alfabetico">Alfabéticamente</option>
+            <option value="capitulos">Número de capítulos leídos</option>
+        </select>
+        <select id="sortOrder">
+            <option value="ascendente">Ascendente</option>
+            <option value="descendente">Descendente</option>
+        </select>
     </header>
 
     <div id="lista-mangas"></div>
@@ -43,5 +52,6 @@
     <script src="cargarMangas.js"></script>
     <script src="editarManga.js"></script>
     <script src="searchBar.js"></script>
+    <script src="filtro.js"></script>
 </body>
 </html>

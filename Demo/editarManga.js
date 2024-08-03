@@ -30,7 +30,7 @@ document.getElementById("edit-form").addEventListener("submit", function(event) 
             numCapitulos: numCapitulos,
             favorito: favorito
         };
-        cargarListaMangas();
+        actualizarLista();
         document.getElementById("edit-modal").style.display = "none";
     } else {
         alert("Todos los campos son necesarios y el número de capítulos debe ser un número válido.");

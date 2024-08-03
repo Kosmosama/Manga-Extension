@@ -7,17 +7,17 @@ function cargarListaMangas(resultados) {
     listaMangasDiv.innerHTML = ""; // Limpiar resultados anteriores
   
     resultados.forEach((manga, index) => {
-      const mangaDiv = document.createElement("div"); // uwu
-      mangaDiv.innerHTML = `
-        <h3>${manga.nombre}</h3>
-        <p>Link: <a href="${manga.link}">${manga.link}</a></p>
-        <img src="${manga.linkImagen}" alt="${manga.nombre}" style="width:100px;">
-        <p>Número de capítulos: ${manga.numCapitulos}</p>
-        <p>Favorito: ${manga.favorito ? 'Sí' : 'No'}</p>
-        <button onclick="alternarFavorito(${index})">Alternar Favorito</button>
-        <button onclick="eliminarManga(${index})">Eliminar Manga</button>
-        <button onclick="abrirFormularioEdicion(${index})">Editar Manga</button>
-      `;
-      listaMangasDiv.appendChild(mangaDiv);
+        const mangaDiv = document.createElement("div");
+        mangaDiv.innerHTML = `
+            <h3>${manga.nombre}</h3>
+            <p>Link: <a href="${manga.link}">${manga.link}</a></p>
+            <img src="${manga.linkImagen}" alt="${manga.nombre}" style="width:100px;">
+            <p>Número de capítulos: ${manga.numCapitulos}</p>
+            <p>Favorito: ${manga.favorito ? 'Sí' : 'No'}</p>
+            <button onclick="alternarFavorito(${index})">Alternar Favorito</button>
+            <button onclick="eliminarManga(${index})">Eliminar Manga</button>
+            <button onclick="abrirFormularioEdicion(${index})">Editar Manga</button>
+        `;
+        listaMangasDiv.appendChild(mangaDiv);
     });
-  }
+}

@@ -1,13 +1,13 @@
 // Esto debe ser añadido al botón de la estrella para alternar entre favorito/no favorito
 function alternarFavorito(index) {
 	mangas[index].favorito = !mangas[index].favorito;
-	cargarListaMangas();
+	actualizarLista();
 }
 
 // Esto debe ser añadido al botón de eliminar manga
 function eliminarManga(index) {
 	mangas.splice(index, 1);
-	cargarListaMangas();
+	actualizarLista();
 }
 
 // Esto debe ser añadido al botón de edición de manga, y editar la función para que use un formulario, no prompts
@@ -25,5 +25,5 @@ function editarManga(index) {
 		numCapitulos: nuevoNumCapitulos,
 		favorito: nuevoFavorito
 	};
-	cargarListaMangas();
+	actualizarLista();
 }
