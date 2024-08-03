@@ -31,6 +31,7 @@ document.getElementById('editForm').addEventListener('submit', function(event){
         mangaList[editIndex] = {
            title: title,
            image: image,
+           today: today,
            readChapters: readChapters,
            totalChapters, totalChapters
         };

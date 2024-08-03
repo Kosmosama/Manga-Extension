@@ -1,5 +1,11 @@
 var mangaList = []; // Variable global para la lista de mangas
 var cargarMangas; // Variable global para la función cargarMangas
+var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+var yyyy = today.getFullYear();
+today = mm + '/' + dd + '/' + yyyy;
+
 
 document.addEventListener('DOMContentLoaded', function() {
     // Cargar la lista de mangas al iniciar la extensión
@@ -49,12 +55,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('chapterForm').addEventListener('submit', async function(event) {
         event.preventDefault();
-        
-        var today = new Date();
-        var dd = String(today.getDate()).padStart(2, '0');
-        var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
-        var yyyy = today.getFullYear();
-        today = mm + '/' + dd + '/' + yyyy;
 
         const formMangaValues = {
             image: document.getElementById('image').value,
