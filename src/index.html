@@ -33,6 +33,21 @@
                 <img src="../public/icons/search.svg" class="h-8 w-8">
             </button>
         </nav>
+            <!-- Selectores de Orden -->
+            <div class="flex flex-row p-2">
+                <select id="sortOption" class="h-8 flex-grow border rounded-md border-gray-300 focus:outline-none focus:border-gray-400 px-2 mr-2">
+                    <option value="favoritos">Favoritos primero</option>
+                    <option value="alfabetico">Alfabéticamente</option>
+                    <option value="capitulos">Número de capítulos leídos</option>
+                    <option value="fechaAdicion">Fecha de adición</option>
+                    <option value="ultimaLectura">Última lectura</option>
+                </select>
+                <select id="sortOrder" class="h-8 flex-grow border rounded-md border-gray-300 focus:outline-none focus:border-gray-400 px-2">
+                    <option value="ascendente">Ascendente</option>
+                    <option value="descendente">Descendente</option>
+                </select>
+            </div>
+    
 
         <!--Caps-->
         <section class="h-[calc(96rem-5.5rem)] overflow-y-auto">
@@ -73,6 +88,7 @@
             </form>
         </div>
     </div>
+
     <!-- Formulario de Edit Manga -->
     <div id="editFormContainer" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center" style="display: none;">
         <div class="bg-white rounded-lg p-6 w-80">
@@ -155,5 +171,6 @@
     <script src="searchBar.js"></script>
     <script src="editManga.js"></script>
     <script src="deleteManga.js"></script>
+    <script src="filter.js"></script>
 </body>
 </html>
