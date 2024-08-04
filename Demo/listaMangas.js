@@ -13,6 +13,8 @@ function cargarListaMangas(resultados) {
             <p>Link: <a href="${manga.link}">${manga.link}</a></p>
             <img src="${manga.linkImagen}" alt="${manga.nombre}" style="width:100px;">
             <p>Número de capítulos: ${manga.numCapitulos}</p>
+            <p>Fecha de Adición: ${new Date(manga.fechaAdicion).toLocaleString()}</p>
+            Última Lectura: ${new Date(manga.ultimaLectura).toLocaleString()}
             <p>Favorito: ${manga.favorito ? 'Sí' : 'No'}</p>
             <button onclick="alternarFavorito(${index})">Alternar Favorito</button>
             <button onclick="eliminarManga(${index})">Eliminar Manga</button>

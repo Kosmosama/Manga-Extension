@@ -15,12 +15,15 @@ document.getElementById('add-manga-button').onclick = function() {
 };
 
 function anadirManga(nombre, link, linkImagen, numCapitulos, favorito) {
+    const fechaActual = new Date().toISOString();
     const nuevoManga = {
-      nombre: nombre,
-      link: link,
-      linkImagen: linkImagen,
-      numCapitulos: numCapitulos,
-      favorito: favorito
+        nombre: nombre,
+        link: link,
+        linkImagen: linkImagen,
+        numCapitulos: numCapitulos,
+        favorito: favorito,
+        fechaAdicion: fechaActual,
+        ultimaLectura: fechaActual
     };
     mangas.push(nuevoManga);
     actualizarLista();

@@ -23,13 +23,18 @@ document.getElementById("edit-form").addEventListener("submit", function(event) 
     const favorito = document.getElementById("edit-favorito").checked;
 
     if (editIndex > -1 && !isNaN(numCapitulos)) {
-        mangas[editIndex] = {
-            nombre: nombre,
-            link: link,
-            linkImagen: linkImagen,
-            numCapitulos: numCapitulos,
-            favorito: favorito
-        };
+        const manga = mangas[editIndex];
+        manga.nombre = nombre;
+        manga.link = link;
+        manga.linkImagen = linkImagen;
+        manga.favorito = favorito;
+
+        // Primero se comprueba que los capitulos han cambiado, luego se reasignan si lo han hecho
+        if (manga.numCapitulos !== numCapitulos) {
+            manga.ultimaLectura = new Date().toISOString();
+        }
+        manga.numCapitulos = numCapitulos;
+        
         actualizarLista();
         document.getElementById("edit-modal").style.display = "none";
     } else {

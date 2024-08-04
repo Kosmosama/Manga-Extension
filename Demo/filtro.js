@@ -30,6 +30,12 @@ function ordenarMangas(array, criterio, orden) {
             case 'capitulos':
                 comparison = a.numCapitulos - b.numCapitulos;
                 break;
+            case 'fechaAdicion':
+                comparison = new Date(a.fechaAdicion) - new Date(b.fechaAdicion);
+                break;
+            case 'ultimaLectura':
+                comparison = new Date(a.ultimaLectura) - new Date(b.ultimaLectura);
+                break;
         }
     
         return orden === 'ascendente' ? comparison : -comparison;
