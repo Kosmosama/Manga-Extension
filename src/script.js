@@ -6,7 +6,6 @@ var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
 var yyyy = today.getFullYear();
 today = mm + '/' + dd + '/' + yyyy;
 
-document.addEventListener('DOMContentLoaded', function() {
     // Cargar la lista de mangas al iniciar la extensión
     recuperarMangas();
 
@@ -34,14 +33,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 '<button id="edit" data-index="' + index + '">Edit</button>' +
                 '<button id="delete" data-index="' + index + '">Delete</button>' +
                 '<div class="absolute -top-1 -left-1 w-4 h-4 bg-green-500 rounded-full items-center justify-center hidden group-hover:flex">' +
-                    '<span class="text-white text-[0.5rem] font-bold">★</span>' +
+                    '<span id="fav" class="text-white text-[0.5rem] font-bold">★</span>' +
                 '</div>' +
             '</div>';
             mangaListContainer.innerHTML += mangaItemHTML;
         });
 
-        // Llamar a los event listeners después de cargar los mangas
-        eventListeners();
     };
 
     // Añadir eventos a los botones y el formulario
@@ -84,4 +81,3 @@ document.addEventListener('DOMContentLoaded', function() {
 
         document.getElementById('formContainer').style.display = 'none';
     });
-});
