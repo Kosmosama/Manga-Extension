@@ -21,8 +21,8 @@ function ordenarMangas(array, criterio, orden) {
         let comparison = 0;
         
         switch (criterio) {
-            case 'favoritos': //To do
-                comparison = b.favorito - a.favorito;
+            case 'favoritos': //funca
+                comparison = b.favorite - a.favorite;
                 break;
             case 'alfabetico'://funca
                 comparison = a.title.localeCompare(b.title);
