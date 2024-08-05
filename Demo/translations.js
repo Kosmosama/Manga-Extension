@@ -19,7 +19,8 @@ fetch('translations.json')
         // Set the dropdown value to the user's preferred language
         document.getElementById('language-select').value = userLang;
     })
-    .catch(error => console.error('Error loading translations:', error));
+    .catch(error => console.error('Error loading translations:', error)
+);
 
 // Function to change language
 function changeLanguage(lang) {
