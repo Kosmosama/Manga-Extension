@@ -8,19 +8,25 @@
 </head>
 <body>
     <header>
-        <h1>This would be the header</h1>
+        <h1 id="header-text" data-translate-key="headerText">This would be the header</h1>
         <input type="text" id="searchBar" placeholder="Buscar manga por nombre..."><br>
-        <button id="add-manga-button">Añadir Manga</button><br>
+        <button id="add-manga-button" data-translate-key="addMangaButton">Añadir Manga</button><br>
         <select id="sortOption">
-            <option value="favoritos">Favoritos primero</option>
-            <option value="alfabetico">Alfabéticamente</option>
-            <option value="capitulos">Número de capítulos leídos</option>
-            <option value="fechaAdicion">Fecha de adición</option>
-            <option value="ultimaLectura">Última lectura</option>
+            <option value="favoritos" data-translate-key="favoritesFirst">Favoritos primero</option>
+            <option value="alfabetico" data-translate-key="alphabetically">Alfabéticamente</option>
+            <option value="capitulos" data-translate-key="numChapters">Número de capítulos leídos</option>
+            <option value="fechaAdicion" data-translate-key="dateAdded">Fecha de adición</option>
+            <option value="ultimaLectura" data-translate-key="lastRead">Última lectura</option>
         </select>
         <select id="sortOrder">
-            <option value="ascendente">Ascendente</option>
-            <option value="descendente">Descendente</option>
+            <option value="ascendente" data-translate-key="ascending">Ascendente</option>
+            <option value="descendente" data-translate-key="descending">Descendente</option>
+        </select>
+        <select id="language-select">
+            <option value="en">English</option>
+            <option value="es">Español</option>
+            <option value="fr">Français</option>
+            <option value="de">Deutsch</option>
         </select>
     </header>
 
@@ -29,24 +35,25 @@
     <div id="edit-modal" class="modal">
         <div class="modal-content">
             <span id="close-modal" class="close">&times;</span>
-            <h2>Editar Manga</h2>
+            <h2 id="edit-manga-title" data-translate-key="editMangaTitle">Edit Manga</h2>
             <form id="edit-form">
-                <label for="edit-nombre">Nombre:</label>
+                <label for="edit-nombre" id="edit-form-name-label" data-translate-key="formNameLabel">Nombre:</label>
                 <input type="text" id="edit-nombre" name="nombre" required><br>
-                <label for="edit-link">Link:</label>
+                <label for="edit-link" id="edit-form-link-label" data-translate-key="formLinkLabel">Link:</label>
                 <input type="text" id="edit-link" name="link" required><br>
-                <label for="edit-linkImagen">Link Imagen:</label>
+                <label for="edit-linkImagen" id="edit-form-image-link-label" data-translate-key="formImageLinkLabel">Link Imagen:</label>
                 <input type="text" id="edit-linkImagen" name="linkImagen" required><br>
-                <label for="edit-numCapitulos">Número de Capítulos:</label>
+                <label for="edit-numCapitulos" id="edit-form-chapter-count-label" data-translate-key="formChapterCountLabel">Número de Capítulos:</label>
                 <input type="number" id="edit-numCapitulos" name="numCapitulos" required><br>
-                <label for="edit-favorito">Favorito:</label>
+                <label for="edit-favorito" id="edit-form-favorite-label" data-translate-key="formFavoriteLabel">Favorito:</label>
                 <input type="checkbox" id="edit-favorito" name="favorito"><br>
-                <button type="submit">Guardar Cambios</button>
-                <button type="button" id="cancel-edit">Cancelar</button>
+                <button type="submit" data-translate-key="saveChanges">Guardar Cambios</button>
+                <button type="button" id="cancel-edit" data-translate-key="cancel">Cancelar</button>
             </form>
         </div>
     </div>
     
+    <script src="translations.js"></script>
     <script src="listaMangas.js"></script>
     <script src="anadirManga.js"></script>
     <script src="manipularManga.js"></script>
