@@ -16,6 +16,7 @@ const translations = {
         loadManga: "Cargar Manga",
         imageLabel: "Imagen (opcional, solo links de imgur)",
         titleLabel: "Título",
+        chapters: "Capítulo {read}/{total}",
         readChaptersLabel: "Capítulos leídos",
         totalChaptersLabel: "Capítulos totales",
         favoritesFirst: "Favoritos primero",
@@ -48,6 +49,7 @@ const translations = {
         loadManga: "Load Manga",
         imageLabel: "Image (optional, only imgur links)",
         titleLabel: "Title",
+        chapters: "Chapter {read}/{total}",
         readChaptersLabel: "Read Chapters",
         totalChaptersLabel: "Total Chapters",
         favoritesFirst: "Favorites First",
@@ -73,6 +75,14 @@ function changeLanguage(lang) {
         if (translations[lang] && translations[lang][key]) {
             if (element.tagName === 'INPUT' && element.type === 'text') {
                 element.placeholder = translations[lang][key];
+            } else if (key === 'chapters') {
+                // Obtén los valores actuales de readChapters y totalChapters
+                const read = element.getAttribute('data-read');
+                const total = element.getAttribute('data-total');
+                // Reemplaza los marcadores de posición en la cadena traducida
+                element.textContent = translations[lang][key]
+                    .replace('{read}', read)
+                    .replace('{total}', total);
             } else {
                 element.textContent = translations[lang][key];
             }
@@ -80,16 +90,43 @@ function changeLanguage(lang) {
     });
 
     // Cambiar el placeholder del campo de búsqueda
-    document.getElementById('searchBar').placeholder = translations[lang].search;
+    const searchBar = document.getElementById('searchBar');
+    if (searchBar) {
+        searchBar.placeholder = translations[lang].search;
+    }
 
     // Actualizar las opciones de los selectores
     updateSelectOptions('sortOption', lang);
     updateSelectOptions('sortOrder', lang);
 
+    // Actualizar los botones de editar y eliminar en cada manga
+    document.querySelectorAll('button[id="edit"]').forEach(button => {
+        button.textContent = translations[lang].edit;
+    });
+    document.querySelectorAll('button[id="delete"]').forEach(button => {
+        button.textContent = translations[lang].delete;
+    });
+
     // Guardar la preferencia de idioma
     chrome.storage.local.set({ language: lang }, function() {
         console.log('Language preference saved.');
     });
+
+    // Actualizar la variable global del idioma actual
+    currentLanguage = lang;
+}
+
+// Función para actualizar las opciones de los selectores
+function updateSelectOptions(selectId, lang) {
+    const select = document.getElementById(selectId);
+    if (select) {
+        Array.from(select.options).forEach(option => {
+            const key = option.getAttribute('data-translate');
+            if (key && translations[lang][key]) {
+                option.text = translations[lang][key];
+            }
+        });
+    }
 }
 
 // Función para actualizar las opciones de los selectores
