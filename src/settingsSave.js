@@ -13,14 +13,15 @@ checkboxes.forEach(function(checkbox) {
 });
 
 function saveSettings() {
-  chrome.storage.local.set({ settings: enabledSettings }, function() {
-    console.log('Settings has been updated and saved properly.');
+  const language = document.getElementById('languageSelect').value;
+  chrome.storage.local.set({ settings: enabledSettings, language: language }, function() {
+    console.log('Settings and language preference have been updated and saved properly.');
     console.log(enabledSettings);
+    console.log('Language:', language);
   });
 }
-
 function loadSettings() {
-  chrome.storage.local.get('settings', function(result) {
+  chrome.storage.local.get(['settings', 'language'], function(result) {
     enabledSettings = result.settings || [];
     console.log('Loaded settings:', enabledSettings);
     // Actualizar el estado de las checkbox basándose en los datos cargados.
@@ -29,8 +30,12 @@ function loadSettings() {
         checkbox.checked = enabledSettings[index].checked;
       }
     });
+
+    // Cargar y aplicar la preferencia de idioma
+    const savedLanguage = result.language || 'es';
+    document.getElementById('languageSelect').value = savedLanguage;
+    changeLanguage(savedLanguage);
   });
 }
-
 // Llamar a loadSettings cuando la página se cargue.
 document.addEventListener('DOMContentLoaded', loadSettings);
