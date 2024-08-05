@@ -1,9 +1,9 @@
 var mangaList = []; // Variable global para la lista de mangas
 var cargarMangas; // Variable global para la función cargarMangas
-var today = new Date();
-var dd = String(today.getDate()).padStart(2, '0');
-var mm = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
-var yyyy = today.getFullYear();
+var dayAdded = new Date();
+var dd = String(dayAdded.getDate()).padStart(2, '0');
+var mm = String(dayAdded.getMonth() + 1).padStart(2, '0'); // January is 0!
+var yyyy = dayAdded.getFullYear();
 today = mm + '/' + dd + '/' + yyyy;
 
 // Cargar la lista de mangas al iniciar la extensión
@@ -72,7 +72,7 @@ document.getElementById('chapterForm').addEventListener('submit', async function
         title: document.getElementById('title').value,
         readChapters: document.getElementById('readChapters').value,
         totalChapters: document.getElementById('totalChapters').value,
-        today: dd + '/' + mm + '/' + yyyy,
+        dayAdded: dd + '/' + mm + '/' + yyyy,
         favorite: false
     };
 
@@ -82,7 +82,7 @@ document.getElementById('chapterForm').addEventListener('submit', async function
         mangaList.push(formMangaValues);
 
         // Guardar la nueva lista ordenada por fecha
-        mangaList.sort((a, b) => new Date(a.today) - new Date(b.today));
+        mangaList.sort((a, b) => new Date(a.dayAdded) - new Date(b.dayAdded));
 
         chrome.storage.local.set({ mangaList: mangaList }, function() {
             console.log('Manga list updated and saved to local storage.');

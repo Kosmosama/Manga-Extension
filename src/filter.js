@@ -31,10 +31,10 @@ function ordenarMangas(array, criterio, orden) {
                 comparison = a.totalChapters - b.totalChapters;
                 break;
             case 'fechaAdicion': //no sé si funciona bien pq solo tengo como referencia lo q añadí hoy XD
-                comparison = new Date(a.fechaAdicion) - new Date(b.fechaAdicion);
+                comparison = new Date(a.dayAdded) - new Date(b.dayAdded);
                 break;
             case 'ultimaLectura': //to do
-                comparison = new Date(a.ultimaLectura) - new Date(b.ultimaLectura);
+                comparison = new Date(a.lastSeen) - new Date(b.lastSeen);
                 break;
         }
     
