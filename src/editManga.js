@@ -16,6 +16,7 @@ function openEditForm(index){
 
     document.getElementById("editTitle").value = manga.title;
     document.getElementById("editImage").value = manga.image;
+    document.getElementById("editLink").value = manga.link;
     document.getElementById("editReadChapters").value = manga.readChapters;
     document.getElementById("editTotalChapters").value = manga.totalChapters;
     document.getElementById("editFormContainer").style.display = "flex";
@@ -25,13 +26,14 @@ document.getElementById('editForm').addEventListener('submit', function(event){
     event.preventDefault();
     const title = document.getElementById("editTitle").value;
     const image = document.getElementById("editImage").value;
+    const link = document.getElementById("editLink").value;
     const readChapters = document.getElementById("editReadChapters").value;
     const totalChapters = document.getElementById("editTotalChapters").value;
     if (editIndex > -1 && !isNaN(readChapters)) {
         mangaList[editIndex] = {
            title: title,
            image: image,
-           lastSeen: lastSeen,
+           link: link,
            readChapters: readChapters,
            totalChapters, totalChapters
         };

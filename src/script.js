@@ -28,7 +28,7 @@ cargarMangas = function(mangaList) {
                 '<img src="' + manga.image + '" alt="Portada" class="w-full h-full object-cover">' +
             '</div>' +
             '<div class="flex-grow">' +
-                '<h3 class="text-xs font-semibold">' + manga.title + '</h3>' +
+                '<a class="text-xs font-semibold" href="'+manga.link+' " target="_blank">' + manga.title + '</a>' +
                 '<p class="text-xs text-gray-500" data-translate="chapters" data-read="' + manga.readChapters + '" data-total="' + manga.totalChapters + '">Capítulo ' + manga.readChapters + '/' + manga.totalChapters + '</p>' +
             '</div>' +
             '<button id="edit" data-index="' + index + '" data-translate="edit">Edit</button>' +
@@ -70,6 +70,7 @@ document.getElementById('chapterForm').addEventListener('submit', async function
     const formMangaValues = {
         image: document.getElementById('image').value,
         title: document.getElementById('title').value,
+        link: document.getElementById('link').value,
         readChapters: document.getElementById('readChapters').value,
         totalChapters: document.getElementById('totalChapters').value,
         dayAdded: dd + '/' + mm + '/' + yyyy,

@@ -1,17 +1,17 @@
 let favorite = false;
-
+function addClickEventToFavElements() {
+    const favSpans = document.querySelectorAll('span#fav');
+    favSpans.forEach(favo => {
+        favo.addEventListener('click', function() {
+            favorite = true;
+            changeFavorite(favo);
+        });
+    });
+}
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM completamente cargado y analizado');
     
-    function addClickEventToFavElements() {
-        const favSpans = document.querySelectorAll('span#fav');
-        favSpans.forEach(favo => {
-            favo.addEventListener('click', function() {
-                favorite = true;
-                changeFavorite(favo);
-            });
-        });
-    }
+   
 
     addClickEventToFavElements();
 
