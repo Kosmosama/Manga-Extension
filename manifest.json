@@ -11,5 +11,11 @@
     "content_scripts":[{
       "matches":["<all_urls>"],
       "js":["/src/script.js","/src/settingsBtn.js"]
-    }]
+    }],
+    "web_accessible_resources": [
+      {
+        "resources": ["translations.json"],
+        "matches": ["<all_urls>"]
+      }
+    ]
 }
