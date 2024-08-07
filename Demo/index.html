@@ -28,9 +28,26 @@
             <option value="fr">Français</option>
             <option value="de">Deutsch</option>
         </select>
+
+        <!-- Input html doc -->
+        <br>
+        <input type="file" id="bookmark-upload" accept=".html">
     </header>
 
+    <!-- To import bookmarks -->
+
+    <div id="bookmark-container"></div>
+
+    <div id="bookmark-actions" style="display: none;">
+        <button id="discard-bookmarks">Discard</button>
+        <button id="add-selected-bookmarks">Add Selected</button>
+    </div>
+
+    <!-- Mangas -->
+
     <div id="lista-mangas"></div>
+
+    <!-- Edit mangas -->
 
     <div id="edit-modal" class="modal">
         <div class="modal-content">
@@ -52,6 +69,8 @@
             </form>
         </div>
     </div>
+
+    <!-- Scripts -->
     
     <script src="translations.js"></script>
     <script src="listaMangas.js"></script>
@@ -62,5 +81,6 @@
     <script src="editarManga.js"></script>
     <script src="searchBar.js"></script>
     <script src="filtro.js"></script>
+    <script src="bookmarkImporter.js"></script>
 </body>
 </html>
