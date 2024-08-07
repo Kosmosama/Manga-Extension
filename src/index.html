@@ -11,6 +11,9 @@
             height: 1080px;
             width: 720px;
         }
+        #dropdownMenu{
+            z-index: 1000;
+        }
     </style>
     <link href="./output.css" rel="stylesheet">
 </head>
@@ -24,29 +27,35 @@
             </div>
             <h1 class="mr-36 ml-auto pt-2 text-base font-semibold" data-translate="mangaLibrary">Manga Library</h1>
         </header>
-        <nav class="flex flex-row align-middle h-10 px-2 py-1">
-            <button class="mr-2">
+        <nav class="flex flex-row align-middle h-10 px-2 py-1 relative">
+            <button id="menuBtn" class="mr-2 relative">
                 <img src="../public/icons/menu.svg" class="h-8 w-8">
             </button>
             <input type="text" placeholder="Search..." class="h-8 flex-grow border rounded-md border-gray-300 focus:outline-none focus:border-gray-400 px-2" id="searchBar">
             <button class="ml-2">
                 <img src="../public/icons/search.svg" class="h-8 w-8">
             </button>
-        </nav>
-            <!-- Selectores de Orden -->
-            <div class="flex flex-row p-2">
-                <select id="sortOption" class="h-8 flex-grow border rounded-md border-gray-300 focus:outline-none focus:border-gray-400 px-2 mr-2">
-                    <option value="favoritos" data-translate="favoritesFirst">Favoritos primero</option>
-                    <option value="alfabetico" data-translate="alphabetically">Alfabéticamente</option>
-                    <option value="capitulos" data-translate="chapterCount">Número de capítulos leídos</option>
-                    <option value="fechaAdicion" data-translate="dateAdded">Fecha de adición</option>
-                    <option value="ultimaLectura" data-translate="lastRead">Última lectura</option>
-                </select>
-                <select id="sortOrder" class="h-8 flex-grow border rounded-md border-gray-300 focus:outline-none focus:border-gray-400 px-2">
-                    <option value="ascendente" data-translate="ascending">Ascendente</option>
-                    <option value="descendente" data-translate="descending">Descendente</option>
-                </select>
+               <!-- Dropdown menu -->
+               <div id="dropdownMenu" class="absolute left-0 top-10 bg-white border border-gray-300 rounded-md shadow-lg p-4 hidden z-10">
+                <div class="mb-2">
+                    <label for="sortOption" class="block text-sm font-medium text-gray-700">Ordenar por:</label>
+                    <select id="sortOption" class="h-8 w-full border rounded-md border-gray-300 focus:outline-none focus:border-gray-400 px-2">
+                        <option value="favoritos" data-translate="favoritesFirst">Favoritos primero</option>
+                        <option value="alfabetico" data-translate="alphabetically">Alfabéticamente</option>
+                        <option value="capitulos" data-translate="chapterCount">Número de capítulos leídos</option>
+                        <option value="fechaAdicion" data-translate="dateAdded">Fecha de adición</option>
+                        <option value="ultimaLectura" data-translate="lastRead">Última lectura</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="sortOrder" class="block text-sm font-medium text-gray-700">Orden:</label>
+                    <select id="sortOrder" class="h-8 w-full border rounded-md border-gray-300 focus:outline-none focus:border-gray-400 px-2">
+                        <option value="ascendente" data-translate="ascending">Ascendente</option>
+                        <option value="descendente" data-translate="descending">Descendente</option>
+                    </select>
+                </div>
             </div>
+        </nav>
     
 
         <!--Caps-->
@@ -59,7 +68,7 @@
             </button>
         </footer>
     </div>
-
+    
     <!-- Formulario de Cargar Manga -->
     <div id="formContainer" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
         <div class="bg-white rounded-lg p-6 w-80">
@@ -164,6 +173,9 @@
                     <input id="cajita" type="checkbox" class="h-4 w-4">
                 </div>
                 <div class="flex items-center">
+                    <a class="text-gray-200 mr-2 text-xs" id="importBookmarks" href="bookmarksDemo.html">Importar Bookmarks</a>
+                </div>
+                <div class="flex items-center">
                     <label class="text-gray-200 mr-2 text-xs" data-translate="settingsOption2">Cosas</label>
                     <input type="checkbox" class="h-4 w-4">
                     <input id="cajita" type="checkbox" class="h-4 w-4">
@@ -185,7 +197,6 @@
             </div>
         </section>
         <!--End settings-->
-   
     <script src="script.js"></script>
     <script src="settingsBtn.js"></script>
     <script src="settingsSave.js"></script>
@@ -195,5 +206,6 @@
     <script src="filter.js"></script>
     <script src="fav.js"></script>
     <script src="language.js"></script>
+    <script src="menuFilter.js"></script>
 </body>
 </html>

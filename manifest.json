@@ -2,7 +2,14 @@
     "manifest_version": 3,
     "name": "Manga Library",
     "description": "Bookmark for mangas/manhwas/manhuas extension",
-    "permissions":["tabs","scripting","storage","webNavigation","activeTab"],
+  "permissions":[
+    "tabs",
+    "scripting",
+    "storage",
+    "webNavigation",
+    "activeTab",
+    "bookmarks"
+  ],
     "version": "1.0",
     "action": {
       "default_popup": "src/index.html",
