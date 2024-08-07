@@ -3,19 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Bookmarks</title>
     <style>
-        body {
-            height: 1080px;
-            width: 720px;
+        ul {
+            list-style-type: none;
+        }
+        .folder {
+            cursor: pointer;
+        }
+        .folder ul {
+            display: none;
         }
     </style>
 </head>
 <body>
-    <div id="bookmarksContainer" class="p-4">
-        <h2>Marcadores</h2>
-        <ul id="bookmarksList" class="list-disc pl-5"></ul>
+    <div id="bookmarksContainer">
+        <ul id="bookmarksList"></ul>
     </div>
+    <button id="addButton">Add Selected Bookmarks</button>
+    <script src="bookmarks.js"></script>
 </body>
-    <script src="importBookmarks.js"></script>
 </html>
