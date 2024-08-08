@@ -1,15 +1,5 @@
 let editIndex = -1;
 
-// Función para agregar los event listeners a los botones
-function addEventListeners() {
-     var mangaEditButton = document.querySelectorAll("button[id=edit]");
-     mangaEditButton.forEach(function(mangaBtn, index){
-       mangaBtn.addEventListener('click', function() {
-         openEditForm(index);
-       });
-     });
-}
-
 function openEditForm(index){
     editIndex = index;
     const manga = mangaList[index];
@@ -35,7 +25,7 @@ document.getElementById('editForm').addEventListener('submit', function(event){
            image: image,
            link: link,
            readChapters: readChapters,
-           totalChapters, totalChapters
+           totalChapters: totalChapters
         };
         cargarMangas(mangaList);
         chrome.storage.local.set({ mangaList: mangaList }, function() {
@@ -51,23 +41,13 @@ document.getElementById("cancelEdit").onclick = function() {
     document.getElementById("editFormContainer").style.display = "none";
 }
 
-
-// Observador de mutaciones para detectar cambios en el DOM
-const observer = new MutationObserver(function(mutations) {
-    mutations.forEach(function(mutation) {
-        if (mutation.addedNodes.length) {
-        addEventListeners();
-        }
+document.addEventListener('DOMContentLoaded', function() {
+    addEventListeners("button[id=edit]", 'click', function() {
+        openEditForm(this.getAttribute('data-index'));
     });
-});
-
-// Configuración del observador para observar todos los cambios en el DOM
-observer.observe(document.body, {
-    childList: true,
-    subtree: true
-});
-
-// Llamada inicial para agregar event listeners a los botones que ya están presentes en el DOM
-document.addEventListener('DOMContentLoaded', function () {
-     addEventListeners();
+    observeDOM(function() {
+        addEventListeners("button[id=edit]", 'click', function() {
+            openEditForm(this.getAttribute('data-index'));
+        });
+    });
 });
