@@ -1,10 +1,6 @@
 var mangaList = []; // Variable global para la lista de mangas
 var cargarMangas; // Variable global para la función cargarMangas
-var dayAdded = new Date();
-var dd = String(dayAdded.getDate()).padStart(2, '0');
-var mm = String(dayAdded.getMonth() + 1).padStart(2, '0'); // January is 0!
-var yyyy = dayAdded.getFullYear();
-today = mm + '/' + dd + '/' + yyyy;
+var dayAdded = new Date().toLocaleDateString('en-GB');
 
 // Cargar la lista de mangas al iniciar la extensión
 recuperarMangas();
@@ -72,7 +68,7 @@ document.getElementById('chapterForm').addEventListener('submit', async function
         link: document.getElementById('link').value,
         readChapters: document.getElementById('readChapters').value,
         totalChapters: document.getElementById('totalChapters').value,
-        dayAdded: dd + '/' + mm + '/' + yyyy,
+        dayAdded: dayAdded,
         favorite: false
     };
 
@@ -89,7 +85,6 @@ document.getElementById('chapterForm').addEventListener('submit', async function
             
             // Actualizar la UI con el nuevo manga
             cargarMangas(mangaList);
-            addClickEventToFavElements();
         });
     });
 
