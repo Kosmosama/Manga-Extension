@@ -1,12 +1,16 @@
 document.addEventListener('DOMContentLoaded', () => {
     const bookmarksList = document.getElementById('bookmarksList');
     const addButton = document.getElementById('addButton');
+    const formContainer = document.getElementById('editFormContainer');
+    const editForm = document.getElementById('editForm');
+
+    let selectedBookmarks = [];
+    let currentBookmarkIndex = 0;
 
     // Function to traverse the bookmarks tree
     function traverseBookmarks(bookmarks, parentList, isRoot = false) {
         bookmarks.forEach(bookmark => {
             if (isRoot) {
-                // Skip rendering the root folder
                 traverseBookmarks(bookmark.children, parentList);
                 return;
             }
@@ -18,19 +22,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 li.innerHTML = `<input type="checkbox" class="folder-checkbox"> ${bookmark.title}`;
                 
                 const ul = document.createElement('ul');
-                ul.style.display = 'none'; // Hide child elements by default
+                ul.style.display = 'none';
                 traverseBookmarks(bookmark.children, ul);
                 li.appendChild(ul);
 
-                // Add a click event listener to the folder to toggle visibility of child elements
                 li.addEventListener('click', (event) => {
                     if (event.target.tagName.toLowerCase() !== 'input') {
                         ul.style.display = ul.style.display === 'none' ? 'block' : 'none';
-                        event.stopPropagation(); // Prevent event from bubbling up to parent elements
+                        event.stopPropagation();
                     }
                 });
 
-                // Add event listener to the folder checkbox to select/deselect all children
                 const folderCheckbox = li.querySelector('.folder-checkbox');
                 folderCheckbox.addEventListener('change', () => {
                     const isChecked = folderCheckbox.checked;
@@ -47,26 +49,66 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Get the bookmarks and traverse the tree
     chrome.bookmarks.getTree((bookmarkTreeNodes) => {
         traverseBookmarks(bookmarkTreeNodes, bookmarksList, true);
     });
 
-    // Add event listener to the add button
     addButton.addEventListener('click', () => {
-        const selectedBookmarks = [];
+        selectedBookmarks = [];
         document.querySelectorAll('.bookmark-checkbox:checked').forEach(checkbox => {
             const title = checkbox.getAttribute('data-title');
             const url = checkbox.getAttribute('data-url');
             const dateAdded = new Date(parseInt(checkbox.getAttribute('data-date')));
 
-            selectedBookmarks.push({
-                title,
-                url,
-                dateAdded
-            });
+            selectedBookmarks.push({ title, url, dateAdded });
         });
 
-        console.log(selectedBookmarks);
+        if (selectedBookmarks.length > 0) {
+            currentBookmarkIndex = 0;
+            showFormForBookmark(currentBookmarkIndex);
+        }
+    });
+
+    function showFormForBookmark(index) {
+        if (index >= selectedBookmarks.length) {
+            formContainer.style.display = 'none';
+            return;
+        }
+
+        const bookmark = selectedBookmarks[index];
+        formContainer.style.display = 'flex';
+
+        document.getElementById('editTitle').value = bookmark.title;
+        document.getElementById('editLink').value = bookmark.url;
+        document.getElementById('editReadChapters').value = '';
+        document.getElementById('editTotalChapters').value = '';
+        document.getElementById('editImage').value = '';
+    }
+
+    editForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const bookmarkform = {
+            image: document.getElementById('editImage').value,
+            title: document.getElementById('editTitle').value,
+            link: document.getElementById('editLink').value,
+            readChapters: document.getElementById('editReadChapters').value,
+            totalChapters: document.getElementById('editTotalChapters').value,
+            dayAdded: selectedBookmarks[currentBookmarkIndex].dateAdded,
+            favorite: false
+        };
+
+        chrome.storage.local.get('mangaList', function(result) {
+            const mangaList = result.mangaList || [];
+            mangaList.push(bookmarkform);
+            chrome.storage.local.set({ mangaList }, () => {
+                currentBookmarkIndex++;
+                showFormForBookmark(currentBookmarkIndex);
+            });
+        });
+    });
+
+    document.getElementById('cancelEdit').addEventListener('click', function() {
+        formContainer.style.display = 'none';
     });
 });
