@@ -85,8 +85,19 @@ document.getElementById('chapterForm').addEventListener('submit', async function
             
             // Actualizar la UI con el nuevo manga
             cargarMangas(mangaList);
+            
+            // Limpiar los campos del formulario
+            limpiarCamposFormulario();
         });
     });
 
     document.getElementById('formContainer').style.display = 'none';
 });
+
+function limpiarCamposFormulario() {
+    document.getElementById('image').value = '';
+    document.getElementById('title').value = '';
+    document.getElementById('link').value = '';
+    document.getElementById('readChapters').value = '';
+    document.getElementById('totalChapters').value = '';
+}
