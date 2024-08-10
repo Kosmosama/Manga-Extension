@@ -21,10 +21,12 @@ document.getElementById('editForm').addEventListener('submit', function(event){
     const totalChapters = document.getElementById("editTotalChapters").value;
     if (editIndex > -1 && !isNaN(readChapters)) {
         mangaList[editIndex] = {
+           favorite: favorite,
            title: title,
            image: image,
            link: link,
            readChapters: readChapters,
+           dayAdded: dayAdded,
            totalChapters: totalChapters
         };
         cargarMangas(mangaList);
