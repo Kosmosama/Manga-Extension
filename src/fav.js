@@ -25,9 +25,7 @@ function changeFavorite(favo) {
 
             updateFavoriteUI(favo, isFavorite);
             
-            chrome.storage.local.set({ mangaList: mangaList }, function() {
-                console.log('Manga list updated and saved to local storage.');
-            });
+            saveManga();
         }
     });
 }

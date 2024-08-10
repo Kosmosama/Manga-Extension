@@ -31,6 +31,7 @@ cargarMangas = function(mangaList) {
                 </div>
                 <button id="edit" data-index="${index}" data-translate="edit">Edit</button>
                 <button id="delete" data-index="${index}" data-translate="delete">Delete</button>
+                <button id="addCap" data-index="${index}" data-translate="addCap">+1 Chapter</button>
                 ${manga.favorite ? `
                 <div class="absolute -top-1 -left-1 w-4 h-4 bg-green-500 rounded-full items-center justify-center flex">
                     <span id="fav" data-index="${index}" class="text-white text-[0.5rem] font-bold">★</span>
@@ -59,6 +60,7 @@ document.getElementById('cancelButton').addEventListener('click', function() {
     formContainer.style.display = 'none';
 });
 
+
 document.getElementById('chapterForm').addEventListener('submit', async function(event) {
     event.preventDefault();
 
@@ -80,15 +82,10 @@ document.getElementById('chapterForm').addEventListener('submit', async function
         // Guardar la nueva lista ordenada por fecha
         mangaList.sort((a, b) => new Date(a.dayAdded) - new Date(b.dayAdded));
 
-        chrome.storage.local.set({ mangaList: mangaList }, function() {
-            console.log('Manga list updated and saved to local storage.');
+        saveManga();
             
-            // Actualizar la UI con el nuevo manga
-            cargarMangas(mangaList);
-            
-            // Limpiar los campos del formulario
-            limpiarCamposFormulario();
-        });
+        // Limpiar los campos del formulario
+         limpiarCamposFormulario();
     });
 
     document.getElementById('formContainer').style.display = 'none';
@@ -100,4 +97,30 @@ function limpiarCamposFormulario() {
     document.getElementById('link').value = '';
     document.getElementById('readChapters').value = '';
     document.getElementById('totalChapters').value = '';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Handler para el evento click
+    function handleAddCapClick() {
+        const index = this.getAttribute('data-index');
+        mangaList[index].totalChapters = parseInt(mangaList[index].totalChapters, 10) + 1;
+        mangaList[index].readChapters = parseInt(mangaList[index].readChapters, 10) + 1;
+        saveManga();
+    }
+
+    // Añadir los event listeners iniciales
+    addEventListeners('button#addCap', 'click', handleAddCapClick);
+
+    // Observar cambios en el DOM y volver a añadir los event listeners si se añaden nuevos botones
+    observeDOM(() => {
+        addEventListeners('button#addCap', 'click', handleAddCapClick);
+    });
+});
+
+function saveManga(){
+    chrome.storage.local.set({ mangaList: mangaList }, function() {
+        console.log('Manga list updated and saved to local storage.');
+        
+        // Actualizar la UI con lo guardado
+        cargarMangas(mangaList);})
 }

@@ -30,9 +30,7 @@ document.getElementById('editForm').addEventListener('submit', function(event){
            totalChapters: totalChapters
         };
         cargarMangas(mangaList);
-        chrome.storage.local.set({ mangaList: mangaList }, function() {
-            console.log('Manga list updated and saved to local storage.');
-        })
+        saveManga();
         document.getElementById("editFormContainer").style.display = "none";
     } else {
         alert("Todos los campos son necesarios y el número de capítulos debe ser un número válido.");
