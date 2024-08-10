@@ -12,8 +12,8 @@ Extension to bookmark mangas you like.
 7. [ ] **Add a "read random" button.**
 8. [ ] **Add a "+1 chapter button" button.**
 9. [x] **Add a button to the search bar to clear it (for when using only the mouse).**
-10. [x] **Implement a button to add chapters one by one
-11. [ ] (discussion needed) and fix the buttons for deleting manga, favoriting with a star, and editing.**
+10. [x] **Implement a button to add chapters one by one**
+11. [ ] **(discussion needed) and fix the buttons for deleting manga, favoriting with a star, and editing.**
 
 ## Next Version
 
