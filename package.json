@@ -1,8 +1,5 @@
 {
   "devDependencies": {
     "tailwindcss": "^3.4.7"
-  },
-  "dependencies": {
-    "googleapis": "^140.0.1"
   }
 }
