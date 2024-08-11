@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const addButton = document.getElementById('addButton');
     const formContainer = document.getElementById('editFormContainer');
     const editForm = document.getElementById('editForm');
-
+    var lastRead = new Date().toLocaleDateString('en-GB');
     let selectedBookmarks = [];
     let currentBookmarkIndex = 0;
 
@@ -74,19 +74,21 @@ document.addEventListener('DOMContentLoaded', () => {
             formContainer.style.display = 'none';
             return;
         }
-
+    
         const bookmark = selectedBookmarks[index];
         formContainer.style.display = 'flex';
-
+    
         document.getElementById('editTitle').value = bookmark.title;
         document.getElementById('editLink').value = bookmark.url;
         document.getElementById('editReadChapters').value = '';
-            document.getElementById('editImage').value = '';
+        document.getElementById('editImage').value = '';
+        document.getElementById('editFavorite').checked = false; // Mostrar el estado del checkbox
     }
+    
 
     editForm.addEventListener('submit', function(event) {
         event.preventDefault();
-
+    
         const bookmarkform = {
             image: document.getElementById('editImage').value,
             title: document.getElementById('editTitle').value,
@@ -94,9 +96,9 @@ document.addEventListener('DOMContentLoaded', () => {
             readChapters: document.getElementById('editReadChapters').value,
             dayAdded: selectedBookmarks[currentBookmarkIndex].dateAdded,
             lastRead: lastRead,
-            favorite: false
+            favorite: document.getElementById('editFavorite').checked
         };
-
+    
         chrome.storage.local.get('mangaList', function(result) {
             const mangaList = result.mangaList || [];
             mangaList.push(bookmarkform);
@@ -106,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     });
-
+    
     document.getElementById('cancelEdit').addEventListener('click', function() {
         formContainer.style.display = 'none';
     });

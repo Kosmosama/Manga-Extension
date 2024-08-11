@@ -72,7 +72,7 @@ document.getElementById('chapterForm').addEventListener('submit', async function
         readChapters: document.getElementById('readChapters').value,
         dayAdded: dayAdded,
         lastRead: lastRead,
-        favorite: false
+        favorite: document.getElementById('favorite').checked // Obtener el estado del checkbox
     };
 
     // Obtener la lista de mangas guardada anteriormente

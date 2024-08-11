@@ -1,5 +1,6 @@
 let favorite = false;
 let listenersAdded = false;
+let favObserver;
 
 function updateFavoriteUI(favo, isFavorite) {
     const parentDiv = favo.parentElement;
@@ -17,26 +18,30 @@ function updateFavoriteUI(favo, isFavorite) {
 function changeFavorite(favo) {
     const index = favo.getAttribute('data-index');
 
-    chrome.storage.local.get('mangaList', function(result) {
-        const mangaList = result.mangaList || [];
-        if (mangaList[index]) {
-            const isFavorite = !mangaList[index].favorite;
-            mangaList[index].favorite = isFavorite;
+    if (mangaList[index]) {
+        const isFavorite = !mangaList[index].favorite;
+        mangaList[index].favorite = isFavorite;
 
-            updateFavoriteUI(favo, isFavorite);
-            
-            saveManga();
-        }
-    });
+        updateFavoriteUI(favo, isFavorite);
+
+        // Guarda mangaList después de modificarlo
+        saveManga();
+    } else {
+        console.log(`No manga found at index ${index}`);
+    }
 }
 
 function addClickEventToFavElements() {
     const favSpans = document.querySelectorAll('span#fav');
+
     favSpans.forEach(favo => {
-        favo.addEventListener('click', function() {
-            favorite = true;
-            changeFavorite(this);
-        });
+        if (!favo.hasAttribute('data-clicked')) { // Verifica si ya se ha agregado el evento
+            favo.addEventListener('click', function() {
+                favorite = true;
+                changeFavorite(this);
+            });
+            favo.setAttribute('data-clicked', 'true'); // Marca el elemento como procesado
+        }
     });
 }
 
@@ -44,11 +49,12 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!listenersAdded) {
         addClickEventToFavElements();
         listenersAdded = true;
+
+        // Configura el MutationObserver solo después de añadir los eventos de clic
+        favObserver = new MutationObserver(function(mutationsList, observer) {
+            addClickEventToFavElements();
+        });
+
+        favObserver.observe(document.body, { childList: true, subtree: true });
     }
-
-    const favObserver = new MutationObserver(function(mutationsList, observer) {
-        addClickEventToFavElements();
-    });
-
-    favObserver.observe(document.body, { childList: true, subtree: true });
 });
