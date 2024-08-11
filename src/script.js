@@ -1,6 +1,7 @@
 var mangaList = []; // Variable global para la lista de mangas
 var cargarMangas; // Variable global para la función cargarMangas
 var dayAdded = new Date().toLocaleDateString('en-GB');
+var lastRead = new Date().toLocaleDateString('en-GB');
 
 // Cargar la lista de mangas al iniciar la extensión
 recuperarMangas();
@@ -25,8 +26,8 @@ cargarMangas = function(mangaList) {
                 </div>
                 <div class="flex-grow">
                     <a class="text-xs font-semibold" href="${manga.link}" target="_blank">${manga.title}</a>
-                    <p class="text-xs text-gray-500" data-translate="chapters" data-read="${manga.readChapters}" data-total="${manga.totalChapters}">
-                        Capítulo ${manga.readChapters}/${manga.totalChapters}
+                    <p class="text-xs text-gray-500" data-translate="chapters" data-read="${manga.readChapters}">
+                        Capítulo ${manga.readChapters}
                     </p>
                 </div>
                 <button id="edit" data-index="${index}" data-translate="edit">Edit</button>
@@ -69,8 +70,8 @@ document.getElementById('chapterForm').addEventListener('submit', async function
         title: document.getElementById('title').value,
         link: document.getElementById('link').value,
         readChapters: document.getElementById('readChapters').value,
-        totalChapters: document.getElementById('totalChapters').value,
         dayAdded: dayAdded,
+        lastRead: lastRead,
         favorite: false
     };
 
@@ -97,7 +98,6 @@ function limpiarCamposFormulario() {
     document.getElementById('title').value = '';
     document.getElementById('link').value = '';
     document.getElementById('readChapters').value = '';
-    document.getElementById('totalChapters').value = '';
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -105,13 +105,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function handleAddCapClick() {
         const index = this.getAttribute('data-index');
         if (!random){
-        mangaList[index].totalChapters = parseInt(mangaList[index].totalChapters, 10) + 1;
         mangaList[index].readChapters = parseInt(mangaList[index].readChapters, 10) + 1;
     
         saveManga();
         cargarMangas(mangaList);
         }else{
-            mangaList[randomIndex].totalChapters = parseInt(mangaList[randomIndex].totalChapters, 10) + 1;
             mangaList[randomIndex].readChapters = parseInt(mangaList[randomIndex].readChapters, 10) + 1;
             saveManga();
             cargarMangas([mangaList[randomIndex]])

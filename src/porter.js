@@ -45,12 +45,12 @@ document.getElementById('import').addEventListener('change', function(event) {
 function validateMangaObject(obj) {
     const requiredKeys = [
         'dayAdded',
+        'lastRead',
         'favorite',
         'image',
         'link',
         'readChapters',
         'title',
-        'totalChapters'
     ];
 
     return requiredKeys.every(key => obj.hasOwnProperty(key));

@@ -81,8 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('editTitle').value = bookmark.title;
         document.getElementById('editLink').value = bookmark.url;
         document.getElementById('editReadChapters').value = '';
-        document.getElementById('editTotalChapters').value = '';
-        document.getElementById('editImage').value = '';
+            document.getElementById('editImage').value = '';
     }
 
     editForm.addEventListener('submit', function(event) {
@@ -93,8 +92,8 @@ document.addEventListener('DOMContentLoaded', () => {
             title: document.getElementById('editTitle').value,
             link: document.getElementById('editLink').value,
             readChapters: document.getElementById('editReadChapters').value,
-            totalChapters: document.getElementById('editTotalChapters').value,
             dayAdded: selectedBookmarks[currentBookmarkIndex].dateAdded,
+            lastRead: lastRead,
             favorite: false
         };
 

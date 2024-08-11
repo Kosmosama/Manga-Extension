@@ -20,10 +20,8 @@ function changeLanguage(lang) {
                 element.placeholder = translations[lang][key];
             } else if (key === 'chapters') {
                 const read = element.getAttribute('data-read');
-                const total = element.getAttribute('data-total');
                 element.textContent = translations[lang][key]
                     .replace('{read}', read)
-                    .replace('{total}', total);
             } else {
                 element.textContent = translations[lang][key];
             }

@@ -27,14 +27,14 @@ function ordenarMangas(array, criterio, orden) {
             case 'alfabetico'://funca
                 comparison = a.title.localeCompare(b.title);
                 break;
-            case 'capitulos': //je
-                comparison = a.totalChapters - b.totalChapters;
+            case 'capitulos': //funca
+                comparison = a.readChapters - b.readChapters;
                 break;
-            case 'fechaAdicion': //no sé si funciona bien pq solo tengo como referencia lo q añadí hoy XD
+            case 'fechaAdicion': //funca
                 comparison = new Date(a.dayAdded) - new Date(b.dayAdded);
                 break;
-            case 'ultimaLectura': //to do
-                comparison = new Date(a.lastSeen) - new Date(b.lastSeen);
+            case 'ultimaLectura': //no sé si funciona bien pq solo tengo como referencia lo q añadí hoy XD
+                comparison = new Date(a.lastRead) - new Date(b.lastRead);
                 break;
         }
     
