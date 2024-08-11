@@ -26,12 +26,8 @@ document.getElementById('import').addEventListener('change', function(event) {
                     console.log('Imported mangas:', importedMangas);
                     console.log('Current mangas array:', mangaList);
                     mangaList.sort((a, b) => new Date(a.dayAdded) - new Date(b.dayAdded));
-                    chrome.storage.local.set({ mangaList: mangaList }, function() {
-                        console.log('Manga list updated and saved to local storage.');
-                        
-                        // Actualizar la UI con el nuevo manga
-                        cargarMangas(mangaList);
-                    })            
+                    saveManga();
+                    cargarMangas(mangaList);
                 } else {
                     console.error('The file does not contain a valid mangas array.');
                 }

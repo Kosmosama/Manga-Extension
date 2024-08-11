@@ -1,6 +1,11 @@
+let random = false;
+let randomIndex;
 document.getElementById('getRandomManga').addEventListener('click', () => {
-    const randomIndex = Math.floor(Math.random() * mangaList.length);
-    const randomManga = [mangaList[randomIndex]];
-
-    cargarMangas(randomManga);
+    randomIndex = Math.floor(Math.random() * mangaList.length);
+    random = true;
+    cargarMangas([mangaList[randomIndex]]);
+})
+document.getElementById('stopRandomManga').addEventListener('click', ()=>{
+    random = false;
+    cargarMangas(mangaList);
 })

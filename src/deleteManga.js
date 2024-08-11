@@ -23,11 +23,9 @@ function confirmDelete(index) {
 
 function eliminarManga(index) {
     mangaList.splice(index, 1);
-    chrome.storage.local.set({ mangaList: mangaList }, function() {
-        console.log('Manga list updated and saved to local storage.');
-        cargarMangas(mangaList);
-        addEventListeners("button[id=delete]", 'click', handleMangaDelete);
-    });
+    saveManga();
+    cargarMangas(mangaList);
+    addEventListeners("button[id=delete]", 'click', handleMangaDelete);
 }
 
 document.addEventListener('DOMContentLoaded', function() {

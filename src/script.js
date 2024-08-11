@@ -83,6 +83,7 @@ document.getElementById('chapterForm').addEventListener('submit', async function
         mangaList.sort((a, b) => new Date(a.dayAdded) - new Date(b.dayAdded));
 
         saveManga();
+        cargarMangas(mangaList);
             
         // Limpiar los campos del formulario
          limpiarCamposFormulario();
@@ -103,9 +104,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // Handler para el evento click
     function handleAddCapClick() {
         const index = this.getAttribute('data-index');
+        if (!random){
         mangaList[index].totalChapters = parseInt(mangaList[index].totalChapters, 10) + 1;
         mangaList[index].readChapters = parseInt(mangaList[index].readChapters, 10) + 1;
+    
         saveManga();
+        cargarMangas(mangaList);
+        }else{
+            mangaList[randomIndex].totalChapters = parseInt(mangaList[randomIndex].totalChapters, 10) + 1;
+            mangaList[randomIndex].readChapters = parseInt(mangaList[randomIndex].readChapters, 10) + 1;
+            saveManga();
+            cargarMangas([mangaList[randomIndex]])
+        }
     }
 
     // Añadir los event listeners iniciales
@@ -120,7 +130,5 @@ document.addEventListener('DOMContentLoaded', () => {
 function saveManga(){
     chrome.storage.local.set({ mangaList: mangaList }, function() {
         console.log('Manga list updated and saved to local storage.');
-        
-        // Actualizar la UI con lo guardado
-        cargarMangas(mangaList);})
+        })
 }
