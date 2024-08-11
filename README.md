@@ -9,8 +9,8 @@ Extension to bookmark mangas you like.
 4. [x] **Add an export/import feature for the app.**
 5. [ ] **Set the link icon as the default image if no image is provided or found.**
 6. [ ] **Add a "completed" status.**
-7. [ ] **Add a "read random" button.**
-8. [ ] **Add a "+1 chapter button" button.**
+7. [x] **Add a "read random" button.**
+8. [x] **Add a "+1 chapter button" button.**
 9. [x] **Add a button to the search bar to clear it (for when using only the mouse).**
 10. [x] **Implement a button to add chapters one by one**
 11. [ ] **(discussion needed) and fix the buttons for deleting manga, favoriting with a star, and editing.**
