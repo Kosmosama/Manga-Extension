@@ -16,15 +16,45 @@ document.getElementById('add-manga-button').onclick = function() {
 
 function anadirManga(nombre, link, linkImagen, numCapitulos, favorito) {
     const fechaActual = new Date().toISOString();
-    const nuevoManga = {
-        nombre: nombre,
-        link: link,
-        linkImagen: linkImagen,
-        numCapitulos: numCapitulos,
-        favorito: favorito,
-        fechaAdicion: fechaActual,
-        ultimaLectura: fechaActual
-    };
-    mangas.push(nuevoManga);
-    actualizarLista();
+
+    // Function to check if the image exists
+    function checkImageExists(url, callback) {
+        const img = new Image();
+        img.onload = () => callback(true);
+        img.onerror = () => callback(false);
+        img.src = url;
+    }
+
+    // Fallback logic
+    checkImageExists(linkImagen, function(imageExists) {
+        if (!imageExists) {
+            const linkIcon = link + "/favicon.ico";  // Assuming the icon is at this path
+            checkImageExists(linkIcon, function(iconExists) {
+                if (!iconExists) {
+                    linkImagen = "./notfoundicon.jpg";
+                } else {
+                    linkImagen = linkIcon;
+                }
+                // After determining the correct image, add the manga
+                addMangaToList();
+            });
+        } else {
+            // If the original image exists, add the manga
+            addMangaToList();
+        }
+    });
+
+    function addMangaToList() {
+        const nuevoManga = {
+            nombre: nombre,
+            link: link,
+            linkImagen: linkImagen,
+            numCapitulos: numCapitulos,
+            favorito: favorito,
+            fechaAdicion: fechaActual,
+            ultimaLectura: fechaActual
+        };
+        mangas.push(nuevoManga);
+        actualizarLista();
+    }
 }
