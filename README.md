@@ -7,7 +7,7 @@ Extension to bookmark mangas you like.
 2. [ ] **Style the main page with CSS.**
 3. [ ] **Style the import page with CSS.**
 4. [x] **Add an export/import feature for the app.**
-5. [ ] **Set the link icon as the default image if no image is provided or found.**
+5. [x] **Set the link icon as the default image if no image is provided or found.**
 6. [ ] **Add a "completed" status.**
 7. [x] **Add a "read random" button.**
 8. [x] **Add a "+1 chapter button" button.**
