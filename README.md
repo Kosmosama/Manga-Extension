@@ -1,6 +1,9 @@
 # MangaExtension
 Extension to bookmark mangas you like.
 
+# Fast file merger
+[Visit File Merger](https://kosmosama.space/filemerger/)
+
 ## TO-DO
 
 1. [ ] **Refactor the code, applying the best practices possible.**
