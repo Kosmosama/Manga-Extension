@@ -18,8 +18,8 @@ cargarMangas = function(mangaList) {
     var mangaListContainer = document.getElementById('mangaListContainer');
     mangaListContainer.innerHTML = ''; // Limpiar el contenedor antes de agregar nuevos elementos
     
-    mangaList.forEach(function(manga, index) {
-        var mangaItemHTML = `
+    mangaListContainer.innerHTML = mangaList.map(function(manga, index) {
+        return `
             <div class="relative flex items-center bg-white rounded-full shadow-md p-2 pr-3 w-full mb-2 group">
                 <div class="w-8 h-8 rounded-full overflow-hidden mr-2">
                     <img src="${manga.image}" alt="Portada" class="w-full h-full object-cover">
@@ -41,9 +41,7 @@ cargarMangas = function(mangaList) {
                     <span id="fav" data-index="${index}" class="text-white text-[0.5rem] font-bold">★</span>
                 </div> `}
             </div>`;
-    
-        mangaListContainer.innerHTML += mangaItemHTML;
-    });
+    }).join(''); // Unir todos los elementos generados en una sola cadena
     
     changeLanguage(currentLanguage);
     // Añadir eventos de clic a los elementos span#fav después de cargar la lista
