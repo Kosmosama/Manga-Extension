@@ -86,7 +86,7 @@ document.getElementById('chapterForm').addEventListener('submit', async function
                 const linkIcon = link + "/favicon.ico";  // Assuming the icon is at this path
                 checkImageExists(linkIcon, function(iconExists) {
                     if (!iconExists) {
-                        image = "../public/Logos/icon.jpg";
+                        image = "../public/logos/icon.png";
                     } else {
                         image = linkIcon;
                     }

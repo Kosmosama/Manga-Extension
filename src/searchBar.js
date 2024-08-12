@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
         resultados = mangaList.filter(manga => manga.title.toLowerCase().includes(query));
         cargarMangas(resultados);
 
-        if (resultados == null || resultados == undefined){
+        if (resultados.length == mangaList.length){
             isSearch = false;
         }
     });
