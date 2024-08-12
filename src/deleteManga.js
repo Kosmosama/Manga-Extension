@@ -22,9 +22,41 @@ function confirmDelete(index) {
 }
 
 function eliminarManga(index) {
-    mangaList.splice(index, 1);
-    saveManga();
-    cargarMangas(mangaList);
+    if (isSearch) {
+        // Obtener el título del manga que se está eliminando de `resultados`
+        const mangaTitle = resultados[index].title;
+
+        // Eliminar de `resultados`
+        resultados.splice(index, 1);
+
+        // Encontrar y eliminar el manga correspondiente en `mangaList`
+        const mangaIndexInMangaList = mangaList.findIndex(manga => manga.title === mangaTitle);
+        if (mangaIndexInMangaList !== -1) {
+            mangaList.splice(mangaIndexInMangaList, 1);
+        }
+        
+        // Guardar y recargar `resultados`
+        saveManga();
+        cargarMangas(mangaList);
+        isSearch = false;
+    } else if (random){
+         // Obtener el título del manga que se está eliminando de `resultados`
+         const mangaTitle = mangaList[randomIndex].title;
+
+         // Eliminar de `resultados`
+         mangaList.splice(randomIndex, 1);
+         
+         // Guardar y recargar `resultados`
+         saveManga();
+         cargarMangas(mangaList);
+         random = false;
+    } else {
+        // Eliminar directamente de `mangaList` si no estás en modo de búsqueda
+        mangaList.splice(index, 1);
+        saveManga();
+        cargarMangas(mangaList);
+    }
+
     addEventListeners("button[id=delete]", 'click', handleMangaDelete);
 }
 

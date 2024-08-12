@@ -144,15 +144,23 @@ document.addEventListener('DOMContentLoaded', () => {
     // Handler para el evento click
     function handleAddCapClick() {
         const index = this.getAttribute('data-index');
-        if (!random){
-        mangaList[index].readChapters = parseInt(mangaList[index].readChapters, 10) + 1;
-    
-        saveManga();
-        cargarMangas(mangaList);
-        }else{
-            mangaList[randomIndex].readChapters = parseInt(mangaList[randomIndex].readChapters, 10) + 1;
+        if (random){
+       
+        mangaList[randomIndex].readChapters = parseInt(mangaList[randomIndex].readChapters, 10) + 1;
             saveManga();
             cargarMangas([mangaList[randomIndex]])
+        }else if (isSearch) {
+            const mangaIndexInMangaList = mangaList.findIndex(manga => manga.title === resultados[index].title);
+            if (mangaIndexInMangaList !== -1) {
+                mangaList[mangaIndexInMangaList].readChapters = parseInt(resultados[index].readChapters, 10) + 1;
+                saveManga();
+                cargarMangas(resultados);
+            }
+        }else{
+            mangaList[index].readChapters = parseInt(mangaList[index].readChapters, 10) + 1;
+    
+            saveManga();
+            cargarMangas(mangaList);
         }
     }
 

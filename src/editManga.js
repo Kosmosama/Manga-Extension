@@ -3,8 +3,20 @@ let originalFavoriteStatus = null;
 let originalDayAdded = null;
 
 function openEditForm(index) {
+    console.log("openEditForm called with index:", index);
     editIndex = index;
-    const manga = mangaList[index];
+    let manga;
+
+    if (random) {
+        manga = mangaList[randomIndex];
+        console.log("Editing random manga:", manga);
+    } else if (isSearch) {
+        manga = resultados[index];
+        console.log("Editing search result manga:", manga);
+    } else {
+        manga = mangaList[index];
+        console.log("Editing mangaList manga:", manga);
+    }
 
     originalDayAdded = manga.dayAdded;
     originalFavoriteStatus = manga.favorite;
@@ -38,7 +50,6 @@ document.getElementById('chapterForm').addEventListener('submit', async function
     });
 
     if (title && link && !isNaN(readChapters)) {
-        // Function to check if the image exists
         function checkImageExists(url, callback) {
             const img = new Image();
             img.onload = () => callback(true);
@@ -46,23 +57,18 @@ document.getElementById('chapterForm').addEventListener('submit', async function
             img.src = url;
         }
 
-        // Fallback logic
         checkImageExists(image, function(imageExists) {
-
             if (!imageExists) {
-                const linkIcon = link + "/favicon.ico";  // Assuming the icon is at this path
+                const linkIcon = link + "/favicon.ico";
                 checkImageExists(linkIcon, function(iconExists) {
-
                     if (!iconExists) {
                         image = "../public/logos/icon.png";
                     } else {
                         image = linkIcon;
                     }
-                    // After determining the correct image, add the manga
                     addMangaToList();
                 });
             } else {
-                // If the original image exists, add the manga
                 addMangaToList();
             }
         });
@@ -88,18 +94,15 @@ document.getElementById('chapterForm').addEventListener('submit', async function
                 favorite: favorite
             };
 
-            // Obtener la lista de mangas guardada anteriormente
             chrome.storage.local.get('mangaList', function(result) {
                 mangaList = result.mangaList || [];
                 mangaList.push(formMangaValues);
 
-                // Guardar la nueva lista ordenada por fecha
                 mangaList.sort((a, b) => new Date(a.dayAdded) - new Date(b.dayAdded));
 
                 saveManga();
                 cargarMangas(mangaList);
-                
-                // Limpiar los campos del formulario
+
                 limpiarCamposFormulario();
             });
 
@@ -110,17 +113,68 @@ document.getElementById('chapterForm').addEventListener('submit', async function
     }
 });
 
+document.getElementById("saveEdit").onclick = function() {
+    if (editIndex !== -1) {
+        console.log("Saving edits for index:", editIndex);
+        let manga;
+
+        if (random) {
+            manga = mangaList[randomIndex];
+            console.log("Saving edits to random manga:", manga);
+        } else if (isSearch) {
+            manga = resultados[editIndex];
+            console.log("Saving edits to search result manga:", manga);
+        } else {
+            manga = mangaList[editIndex];
+            console.log("Saving edits to mangaList manga:", manga);
+        }
+
+        manga.title = document.getElementById("editTitle").value;
+        manga.image = document.getElementById("editImage").value;
+        manga.link = document.getElementById("editLink").value;
+        manga.readChapters = parseInt(document.getElementById("editReadChapters").value, 10);
+        manga.favorite = document.getElementById("editFavorite").checked;
+        manga.dayAdded = originalDayAdded;
+
+        console.log("Updated manga details:", manga);
+
+        saveManga();
+        if (random) {
+            cargarMangas([mangaList[randomIndex]]);
+        } else if (isSearch) {
+            cargarMangas(resultados);
+        } else {
+            cargarMangas(mangaList);
+        }
+
+        document.getElementById("editFormContainer").style.display = "none";
+    }
+};
+
 document.getElementById("cancelEdit").onclick = function() {
+    console.log("Cancel edit");
     document.getElementById("editFormContainer").style.display = "none";
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    addEventListeners("button[id=edit]", 'click', function() {
-        openEditForm(this.getAttribute('data-index'));
-    });
-    observeDOM(function() {
-        addEventListeners("button[id=edit]", 'click', function() {
-            openEditForm(this.getAttribute('data-index'));
+    console.log("DOMContentLoaded event fired");
+    
+    // Añadir event listeners solo una vez
+    function addEditEventListeners() {
+        const editButtons = document.querySelectorAll("button[id=edit]");
+        editButtons.forEach(button => {
+            button.removeEventListener('click', handleEditClick); // Eliminar listeners existentes
+            button.addEventListener('click', handleEditClick);
         });
+    }
+
+    function handleEditClick(event) {
+        openEditForm(this.getAttribute('data-index'));
+    }
+
+    addEditEventListeners();
+
+    observeDOM(function() {
+        addEditEventListeners();
     });
 });
