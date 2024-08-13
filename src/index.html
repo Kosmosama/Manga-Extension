@@ -25,7 +25,7 @@
                     <img src="../public/icons/settings.svg" class="h-8 w-8 mt-1 ml-1">
                 </button>
             </div>
-            <h1 class="mr-36 ml-auto pt-2 text-base font-semibold" data-translate="mangaLibrary">Manga Library</h1>
+            <h1 class="mr-36 ml-auto pt-2 text-base font-semibold" data-translate-key="mangaLibrary">Manga Library</h1>
         </header>
         <nav class="flex flex-row align-middle h-10 px-2 py-1 relative">
             <button id="menuBtn" class="mr-2 relative">
@@ -43,11 +43,11 @@
                 <div class="mb-2">
                     <label for="sortOption" class="block text-sm font-medium text-gray-700">Ordenar por:</label>
                     <select id="sortOption" class="h-8 w-full border rounded-md border-gray-300 focus:outline-none focus:border-gray-400 px-2">
-                        <option value="favoritos" data-translate="favoritesFirst">Favoritos primero</option>
-                        <option value="alfabetico" data-translate="alphabetically">Alfabéticamente</option>
-                        <option value="capitulos" data-translate="chapterCount">Número de capítulos leídos</option>
-                        <option value="fechaAdicion" data-translate="dateAdded">Fecha de adición</option>
-                        <option value="ultimaLectura" data-translate="lastRead">Última lectura</option>
+                        <option value="favoritos" data-translate-key="favoritesFirst">Favoritos primero</option>
+                        <option value="alfabetico" data-translate-key="alphabetically">Alfabéticamente</option>
+                        <option value="capitulos" data-translate-key="chapterCount">Número de capítulos leídos</option>
+                        <option value="fechaAdicion" data-translate-key="dateAdded">Fecha de adición</option>
+                        <option value="ultimaLectura" data-translate-key="lastRead">Última lectura</option>
                     </select>
                 </div>
                 <div class="mb-2">
@@ -57,8 +57,8 @@
                 <div>
                     <label for="sortOrder" class="block text-sm font-medium text-gray-700">Orden:</label>
                     <select id="sortOrder" class="h-8 w-full border rounded-md border-gray-300 focus:outline-none focus:border-gray-400 px-2">
-                        <option value="ascendente" data-translate="ascending">Ascendente</option>
-                        <option value="descendente" data-translate="descending">Descendente</option>
+                        <option value="ascendente" data-translate-key="ascending">Ascendente</option>
+                        <option value="descendente" data-translate-key="descending">Descendente</option>
                     </select>
                 </div>
             </div>
@@ -79,14 +79,14 @@
     <!-- Formulario de Cargar Manga -->
     <div id="formContainer" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
         <div class="bg-white rounded-lg p-6 w-80">
-            <h2 class="text-lg font-semibold mb-4" data-translate="loadManga">Cargar Manga</h2>
+            <h2 class="text-lg font-semibold mb-4" data-translate-key="loadManga">Cargar Manga</h2>
             <form id="chapterForm">
                 <div class="mb-4">
-                    <label for="image" class="block text-sm font-medium text-gray-700" data-translate="imageLabel">Imagen (opcional, solo links de imgur)</label>
+                    <label for="image" class="block text-sm font-medium text-gray-700" data-translate-key="imageLabel">Imagen (opcional, solo links de imgur)</label>
                     <input type="text" id="image" name="image" placeholder="Ingrese la URL de la imagen" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50">
                 </div>
                 <div class="mb-4">
-                    <label for="title" class="block text-sm font-medium text-gray-700" data-translate="titleLabel">Título</label>
+                    <label for="title" class="block text-sm font-medium text-gray-700" data-translate-key="titleLabel">Título</label>
                     <input type="text" id="title" name="title" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50" required>
                 </div>
                 <div class="mb-4">
@@ -94,7 +94,7 @@
                     <input type="text" id="link" name="link" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50" required>
                 </div>
                 <div class="mb-4">
-                    <label for="readChapters" class="block text-sm font-medium text-gray-700" data-translate="readChaptersLabel">Capítulos leídos</label>
+                    <label for="readChapters" class="block text-sm font-medium text-gray-700" data-translate-key="readChaptersLabel">Capítulos leídos</label>
                     <input type="number" id="readChapters" name="readChapters" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50" required>
                 </div>
                 <div class="mb-4">
@@ -102,8 +102,8 @@
                     <input type="checkbox" id="favorite" name="favorite" class="mt-1 block">
                 </div>
                 <div class="flex justify-end">
-                    <button type="button" id="cancelButton" class="mr-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-1 px-4 rounded" data-translate="cancel">Cancelar</button>
-                    <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 px-4 rounded" data-translate="save">Guardar</button>
+                    <button type="button" id="cancelButton" class="mr-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-1 px-4 rounded" data-translate-key="cancel">Cancelar</button>
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 px-4 rounded" data-translate-key="save">Guardar</button>
                 </div>
             </form>
         </div>
@@ -112,14 +112,14 @@
     <!-- Formulario de Edit Manga -->
     <div id="editFormContainer" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center" style="display: none;">
         <div class="bg-white rounded-lg p-6 w-80">
-            <h2 class="text-lg font-semibold mb-4" data-translate="editManga">Editar Manga</h2>
+            <h2 class="text-lg font-semibold mb-4" data-translate-key="editManga">Editar Manga</h2>
             <form id="editForm">
                 <div class="mb-4">
-                    <label for="image" class="block text-sm font-medium text-gray-700" data-translate="imageLabel">Imagen (opcional, solo links de imgur)</label>
+                    <label for="image" class="block text-sm font-medium text-gray-700" data-translate-key="imageLabel">Imagen (opcional, solo links de imgur)</label>
                     <input type="text" id="editImage" name="image" placeholder="Ingrese la URL de la imagen" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50">
                 </div>
                 <div class="mb-4">
-                    <label for="title" class="block text-sm font-medium text-gray-700" data-translate="titleLabel">Título</label>
+                    <label for="title" class="block text-sm font-medium text-gray-700" data-translate-key="titleLabel">Título</label>
                     <input type="text" id="editTitle" name="title" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50" required>
                 </div>
                 <div class="mb-4">
@@ -127,7 +127,7 @@
                     <input type="text" id="editLink" name="edit" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50" required>
                 </div>
                 <div class="mb-4">
-                    <label for="readChapters" class="block text-sm font-medium text-gray-700" data-translate="readChaptersLabel">Capítulos leídos</label>
+                    <label for="readChapters" class="block text-sm font-medium text-gray-700" data-translate-key="readChaptersLabel">Capítulos leídos</label>
                     <input type="number" id="editReadChapters" name="readChapters" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50" required>
                 </div>
                 <div class="mb-4">
@@ -135,8 +135,8 @@
                     <input type="checkbox" id="editFavorite" name="favorite" class="mt-1 block">
                 </div>
                 <div class="flex justify-end">
-                    <button type="button" id="cancelEdit" class="mr-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-1 px-4 rounded" data-translate="cancel">Cancelar</button>
-                    <button type="submit" id="saveEdit" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 px-4 rounded" data-translate="save">Guardar</button>
+                    <button type="button" id="cancelEdit" class="mr-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-1 px-4 rounded" data-translate-key="cancel">Cancelar</button>
+                    <button type="submit" id="saveEdit" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 px-4 rounded" data-translate-key="save">Guardar</button>
                 </div>
 
             </form>
@@ -145,25 +145,25 @@
 <!-- Ventana de Confirmación -->
     <div id="confirmationDialog" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center" style="display: none;">
         <div class="bg-white rounded-lg shadow-lg w-96 p-6">
-            <h2 class="text-lg font-semibold mb-4" data-translate="confirmation">Confirmación</h2>
-            <p class="mb-4" data-translate="confirmDelete">¿Estás seguro de que deseas eliminar este manga?</p>
+            <h2 class="text-lg font-semibold mb-4" data-translate-key="confirmation">Confirmación</h2>
+            <p class="mb-4" data-translate-key="confirmDelete">¿Estás seguro de que deseas eliminar este manga?</p>
             <div class="flex justify-end">
-                <button id="cancelConfirm" class="mr-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-1 px-4 rounded" data-translate="cancel">Cancelar</button>
-                <button id="confirm" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-4 rounded" data-translate="delete">Eliminar</button>
+                <button id="cancelConfirm" class="mr-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-1 px-4 rounded" data-translate-key="cancel">Cancelar</button>
+                <button id="confirm" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-4 rounded" data-translate-key="delete">Eliminar</button>
             </div>
         </div>
     </div>
         <!--Settings-->
         <section id="settings" class="hidden absolute top-0 left-0 w-96 h-96 bg-gray-600 text-white p-4">
             <div class="flex justify-between items-center mb-4">
-                <h2 class="text-lg font-semibold" data-translate="settings">Settings</h2>
+                <h2 class="text-lg font-semibold" data-translate-key="settings">Settings</h2>
                 <button id="closeBtn">
                     <img src="../public/icons/x.svg" class="h-5 w-5">
                 </button>
             </div>
             <div class="flex flex-col space-y-2 bg-gray-500 p-3 rounded-md">
                 <div class="flex items-center">
-                    <label for="languageSelect" class="text-gray-200 mr-2 text-xs" data-translate="language">Idioma:</label>
+                    <label for="languageSelect" class="text-gray-200 mr-2 text-xs" data-translate-key="language">Idioma:</label>
                     <select id="languageSelect" class="bg-gray-700 text-white text-xs rounded">
                         <option value="es">Español</option>
                         <option value="en">English</option>
@@ -176,7 +176,7 @@
                     </select>
                 </div>
                 <div class="flex items-center">
-                    <label class="text-gray-200 mr-2 text-xs" data-translate="settingsOption1">No tengo idea de qué poner en settings xd</label>
+                    <label class="text-gray-200 mr-2 text-xs" data-translate-key="settingsOption1">No tengo idea de qué poner en settings xd</label>
                     <input type="checkbox" class="h-4 w-4">
                     <input id="cajita" type="checkbox" class="h-4 w-4">
                 </div>
@@ -184,12 +184,12 @@
                     <a class="text-gray-200 mr-2 text-xs" id="importBookmarks" href="bookmarksDemo.html">Importar Bookmarks</a>
                 </div>
                 <div class="flex items-center">
-                    <label class="text-gray-200 mr-2 text-xs" data-translate="settingsOption2">Cosas</label>
+                    <label class="text-gray-200 mr-2 text-xs" data-translate-key="settingsOption2">Cosas</label>
                     <input type="checkbox" class="h-4 w-4">
                     <input id="cajita" type="checkbox" class="h-4 w-4">
                 </div>
                 <div class="flex items-center">
-                    <label class="text-gray-200 mr-2 text-xs" data-translate="settingsOption3">Feliz</label>
+                    <label class="text-gray-200 mr-2 text-xs" data-translate-key="settingsOption3">Feliz</label>
                     <input type="checkbox" class="h-4 w-4">
                     <input id="cajita" type="checkbox" class="h-4 w-4">
                 </div>
@@ -198,11 +198,11 @@
                     <button id="export">Export</button>
                 </div>
                 <div class="flex items-center">
-                    <label class="text-gray-200 mr-2 text-xs" data-translate="settingsOption4">Sexo</label>
-                    <label class="text-gray-200 mr-2 text-xs" data-translate="settingsOption4Yes">Si</label>
+                    <label class="text-gray-200 mr-2 text-xs" data-translate-key="settingsOption4">Sexo</label>
+                    <label class="text-gray-200 mr-2 text-xs" data-translate-key="settingsOption4Yes">Si</label>
                     <input type="checkbox" class="h-4 w-4">
                     <input id="cajita" type="checkbox" class="h-4 w-4">
-                    <label class="text-gray-200 mr-2 text-xs" data-translate="settingsOption4YesPlease">Si, por favor</label>
+                    <label class="text-gray-200 mr-2 text-xs" data-translate-key="settingsOption4YesPlease">Si, por favor</label>
                     <input type="checkbox" class="h-4 w-4">
                     <input id="cajita" type="checkbox" class="h-4 w-4">
                 </div>
@@ -219,7 +219,7 @@
     <script src="deleteManga.js"></script>
     <script src="filter.js"></script>
     <script src="fav.js"></script>
-    <script src="language.js"></script>
+    <script src="translations.js"></script>
     <script src="menuFilter.js"></script>
     <script src="getRandom.js"></script>
 </body>
