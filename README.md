@@ -11,7 +11,6 @@ Extension to bookmark mangas you like.
 3. [ ] **Style the import page with CSS.**
 4. [x] **Add an export/import feature for the app.**
 5. [x] **Set the link icon as the default image if no image is provided or found.**
-6. [ ] **Add a "completed" status.**
 7. [x] **Add a "read random" button.**
 8. [x] **Add a "+1 chapter button" button.**
 9. [x] **Add a button to the search bar to clear it (for when using only the mouse).**
@@ -20,7 +19,7 @@ Extension to bookmark mangas you like.
 
 ## Next Version
 
-1. **Add "genres" to filter and categorize mangas (e.g., manhua, manhwa, etc). Consider allowing users to create genres.**
+1. **Add "genres" to filter and categorize mangas (e.g., manhua, manhwa, etc). Consider allowing users to create genres. + add a completed status**
 2. **Add synchronization with Google Drive.**
 
 ## Proposals
