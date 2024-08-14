@@ -17,7 +17,8 @@ Extension to bookmark mangas you like.
 10. [x] **Implement a button to add chapters one by one**
 11. [ ] **Implement translation keys for bookmarks.html and remaining keys for the index** 
 12. [ ] **Implement translations.js in for the bookmarks.html**
-12. [ ] **(discussion needed) and fix the buttons for deleting manga, favoriting with a star, and editing.**
+13. [ ] **(discussion needed) and fix the buttons for deleting manga, favoriting with a star, and editing.**
+14. [ ] **Implement properly translation on the setting and IMPORTANT on the generated cards.**
 
 ## Next Version
 
