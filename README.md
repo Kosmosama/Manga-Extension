@@ -30,5 +30,6 @@ Extension to bookmark mangas you like.
    *There will be a setting in the options tab to enable/disable this feature if it bothers some users.
    It will be disabled by default.*
    *-Kosmo*
-2. **Will you marry me?**
-   *-Keys4Ever-*
+2. *Will you marry me?*
+   
+   *-Keys4Ever*
