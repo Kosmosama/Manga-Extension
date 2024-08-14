@@ -26,13 +26,13 @@ cargarMangas = function(mangaList) {
                 </div>
                 <div class="flex-grow">
                     <a class="text-xs font-semibold" href="${manga.link}" target="_blank">${manga.title}</a>
-                    <p class="text-xs text-gray-500" data-translate="chapters" data-read="${manga.readChapters}">
+                    <p class="text-xs text-gray-500" data-translate-key="chapters" data-read="${manga.readChapters}">
                         Capítulo ${manga.readChapters}
                     </p>
                 </div>
-                <button id="edit" data-index="${index}" data-translate="edit">Edit</button>
-                <button id="delete" data-index="${index}" data-translate="delete">Delete</button>
-                <button id="addCap" data-index="${index}" data-translate="addCap">+1 Chapter</button>
+                <button id="edit" data-index="${index}" data-translate-key="edit">Edit</button>
+                <button id="delete" data-index="${index}" data-translate-key="delete">Delete</button>
+                <button id="addCap" data-index="${index}" data-translate-key="addCap">+1 Chapter</button>
                 ${manga.favorite ? `
                 <div class="absolute -top-1 -left-1 w-4 h-4 bg-green-500 rounded-full items-center justify-center flex">
                     <span id="fav" data-index="${index}" class="text-white text-[0.5rem] font-bold">★</span>
@@ -43,7 +43,6 @@ cargarMangas = function(mangaList) {
             </div>`;
     }).join(''); // Unir todos los elementos generados en una sola cadena
     
-    changeLanguage(currentLanguage);
     // Añadir eventos de clic a los elementos span#fav después de cargar la lista
     addClickEventToFavElements();
 };

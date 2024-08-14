@@ -21,8 +21,15 @@ function savePreferredLanguage(language) {
 function translatePage(language, translations) {
     document.querySelectorAll('[data-translate-key]').forEach(element => {
         const key = element.getAttribute('data-translate-key');
+        
         if (translations[language] && translations[language][key]) {
-            element.textContent = translations[language][key];
+            // Special case for 'chapters'
+            if (key === 'chapters' && element.hasAttribute('data-read')) {
+                const read = element.getAttribute('data-read');
+                element.textContent = translations[language][key].replace('{read}', read);
+            } else {
+                element.textContent = translations[language][key];
+            }
         } else if (translations['en'] && translations['en'][key]) {
             element.textContent = translations['en'][key];
         } else {

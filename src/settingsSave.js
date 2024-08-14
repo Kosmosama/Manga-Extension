@@ -34,7 +34,7 @@ function loadSettings() {
     // Cargar y aplicar la preferencia de idioma
     const savedLanguage = result.language || 'es';
     document.getElementById('languageSelect').value = savedLanguage;
-    changeLanguage(savedLanguage);
+
   });
 }
 // Llamar a loadSettings cuando la página se cargue.
