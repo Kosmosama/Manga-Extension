@@ -1,7 +1,7 @@
 # MangaExtension
 Extension to bookmark mangas you like.
 
-# Fast file merger
+# Very Fast file merger
 [Visit File Merger](https://kosmosama.space/filemerger/)
 
 ## TO-DO
@@ -15,8 +15,8 @@ Extension to bookmark mangas you like.
 8. [x] **Add a "+1 chapter button" button.**
 9. [x] **Add a button to the search bar to clear it (for when using only the mouse).**
 10. [x] **Implement a button to add chapters one by one**
-11. [ ] **Implement translation keys for bookmarks.html and remaining keys for the index**
-12. [ ] **(discussion needed) and fix the buttons for deleting manga, favoriting with a star, and editing.**
+11. [x] **Implement translation keys for bookmarks.html and remaining keys for the index**
+12. [ ] **fix the buttons for deleting manga, favoriting with a star, and editing. (discussion needed) **
 13. [x] **Implement properly translation on the setting and IMPORTANT on the generated cards.**
 
 ## Next Version
