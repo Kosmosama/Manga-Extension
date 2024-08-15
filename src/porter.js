@@ -1,6 +1,6 @@
-document.getElementById('export').addEventListener('click', exportar);
+document.getElementById('export').addEventListener('click', handleFileExport);
 
-function exportar() {
+function handleFileExport() {
     const date = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
     const filename = `mangas_${date}.json`;
     const json = JSON.stringify(mangaList, null, 2);
@@ -14,32 +14,36 @@ function exportar() {
     URL.revokeObjectURL(url);
 }
 
-document.getElementById('import').addEventListener('change', function(event) {
+document.getElementById('import').addEventListener('change', handleFileImport);
+
+function handleFileImport(event) {
     const file = event.target.files[0];
     if (file && file.name.endsWith('.json')) {
         const reader = new FileReader();
-        reader.onload = function(e) {
-            try {
-                const importedMangas = JSON.parse(e.target.result);
-                if (Array.isArray(importedMangas) && importedMangas.every(validateMangaObject)) {
-                    mangaList.push(...importedMangas);
-                    console.log('Imported mangas:', importedMangas);
-                    console.log('Current mangas array:', mangaList);
-                    mangaList.sort((a, b) => new Date(a.dayAdded) - new Date(b.dayAdded));
-                    saveManga();
-                    cargarMangas(mangaList);
-                } else {
-                    console.error('The file does not contain a valid mangas array.');
-                }
-            } catch (error) {
-                console.error('Error parsing JSON:', error);
-            }
-        };
+        reader.onload = handleFileLoad;
         reader.readAsText(file);
     } else {
         console.error('Please select a valid JSON file.');
     }
-});
+}
+
+function handleFileLoad(e) {
+    try {
+        const importedMangas = JSON.parse(e.target.result);
+        if (Array.isArray(importedMangas) && importedMangas.every(validateMangaObject)) {
+            mangaList.push(...importedMangas);
+            console.log('Imported mangas:', importedMangas);
+            console.log('Current mangas array:', mangaList);
+            mangaList.sort((a, b) => new Date(a.dayAdded) - new Date(b.dayAdded));
+            saveManga();
+            cargarMangas(mangaList);
+        } else {
+            console.error('The file does not contain a valid mangas array.');
+        }
+    } catch (error) {
+        console.error('Error parsing JSON:', error);
+    }
+}
 
 // Comprobation so each pushed manga has these keys
 function validateMangaObject(obj) {
