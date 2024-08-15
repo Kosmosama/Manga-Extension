@@ -41,13 +41,23 @@ function translatePage(language, translations) {
 // Initialize translation and event listeners
 function initializeTranslations(translations) {
     loadPreferredLanguage(translations).then((language) => {
+        // Guardar el idioma en una variable global para usarlo en otras funciones
+        window.language = language;
+        window.translations = translations;
+        
         translatePage(language, translations);
+
+        // Configurar el selector de idioma
         document.getElementById('languageSelect').value = language;
         document.getElementById('languageSelect').addEventListener('change', function() {
             const selectedLanguage = this.value;
             savePreferredLanguage(selectedLanguage);
+            window.language = selectedLanguage; // Actualizar la variable global
             translatePage(selectedLanguage, translations);
         });
+
+        // Cargar las tarjetas de mangas traducidas
+        cargarMangas(mangaList); // Supongo que mangaList ya está disponible
     });
 }
 

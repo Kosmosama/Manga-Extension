@@ -15,10 +15,9 @@ Extension to bookmark mangas you like.
 8. [x] **Add a "+1 chapter button" button.**
 9. [x] **Add a button to the search bar to clear it (for when using only the mouse).**
 10. [x] **Implement a button to add chapters one by one**
-11. [ ] **Implement translation keys for bookmarks.html and remaining keys for the index** 
-12. [ ] **Implement translations.js in for the bookmarks.html**
-13. [ ] **(discussion needed) and fix the buttons for deleting manga, favoriting with a star, and editing.**
-14. [ ] **Implement properly translation on the setting and IMPORTANT on the generated cards.**
+11. [ ] **Implement translation keys for bookmarks.html and remaining keys for the index**
+12. [ ] **(discussion needed) and fix the buttons for deleting manga, favoriting with a star, and editing.**
+13. [x] **Implement properly translation on the setting and IMPORTANT on the generated cards.**
 
 ## Next Version
 
@@ -32,5 +31,6 @@ Extension to bookmark mangas you like.
    It will be disabled by default.*
    *-Kosmo*
 2. *Will you marry me?*
-   
    *-Keys4Ever*
+3. *Yes.*
+   *-Kosmo*

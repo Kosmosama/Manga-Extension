@@ -27,21 +27,24 @@ cargarMangas = function(mangaList) {
                 <div class="flex-grow">
                     <a class="text-xs font-semibold" href="${manga.link}" target="_blank">${manga.title}</a>
                     <p class="text-xs text-gray-500" data-translate-key="chapters" data-read="${manga.readChapters}">
-                        Capítulo ${manga.readChapters}
+                        ${translations[language]['chapters'].replace('{read}', manga.readChapters)}
                     </p>
                 </div>
-                <button id="edit" data-index="${index}" data-translate-key="edit">Edit</button>
-                <button id="delete" data-index="${index}" data-translate-key="delete">Delete</button>
-                <button id="addCap" data-index="${index}" data-translate-key="addCap">+1 Chapter</button>
+                <button id="edit" data-index="${index}" data-translate-key="edit">${translations[language]['edit']}</button>
+                <button id="delete" data-index="${index}" data-translate-key="delete">${translations[language]['delete']}</button>
+                <button id="addCap" data-index="${index}" data-translate-key="addCap">${translations[language]['addCap']}</button>
                 ${manga.favorite ? `
                 <div class="absolute -top-1 -left-1 w-4 h-4 bg-green-500 rounded-full items-center justify-center flex">
                     <span id="fav" data-index="${index}" class="text-white text-[0.5rem] font-bold">★</span>
                 </div>` : `
                 <div class="absolute -top-1 -left-1 w-4 h-4 bg-green-500 rounded-full items-center justify-center hidden group-hover:flex">
                     <span id="fav" data-index="${index}" class="text-white text-[0.5rem] font-bold">★</span>
-                </div> `}
+                </div>`}
             </div>`;
-    }).join(''); // Unir todos los elementos generados en una sola cadena
+    }).join('');
+    
+    // Llamar a translatePage para traducir los elementos recién generados
+    translatePage(language, translations);
     
     // Añadir eventos de clic a los elementos span#fav después de cargar la lista
     addClickEventToFavElements();
