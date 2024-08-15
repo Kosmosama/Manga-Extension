@@ -41,7 +41,7 @@
                <!-- Dropdown menu -->
                <div id="dropdownMenu" class="absolute left-0 top-10 bg-white border border-gray-300 rounded-md shadow-lg p-4 hidden z-10">
                 <div class="mb-2">
-                    <label for="sortOption" class="block text-sm font-medium text-gray-700">Ordenar por:</label>
+                    <label for="sortOption" class="block text-sm font-medium text-gray-700" data-translate-key="orderBy">Ordenar por:</label>
                     <select id="sortOption" class="h-8 w-full border rounded-md border-gray-300 focus:outline-none focus:border-gray-400 px-2">
                         <option value="favoritos" data-translate-key="favoritesFirst">Favoritos primero</option>
                         <option value="alfabetico" data-translate-key="alphabetically">Alfabéticamente</option>
@@ -51,11 +51,11 @@
                     </select>
                 </div>
                 <div class="mb-2">
-                    <button id="getRandomManga">get random manga</button>
-                    <button id="stopRandomManga">Quit random manga</button>
+                    <button id="getRandomManga" data-translate-key="getRandom">get random manga</button>
+                    <button id="stopRandomManga" data-translate-key="quitRandom">Quit random manga</button>
                 </div>
                 <div>
-                    <label for="sortOrder" class="block text-sm font-medium text-gray-700">Orden:</label>
+                    <label for="sortOrder" class="block text-sm font-medium text-gray-700" data-translate-key="order">Orden:</label>
                     <select id="sortOrder" class="h-8 w-full border rounded-md border-gray-300 focus:outline-none focus:border-gray-400 px-2">
                         <option value="ascendente" data-translate-key="ascending">Ascendente</option>
                         <option value="descendente" data-translate-key="descending">Descendente</option>
@@ -90,7 +90,7 @@
                     <input type="text" id="title" name="title" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50" required>
                 </div>
                 <div class="mb-4">
-                    <label for="title" class="block text-sm font-medium text-gray-700">Link del manga</label>
+                    <label for="title" class="block text-sm font-medium text-gray-700" data-translate-key="formLinkLabel">Link del manga</label>
                     <input type="text" id="link" name="link" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50" required>
                 </div>
                 <div class="mb-4">
@@ -98,7 +98,7 @@
                     <input type="number" id="readChapters" name="readChapters" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50" required>
                 </div>
                 <div class="mb-4">
-                    <label for="favorite" class="block text-sm font-medium text-gray-700">Favorito</label>
+                    <label for="favorite" class="block text-sm font-medium text-gray-700" data-translate-key="favorite">Favorito</label>
                     <input type="checkbox" id="favorite" name="favorite" class="mt-1 block">
                 </div>
                 <div class="flex justify-end">
@@ -115,7 +115,7 @@
             <h2 class="text-lg font-semibold mb-4" data-translate-key="editManga">Editar Manga</h2>
             <form id="editForm">
                 <div class="mb-4">
-                    <label for="image" class="block text-sm font-medium text-gray-700" data-translate-key="imageLabel">Imagen (opcional, solo links de imgur)</label>
+                    <label for="image" class="block text-sm font-medium text-gray-700" data-translate-key="formLinkImageLabel">Imagen (opcional, solo links de imgur)</label>
                     <input type="text" id="editImage" name="image" placeholder="Ingrese la URL de la imagen" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50">
                 </div>
                 <div class="mb-4">
@@ -123,7 +123,7 @@
                     <input type="text" id="editTitle" name="title" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50" required>
                 </div>
                 <div class="mb-4">
-                    <label for="title" class="block text-sm font-medium text-gray-700">Link</label>
+                    <label for="title" class="block text-sm font-medium text-gray-700" data-translate-key="formLinkLabel">Link</label>
                     <input type="text" id="editLink" name="edit" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50" required>
                 </div>
                 <div class="mb-4">
@@ -131,7 +131,7 @@
                     <input type="number" id="editReadChapters" name="readChapters" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50" required>
                 </div>
                 <div class="mb-4">
-                    <label for="editFavorite" class="block text-sm font-medium text-gray-700">Favorito</label>
+                    <label for="editFavorite" class="block text-sm font-medium text-gray-700" data-translate-key="favorite">Favorito</label>
                     <input type="checkbox" id="editFavorite" name="favorite" class="mt-1 block">
                 </div>
                 <div class="flex justify-end">
@@ -181,7 +181,7 @@
                     <input id="cajita" type="checkbox" class="h-4 w-4">
                 </div>
                 <div class="flex items-center">
-                    <a class="text-gray-200 mr-2 text-xs" id="importBookmarks" href="bookmarksDemo.html">Importar Bookmarks</a>
+                    <a class="text-gray-200 mr-2 text-xs" id="importBookmarks" data-translate-key="importBookmarks" href="bookmarksDemo.html">Importar Bookmarks</a>
                 </div>
                 <div class="flex items-center">
                     <label class="text-gray-200 mr-2 text-xs" data-translate-key="settingsOption2">Cosas</label>
@@ -195,7 +195,7 @@
                 </div>
                 <div class="flex items-center">
                     <input type="file" id="import" accept="application/json">
-                    <button id="export">Export</button>
+                    <button id="export" data-translate-key="export">Export</button>
                 </div>
                 <div class="flex items-center">
                     <label class="text-gray-200 mr-2 text-xs" data-translate-key="settingsOption4">Sexo</label>
