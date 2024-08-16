@@ -17,7 +17,7 @@
     },
     "content_scripts":[{
       "matches":["<all_urls>"],
-      "js":["/src/script.js","/src/settingsBtn.js","src/settingsSave.js","src/searchBar.js","src/menuFilter.js","src/translations.js","src/filter.js","src/fav.js","src/editManga.js","src/domUtils.js","src/deleteManga.js","src/bookmarks.js"]
+      "js":["/src/script.js","/src/settingsBtn.js","src/getRandom.js","src/settingsSave.js","src/searchBar.js","src/menuFilter.js","src/translations.js","src/filter.js","src/fav.js","src/editManga.js","src/domUtils.js","src/deleteManga.js","src/bookmarks.js"]
     }],
     "web_accessible_resources": [
       {

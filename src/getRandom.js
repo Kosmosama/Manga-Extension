@@ -1,11 +1,18 @@
 let random = false;
 let randomIndex;
-document.getElementById('getRandomManga').addEventListener('click', () => {
+
+// Function to show a random manga (only)
+function getRandomManga() {
     randomIndex = Math.floor(Math.random() * mangaList.length);
     random = true;
     cargarMangas([mangaList[randomIndex]]);
-})
-document.getElementById('stopRandomManga').addEventListener('click', ()=>{
+}
+
+// Function to stop random manga mode
+function stopRandomManga() {
     random = false;
     cargarMangas(mangaList);
-})
+}
+
+document.getElementById('getRandomManga').addEventListener('click', getRandomManga);
+document.getElementById('stopRandomManga').addEventListener('click', stopRandomManga);
