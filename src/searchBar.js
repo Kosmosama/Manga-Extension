@@ -15,8 +15,6 @@ function handleSearchInput() {
 }
 
 function handleDeleteSearch() {
-    if (searchBar.value === "") return; 
-
     searchBar.value = "";
     cargarMangas(mangaList);
     isSearch = false;
