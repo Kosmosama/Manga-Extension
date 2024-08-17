@@ -1,28 +1,45 @@
 {
-    "manifest_version": 3,
-    "name": "Manga Library",
-    "description": "Bookmark for mangas/manhwas/manhuas extension",
-  "permissions":[
-    "tabs",
-    "scripting",
-    "storage",
-    "webNavigation",
-    "activeTab",
-    "bookmarks"
+  "manifest_version": 3,
+  "name": "Manga Library",
+  "description": "Bookmark for mangas/manhwas/manhuas extension",
+  "version": "1.0",
+  "permissions": [
+      "tabs",
+      "scripting",
+      "storage",
+      "webNavigation",
+      "activeTab",
+      "bookmarks"
   ],
-    "version": "1.0",
-    "action": {
+  "action": {
       "default_popup": "src/index.html",
       "default_icon": "public/logos/icon.png"
-    },
-    "content_scripts":[{
-      "matches":["<all_urls>"],
-      "js":["/src/script.js","/src/settingsBtn.js","src/getRandom.js","src/settingsSave.js","src/searchBar.js","src/menuFilter.js","src/translations.js","src/filter.js","src/fav.js","src/editManga.js","src/domUtils.js","src/deleteManga.js","src/bookmarks.js"]
-    }],
-    "web_accessible_resources": [
+  },
+  "content_scripts": [
       {
-        "resources": ["translations.json"],
-        "matches": ["<all_urls>"]
+          "matches": ["<all_urls>"],
+          "js": [
+              "src/script.js",
+              "src/storageHandler.js",
+              "src/settingsBtn.js",
+              "src/getRandom.js",
+              "src/settingsSave.js",
+              "src/searchBar.js",
+              "src/menuFilter.js",
+              "src/translations.js",
+              "src/filter.js",
+              "src/fav.js",
+              "src/editManga.js",
+              "src/domUtils.js",
+              "src/deleteManga.js",
+              "src/bookmarks.js"
+          ]
       }
-    ]
+  ],
+  "web_accessible_resources": [
+      {
+          "resources": ["translations.json"],
+          "matches": ["<all_urls>"]
+      }
+  ]
 }
