@@ -22,22 +22,22 @@ function ordenarMangas(array, criterio, orden) {
 
         switch (criterio) {
             case 'favoritos':
-                comparison = b.favorito - a.favorito;
+                comparison = b.favorite - a.favorite;
                 break;
             case 'capitulos':
-                comparison = a.numCapitulos - b.numCapitulos;
+                comparison = a.readChapters - b.readChapters;
                 break;
             case 'fechaAdicion':
-                comparison = new Date(a.fechaAdicion) - new Date(b.fechaAdicion);
+                comparison = new Date(a.dayAdded) - new Date(b.dayAdded);
                 break;
             case 'ultimaLectura':
-                comparison = new Date(a.ultimaLectura) - new Date(b.ultimaLectura);
+                comparison = new Date(a.lastRead) - new Date(b.lastRead);
                 break;
         }
 
         // If the primary comparison is the same, sort alphabetically by 'nombre'
         if (comparison === 0) {
-            comparison = a.nombre.localeCompare(b.nombre);
+            comparison = a.title.localeCompare(b.title);
         }
 
         return orden === 'ascendente' ? comparison : -comparison;
