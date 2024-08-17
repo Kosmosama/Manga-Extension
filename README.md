@@ -12,6 +12,7 @@ Extension to bookmark mangas you like.
 4. [ ] **fix the buttons for deleting manga, favoriting with a star, and editing. (discussion needed)**
 5. [ ] **Save filter options on chrome.storage.local**
 6. [ ] **Fix everything related to filters.**
+7. [ ] **Change all functions, variable names and comments to english**
 
 
 ## Next Version
