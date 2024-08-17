@@ -13,6 +13,7 @@ Extension to bookmark mangas you like.
 5. [ ] **Save filter options on chrome.storage.local**
 6. [ ] **Fix everything related to filters.**
 7. [ ] **Change all functions, variable names and comments to english**
+8. [ ] **Add the settings**
 
 
 ## Next Version
