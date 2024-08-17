@@ -36,6 +36,7 @@ function eliminarManga(index) {
         }
         
         // Guardar y recargar `resultados`
+        saveMangas();
         cargarMangas(mangaList);
         isSearch = false;
     } else if (random){
@@ -46,11 +47,13 @@ function eliminarManga(index) {
          mangaList.splice(randomIndex, 1);
          
          // Guardar y recargar `resultados`
+         saveMangas();
          cargarMangas(mangaList);
          random = false;
     } else {
         // Eliminar directamente de `mangaList` si no estás en modo de búsqueda
         mangaList.splice(index, 1);
+        saveMangas();
         cargarMangas(mangaList);
     }
 

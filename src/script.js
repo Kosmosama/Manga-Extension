@@ -108,6 +108,7 @@ document.getElementById('chapterForm').addEventListener('submit', async function
                 // Guardar la nueva lista ordenada por fecha
                 mangaList.sort((a, b) => new Date(a.dayAdded) - new Date(b.dayAdded));
 
+                saveMangas();
                 cargarMangas(mangaList);
                 
                 // Limpiar los campos del formulario
@@ -136,15 +137,19 @@ document.addEventListener('DOMContentLoaded', () => {
         if (random){
        
         mangaList[randomIndex].readChapters = parseInt(mangaList[randomIndex].readChapters, 10) + 1;
+            saveMangas();
             cargarMangas([mangaList[randomIndex]])
         }else if (isSearch) {
             const mangaIndexInMangaList = mangaList.findIndex(manga => manga.title === resultados[index].title);
             if (mangaIndexInMangaList !== -1) {
                 mangaList[mangaIndexInMangaList].readChapters = parseInt(resultados[index].readChapters, 10) + 1;
+                saveMangas();
                 cargarMangas(resultados);
             }
         }else{
             mangaList[index].readChapters = parseInt(mangaList[index].readChapters, 10) + 1;
+    
+            saveMangas();
             cargarMangas(mangaList);
         }
     }
@@ -157,3 +162,4 @@ document.addEventListener('DOMContentLoaded', () => {
         addEventListeners('button#addCap', 'click', handleAddCapClick);
     });
 });
+

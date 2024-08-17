@@ -1,27 +1,24 @@
-var mangaList = []; // Global variable for mangas
+var mangaList = []; // Variable global para la lista de mangas
 
 // Load mangas from storage.local
 function loadMangas() {
-    chrome.storage.local.get('mangas', function(result) {
+    chrome.storage.local.get('mangaList', function(result) {
         if (chrome.runtime.lastError) {
             console.error('Error loading mangas:', chrome.runtime.lastError);
             return;
         }
-        if (result.mangas && result.mangas.length > 0) {
-            mangaList = result.mangas;
-            console.log(`Loaded ${result.mangas.length} mangas:`, mangaList);
+        if (result.mangaList.length > 0) {
+            mangaList = result.mangaList;
+            console.log(`Loaded ${result.mangaList.length} mangas:`, mangaList);
         } else {
             console.log('No mangas found in storage.');
         }
-
-        // #LOADCONTENT
-        cargarMangas(mangaList);
     });
 }
 
 // Save mangas to storage.local
 function saveMangas() {
-    chrome.storage.local.set({ 'mangas': mangaList }, function() {
+    chrome.storage.local.set({ mangaList: mangaList }, function() {
         if (chrome.runtime.lastError) {
             console.error('Error saving mangas:', chrome.runtime.lastError);
             return;
