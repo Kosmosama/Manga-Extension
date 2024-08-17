@@ -9,15 +9,10 @@ Extension to bookmark mangas you like.
 1. [ ] **Refactor the code, applying the best practices possible.**
 2. [ ] **Style the main page with CSS.**
 3. [ ] **Style the import page with CSS.**
-4. [x] **Add an export/import feature for the app.**
-5. [x] **Set the link icon as the default image if no image is provided or found.**
-7. [x] **Add a "read random" button.**
-8. [x] **Add a "+1 chapter button" button.**
-9. [x] **Add a button to the search bar to clear it (for when using only the mouse).**
-10. [x] **Implement a button to add chapters one by one**
-11. [x] **Implement translation keys for bookmarks.html and remaining keys for the index**
-12. [ ] **fix the buttons for deleting manga, favoriting with a star, and editing. (discussion needed)**
-13. [x] **Implement properly translation on the setting and IMPORTANT on the generated cards.**
+4. [ ] **fix the buttons for deleting manga, favoriting with a star, and editing. (discussion needed)**
+5. [ ] **Save filter options on chrome.storage.local**
+6. [ ] **Fix everything related to filters.**
+
 
 ## Next Version
 
