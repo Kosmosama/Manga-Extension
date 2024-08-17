@@ -23,9 +23,6 @@ function changeFavorite(favo) {
         mangaList[index].favorite = isFavorite;
 
         updateFavoriteUI(favo, isFavorite);
-
-        // Guarda mangaList después de modificarlo
-        saveManga();
     } else {
         console.log(`No manga found at index ${index}`);
     }

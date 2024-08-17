@@ -59,8 +59,6 @@ document.getElementById('editForm').addEventListener('submit', function(event) {
                 mangaList[editIndex].dayAdded = originalDayAdded; // Mantiene el valor original de dayAdded
             }
         }
-
-        saveManga();
         //cargar si
         if(isSearch){
             cargarMangas(resultados);
