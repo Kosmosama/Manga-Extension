@@ -8,6 +8,7 @@
       "scripting",
       "storage",
       "webNavigation",
+      "activeTab",
       "bookmarks"
   ],
   "action": {
