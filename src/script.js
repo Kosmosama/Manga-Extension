@@ -1,18 +1,6 @@
-var mangaList = []; // Variable global para la lista de mangas
 var cargarMangas; // Variable global para la función cargarMangas
 var dayAdded = new Date().toLocaleDateString('en-GB');
 var lastRead = new Date().toLocaleDateString('en-GB');
-
-// Cargar la lista de mangas al iniciar la extensión
-recuperarMangas();
-
-function recuperarMangas() {
-    chrome.storage.local.get('mangaList', function(result) {
-        mangaList = result.mangaList || [];
-        console.log('Loaded manga list:', mangaList);
-        cargarMangas(mangaList);
-    });
-}
 
 cargarMangas = function(mangaList) {
     var mangaListContainer = document.getElementById('mangaListContainer');
@@ -120,7 +108,7 @@ document.getElementById('chapterForm').addEventListener('submit', async function
                 // Guardar la nueva lista ordenada por fecha
                 mangaList.sort((a, b) => new Date(a.dayAdded) - new Date(b.dayAdded));
 
-                saveManga();
+                saveMangas();
                 cargarMangas(mangaList);
                 
                 // Limpiar los campos del formulario
@@ -149,19 +137,19 @@ document.addEventListener('DOMContentLoaded', () => {
         if (random){
        
         mangaList[randomIndex].readChapters = parseInt(mangaList[randomIndex].readChapters, 10) + 1;
-            saveManga();
+            saveMangas();
             cargarMangas([mangaList[randomIndex]])
         }else if (isSearch) {
             const mangaIndexInMangaList = mangaList.findIndex(manga => manga.title === resultados[index].title);
             if (mangaIndexInMangaList !== -1) {
                 mangaList[mangaIndexInMangaList].readChapters = parseInt(resultados[index].readChapters, 10) + 1;
-                saveManga();
+                saveMangas();
                 cargarMangas(resultados);
             }
         }else{
             mangaList[index].readChapters = parseInt(mangaList[index].readChapters, 10) + 1;
     
-            saveManga();
+            saveMangas();
             cargarMangas(mangaList);
         }
     }
@@ -175,8 +163,3 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-function saveManga(){
-    chrome.storage.local.set({ mangaList: mangaList }, function() {
-        console.log('Manga list updated and saved to local storage.');
-        })
-}

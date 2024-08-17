@@ -60,7 +60,7 @@ document.getElementById('editForm').addEventListener('submit', function(event) {
             }
         }
 
-        saveManga();
+        saveMangas();
         //cargar si
         if(isSearch){
             cargarMangas(resultados);
