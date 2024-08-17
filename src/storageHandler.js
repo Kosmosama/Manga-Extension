@@ -13,7 +13,9 @@ function loadMangas() {
         } else {
             console.log('No mangas found in storage.');
         }
-        // #LOADCONTENT actualizarLista();
+
+        // #LOADCONTENT
+        cargarMangas(mangaList);
     });
 }
 
