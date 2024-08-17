@@ -19,25 +19,27 @@ function actualizarLista() {
 function ordenarMangas(array, criterio, orden) {
     return array.sort((a, b) => {
         let comparison = 0;
-        
+
         switch (criterio) {
-            case 'favoritos': //funca
-                comparison = b.favorite - a.favorite;
+            case 'favoritos':
+                comparison = b.favorito - a.favorito;
                 break;
-            case 'alfabetico'://funca
-                comparison = a.title.localeCompare(b.title);
+            case 'capitulos':
+                comparison = a.numCapitulos - b.numCapitulos;
                 break;
-            case 'capitulos': //funca
-                comparison = a.readChapters - b.readChapters;
+            case 'fechaAdicion':
+                comparison = new Date(a.fechaAdicion) - new Date(b.fechaAdicion);
                 break;
-            case 'fechaAdicion': //funca
-                comparison = new Date(a.dayAdded) - new Date(b.dayAdded);
-                break;
-            case 'ultimaLectura': //no sé si funciona bien pq solo tengo como referencia lo q añadí hoy XD
-                comparison = new Date(a.lastRead) - new Date(b.lastRead);
+            case 'ultimaLectura':
+                comparison = new Date(a.ultimaLectura) - new Date(b.ultimaLectura);
                 break;
         }
-    
+
+        // If the primary comparison is the same, sort alphabetically by 'nombre'
+        if (comparison === 0) {
+            comparison = a.nombre.localeCompare(b.nombre);
+        }
+
         return orden === 'ascendente' ? comparison : -comparison;
     });
 }
