@@ -32,7 +32,8 @@
               "src/editManga.js",
               "src/domUtils.js",
               "src/deleteManga.js",
-              "src/bookmarks.js"
+              "src/bookmarks.js",
+              "src/addManga.js"
           ]
       }
   ],
