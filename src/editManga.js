@@ -1,85 +1,81 @@
 let editIndex = -1;
 let originalFavoriteStatus = null;
 let originalDayAdded = null;
-let manga;
+let manga = null;
+
 function openEditForm(index) {
     editIndex = index;
-    if (isSearch) {
-        manga = resultados[editIndex];
-    } else if(random) {
-        manga = mangaList[randomIndex];
-    }else{
-        manga = mangaList[editIndex];
-    }
+    manga = getMangaByIndex(editIndex);
 
-    originalDayAdded = manga.dayAdded;
-    originalFavoriteStatus = manga.favorite;
+    if (manga) {
+        originalDayAdded = manga.dayAdded;
+        originalFavoriteStatus = manga.favorite;
+
+        populateEditForm(manga);
+        document.getElementById("editFormContainer").style.display = "flex";
+    }
+}
+
+function getMangaByIndex(index) {
+    if (isSearch) {
+        return resultados[index];
+    } else if (random) {
+        return mangaList[randomIndex];
+    } else {
+        return mangaList[index];
+    }
+}
+
+function populateEditForm(manga) {
     document.getElementById("editTitle").value = manga.title;
     document.getElementById("editImage").value = manga.image;
     document.getElementById("editLink").value = manga.link;
     document.getElementById("editReadChapters").value = manga.readChapters;
     document.getElementById("editFavorite").checked = manga.favorite;
-    document.getElementById("editFormContainer").style.display = "flex";
 }
 
-document.getElementById('editForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-
-    // Obtén los valores del formulario
-    const image = document.getElementById('editImage').value || "../public/Logos/icon.jpg";
+function updateMangaDetails() {
+    const image = document.getElementById('editImage').value || "../public/logos/icon.png";
     const title = document.getElementById('editTitle').value;
     const link = document.getElementById('editLink').value;
     const readChapters = document.getElementById('editReadChapters').value;
     const favorite = document.getElementById('editFavorite').checked;
 
-    // Verifica que los campos necesarios no estén vacíos y que readChapters sea un número válido
     if (title && link && !isNaN(readChapters)) {
-        // Actualiza el manga existente en la lista si editIndex es válido
-        if (editIndex >= 0) {
-            if (isSearch){
-                resultados[editIndex].image = image;
-                resultados[editIndex].title = title;
-                resultados[editIndex].link = link;
-                resultados[editIndex].readChapters = readChapters;
-                resultados[editIndex].favorite = favorite;
-                resultados[editIndex].dayAdded = originalDayAdded; 
-            }else if(random){
-                mangaList[randomIndex].image = image;
-                mangaList[randomIndex].title = title;
-                mangaList[randomIndex].link = link;
-                mangaList[randomIndex].readChapters = readChapters;
-                mangaList[randomIndex].favorite = favorite;
-                mangaList[randomIndex].dayAdded = originalDayAdded;
-            }else{
-                mangaList[editIndex].image = image;
-                mangaList[editIndex].title = title;
-                mangaList[editIndex].link = link;
-                mangaList[editIndex].readChapters = readChapters;
-                mangaList[editIndex].favorite = favorite;
-                mangaList[editIndex].dayAdded = originalDayAdded; // Mantiene el valor original de dayAdded
-            }
-        }
-
+        manga.image = image;
+        manga.title = title;
+        manga.link = link;
+        manga.readChapters = readChapters;
+        manga.favorite = favorite;
+        manga.dayAdded = originalDayAdded; // Mantiene el valor original
         saveMangas();
-        //cargar si
-        if(isSearch){
-            cargarMangas(resultados);
-        }else if(random){
-            cargarMangas([mangaList[randomIndex]]);
-        }else{
-            cargarMangas(mangaList);
-        }
-        // Reinicia los valores del formulario y oculta el contenedor
-        limpiarCamposFormulario();
-        document.getElementById('editFormContainer').style.display = 'none';
+        reloadMangas();
+        resetEditForm();
     } else {
         alert("Todos los campos son necesarios y el número de capítulos debe ser un número válido.");
     }
+}
+
+function reloadMangas() {
+    if (isSearch) {
+        cargarMangas(resultados);
+    } else if (random) {
+        cargarMangas([mangaList[randomIndex]]);
+    } else {
+        cargarMangas(mangaList);
+    }
+}
+
+function resetEditForm() {
+    document.getElementById('editFormContainer').style.display = 'none';
+}
+
+document.getElementById('editForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    updateMangaDetails();
 });
 
-document.getElementById("cancelEdit").onclick = function() {
-    document.getElementById("editFormContainer").style.display = "none";
-}
+document.getElementById("cancelEdit").addEventListener('click', resetEditForm);
 
 document.addEventListener('DOMContentLoaded', function() {
     addEventListeners("button[id=edit]", 'click', function() {
