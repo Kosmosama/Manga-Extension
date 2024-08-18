@@ -2,7 +2,6 @@ let isSearch = false;
 let resultados = [];
 let searchBar = null;
 let deleteSearch = null;
-
 function handleSearchInput() {
     isSearch = true;
     const query = searchBar.value.toLowerCase();
@@ -28,9 +27,11 @@ function initializeEventListeners() {
     deleteSearch.addEventListener('click', handleDeleteSearch);
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    mangaList.forEach(manga => {
+function addTitleLower() {
+    mangaList.forEach(function(manga) {
+        console.log('Manga: ', manga.title);
+        
         manga.titleLower = manga.title.toLowerCase();
     });
     initializeEventListeners();
-});
+}
