@@ -21,7 +21,7 @@ document.getElementById('chapterForm').addEventListener('submit', async function
         // Fallback logic
         checkImageExists(image, function(imageExists) {
             if (!imageExists) {
-                const linkIcon = link + "/favicon.ico";  // Assuming the icon is at this path
+                const linkIcon = 'http://www.google.com/s2/favicons?domain=' + link;  // Assuming the icon is at this path
                 checkImageExists(linkIcon, function(iconExists) {
                     if (!iconExists) {
                         image = "../public/logos/icon.png";
