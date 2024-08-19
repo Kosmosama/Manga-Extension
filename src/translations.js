@@ -1,3 +1,8 @@
+// Translate a certain key
+function translate(key) {
+    return (window.translations[window.language] && window.translations[window.language][key]) || 'TRANSLATE-ERROR';
+}
+
 // Load the language preference from storage or navigator
 function loadPreferredLanguage(translations) {
     return new Promise((resolve) => {
@@ -18,23 +23,12 @@ function savePreferredLanguage(language) {
 }
 
 // Translate elements on the page
-function translatePage(language, translations) {
+function translatePage() {
     document.querySelectorAll('[data-translate-key]').forEach(element => {
         const key = element.getAttribute('data-translate-key');
+        const translatedText = translate(key);
         
-        if (translations[language] && translations[language][key]) {
-            // Special case for 'chapters'
-            if (key === 'chapters' && element.hasAttribute('data-read')) {
-                const read = element.getAttribute('data-read');
-                element.textContent = translations[language][key].replace('{read}', read);
-            } else {
-                element.textContent = translations[language][key];
-            }
-        } else if (translations['en'] && translations['en'][key]) {
-            element.textContent = translations['en'][key];
-        } else {
-            console.warn(`Translation key '${key}' not found.`);
-        }
+        element.textContent = translatedText;
     });
 }
 
@@ -45,7 +39,7 @@ function initializeTranslations(translations) {
         window.language = language;
         window.translations = translations;
         
-        translatePage(language, translations);
+        translatePage();
 
         // Configurar el selector de idioma
         document.getElementById('languageSelect').value = language;
@@ -53,7 +47,8 @@ function initializeTranslations(translations) {
             const selectedLanguage = this.value;
             savePreferredLanguage(selectedLanguage);
             window.language = selectedLanguage; // Actualizar la variable global
-            translatePage(selectedLanguage, translations);
+            translatePage();
+            cargarMangas(mangaList);
         });
 
         // Cargar las tarjetas de mangas traducidas
