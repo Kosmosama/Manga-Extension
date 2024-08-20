@@ -51,17 +51,14 @@ document.getElementById("mangaListContainer").addEventListener("click", (event) 
     const mangaTitle = mangaItem.dataset.title;
     const manga = mangaList.find(m => m.title === mangaTitle);
 
-    // #TODO
     if (event.target.id === 'fav') {
-        console.log("Click fav!");
-        // alternarFavorito(manga);
+        const favo = event.target.closest('#fav');
+        changeFavorite(favo, manga);
     } else if (event.target.id === 'delete') {
         handleMangaDelete(manga);
     } else if (event.target.id === 'edit') {
-        console.log("Click edit!");
-        // editarManga(manga);
+        openEditForm(manga);
     } else if (event.target.id === 'addCap') {
-        console.log("Click +1!");
-        // agregarCapitulo(manga);
+        handleAddCapClick(manga);
     }
 });

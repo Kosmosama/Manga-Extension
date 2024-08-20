@@ -1,4 +1,3 @@
-// Añadir eventos a los botones y el formulario
 document.getElementById('addButton').addEventListener('click', function () {
     var formContainer = document.getElementById('formContainer');
     formContainer.style.display = 'flex';
@@ -12,7 +11,7 @@ document.getElementById('cancelButton').addEventListener('click', function () {
 document.getElementById('chapterForm').addEventListener('submit', async function(event) {
     event.preventDefault();
 
-    let image = document.getElementById('image').value || "../public/Logos/icon.jpg";
+    let image = document.getElementById('image').value || "../public/logos/icon.png";
     const title = document.getElementById('title').value;
     const link = document.getElementById('link').value;
     const readChapters = document.getElementById('readChapters').value;
@@ -89,36 +88,19 @@ function limpiarCamposFormulario() {
     document.getElementById('favorite').checked = false;
 }
 
-// Add chapter button
-document.addEventListener('DOMContentLoaded', () => {
-    // Handler para el evento click
-    function handleAddCapClick() {
-        const index = this.getAttribute('data-index');
-        if (random){
-       
+function handleAddCapClick(manga) {
+    if (random) {
         mangaList[randomIndex].readChapters = parseInt(mangaList[randomIndex].readChapters, 10) + 1;
-            saveMangas();
-            cargarMangas([mangaList[randomIndex]])
-        }else if (isSearch) {
-            const mangaIndexInMangaList = mangaList.findIndex(manga => manga.title === resultados[index].title);
-            if (mangaIndexInMangaList !== -1) {
-                mangaList[mangaIndexInMangaList].readChapters = parseInt(resultados[index].readChapters, 10) + 1;
-                saveMangas();
-                cargarMangas(resultados);
-            }
-        }else{
-            mangaList[index].readChapters = parseInt(mangaList[index].readChapters, 10) + 1;
-    
-            saveMangas();
-            cargarMangas(mangaList);
-        }
+        saveMangas();
+        cargarMangas([mangaList[randomIndex]]);
+    } else if (isSearch) {
+        manga.readChapters = parseInt(manga.readChapters, 10) + 1;
+        saveMangas();
+        cargarMangas(resultados);
+    } else {
+        manga.readChapters = parseInt(manga.readChapters, 10) + 1;
+        saveMangas();
+        cargarMangas(mangaList);
     }
+}
 
-    // Añadir los event listeners iniciales
-    addEventListeners('button#addCap', 'click', handleAddCapClick);
-
-    // Observar cambios en el DOM y volver a añadir los event listeners si se añaden nuevos botones
-    observeDOM(() => {
-        addEventListeners('button#addCap', 'click', handleAddCapClick);
-    });
-});

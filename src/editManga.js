@@ -1,32 +1,20 @@
-let editIndex = -1;
 let originalFavoriteStatus = null;
 let originalDayAdded = null;
 let manga = null;
 
-function openEditForm(index) {
-    editIndex = index;
-    manga = getMangaByIndex(editIndex);
+function openEditForm(editManga) {
 
-    if (manga) {
+    if (editManga) {
+        manga = editManga;
         originalDayAdded = manga.dayAdded;
         originalFavoriteStatus = manga.favorite;
 
-        populateEditForm(manga);
+        fillEditForm(editManga);
         document.getElementById("editFormContainer").style.display = "flex";
     }
 }
 
-function getMangaByIndex(index) {
-    if (isSearch) {
-        return resultados[index];
-    } else if (random) {
-        return mangaList[randomIndex];
-    } else {
-        return mangaList[index];
-    }
-}
-
-function populateEditForm(manga) {
+function fillEditForm(manga) {
     document.getElementById("editTitle").value = manga.title;
     document.getElementById("editImage").value = manga.image;
     document.getElementById("editLink").value = manga.link;
@@ -57,13 +45,7 @@ function updateMangaDetails() {
 }
 
 function reloadMangas() {
-    if (isSearch) {
-        cargarMangas(resultados);
-    } else if (random) {
-        cargarMangas([mangaList[randomIndex]]);
-    } else {
-        cargarMangas(mangaList);
-    }
+    cargarMangas(mangaList);
 }
 
 function resetEditForm() {
@@ -76,14 +58,3 @@ document.getElementById('editForm').addEventListener('submit', function(event) {
 });
 
 document.getElementById("cancelEdit").addEventListener('click', resetEditForm);
-
-document.addEventListener('DOMContentLoaded', function() {
-    addEventListeners("button[id=edit]", 'click', function() {
-        openEditForm(this.getAttribute('data-index'));
-    });
-    observeDOM(function() {
-        addEventListeners("button[id=edit]", 'click', function() {
-            openEditForm(this.getAttribute('data-index'));
-        });
-    });
-});
