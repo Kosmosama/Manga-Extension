@@ -1,3 +1,14 @@
+// Añadir eventos a los botones y el formulario
+document.getElementById('addButton').addEventListener('click', function () {
+    var formContainer = document.getElementById('formContainer');
+    formContainer.style.display = 'flex';
+});
+
+document.getElementById('cancelButton').addEventListener('click', function () {
+    var formContainer = document.getElementById('formContainer');
+    formContainer.style.display = 'none';
+});
+
 document.getElementById('chapterForm').addEventListener('submit', async function(event) {
     event.preventDefault();
 

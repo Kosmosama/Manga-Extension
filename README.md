@@ -12,6 +12,7 @@ Extension to bookmark mangas you like.
 6. [ ] **Fix everything related to filters and search bar.**
 7. [ ] **Change all functions, variable names and comments to english.**
 8. [ ] **Fix dates.**
+9. [ ] **Manga names must be unique.**
 
 
 ## Next Version
