@@ -1,7 +1,7 @@
 document.getElementById('export').addEventListener('click', handleFileExport);
 
 function handleFileExport() {
-    const date = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
+    const date = new Date().toISOString().split('T')[0]; // FormDat: YYYY-MM-DD
     const filename = `mangas_${date}.json`;
     const json = JSON.stringify(mangaList, null, 2);
     const blob = new Blob([json], {type: "application/json"});
