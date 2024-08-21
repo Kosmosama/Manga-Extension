@@ -2,7 +2,7 @@ let originalFavoriteStatus = null;
 let originalDayAdded = null;
 let manga = null;
 
-function openEditForm(editManga) {
+function handleMangaEdition(editManga) {
 
     if (editManga) {
         manga = editManga;

@@ -28,11 +28,10 @@
               "src/menuFilter.js",
               "src/translations.js",
               "src/filter.js",
-              "src/fav.js",
               "src/editManga.js",
               "src/domUtils.js",
-              "src/deleteManga.js",
               "src/bookmarks.js",
+              "src/mangaHandler.js",
               "src/addManga.js"
           ]
       }

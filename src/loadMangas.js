@@ -19,9 +19,10 @@ function cargarMangas(mangaList) {
             'mb-2',
             'group',
             "manga-item"
-        ); // All css classes except "manga-item", which is important for document fragmentation
+        ); // All css classes except "manga-item", which is important for event handler
         mangaDiv.dataset.title = manga.title;
 
+        // Add so image loading takes place here
         mangaDiv.innerHTML = `
             <div class="w-8 h-8 rounded-full overflow-hidden mr-2">
                 <img src="${manga.image}" alt="Portada" class="w-full h-full object-cover">
@@ -52,13 +53,12 @@ document.getElementById("mangaListContainer").addEventListener("click", (event) 
     const manga = mangaList.find(m => m.title === mangaTitle);
 
     if (event.target.id === 'fav') {
-        const favo = event.target.closest('#fav');
-        changeFavorite(favo, manga);
+        handleFavoriteToggle(manga);
     } else if (event.target.id === 'delete') {
-        handleMangaDelete(manga);
+        handleMangaDeletion(manga);
     } else if (event.target.id === 'edit') {
-        openEditForm(manga);
+        handleMangaEdition(manga);
     } else if (event.target.id === 'addCap') {
-        handleAddCapClick(manga);
+        handleAddChapter(manga);
     }
 });

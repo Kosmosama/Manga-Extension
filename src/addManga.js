@@ -87,20 +87,3 @@ function limpiarCamposFormulario() {
     document.getElementById('readChapters').value = '';
     document.getElementById('favorite').checked = false;
 }
-
-function handleAddCapClick(manga) {
-    if (random) {
-        mangaList[randomIndex].readChapters = parseInt(mangaList[randomIndex].readChapters, 10) + 1;
-        saveMangas();
-        cargarMangas([mangaList[randomIndex]]);
-    } else if (isSearch) {
-        manga.readChapters = parseInt(manga.readChapters, 10) + 1;
-        saveMangas();
-        cargarMangas(resultados);
-    } else {
-        manga.readChapters = parseInt(manga.readChapters, 10) + 1;
-        saveMangas();
-        cargarMangas(mangaList);
-    }
-}
-
