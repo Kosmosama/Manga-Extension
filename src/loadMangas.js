@@ -62,3 +62,6 @@ document.getElementById("mangaListContainer").addEventListener("click", (event) 
         handleAddChapter(manga);
     }
 });
+
+
+
