@@ -28,7 +28,6 @@
               "src/menuFilter.js",
               "src/translations.js",
               "src/filter.js",
-              "src/editManga.js",
               "src/domUtils.js",
               "src/bookmarks.js",
               "src/mangaHandler.js",
