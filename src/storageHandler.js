@@ -30,3 +30,4 @@ function saveMangas() {
 
 
 document.addEventListener("DOMContentLoaded", loadMangas);
+window.addEventListener("beforeunload", saveMangas);
