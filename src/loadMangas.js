@@ -1,10 +1,18 @@
-function cargarMangas(mangaList) {
+// Function to handle image loading errors
+function handleImageError(imgElement) {
+    imgElement.onerror = null;
+
+    imgElement.src = "../public/logos/icon.png";
+}
+
+// Function to load all mangas from an array
+function cargarMangas(inputList) {
     const mangaListContainer = document.getElementById('mangaListContainer');
     mangaListContainer.innerHTML = '';
 
     const fragment = document.createDocumentFragment();
 
-    mangaList.forEach((manga) => {
+    inputList.forEach((manga) => {
         const mangaDiv = document.createElement("div");
         mangaDiv.classList.add(
             'relative',
@@ -19,13 +27,13 @@ function cargarMangas(mangaList) {
             'mb-2',
             'group',
             "manga-item"
-        ); // All css classes except "manga-item", which is important for event handler
+        );
         mangaDiv.dataset.title = manga.title;
 
-        // Add so image loading takes place here
+        // Set up the inner HTML with function call in onerror
         mangaDiv.innerHTML = `
             <div class="w-8 h-8 rounded-full overflow-hidden mr-2">
-                <img src="${manga.image}" alt="Portada" class="w-full h-full object-cover">
+                <img src="${manga.image}" alt="Portada" class="w-full h-full object-cover" onerror="handleImageError(this)">
             </div>
             <div class="flex-grow">
                 <a class="text-xs font-semibold" href="${manga.link}" target="_blank">${manga.title}</a>
@@ -62,6 +70,3 @@ document.getElementById("mangaListContainer").addEventListener("click", (event) 
         handleAddChapter(manga);
     }
 });
-
-
-

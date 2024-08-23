@@ -76,11 +76,11 @@ function handleMangaEdition(manga) {
     function updateMangaDetails() {
         const title = document.getElementById('editTitle').value.trim();
         const link = document.getElementById('editLink').value.trim();
-        const image = document.getElementById('editImage').value.trim() || manga.image || '../public/logos/icon.png'; //#TODO Fix image handling
+        const image = document.getElementById('editImage').value.trim();
         const readChapters = parseInt(document.getElementById('editReadChapters').value.trim(), 10);
         const favorite = document.getElementById('editFavorite').checked;
 
-        // Data verification #TODO Add image handling here too
+        // Data verification
         if (isNameUsed(title)){
             showModal("All manga names must be uniques."); //#TODO Add translation to all modals
             return;
@@ -92,7 +92,7 @@ function handleMangaEdition(manga) {
 
         manga.title = title;
         manga.link = link;
-        manga.image = image; //#TODO Fix image handling (doesn't do the checkImageExists() thingy, which also has to be fixed btw)
+        manga.image = image;
         manga.readChapters = readChapters;
         manga.favorite = favorite;
         manga.dayAdded = manga.dayAdded;

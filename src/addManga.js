@@ -1,13 +1,16 @@
+// Button to add new manga
 document.getElementById('addButton').addEventListener('click', function () {
     var formContainer = document.getElementById('formContainer');
     formContainer.style.display = 'flex';
 });
 
+// Button to hide form
 document.getElementById('cancelButton').addEventListener('click', function () {
     var formContainer = document.getElementById('formContainer');
     formContainer.style.display = 'none';
 });
 
+// Submit button for the form
 document.getElementById('chapterForm').addEventListener('submit', async function(event) {
     event.preventDefault();
 
