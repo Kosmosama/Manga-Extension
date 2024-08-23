@@ -19,6 +19,11 @@ document.getElementById('chapterForm').addEventListener('submit', async function
     const lastRead = new Date().toLocaleDateString('en-GB');
     const favorite = document.getElementById('favorite').checked;
 
+    if (isNameUsed(title)){
+        showModal("All the titles must be unique");
+        return;
+    }
+
     if (title && link && !isNaN(readChapters)) {
         // Function to check if the image exists
         function checkImageExists(url, callback) {
@@ -76,7 +81,7 @@ document.getElementById('chapterForm').addEventListener('submit', async function
             document.getElementById('formContainer').style.display = 'none';
         }
     } else {
-        alert("Todos los campos son necesarios y el número de capítulos debe ser un número válido.");
+        showModal("Todos los campos son necesarios y el número de capítulos debe ser un número válido.");
     }
 });
 

@@ -79,7 +79,10 @@ function handleMangaEdition(manga) {
         const image = document.getElementById('editImage').value.trim() || manga.image || '../public/logos/icon.png'; //#TODO Fix image handling
         const readChapters = parseInt(document.getElementById('editReadChapters').value.trim(), 10);
         const favorite = document.getElementById('editFavorite').checked;
-
+        if (isNameUsed(title)){
+            showModal("All manga names must be uniques.");
+            return;
+        }
         if (!title || !link || isNaN(readChapters) || readChapters < 0) {
             showModal("Please ensure all fields are filled out correctly.");
             return;
@@ -103,4 +106,18 @@ function handleMangaEdition(manga) {
     }, { once: true });
 
     document.getElementById('cancelEdit').addEventListener('click', resetEditForm, { once: true });
+}
+
+function isNameUsed(title){
+    return mangaList.some(manga => manga.title === title) ? true : false;
+}
+
+function showModal(message) {
+    const modal = document.getElementById('alertModal');
+    modal.querySelector('.modal-body').textContent = message;
+    modal.style.display = 'block';
+
+    document.getElementById('closeModal').addEventListener('click', function() {
+        modal.style.display = 'none';
+    });
 }
