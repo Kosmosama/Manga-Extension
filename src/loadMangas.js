@@ -2,6 +2,7 @@
 function handleImageError(imgElement) {
     imgElement.onerror = null;
 
+    //#TODO Implement random icon logic here
     imgElement.src = "../public/logos/icon.png";
 }
 
