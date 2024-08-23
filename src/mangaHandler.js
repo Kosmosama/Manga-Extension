@@ -79,12 +79,14 @@ function handleMangaEdition(manga) {
         const image = document.getElementById('editImage').value.trim() || manga.image || '../public/logos/icon.png'; //#TODO Fix image handling
         const readChapters = parseInt(document.getElementById('editReadChapters').value.trim(), 10);
         const favorite = document.getElementById('editFavorite').checked;
+
+        // Data verification #TODO Add image handling here too
         if (isNameUsed(title)){
-            showModal("All manga names must be uniques.");
+            showModal("All manga names must be uniques."); //#TODO Add translation to all modals
             return;
         }
         if (!title || !link || isNaN(readChapters) || readChapters < 0) {
-            showModal("Please ensure all fields are filled out correctly.");
+            showModal("Please ensure all fields are filled out correctly."); //#TODO Add translation to all modals
             return;
         }
 
