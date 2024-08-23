@@ -11,7 +11,7 @@ document.getElementById('cancelButton').addEventListener('click', function () {
 document.getElementById('chapterForm').addEventListener('submit', async function(event) {
     event.preventDefault();
 
-    let image = document.getElementById('image').value || "../public/logos/icon.png";
+    let image = document.getElementById('image').value || "../public/logos/logo.png";
     const title = document.getElementById('title').value;
     const link = document.getElementById('link').value;
     const readChapters = document.getElementById('readChapters').value;

@@ -76,7 +76,7 @@ function handleMangaEdition(manga) {
     function updateMangaDetails() {
         const title = document.getElementById('editTitle').value.trim();
         const link = document.getElementById('editLink').value.trim();
-        const image = document.getElementById('editImage').value.trim() || manga.image || '../public/logos/icon.png'; //#TODO Fix image handling
+        const image = document.getElementById('editImage').value.trim() || manga.image || '../public/logos/logo.png'; //#TODO Fix image handling
         const readChapters = parseInt(document.getElementById('editReadChapters').value.trim(), 10);
         const favorite = document.getElementById('editFavorite').checked;
 
