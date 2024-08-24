@@ -1,3 +1,5 @@
+const date = new Date().toISOString();
+
 // Button to show form
 document.getElementById('addButton').addEventListener('click', showAddForm);
 
@@ -34,8 +36,6 @@ document.getElementById('chapterForm').addEventListener('submit', function(event
 });
 
 function addNewManga() {
-    const date = new Date().toISOString();
-
     let image = document.getElementById('image').value.trim();   
     const title = document.getElementById('title').value.trim();
     const link = document.getElementById('link').value.trim();

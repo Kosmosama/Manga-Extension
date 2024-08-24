@@ -29,8 +29,8 @@ function handleFavoriteToggle(manga) {
 // Function to +1 a chapter to a certain manga
 function handleAddChapter(manga) {
     manga.readChapters = (parseInt(manga.readChapters, 10) || 0) + 1;
-    //#TODO update lastRead date
-    refreshAndSaveMangas()
+    manga.lastRead = date;
+    refreshAndSaveMangas();
 }
 
 // Function to delete a certain manga with a confirmation dialog
@@ -102,7 +102,7 @@ function handleMangaEdition(manga) {
         manga.readChapters = readChapters;
         manga.favorite = favorite;
         manga.dayAdded = manga.dayAdded;
-        manga.lastRead = new Date().toISOString(); //#TODO Fix dates
+        manga.lastRead = date;
 
         refreshAndSaveMangas();
         resetEditForm();
