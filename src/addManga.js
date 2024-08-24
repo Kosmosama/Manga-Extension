@@ -1,5 +1,3 @@
-const date = new Date().toISOString();
-
 // Button to show form
 document.getElementById('addButton').addEventListener('click', showAddForm);
 
@@ -36,15 +34,15 @@ document.getElementById('chapterForm').addEventListener('submit', function(event
 });
 
 function addNewManga() {
-    let image = document.getElementById('image').value.trim();   
+    const date = new Date().toISOString();
+    
+    const image = document.getElementById('image').value.trim();   
     const title = document.getElementById('title').value.trim();
     const link = document.getElementById('link').value.trim();
     const readChapters = parseInt(document.getElementById('readChapters').value.trim(), 10);
     const favorite = document.getElementById('favorite').checked;
     const dayAdded = date;
     const lastRead = date;
-
-    image = imageExists({ value: image }) ? image : getRandomImage(); 
     
     if (isNameUsed(title)){
         showModal("All the titles must be unique"); //#TODO Translate
@@ -68,13 +66,3 @@ function addNewManga() {
         showModal("Todos los campos son necesarios y el número de capítulos debe ser un número válido."); //#TODO Translate
     }
 }
-
-function getRandomImage() {
-    const randomIndex = Math.floor(Math.random() * 4);
-    return `../public/logos/${randomIndex}.webp`;
-}
-function imageExists(input){
-    const img = new Image();
-    img.src = input.value;
-    return img.complete && img.naturalHeight !== 0;
-};

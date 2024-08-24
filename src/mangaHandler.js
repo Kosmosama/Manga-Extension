@@ -29,7 +29,7 @@ function handleFavoriteToggle(manga) {
 // Function to +1 a chapter to a certain manga
 function handleAddChapter(manga) {
     manga.readChapters = (parseInt(manga.readChapters, 10) || 0) + 1;
-    manga.lastRead = date;
+    manga.lastRead = new Date().toISOString();
     refreshAndSaveMangas();
 }
 
@@ -83,20 +83,17 @@ function handleMangaEdition(manga) {
 
         const title = document.getElementById('editTitle').value.trim();
         const link = document.getElementById('editLink').value.trim();
-        let image = document.getElementById('editImage').value.trim();
+        const image = document.getElementById('editImage').value.trim();
         const readChapters = parseInt(document.getElementById('editReadChapters').value.trim(), 10);
         const favorite = document.getElementById('editFavorite').checked;
 
         // Data verification
-    
-    image = imageExists({ value: image }) ? image : getRandomImage(); 
-
-    if (manga.title !== title){
-        if (isNameUsed(title)){
-            showModal("All manga names must be uniques."); //#TODO Add translation to all modals
-            return;
+        if (manga.title !== title){
+            if (isNameUsed(title)){
+                showModal("All manga names must be uniques."); //#TODO Add translation to all modals
+                return;
+            }
         }
-    }
         if (!title || !link || isNaN(readChapters) || readChapters < 0) {
             showModal("Please ensure all fields are filled out correctly."); //#TODO Add translation to all modals
             return;

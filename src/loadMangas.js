@@ -3,8 +3,13 @@ function handleImageError(event) {
     const imgElement = event.target;
     imgElement.onerror = null;
 
-    //#TODO Implement random icon logic here
-    imgElement.src = "../public/logos/icon.png";
+    // Apply random image
+    imgElement.src = getRandomImage();
+}
+
+function getRandomImage() {
+    const randomIndex = Math.floor(Math.random() * 4);
+    return `../public/logos/${randomIndex}.webp`;
 }
 
 // Function to load all mangas from an array
