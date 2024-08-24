@@ -43,7 +43,9 @@
     "getRandom": "Manga Aleatorio",
     "quitRandom": "Mostrar Todos",
     "favorite": "favorito",
-    "importBookmarks": "Importar Marcadores"
+    "importBookmarks": "Importar Marcadores",
+    "uniqueTitlesWarning":"los títulos deben ser únicos.",
+    "required": "Todos los campos son necesarios y el número de capítulos debe ser un número válido."
   },
   "en": {
     "titleBookmarks": "Bookmarks",
@@ -89,7 +91,9 @@
     "order": "Order",
     "getRandom": "Random Manga",
     "quitRandom": "Show All",
-    "favorite": "favorite"
+    "favorite": "favorite",
+    "uniqueTitlesWarning":"All titles must be unique",
+    "required":"All fields are required, and the number of chapters must be a valid number."
   },
   "fr": {
     "importBookmarks":"Importer les favoris",
@@ -138,7 +142,9 @@
     "order": "Ordre",
     "getRandom": "Manga aléatoire",
     "quitRandom": "Afficher tout",
-    "favorite": "favori"
+    "favorite": "favori",
+    "uniqueTitlesWarning":"Tous les titres doivent être uniques",
+    "required":"Tous les champs sont obligatoires, et le nombre de chapitres doit être un nombre valide."
   },
   "de": {
     "titleBookmarks": "Lesezeichen",
@@ -190,7 +196,9 @@
     "order": "Bestellen",
     "getRandom": "Zufälliger Manga",
     "quitRandom": "Alle anzeigen",
-    "favorite": "Favorit"
+    "favorite": "Favorit",
+    "uniqueTitlesWarning":"Alle Titel müssen einzigartig sein",
+    "required":"Alle Felder sind erforderlich, und die Anzahl der Kapitel muss eine gültige Zahl sein."
   },
   "ru": {
     "titleBookmarks": "Закладки",
@@ -242,7 +250,9 @@
     "order": "Заказать",
     "getRandom": "Случайная манга",
     "quitRandom": "Показать все",
-    "favorite": "Избранное"
+    "favorite": "Избранное",
+    "uniqueTitlesWarning":"Все заголовки должны быть уникальными",
+    "required":"Все поля обязательны для заполнения, и количество глав должно быть действительным числом."
   },
   "pt": {
     "titleBookmarks": "Favoritos",
@@ -294,7 +304,9 @@
     "order": "Ordem",
     "getRandom": "Mangá Aleatório",
     "quitRandom": "Mostrar Todos",
-    "favorite": "favorito"
+    "favorite": "favorito",
+    "uniqueTitlesWarning":"Todos os títulos devem ser únicos",
+    "required":"Todos os campos são obrigatórios, e o número de capítulos deve ser um número válido."
   },
   "zh": {
     "titleBookmarks": "书签",
@@ -346,7 +358,9 @@
     "order": "订单",
     "getRandom": "随机漫画",
     "quitRandom": "显示所有",
-    "favorite": "最爱"
+    "favorite": "最爱",
+    "uniqueTitlesWarning":"所有标题必须唯一",
+    "required":"所有字段都是必填项，章节数必须是有效的数字。"
   },
   "ja": {
     "titleBookmarks": "ブックマーク",
@@ -398,6 +412,8 @@
     "order": "順序",
     "getRandom": "ランダムなマンガ",
     "quitRandom": "すべて表示",
-    "favorite": "お気に入り"
+    "favorite": "お気に入り",
+    "uniqueTitlesWarning":"すべてのタイトルは一意でなければなりません",
+    "required":"すべての項目は必須であり、章の数は有効な数値でなければなりません。"
   }
 }

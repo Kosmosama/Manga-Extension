@@ -45,7 +45,7 @@ function addNewManga() {
     const lastRead = date;
     
     if (isNameUsed(title)){
-        showModal("All the titles must be unique"); //#TODO Translate
+        showModal(translate('uniqueTitlesWarning'));
         return;
     }
     if (title && link && !isNaN(readChapters) && readChapters >= 0) {
@@ -63,6 +63,6 @@ function addNewManga() {
         resetAddForm();
         refreshAndSaveMangas();
     } else {
-        showModal("Todos los campos son necesarios y el número de capítulos debe ser un número válido."); //#TODO Translate
+        showModal(translate('required'));
     }
 }

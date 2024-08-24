@@ -89,11 +89,11 @@ function handleMangaEdition(manga) {
 
         // Data verification
         if (manga.title !== title && isNameUsed(title)) {
-            showModal("All manga names must be unique."); // #TODO Add translation to all modals
+            showModal(translate('uniqueTitlesWarning'));
             return;
         }
         if (!title || !link || isNaN(readChapters) || readChapters < 0) {
-            showModal("Please ensure all fields are filled out correctly."); //#TODO Add translation to all modals
+            showModal(translate('required'));
             return;
         }
 
