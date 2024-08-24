@@ -1,34 +1,55 @@
-// Button to add new manga
-document.getElementById('addButton').addEventListener('click', function () {
-    var formContainer = document.getElementById('formContainer');
-    formContainer.style.display = 'flex';
-});
+// Button to show form
+document.getElementById('addButton').addEventListener('click', showAddForm);
+
+function showAddForm() {
+    const addFormContainer = document.getElementById('formContainer');
+    addFormContainer.style.display = 'flex';
+}
 
 // Button to hide form
-document.getElementById('cancelButton').addEventListener('click', function () {
-    var formContainer = document.getElementById('formContainer');
-    formContainer.style.display = 'none';
+document.getElementById('cancelButton').addEventListener('click', resetAddForm);
+
+function hideAddForm() {
+    const addFormContainer = document.getElementById('formContainer');
+    addFormContainer.style.display = 'none';
+}
+
+function resetAddForm() {
+    resetFormValues();
+    hideAddForm();
+}
+
+function resetFormValues() {
+    document.getElementById('image').value = '';
+    document.getElementById('title').value = '';
+    document.getElementById('link').value = '';
+    document.getElementById('readChapters').value = '';
+    document.getElementById('favorite').checked = false;
+}
+
+// Button to submit form
+document.getElementById('chapterForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    addNewManga();
 });
 
-// Submit button for the form
-document.getElementById('chapterForm').addEventListener('submit', async function(event) {
-    event.preventDefault();
+function addNewManga() {
+    const date = new Date().toISOString();
 
-    let image = document.getElementById('image').value || "../public/logos/logo.png";
-    const title = document.getElementById('title').value;
-    const link = document.getElementById('link').value;
-    const readChapters = document.getElementById('readChapters').value;
-    const dayAdded = new Date().toLocaleDateString('en-GB');
-    const lastRead = new Date().toLocaleDateString('en-GB');
+    const image = document.getElementById('image').value.trim();
+    const title = document.getElementById('title').value.trim();
+    const link = document.getElementById('link').value.trim();
+    const readChapters = parseInt(document.getElementById('readChapters').value.trim(), 10);
     const favorite = document.getElementById('favorite').checked;
+    const dayAdded = date;
+    const lastRead = date;
 
     if (isNameUsed(title)){
-        showModal("All the titles must be unique");
+        showModal("All the titles must be unique"); //#TODO Translate
         return;
     }
-
-    if (title && link && !isNaN(readChapters)) {
-        const formMangaValues = {
+    if (title && link && !isNaN(readChapters) && readChapters >= 0) {
+        const newManga = {
             image: image,
             title: title,
             link: link,
@@ -38,31 +59,10 @@ document.getElementById('chapterForm').addEventListener('submit', async function
             favorite: favorite
         };
 
-        // Obtener la lista de mangas guardada anteriormente
-        chrome.storage.local.get('mangaList', function(result) {
-            mangaList = result.mangaList || [];
-            mangaList.push(formMangaValues);
-
-            // Guardar la nueva lista ordenada por fecha
-            mangaList.sort((a, b) => new Date(a.dayAdded) - new Date(b.dayAdded));
-
-            saveMangas();
-            cargarMangas(mangaList);
-            
-            // Limpiar los campos del formulario
-            limpiarCamposFormulario();
-        });
-
-        document.getElementById('formContainer').style.display = 'none';
+        mangaList.push(newManga);
+        resetAddForm();
+        refreshAndSaveMangas();
     } else {
-        showModal("Todos los campos son necesarios y el número de capítulos debe ser un número válido.");
+        showModal("Todos los campos son necesarios y el número de capítulos debe ser un número válido."); //#TODO Translate
     }
-});
-
-function limpiarCamposFormulario() {
-    document.getElementById('image').value = '';
-    document.getElementById('title').value = '';
-    document.getElementById('link').value = '';
-    document.getElementById('readChapters').value = '';
-    document.getElementById('favorite').checked = false;
 }

@@ -4,6 +4,22 @@ function refreshAndSaveMangas() {
     saveMangas();
 }
 
+// Helper function to check if a name already exists
+function isNameUsed(title){
+    return mangaList.some(manga => manga.title === title) ? true : false;
+}
+
+// Helper function to create a modal with a message
+function showModal(message) {
+    const modal = document.getElementById('alertModal');
+    modal.querySelector('.modal-body').textContent = message;
+    modal.style.display = 'block';
+
+    document.getElementById('closeModal').addEventListener('click', function() {
+        modal.style.display = 'none';
+    });
+}
+
 // Function to toggle favourite state for a certain manga
 function handleFavoriteToggle(manga) {
     manga.favorite = !manga.favorite;
@@ -63,16 +79,6 @@ function handleMangaEdition(manga) {
         formContainer.style.display = 'none';
     }
 
-    function showModal(message) {
-        const modal = document.getElementById('alertModal');
-        modal.querySelector('.modal-body').textContent = message;
-        modal.style.display = 'block';
-
-        document.getElementById('closeModal').addEventListener('click', function() {
-            modal.style.display = 'none';
-        });
-    }
-
     function updateMangaDetails() {
         const title = document.getElementById('editTitle').value.trim();
         const link = document.getElementById('editLink').value.trim();
@@ -108,18 +114,4 @@ function handleMangaEdition(manga) {
     }, { once: true });
 
     document.getElementById('cancelEdit').addEventListener('click', resetEditForm, { once: true });
-}
-
-function isNameUsed(title){
-    return mangaList.some(manga => manga.title === title) ? true : false;
-}
-
-function showModal(message) {
-    const modal = document.getElementById('alertModal');
-    modal.querySelector('.modal-body').textContent = message;
-    modal.style.display = 'block';
-
-    document.getElementById('closeModal').addEventListener('click', function() {
-        modal.style.display = 'none';
-    });
 }
