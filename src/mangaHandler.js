@@ -103,7 +103,7 @@ function handleMangaEdition(manga) {
         manga.readChapters = readChapters;
         manga.favorite = favorite;
         manga.dayAdded = manga.dayAdded;
-        manga.lastRead = date;
+        manga.lastRead = new Date().toISOString();
 
         refreshAndSaveMangas();
         resetEditForm();
