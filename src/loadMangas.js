@@ -1,5 +1,6 @@
 // Function to handle image loading errors
-function handleImageError(imgElement) {
+function handleImageError(event) {
+    const imgElement = event.target;
     imgElement.onerror = null;
 
     //#TODO Implement random icon logic here
@@ -31,10 +32,9 @@ function cargarMangas(inputList) {
         );
         mangaDiv.dataset.title = manga.title;
 
-        // Set up the inner HTML with function call in onerror
         mangaDiv.innerHTML = `
             <div class="w-8 h-8 rounded-full overflow-hidden mr-2">
-                <img src="${manga.image}" alt="Portada" class="w-full h-full object-cover" onerror="handleImageError(this)">
+                <img src="${manga.image}" alt="Cover" class="w-full h-full object-cover">
             </div>
             <div class="flex-grow">
                 <a class="text-xs font-semibold" href="${manga.link}" target="_blank">${manga.title}</a>
@@ -47,13 +47,18 @@ function cargarMangas(inputList) {
                 <span id="fav" class="text-white text-[0.5rem] font-bold">★</span>
             </div>
         `;
-        
+
+        // Error event listener to images
+        const imgElement = mangaDiv.querySelector('img');
+        imgElement.addEventListener('error', handleImageError);
+
         fragment.appendChild(mangaDiv);
     });
 
     mangaListContainer.appendChild(fragment);
 }
 
+// Event delegation for handling manga item interactions
 document.getElementById("mangaListContainer").addEventListener("click", (event) => {
     const mangaItem = event.target.closest('.manga-item');
     if (!mangaItem) return;
