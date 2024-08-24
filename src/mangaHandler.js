@@ -1,4 +1,3 @@
-let originalTitle = null;
 // Helper function to refresh and save mangas
 function refreshAndSaveMangas() {
     cargarMangas(mangaList); // Later on, call the filter
@@ -69,7 +68,7 @@ function handleMangaEdition(manga) {
     formContainer.style.display = 'flex';
 
     function fillEditForm(manga) {
-        originalTitle = document.getElementById('editTitle').value = manga.title || '';
+        document.getElementById('editTitle').value = manga.title || '';
         document.getElementById('editLink').value = manga.link || '';
         document.getElementById('editImage').value = manga.image || ''; 
         document.getElementById('editReadChapters').value = manga.readChapters || 0;
@@ -89,7 +88,7 @@ function handleMangaEdition(manga) {
         const favorite = document.getElementById('editFavorite').checked;
 
         // Data verification
-    if (originalTitle !== title){
+    if (manga.title !== title){
         if (isNameUsed(title)){
             showModal("All manga names must be uniques."); //#TODO Add translation to all modals
             return;
