@@ -83,11 +83,14 @@ function handleMangaEdition(manga) {
 
         const title = document.getElementById('editTitle').value.trim();
         const link = document.getElementById('editLink').value.trim();
-        const image = document.getElementById('editImage').value.trim();
+        let image = document.getElementById('editImage').value.trim();
         const readChapters = parseInt(document.getElementById('editReadChapters').value.trim(), 10);
         const favorite = document.getElementById('editFavorite').checked;
 
         // Data verification
+    
+    image = imageExists({ value: image }) ? image : getRandomImage(); 
+
     if (manga.title !== title){
         if (isNameUsed(title)){
             showModal("All manga names must be uniques."); //#TODO Add translation to all modals
