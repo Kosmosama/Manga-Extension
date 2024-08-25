@@ -157,27 +157,23 @@
             <h2 data-translate-key="confirmation">Confirmación</h2>
             <p data-translate-key="confirmDelete">¿Estás seguro de que deseas eliminar este manga?</p>
             <div class="flex justify-end">
-                <button id="cancelConfirm"
-                    class="mr-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-1 px-4 rounded"
-                    data-translate-key="cancel">Cancelar</button>
-                <button id="confirm" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-4 rounded"
-                    data-translate-key="delete">Eliminar</button>
+                <button id="cancelConfirm" data-translate-key="cancel">Cancelar</button>
+                <button id="confirm" data-translate-key="delete">Eliminar</button>
             </div>
         </div>
     </div>
     <!--Settings-->
-    <section id="settings" class="hidden absolute top-0 left-0 w-96 h-96 bg-gray-600 text-white p-4">
-        <div class="flex justify-between items-center mb-4">
-            <h2 class="text-lg font-semibold" data-translate-key="settings">Settings</h2>
+    <section id="settings">
+        <div id="settingsTitle">
+            <h2 data-translate-key="settings">Settings</h2>
             <button id="closeBtn">
-                <img src="../public/icons/x.svg" class="h-5 w-5">
+                <img src="../public/icons/x.svg">
             </button>
         </div>
-        <div class="flex flex-col space-y-2 bg-gray-500 p-3 rounded-md">
-            <div class="flex items-center">
-                <label for="languageSelect" class="text-gray-200 mr-2 text-xs"
-                    data-translate-key="language">Idioma:</label>
-                <select id="languageSelect" class="bg-gray-700 text-white text-xs rounded">
+        <div id="settingsDiv">
+            <div>
+                <label for="languageSelect" data-translate-key="language">Idioma:</label>
+                <select id="languageSelect">
                     <option value="es">Español</option>
                     <option value="en">English</option>
                     <option value="de">Deutsch</option>
@@ -188,34 +184,13 @@
                     <option value="pt">português</option>
                 </select>
             </div>
-            <div class="flex items-center">
-                <label class="text-gray-200 mr-2 text-xs" data-translate-key="settingsOption1">No tengo idea de qué
-                    poner en settings xd</label>
-                <input id="cajita" type="checkbox" class="h-4 w-4">
-            </div>
-            <div class="flex items-center">
-                <a class="text-gray-200 mr-2 text-xs" id="importBookmarks" data-translate-key="importBookmarks"
+            <div>
+                <a id="importBookmarks" data-translate-key="importBookmarks"
                     href="bookmarksDemo.html">Importar Bookmarks</a>
             </div>
-            <div class="flex items-center">
-                <label class="text-gray-200 mr-2 text-xs" data-translate-key="settingsOption2">Cosas</label>
-                <input id="cajita" type="checkbox" class="h-4 w-4">
-            </div>
-            <div class="flex items-center">
-                <label class="text-gray-200 mr-2 text-xs" data-translate-key="settingsOption3">Feliz</label>
-                <input id="cajita" type="checkbox" class="h-4 w-4">
-            </div>
-            <div class="flex items-center">
+            <div>
                 <input type="file" id="import" accept="application/json">
                 <button id="export" data-translate-key="export">Export</button>
-            </div>
-            <div class="flex items-center">
-                <label class="text-gray-200 mr-2 text-xs" data-translate-key="settingsOption4">Sexo</label>
-                <label class="text-gray-200 mr-2 text-xs" data-translate-key="settingsOption4Yes">Si</label>
-                <input id="cajita" type="checkbox" class="h-4 w-4">
-                <label class="text-gray-200 mr-2 text-xs" data-translate-key="settingsOption4YesPlease">Si, por
-                    favor</label>
-                <input id="cajita" type="checkbox" class="h-4 w-4">
             </div>
         </div>
     </section>

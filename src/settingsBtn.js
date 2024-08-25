@@ -1,28 +1,23 @@
-const noSettings = document.getElementById('notSettings')
-const settings = document.getElementById('settings')
-const openSettingsBtn = document.getElementById('openBtn')
-const closeSettingsBtn = document.getElementById('closeBtn')
+const noSettings = document.getElementById('notSettings');
+const settings = document.getElementById('settings');
+const openSettingsBtn = document.getElementById('openBtn');
+const closeSettingsBtn = document.getElementById('closeBtn');
 
 const openSettings = () => {
-    //quitar todo
-    noSettings.classList.add('hidden')
+    // Ocultar todo
+    noSettings.style.display = 'none';
 
-    //poner Settings
-    settings.classList.add('block')
-    settings.classList.remove('hidden')
-}
+    // Mostrar Settings
+    settings.style.display = 'block';
+};
+
 const closeSettings = () => {
-    //quitar settings
-    noSettings.classList.remove('hidden')
+    // Mostrar todo
+    noSettings.style.display = 'block';
 
-    //poner todo
-    settings.classList.add('hidden')
-    settings.classList.remove('block')
-}
+    // Ocultar Settings
+    settings.style.display = 'none';
+};
 
-
-openSettingsBtn.addEventListener("click", openSettings)
-closeSettingsBtn.addEventListener("click", closeSettings)
-
-
-//crear funcion que revise el botón
+openSettingsBtn.addEventListener("click", openSettings);
+closeSettingsBtn.addEventListener("click", closeSettings);

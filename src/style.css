@@ -236,6 +236,7 @@ Footer {
     margin-right: 0.125rem
   }
 
+  /*Confirm delete*/
 #confirmationDialog{
   display: flex;
   align-items: center;
@@ -251,7 +252,7 @@ Footer {
     padding: 1.25rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
-  #confirmationDialog h2{ /* class="text-lg font-semibold mb-4"*/
+  #confirmationDialog h2{ 
     font-size: 0.875rem;
     line-height: 1.25rem;
     margin-bottom: 1rem;
@@ -260,3 +261,109 @@ Footer {
     margin-bottom: 1rem;
     
   }
+  #cancelConfirm{
+    background-color:rgba(66, 64, 64, 0.3);
+    border-radius: 999px;
+    color: rgb(0, 0, 0);
+    font-weight: 600;
+    margin-right: 0.25rem;
+    padding-top: 0.125rem;
+    padding-bottom: 0.125rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+    #cancelConfirm:hover{
+      background-color:rgba(66, 64, 64, 0.87);
+    }
+  #confirm{
+    background-color: rgba(255, 0, 0, 0.8);
+    border-radius: 999px;
+    color:white;
+    font-weight: 600;
+    padding-top: 0.125rem;
+    padding-bottom: 0.125rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+    #confirm:hover{
+      background-color: rgb(255, 0, 0);
+    }
+
+/*Settings*/
+
+#settings {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 24rem;
+  height: 24rem;
+  background-color: rgba(0, 0, 0, 0.315);
+  padding: 1rem;
+  flex-direction: column;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+#settingsTitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+#settingsTitle h2 {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  font-weight: 600;
+}
+
+#settingsTitle img {
+  height: 1.125rem;
+  width: 1.125rem;
+  cursor: pointer;
+}
+
+#settingsDiv {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  width: 100%;
+  align-items: center;
+  background-color: rgba(128, 128, 128, 0.815);
+  padding: 0.875rem;
+  border-radius: 0.5rem;
+}
+
+#settingsDiv div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+#settingsDiv div:last-child {
+  margin-bottom: 0;
+}
+
+#languageSelect {
+  background-color: rgba(66, 64, 64, 0.7);
+  border-radius: 8px;
+  color: white;
+  font-size: 0.75rem;
+  line-height: 1rem;
+  width: 100%;
+}
+
+input[type="file"],
+button#export {
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+button#export {
+  margin-top: 0.5rem;
+}
