@@ -24,11 +24,8 @@
               "src/settingsBtn.js",
               "src/getRandom.js",
               "src/settingsSave.js",
-              "src/searchBar.js",
-              "src/menuFilter.js",
               "src/translations.js",
               "src/filter.js",
-              "src/domUtils.js",
               "src/bookmarks.js",
               "src/mangaHandler.js",
               "src/addManga.js"

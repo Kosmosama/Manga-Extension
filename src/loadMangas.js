@@ -13,7 +13,7 @@ function getRandomImage() {
 }
 
 // Function to load all mangas from an array
-function cargarMangas(inputList) {
+function loadMangas(inputList) {
     const mangaListContainer = document.getElementById('mangaListContainer');
     mangaListContainer.innerHTML = '';
 

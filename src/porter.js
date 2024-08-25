@@ -35,8 +35,11 @@ function handleFileLoad(e) {
             console.log('Imported mangas:', importedMangas);
             console.log('Current mangas array:', mangaList);
             mangaList.sort((a, b) => new Date(a.dayAdded) - new Date(b.dayAdded));
-            saveMangas();
-            cargarMangas(mangaList);
+            
+            refreshAndSaveMangas(); 
+            // Might not work and need to go back to:
+            // actualizarLista();
+            // saveMangas();       
         } else {
             console.error('The file does not contain a valid mangas array.');
         }

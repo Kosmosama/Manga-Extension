@@ -1,45 +1,85 @@
-// Opciones de busqueda
+// Dropdown menu
+document.getElementById('menuBtn').addEventListener('click', toggleDropdownMenu);
+document.addEventListener('click', closeDropdownMenu);
+
+function toggleDropdownMenu(event) {
+    event.stopPropagation();
+    document.getElementById('dropdownMenu').classList.toggle('hidden');
+}
+
+function closeDropdownMenu(event) {
+    const dropdownMenu = document.getElementById('dropdownMenu');
+    if (!dropdownMenu.contains(event.target) && event.target !== document.getElementById('menuBtn')) {
+        dropdownMenu.classList.add('hidden');
+    }
+}
+
+// Search bar
+document.getElementById('searchBar').addEventListener('input', actualizarLista);
+
+document.getElementById('deleteSearch').addEventListener('click', handleDeleteSearch);
+
+function handleDeleteSearch() {
+    document.getElementById('searchBar').value = "";
+    actualizarLista();
+}
+
+// Filter option
 document.getElementById('sortOption').addEventListener('change', actualizarLista);
 
-// Ascendente / Descendente
+// Filter order
 document.getElementById('sortOrder').addEventListener('change', actualizarLista);
 
 function actualizarLista() {
     const query = document.getElementById('searchBar').value.toLowerCase();
-    let resultados = mangaList.filter(manga => manga.title.toLowerCase().includes(query));
+    let results = mangaList;
+
+    // Filter by searchbar
+    if (query) {
+        results = results.filter(manga => manga.title.toLowerCase().includes(query));
+    }
     
     const sortOption = document.getElementById('sortOption').value;
     const sortOrder = document.getElementById('sortOrder').value;
   
-    resultados = ordenarMangas(resultados, sortOption, sortOrder);
+    // Filter by filters
+    results = sortMangas(results, sortOption, sortOrder);
   
-    cargarMangas(resultados);
+    loadMangas(results);
 }
 
-function ordenarMangas(array, criterio, orden) {
+function sortMangas(array, filterMethod, order) {
     return array.sort((a, b) => {
         let comparison = 0;
 
-        switch (criterio) {
+        switch (filterMethod) {
             case 'favoritos':
+                // Should show favorites first
                 comparison = b.favorite - a.favorite;
                 break;
             case 'capitulos':
-                comparison = a.readChapters - b.readChapters;
+                // Should show most chapters to least
+                comparison = b.readChapters - a.readChapters;
                 break;
             case 'fechaAdicion':
-                comparison = new Date(a.dayAdded) - new Date(b.dayAdded);
+                // Should show most recent first
+                comparison = new Date(b.dayAdded) - new Date(a.dayAdded);
                 break;
             case 'ultimaLectura':
-                comparison = new Date(a.lastRead) - new Date(b.lastRead);
+                // Should show most recent first
+                comparison = new Date(b.lastRead) - new Date(a.lastRead);
                 break;
+            default:
+                // If "filterMethod" is other, should order alphabetically
+                comparison = a.title.localeCompare(b.title);
         }
 
-        // If the primary comparison is the same, sort alphabetically by 'nombre'
+        // In case that two of the comparisons are the same, order alphabetically (e.g., two with the same favorite status)
         if (comparison === 0) {
             comparison = a.title.localeCompare(b.title);
         }
 
-        return orden === 'ascendente' ? comparison : -comparison;
+        // Ascending/Descending
+        return order === 'ascendente' ? comparison : -comparison;
     });
 }

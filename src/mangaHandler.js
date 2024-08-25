@@ -1,6 +1,6 @@
 // Helper function to refresh and save mangas
 function refreshAndSaveMangas() {
-    cargarMangas(mangaList); // Later on, call the filter
+    actualizarLista();
     saveMangas();
 }
 
@@ -23,7 +23,7 @@ function showModal(message) {
 // Function to toggle favourite state for a certain manga
 function handleFavoriteToggle(manga) {
     manga.favorite = !manga.favorite;
-    refreshAndSaveMangas()
+    refreshAndSaveMangas();
 }
 
 // Function to +1 a chapter to a certain manga

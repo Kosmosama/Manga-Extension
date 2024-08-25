@@ -4,7 +4,7 @@ Extension to bookmark mangas you like.
 
 ## TO-DO
 
-1. [ ] **Refactor the code, applying the best practices possible.**
+1. [x] **Refactor the code, applying the best practices possible.**
 2. [ ] **Style the main page with CSS.**
 3. [ ] **Style the import page with CSS.**
 4. [x] **Fix the buttons for deleting manga, favoriting with a star, and editing. (discussion needed)**
