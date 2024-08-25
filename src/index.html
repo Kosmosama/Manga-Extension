@@ -5,9 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        #formContainer {
-            display: none;
-        }
 
         body {
             height: 1080px;
@@ -22,7 +19,7 @@
     <link href="style.css" rel="stylesheet">
 </head>
 
-<body class="text-sm">
+<body>
     <div id="notSettings" class="">
         <header>
             <div>
@@ -30,30 +27,22 @@
                     <img src="../public/icons/settings.svg">
                 </button>
             </div>
-            <h1 class="mr-36 ml-auto pt-2 text-base font-semibold" data-translate-key="mangaLibrary">Manga Library</h1>
+            <h1 data-translate-key="mangaLibrary">Manga Library</h1>
         </header>
-        <nav class="flex flex-row align-middle h-10 px-2 py-1 relative">
-            <button id="menuBtn" class="mr-2 relative">
-                <img src="../public/icons/menu.svg" class="h-8 w-8">
+        <nav>
+            <button id="menuBtn">
+                <img src="../public/icons/menu.svg">
             </button>
-            <input type="text" placeholder="Search..."
-                class="h-8 flex-grow border rounded-md border-gray-300 focus:outline-none focus:border-gray-400 px-2"
-                id="searchBar">
-            <button class="border rounded-md border-gray-300 focus:outline-none focus:border-gray-400 px-2"
-                id="deleteSearch">
+            <input type="text" placeholder="Search..." id="searchBar">
+            <button id="deleteSearch">
                 <img src="../public/icons/x.svg">
             </button>
-            <button class="ml-2">
-                <img src="../public/icons/search.svg" class="h-8 w-8">
-            </button>
             <!-- Dropdown menu -->
-            <div id="dropdownMenu"
-                class="absolute left-0 top-10 bg-white border border-gray-300 rounded-md shadow-lg p-4 hidden z-10">
+            <div id="dropdownMenu">
                 <div class="mb-2">
-                    <label for="sortOption" class="block text-sm font-medium text-gray-700"
+                    <label for="sortOption"
                         data-translate-key="orderBy">Ordenar por:</label>
-                    <select id="sortOption"
-                        class="h-8 w-full border rounded-md border-gray-300 focus:outline-none focus:border-gray-400 px-2">
+                    <select id="sortOption">
                         <option value="favoritos" data-translate-key="favoritesFirst">Favoritos primero</option>
                         <option value="alfabetico" data-translate-key="alphabetically">Alfabéticamente</option>
                         <option value="capitulos" data-translate-key="chapterCount">Número de capítulos leídos</option>
@@ -61,15 +50,12 @@
                         <option value="ultimaLectura" data-translate-key="lastRead">Última lectura</option>
                     </select>
                 </div>
-                <div class="mb-2">
-                    <button id="getRandomManga" data-translate-key="getRandom">get random manga</button>
-                    <button id="stopRandomManga" data-translate-key="quitRandom">Quit random manga</button>
-                </div>
+                
+                <button id="getRandomManga" data-translate-key="getRandom">get random manga</button>
+                
                 <div>
-                    <label for="sortOrder" class="block text-sm font-medium text-gray-700"
-                        data-translate-key="order">Orden:</label>
-                    <select id="sortOrder"
-                        class="h-8 w-full border rounded-md border-gray-300 focus:outline-none focus:border-gray-400 px-2">
+                    <label for="sortOrder" data-translate-key="order">Orden:</label>
+                    <select id="sortOrder">
                         <option value="ascendente" data-translate-key="ascending">Ascendente</option>
                         <option value="descendente" data-translate-key="descending">Descendente</option>
                     </select>
@@ -79,12 +65,14 @@
 
 
         <!--Caps-->
-        <section class="h-[calc(96rem-5.5rem)]">
-            <div class="p-2" id="mangaListContainer"></div>
+        <section>
+            <div id="mangaListContainer"></div>
         </section>
-        <footer class="fixed bottom-4 left-1/2 transform -translate-x-1/2">
-            <button class="bg-amber-500 rounded-lg p-2 shadow-lg hover:bg-amber-600 transition-colors" id="addButton">
-                <img src="../public/icons/plus.svg" class="w-6 h-6">
+
+        <!--Footer btn-->
+        <footer>
+            <button  id="addButton">
+                <img src="../public/icons/plus.svg">
             </button>
         </footer>
     </div>
@@ -97,41 +85,29 @@
         </div>
     </div>
 
-    <!-- Formulario de Cargar Manga -->
-    <div id="formContainer" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
-        <div class="bg-white rounded-lg p-6 w-80">
-            <h2 class="text-lg font-semibold mb-4" data-translate-key="loadManga">Cargar Manga</h2>
+    <!-- Load manga form -->
+    <div id="formContainer">
+        <div id="parentDiv">
+            <h2 data-translate-key="loadManga">Cargar Manga</h2>
             <form id="chapterForm">
                 <div class="mb-4">
-                    <label for="image" class="block text-sm font-medium text-gray-700"
-                        data-translate-key="imageLabel">Imagen (opcional, solo links de imgur)</label>
-                    <input type="text" id="image" name="image" placeholder="Ingrese la URL de la imagen"
-                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50">
+                    <label for="image" data-translate-key="imageLabel">Imagen (opcional, solo links de imgur)</label>
+                    <input type="text" id="image" name="image" placeholder="Ingrese la URL de la imagen">
                 </div>
                 <div class="mb-4">
-                    <label for="title" class="block text-sm font-medium text-gray-700"
-                        data-translate-key="titleLabel">Título</label>
-                    <input type="text" id="title" name="title"
-                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50"
-                        required>
+                    <label for="title" data-translate-key="titleLabel">Título</label>
+                    <input type="text" id="title" name="title" required>
                 </div>
                 <div class="mb-4">
-                    <label for="title" class="block text-sm font-medium text-gray-700"
-                        data-translate-key="formLinkLabel">Link del manga</label>
-                    <input type="text" id="link" name="link"
-                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50"
-                        required>
+                    <label for="title" data-translate-key="formLinkLabel">Link del manga</label>
+                    <input type="text" id="link" name="link" required>
                 </div>
                 <div class="mb-4">
-                    <label for="readChapters" class="block text-sm font-medium text-gray-700"
-                        data-translate-key="readChaptersLabel">Capítulos leídos</label>
-                    <input type="number" id="readChapters" name="readChapters"
-                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50"
-                        required>
+                    <label for="readChapters" data-translate-key="readChaptersLabel">Capítulos leídos</label>
+                    <input type="number" id="readChapters" name="readChapters" required>
                 </div>
                 <div class="mb-4">
-                    <label for="favorite" class="block text-sm font-medium text-gray-700"
-                        data-translate-key="favorite">Favorito</label>
+                    <label for="favorite" data-translate-key="favorite">Favorito</label>
                     <input type="checkbox" id="favorite" name="favorite" class="mt-1 block">
                 </div>
                 <div class="flex justify-end">
@@ -147,47 +123,33 @@
     </div>
 
     <!-- Formulario de Edit Manga -->
-    <div id="editFormContainer" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center"
-        style="display: none;">
-        <div class="bg-white rounded-lg p-6 w-80">
-            <h2 class="text-lg font-semibold mb-4" data-translate-key="editMangaTitle">Editar Manga</h2>
+    <div id="editFormContainer">
+        <div id="parentDiv">
+            <h2 data-translate-key="editMangaTitle">Editar Manga</h2>
             <form id="editForm">
                 <div class="mb-4">
-                    <label for="image" class="block text-sm font-medium text-gray-700"
-                        data-translate-key="imageLabel">Imagen (opcional, solo links de imgur)</label>
-                    <input type="text" id="editImage" name="image" placeholder="Ingrese la URL de la imagen"
-                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50">
+                    <label for="image" data-translate-key="imageLabel">Imagen (opcional, solo links de imgur)</label>
+                    <input type="text" id="editImage" name="image" placeholder="Ingrese la URL de la imagen">
                 </div>
                 <div class="mb-4">
-                    <label for="title" class="block text-sm font-medium text-gray-700"
-                        data-translate-key="titleLabel">Título</label>
-                    <input type="text" id="editTitle" name="title"
-                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50"
-                        required>
+                    <label for="title" data-translate-key="titleLabel">Título</label>
+                    <input type="text" id="editTitle" name="title" required>
                 </div>
                 <div class="mb-4">
-                    <label for="title" class="block text-sm font-medium text-gray-700"
-                        data-translate-key="formLinkLabel">Link</label>
-                    <input type="text" id="editLink" name="edit"
-                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50"
-                        required>
+                    <label for="title" data-translate-key="formLinkLabel">Link</label>
+                    <input type="text" id="editLink" name="edit" required>
                 </div>
                 <div class="mb-4">
-                    <label for="readChapters" class="block text-sm font-medium text-gray-700"
-                        data-translate-key="readChaptersLabel">Capítulos leídos</label>
-                    <input type="number" id="editReadChapters" name="readChapters"
-                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-opacity-50"
-                        required>
+                    <label for="readChapters" data-translate-key="readChaptersLabel">Capítulos leídos</label>
+                    <input type="number" id="editReadChapters" name="readChapters" required>
                 </div>
                 <div class="mb-4">
-                    <label for="editFavorite" class="block text-sm font-medium text-gray-700"
-                        data-translate-key="favorite">Favorito</label>
+                    <label for="editFavorite" data-translate-key="favorite">Favorito</label>
                     <input type="checkbox" id="editFavorite" name="favorite" class="mt-1 block">
                 </div>
                 <div class="flex justify-end">
                     <button type="button" id="cancelEdit"
-                        class="mr-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-1 px-4 rounded"
-                        data-translate-key="cancel">Cancelar</button>
+                        class="mr-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-1 px-4 rounded" data-translate-key="cancel">Cancelar</button>
                     <button type="submit" id="saveEdit"
                         class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 px-4 rounded"
                         data-translate-key="save">Guardar</button>

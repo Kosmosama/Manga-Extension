@@ -1,16 +1,25 @@
+body {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+label {
+  display: block;
+  font-weight: 600;
+  color:#424040
+}
 /* Modal styling */
 .modal {
-    display: none; 
-    position: fixed; 
-    z-index: 1; 
-    left: 0;
-    top: 0;
-    width: 100%; 
-    height: 100%; 
-    overflow: auto; 
-    background-color: rgba(0, 0, 0, 0.4); 
-  }
-  
+  display: none; 
+  position: fixed; 
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto; 
+  background-color: rgba(0, 0, 0, 0.4); 
+}
+
   .modal-content {
     background-color: #fff;
     margin: 15% auto; 
@@ -20,37 +29,160 @@
     max-width: 400px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
-  
+
   .modal-close {
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
   }
-  
+
   .modal-close:hover,
   .modal-close:focus {
     color: #000;
     text-decoration: none;
     cursor: pointer;
   }
-  
 
 
-  /*Header*/
-  Header{
-    /*flex flex-row border-b border-b-blue-400 border-solid h-12*/
-    height: 3rem;
-    display: flex;
-    flex-direction: row;
-    border: none;
-    border-bottom: solid;
-    border-bottom-width: 1px;
-    border-bottom-color: rgba(0, 255, 255, 0.5);
-  }
+
+/*Header*/
+Header {
+/*flex flex-row border-b border-b-blue-400 border-solid h-12*/
+  height: 3rem;
+  display: flex;
+  flex-direction: row;
+  border: none;
+  border-bottom: solid;
+  border-bottom-width: 1px;
+  border-bottom-color: rgba(0, 255, 255, 0.5);
+}
   Header img {
     height: 2rem;
     width: 2rem;
     margin-top: 0.5rem;
     margin-left: 0.5rem;
   }
+  Header h1 {
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 1rem;
+    text-align:center;
+    font-weight: 600;
+  }
+/*Nav*/
+Nav{
+  display: flex;
+  flex-direction: row;
+  vertical-align: middle;
+  height: 2.5rem;
+  padding-left: 0.125rem;
+  padding-right: 0.125rem;
+  position: relative;
+  margin-top: 0.5rem;
+}
+Nav button:not(#getRandomManga,#stopRandomManga){ 
+  border: gray solid 1px;
+  height: 2rem;
+  width: 2rem;
+  border-radius: 0.375rem;
+  padding-right: 0.5rem;
+  padding-left: 0.5rem;
+}
+  Nav button:focus{
+    border: red;
+  }
+  #searchBar {
+    height: 2rem;
+    flex-grow: 1;
+    border: gray solid 1px;
+    border-radius: 0.375rem;
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+  }
+  #searchBar:focus{
+    outline: none;
+  }
+  /*Filter dropdown menu*/
+  #dropdownMenu {
+    position: absolute;
+    left: 0px;
+    top: 2rem;
+    background-color: white;
+    border: gray solid 2px;
+    border-radius: 0.375rem;
+    box-shadow: black;
+    padding: 1rem;
+    z-index: 3rem;
+  }
+  #dropdownMenu select { /*    "h-8 w-full border rounded-md border-gray-300 focus:outline-none focus:border-gray-400 px-2"   */
+    height: 2.5rem;
+    padding: 0.25rem;
+    width: 100%;
+    border: gray solid 1px;
+    border-radius: 0.375rem;
+  }
+  #dropdownMenu select:focus{
+    outline: none;
+  }
+  #getRandomManga {
+    margin-top: 0.25rem;
+    margin-bottom: 0.5rem;
+  }
+#mangaListContainer{
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+/*Footer button*/
+Footer {
+  position: fixed;
+  bottom: 1rem;
+  left: 49%;
+}
+  Footer button{
+    background-color: chocolate;
+    border-radius: 0.5rem;
+    box-shadow: 10px 5px 5px black;
+    padding: 0.5rem;
+    
+  }
+    Footer button:hover{
+      background-color: rgb(248, 111, 12);
+    }
+  Footer img{
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+#formContainer,#editFormContainer{
+  position: fixed;
+  display: none;
+  inset: 0px;
+  background-color: rgba(128, 128, 128, 0.50);
+  align-items: center;
+  justify-content: center;
+}
+  /* I created a parent div and applied it to both so I wouldn't have to keep repeating the #formContainer, #editFormContainer.*/
+  #parentDiv{ 
+    background-color: white;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    width: 20rem;
+  }
+  #parentDiv h2{
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  #parentDiv input{
+    margin-top: 0.125rem;
+    display: block;
+    width: 100%;
+    border: gray solid 1px;
+    border-radius: 0.5rem;
+    box-shadow: 2px 1px 1px rgba(0, 0, 0, 0.1);
+  }
+    #parentDiv input:focus{
+      outline: none;
+    }

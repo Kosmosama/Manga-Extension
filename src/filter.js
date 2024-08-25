@@ -4,15 +4,24 @@ document.addEventListener('click', closeDropdownMenu);
 
 function toggleDropdownMenu(event) {
     event.stopPropagation();
-    document.getElementById('dropdownMenu').classList.toggle('hidden');
+    const dropdownMenu = document.getElementById('dropdownMenu');
+    if (dropdownMenu.style.display === 'none' || dropdownMenu.style.display === '') {
+        dropdownMenu.style.display = 'block';
+    } else {
+        dropdownMenu.style.display = 'none';
+    }
 }
 
 function closeDropdownMenu(event) {
     const dropdownMenu = document.getElementById('dropdownMenu');
     if (!dropdownMenu.contains(event.target) && event.target !== document.getElementById('menuBtn')) {
-        dropdownMenu.classList.add('hidden');
+        dropdownMenu.style.display = 'none';
     }
 }
+
+// Ejemplo de cómo ocultar el menú al cargar la página
+document.getElementById('dropdownMenu').style.display = 'none';
+
 
 // Search bar
 document.getElementById('searchBar').addEventListener('input', actualizarLista);
