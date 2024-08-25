@@ -20,7 +20,7 @@
 </head>
 
 <body>
-    <div id="notSettings" class="">
+    <div id="notSettings">
         <header>
             <div>
                 <button href="settings.html" id="openBtn">
@@ -39,7 +39,7 @@
             </button>
             <!-- Dropdown menu -->
             <div id="dropdownMenu">
-                <div class="mb-2">
+                <div>
                     <label for="sortOption"
                         data-translate-key="orderBy">Ordenar por:</label>
                     <select id="sortOption">
@@ -90,33 +90,29 @@
         <div id="parentDiv">
             <h2 data-translate-key="loadManga">Cargar Manga</h2>
             <form id="chapterForm">
-                <div class="mb-4">
+                <div>
                     <label for="image" data-translate-key="imageLabel">Imagen (opcional, solo links de imgur)</label>
                     <input type="text" id="image" name="image" placeholder="Ingrese la URL de la imagen">
                 </div>
-                <div class="mb-4">
+                <div>
                     <label for="title" data-translate-key="titleLabel">Título</label>
                     <input type="text" id="title" name="title" required>
                 </div>
-                <div class="mb-4">
+                <div>
                     <label for="title" data-translate-key="formLinkLabel">Link del manga</label>
                     <input type="text" id="link" name="link" required>
                 </div>
-                <div class="mb-4">
+                <div>
                     <label for="readChapters" data-translate-key="readChaptersLabel">Capítulos leídos</label>
                     <input type="number" id="readChapters" name="readChapters" required>
                 </div>
-                <div class="mb-4">
+                <div id="favorite">
                     <label for="favorite" data-translate-key="favorite">Favorito</label>
-                    <input type="checkbox" id="favorite" name="favorite" class="mt-1 block">
+                    <input type="checkbox" name="favorite">
                 </div>
-                <div class="flex justify-end">
-                    <button type="button" id="cancelButton"
-                        class="mr-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-1 px-4 rounded"
-                        data-translate-key="cancel">Cancelar</button>
-                    <button type="submit"
-                        class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 px-4 rounded"
-                        data-translate-key="save">Guardar</button>
+                <div id="btnDiv">
+                    <button type="button" id="cancelButton" data-translate-key="cancel">Cancelar</button>
+                    <button type="submit" id="saveBtn" data-translate-key="save">Guardar</button>
                 </div>
             </form>
         </div>
@@ -127,43 +123,39 @@
         <div id="parentDiv">
             <h2 data-translate-key="editMangaTitle">Editar Manga</h2>
             <form id="editForm">
-                <div class="mb-4">
+                <div>
                     <label for="image" data-translate-key="imageLabel">Imagen (opcional, solo links de imgur)</label>
                     <input type="text" id="editImage" name="image" placeholder="Ingrese la URL de la imagen">
                 </div>
-                <div class="mb-4">
+                <div>
                     <label for="title" data-translate-key="titleLabel">Título</label>
                     <input type="text" id="editTitle" name="title" required>
                 </div>
-                <div class="mb-4">
+                <div>
                     <label for="title" data-translate-key="formLinkLabel">Link</label>
                     <input type="text" id="editLink" name="edit" required>
                 </div>
-                <div class="mb-4">
+                <div>
                     <label for="readChapters" data-translate-key="readChaptersLabel">Capítulos leídos</label>
                     <input type="number" id="editReadChapters" name="readChapters" required>
                 </div>
-                <div class="mb-4">
+                <div id="favorite">
                     <label for="editFavorite" data-translate-key="favorite">Favorito</label>
-                    <input type="checkbox" id="editFavorite" name="favorite" class="mt-1 block">
+                    <input type="checkbox" id="editFavorite" name="favorite">
                 </div>
-                <div class="flex justify-end">
-                    <button type="button" id="cancelEdit"
-                        class="mr-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-1 px-4 rounded" data-translate-key="cancel">Cancelar</button>
-                    <button type="submit" id="saveEdit"
-                        class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-1 px-4 rounded"
-                        data-translate-key="save">Guardar</button>
+                <div id="btnDiv">
+                    <button type="button" id="cancelEdit" data-translate-key="cancel">Cancelar</button>
+                    <button type="submit" id="saveEdit" data-translate-key="save">Guardar</button>
                 </div>
 
             </form>
         </div>
     </div>
     <!-- Ventana de Confirmación -->
-    <div id="confirmationDialog" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center"
-        style="display: none;">
-        <div class="bg-white rounded-lg shadow-lg w-96 p-6">
-            <h2 class="text-lg font-semibold mb-4" data-translate-key="confirmation">Confirmación</h2>
-            <p class="mb-4" data-translate-key="confirmDelete">¿Estás seguro de que deseas eliminar este manga?</p>
+    <div id="confirmationDialog" style="display: none;">
+        <div id="confirmBox">
+            <h2 data-translate-key="confirmation">Confirmación</h2>
+            <p data-translate-key="confirmDelete">¿Estás seguro de que deseas eliminar este manga?</p>
             <div class="flex justify-end">
                 <button id="cancelConfirm"
                     class="mr-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-1 px-4 rounded"
