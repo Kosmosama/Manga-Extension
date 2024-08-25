@@ -35,3 +35,22 @@
     cursor: pointer;
   }
   
+
+
+  /*Header*/
+  Header{
+    /*flex flex-row border-b border-b-blue-400 border-solid h-12*/
+    height: 3rem;
+    display: flex;
+    flex-direction: row;
+    border: none;
+    border-bottom: solid;
+    border-bottom-width: 1px;
+    border-bottom-color: rgba(0, 255, 255, 0.5);
+  }
+  Header img {
+    height: 2rem;
+    width: 2rem;
+    margin-top: 0.5rem;
+    margin-left: 0.5rem;
+  }
