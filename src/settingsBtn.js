@@ -4,18 +4,18 @@ const openSettingsBtn = document.getElementById('openBtn');
 const closeSettingsBtn = document.getElementById('closeBtn');
 
 const openSettings = () => {
-    // Ocultar todo
+    // Hide everything
     noSettings.style.display = 'none';
 
-    // Mostrar Settings
+    // Show settings
     settings.style.display = 'block';
 };
 
 const closeSettings = () => {
-    // Mostrar todo
+    // Show everything
     noSettings.style.display = 'block';
 
-    // Ocultar Settings
+    // Hide settings
     settings.style.display = 'none';
 };
 

@@ -1,6 +1,6 @@
 // Dropdown menu
 document.getElementById('menuBtn').addEventListener('click', toggleDropdownMenu);
-document.addEventListener('click', closeDropdownMenu);
+document.addEventListener('click', closeDropdownMenu); // Click anywhere to close filter
 
 function toggleDropdownMenu(event) {
     event.stopPropagation();
@@ -19,27 +19,23 @@ function closeDropdownMenu(event) {
     }
 }
 
-// Ejemplo de cómo ocultar el menú al cargar la página
-document.getElementById('dropdownMenu').style.display = 'none';
-
-
 // Search bar
-document.getElementById('searchBar').addEventListener('input', actualizarLista);
+document.getElementById('searchBar').addEventListener('input', loadFilteredMangas);
 
 document.getElementById('deleteSearch').addEventListener('click', handleDeleteSearch);
 
 function handleDeleteSearch() {
     document.getElementById('searchBar').value = "";
-    actualizarLista();
+    loadFilteredMangas();
 }
 
 // Filter option
-document.getElementById('sortOption').addEventListener('change', actualizarLista);
+document.getElementById('sortOption').addEventListener('change', loadFilteredMangas);
 
 // Filter order
-document.getElementById('sortOrder').addEventListener('change', actualizarLista);
+document.getElementById('sortOrder').addEventListener('change', loadFilteredMangas);
 
-function actualizarLista() {
+function loadFilteredMangas() {
     const query = document.getElementById('searchBar').value.toLowerCase();
     let results = mangaList;
 

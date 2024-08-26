@@ -48,11 +48,11 @@ function initializeTranslations(translations) {
             savePreferredLanguage(selectedLanguage);
             window.language = selectedLanguage; // Actualizar la variable global
             translatePage();
-            actualizarLista();
+            loadFilteredMangas();
         });
 
         // Cargar las tarjetas de mangas traducidas
-        actualizarLista(); // Supongo que mangaList ya está disponible
+        loadFilteredMangas(); // Supongo que mangaList ya está disponible
     });
 }
 
