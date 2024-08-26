@@ -1,6 +1,6 @@
 // Helper function to refresh and save mangas
 function refreshAndSaveMangas() {
-    actualizarLista();
+    loadFilteredMangas();
     saveMangas();
 }
 

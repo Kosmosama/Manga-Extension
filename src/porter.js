@@ -38,7 +38,7 @@ function handleFileLoad(e) {
             
             refreshAndSaveMangas(); 
             // Might not work and need to go back to:
-            // actualizarLista();
+            // loadFilteredMangas();
             // saveMangas();       
         } else {
             console.error('The file does not contain a valid mangas array.');

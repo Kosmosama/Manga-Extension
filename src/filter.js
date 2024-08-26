@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 document.getElementById('menuBtn').addEventListener('click', showFiltersDialog);
 document.getElementById('closeFiltersDialog').addEventListener('click', hideFiltersDialog);
 document.addEventListener('click', closeFiltersDialogOutside);
+=======
+// Dropdown menu
+document.getElementById('menuBtn').addEventListener('click', toggleDropdownMenu);
+document.addEventListener('click', closeDropdownMenu); // Click anywhere to close filter
+>>>>>>> ca6baddfa25715df8fb6b7e2e6a651ea06a106d6
 
 function showFiltersDialog(event) {
     event.stopPropagation();
@@ -25,22 +31,27 @@ function closeFiltersDialogOutside(event) {
 // Inicialmente oculta el diálogo
 document.getElementById('filtersDialog').classList.add('translate-x-full');
 
+<<<<<<< HEAD
 document.getElementById('searchBar').addEventListener('input', actualizarLista);
+=======
+// Search bar
+document.getElementById('searchBar').addEventListener('input', loadFilteredMangas);
+>>>>>>> ca6baddfa25715df8fb6b7e2e6a651ea06a106d6
 
 document.getElementById('deleteSearch').addEventListener('click', handleDeleteSearch);
 
 function handleDeleteSearch() {
     document.getElementById('searchBar').value = "";
-    actualizarLista();
+    loadFilteredMangas();
 }
 
 // Filter option
-document.getElementById('sortOption').addEventListener('change', actualizarLista);
+document.getElementById('sortOption').addEventListener('change', loadFilteredMangas);
 
 // Filter order
-document.getElementById('sortOrder').addEventListener('change', actualizarLista);
+document.getElementById('sortOrder').addEventListener('change', loadFilteredMangas);
 
-function actualizarLista() {
+function loadFilteredMangas() {
     const query = document.getElementById('searchBar').value.toLowerCase();
     let results = mangaList;
 

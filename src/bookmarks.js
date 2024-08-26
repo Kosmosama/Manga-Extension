@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('editLink').value = bookmark.url;
         document.getElementById('editReadChapters').value = '';
         document.getElementById('editImage').value = '';
-        document.getElementById('editFavorite').checked = false; // Mostrar el estado del checkbox
+        document.getElementById('editFavorite').checked = false; // Show checkbox state
     }
     
 
