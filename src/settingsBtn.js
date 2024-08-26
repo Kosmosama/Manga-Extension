@@ -1,23 +1,16 @@
-const noSettings = document.getElementById('notSettings');
-const settings = document.getElementById('settings');
-const openSettingsBtn = document.getElementById('openBtn');
-const closeSettingsBtn = document.getElementById('closeBtn');
+const dialog = document.getElementById('radix-dialog');
+const openDialogBtn = document.getElementById('open-dialog');
+const closeDialogBtn = document.getElementById('close-dialog');
 
-const openSettings = () => {
-    // Ocultar todo
-    noSettings.style.display = 'none';
-
-    // Mostrar Settings
-    settings.style.display = 'block';
+const openDialog = () => {
+  dialog.classList.remove('translate-x-full');
+  dialog.classList.add('translate-x-0');
 };
 
-const closeSettings = () => {
-    // Mostrar todo
-    noSettings.style.display = 'block';
-
-    // Ocultar Settings
-    settings.style.display = 'none';
+const closeDialog = () => {
+  dialog.classList.remove('translate-x-0');
+  dialog.classList.add('translate-x-full');
 };
 
-openSettingsBtn.addEventListener("click", openSettings);
-closeSettingsBtn.addEventListener("click", closeSettings);
+openDialogBtn.addEventListener('click', openDialog);
+closeDialogBtn.addEventListener('click', closeDialog);

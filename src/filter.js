@@ -1,29 +1,30 @@
-// Dropdown menu
-document.getElementById('menuBtn').addEventListener('click', toggleDropdownMenu);
-document.addEventListener('click', closeDropdownMenu);
+document.getElementById('menuBtn').addEventListener('click', showFiltersDialog);
+document.getElementById('closeFiltersDialog').addEventListener('click', hideFiltersDialog);
+document.addEventListener('click', closeFiltersDialogOutside);
 
-function toggleDropdownMenu(event) {
+function showFiltersDialog(event) {
     event.stopPropagation();
-    const dropdownMenu = document.getElementById('dropdownMenu');
-    if (dropdownMenu.style.display === 'none' || dropdownMenu.style.display === '') {
-        dropdownMenu.style.display = 'block';
-    } else {
-        dropdownMenu.style.display = 'none';
+    const filtersDialog = document.getElementById('filtersDialog');
+    filtersDialog.classList.remove('translate-x-full');
+    filtersDialog.classList.add('translate-x-0');
+}
+
+function hideFiltersDialog() {
+    const filtersDialog = document.getElementById('filtersDialog');
+    filtersDialog.classList.add('translate-x-full');
+    filtersDialog.classList.remove('translate-x-0');
+}
+
+function closeFiltersDialogOutside(event) {
+    const filtersDialog = document.getElementById('filtersDialog');
+    if (!filtersDialog.contains(event.target) && event.target !== document.getElementById('menuBtn')) {
+        hideFiltersDialog();
     }
 }
 
-function closeDropdownMenu(event) {
-    const dropdownMenu = document.getElementById('dropdownMenu');
-    if (!dropdownMenu.contains(event.target) && event.target !== document.getElementById('menuBtn')) {
-        dropdownMenu.style.display = 'none';
-    }
-}
+// Inicialmente oculta el diálogo
+document.getElementById('filtersDialog').classList.add('translate-x-full');
 
-// Ejemplo de cómo ocultar el menú al cargar la página
-document.getElementById('dropdownMenu').style.display = 'none';
-
-
-// Search bar
 document.getElementById('searchBar').addEventListener('input', actualizarLista);
 
 document.getElementById('deleteSearch').addEventListener('click', handleDeleteSearch);

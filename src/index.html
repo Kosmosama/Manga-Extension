@@ -1,211 +1,160 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-
-        body {
-            height: 1080px;
-            width: 720px;
-        }
-
-        #dropdownMenu {
-            z-index: 1000;
-        }
-    </style>
-    <link href="./output.css" rel="stylesheet">
-    <link href="style.css" rel="stylesheet">
-</head>
-
-<body>
-    <div id="notSettings">
-        <header>
-            <div>
-                <button href="settings.html" id="openBtn">
-                    <img src="../public/icons/settings.svg">
-                </button>
+<html lang="en" class="h-[1080px] w-[720px]">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<style>
+			#dropdownMenu {
+			z-index: 1000;
+			}
+		</style>
+		<link href="./output.css" rel="stylesheet">
+	</head>
+	<body class="container mx-auto p-4 max-w-3xl bg-gray-50 dark:bg-gray-500 dark:text-white text-foreground" data-id="1">
+		<div class="bg-card rounded-lg shadow-lg p-4 mb-6 transform transition-all bg-gray-50 dark:bg-gray-900 hover:scale-[1.02]" data-id="2">
+			<header class="flex justify-between items-center mb-4" data-id="3">
+				<button id="open-dialog" class="inline-flex items-center justify-center rounded-md text-sm font-medium h-10 w-10" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-dialog">
+               <img src="../public/icons/settings.svg">
+               <span class="sr-only">Open settings</span>
+             </button>
+				<h1 class="text-2xl font-bold" data-id="17">Manga Library</h1>
+				<div class="w-6" data-id="18"></div>
+			</header>
+			<div class="flex gap-2" data-id="19">
+				<button id="menuBtn" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2" data-id="22" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-:r3:" data-state="closed">
+				<img src="../public/icons/filter.svg">
+				Filters
+				</button>
+				<form class="flex-grow relative" data-id="31">
+					<input id="searchBar" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pr-16" placeholder="Search manga..." data-id="32" type="text" value="">
+					<button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10 absolute right-0 top-0 bottom-0" type="submit" data-id="36">
+					<img src="../public/icons/search.svg">
+					<span class="sr-only" data-id="38">Search</span>
+					</button>
+				</form>
+			</div>
+		</div>
+		<main class="space-y-4 h-[calc(100vh-300px)] overflow-y-auto" data-id="39" style="scrollbar-width: none;">
+			<style data-id="40">
+				.manga-list::-webkit-scrollbar {
+				display: none;
+				}
+			</style>
+			<div class="manga-list space-y-4 pr-4" id="mangaListContainer" data-id="41">
+			</div>
+		</main>
+		<div class=" transform transition-all hover:scale-[1.02]">
+			<button id="addButton" class="inline-flex items-center bg-gray-50 dark:bg-gray-900 justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 mt-6 w-full" data-id="78">
+			<img src="../public/icons/plus.svg">
+			Add Manga
+			</button>
+		</div>
+      <div role="dialog" id="radix-dialog" class="fixed top-0 right-0 h-full max-w-sm bg-slate-900 p-6 shadow-lg transition-transform transform translate-x-full z-[100] w-3/4 sm:max-w-sm" tabindex="-1">
+         <div class="flex flex-col space-y-2">
+           <h2 id="radix-title" class="text-lg font-semibold">Settings</h2>
+         </div>
+         <div class="flex items-center space-x-2 mt-4">
+           <button type="button" role="switch" aria-checked="false" class="switch peer" id="dark-mode">
+             <span class="switch-thumb"></span>
+           </button>
+           <label for="dark-mode" class="text-sm font-medium">Light Mode</label>
+         </div>
+         <button id="close-dialog" type="button" class="absolute right-4 top-4">
+           <img src="../public/icons/x.svg">
+           <span class="sr-only">Close</span>
+         </button>
+       </div>
+       <div role="dialog" id="formContainer" class="fixed z-50 gap-4 bg-slate-900 p-6 shadow-lg inset-y-0 right-0 h-full w-3/4 border-l sm:max-w-sm transform translate-x-full transition-transform duration-500 ease-in-out">
+         <div class="flex flex-col space-y-2 text-center sm:text-left">
+             <h2 class="text-lg font-semibold text-foreground" data-translate-key="loadManga">Cargar Manga</h2>
+         </div>
+         <div class="py-4 space-y-4">
+             <form id="chapterForm">
+                 <div class="space-y-1">
+                     <label for="image" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" data-translate-key="imageLabel">Imagen (opcional, solo links de imgur)</label>
+                     <input type="text" id="image" name="image" placeholder="Ingrese la URL de la imagen" class="text-black flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                 </div>
+                 <div class="space-y-1">
+                     <label for="title" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" data-translate-key="titleLabel">Título</label>
+                     <input type="text" id="title" name="title" required class="text-black flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                 </div>
+                 <div class="space-y-1">
+                     <label for="link" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" data-translate-key="formLinkLabel">Link del manga</label>
+                     <input type="text" id="link" name="link" required class="text-black flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                 </div>
+                 <div class="space-y-1">
+                     <label for="readChapters" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" data-translate-key="readChaptersLabel">Capítulos leídos</label>
+                     <input type="number" id="readChapters" name="readChapters" required class="text-black flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                 </div>
+                 <div class="flex items-center space-x-2">
+                     <input type="checkbox" id="favorite" name="favorite" class="peer h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground">
+                     <label for="favorite" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" data-translate-key="favorite">Favorito</label>
+                 </div>
+                 <div class="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
+                     <button type="button" id="cancelButton" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2" data-translate-key="cancel">Cancelar</button>
+                     <button type="submit" id="saveBtn" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2" data-translate-key="save">Guardar</button>
+                 </div>
+             </form>
+         </div>
+         <button type="button" class="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none">
+             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x h-4 w-4">
+                 <path d="M18 6 6 18"></path>
+                 <path d="m6 6 12 12"></path>
+             </svg>
+             <span class="sr-only">Close</span>
+         </button>
+     </div>     
+     
+     <div id="filtersDialog" class="fixed inset-y-0 right-0 z-50 w-3/4 max-w-sm bg-slate-900 shadow-lg transform translate-x-full transition-transform duration-300 ease-in-out">
+        <div class="relative p-6 h-full">
+            <h2 id="filtersTitle" class="text-lg font-semibold">Filters</h2>
+            <div class="py-4">
+                <div class="flex items-center space-x-2">
+                    <button type="button" role="checkbox" aria-checked="false" data-state="unchecked" value="on" class="peer h-4 w-4 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground" id="showFavorites"></button>
+                    <label for="showFavorites" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Show only favorites</label>
+                </div>
+                <div class="flex flex-col space-y-4">
+                    <div>
+                        <label for="sortOption" class="text-sm font-medium">Ordenar por:</label>
+                        <select id="sortOption" class="text-black mt-1 block w-full">
+                            <option value="favoritos">Favoritos primero</option>
+                            <option value="alfabetico">Alfabéticamente</option>
+                            <option value="capitulos">Número de capítulos leídos</option>
+                            <option value="fechaAdicion">Fecha de adición</option>
+                            <option value="ultimaLectura">Última lectura</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="sortOrder" class="text-sm font-medium">Orden:</label>
+                        <select id="sortOrder" class="text-black mt-1 block w-full">
+                            <option value="ascendente">Ascendente</option>
+                            <option value="descendente">Descendente</option>
+                        </select>
+                    </div>
+                    <button id="getRandomManga" class="mt-4 bg-primary text-white p-2 rounded">Get Random Manga</button>
+                </div>
             </div>
-            <h1 data-translate-key="mangaLibrary">Manga Library</h1>
-        </header>
-        <nav>
-            <button id="menuBtn">
-                <img src="../public/icons/menu.svg">
-            </button>
-            <input type="text" placeholder="Search..." id="searchBar">
-            <button id="deleteSearch">
-                <img src="../public/icons/x.svg">
-            </button>
-            <!-- Dropdown menu -->
-            <div id="dropdownMenu">
-                <div>
-                    <label for="sortOption"
-                        data-translate-key="orderBy">Ordenar por:</label>
-                    <select id="sortOption">
-                        <option value="favoritos" data-translate-key="favoritesFirst">Favoritos primero</option>
-                        <option value="alfabetico" data-translate-key="alphabetically">Alfabéticamente</option>
-                        <option value="capitulos" data-translate-key="chapterCount">Número de capítulos leídos</option>
-                        <option value="fechaAdicion" data-translate-key="dateAdded">Fecha de adición</option>
-                        <option value="ultimaLectura" data-translate-key="lastRead">Última lectura</option>
-                    </select>
-                </div>
-                
-                <button id="getRandomManga" data-translate-key="getRandom">get random manga</button>
-                
-                <div>
-                    <label for="sortOrder" data-translate-key="order">Orden:</label>
-                    <select id="sortOrder">
-                        <option value="ascendente" data-translate-key="ascending">Ascendente</option>
-                        <option value="descendente" data-translate-key="descending">Descendente</option>
-                    </select>
-                </div>
-            </div>
-        </nav>
-
-
-        <!--Caps-->
-        <section>
-            <div id="mangaListContainer"></div>
-        </section>
-
-        <!--Footer btn-->
-        <footer>
-            <button  id="addButton">
-                <img src="../public/icons/plus.svg">
-            </button>
-        </footer>
-    </div>
-
-    <!-- Modal Structure -->
-    <div id="alertModal" class="modal">
-        <div class="modal-content">
-            <span id="closeModal" class="modal-close">&times;</span>
-            <p class="modal-body"></p>
-        </div>
-    </div>
-
-    <!-- Load manga form -->
-    <div id="formContainer">
-        <div id="parentDiv">
-            <h2 data-translate-key="loadManga">Cargar Manga</h2>
-            <form id="chapterForm">
-                <div>
-                    <label for="image" data-translate-key="imageLabel">Imagen (opcional, solo links de imgur)</label>
-                    <input type="text" id="image" name="image" placeholder="Ingrese la URL de la imagen">
-                </div>
-                <div>
-                    <label for="title" data-translate-key="titleLabel">Título</label>
-                    <input type="text" id="title" name="title" required>
-                </div>
-                <div>
-                    <label for="title" data-translate-key="formLinkLabel">Link del manga</label>
-                    <input type="text" id="link" name="link" required>
-                </div>
-                <div>
-                    <label for="readChapters" data-translate-key="readChaptersLabel">Capítulos leídos</label>
-                    <input type="number" id="readChapters" name="readChapters" required>
-                </div>
-                <div id="favorite">
-                    <label for="favorite" data-translate-key="favorite">Favorito</label>
-                    <input type="checkbox" name="favorite">
-                </div>
-                <div id="btnDiv">
-                    <button type="button" id="cancelButton" data-translate-key="cancel">Cancelar</button>
-                    <button type="submit" id="saveBtn" data-translate-key="save">Guardar</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Formulario de Edit Manga -->
-    <div id="editFormContainer">
-        <div id="parentDiv">
-            <h2 data-translate-key="editMangaTitle">Editar Manga</h2>
-            <form id="editForm">
-                <div>
-                    <label for="image" data-translate-key="imageLabel">Imagen (opcional, solo links de imgur)</label>
-                    <input type="text" id="editImage" name="image" placeholder="Ingrese la URL de la imagen">
-                </div>
-                <div>
-                    <label for="title" data-translate-key="titleLabel">Título</label>
-                    <input type="text" id="editTitle" name="title" required>
-                </div>
-                <div>
-                    <label for="title" data-translate-key="formLinkLabel">Link</label>
-                    <input type="text" id="editLink" name="edit" required>
-                </div>
-                <div>
-                    <label for="readChapters" data-translate-key="readChaptersLabel">Capítulos leídos</label>
-                    <input type="number" id="editReadChapters" name="readChapters" required>
-                </div>
-                <div id="favorite">
-                    <label for="editFavorite" data-translate-key="favorite">Favorito</label>
-                    <input type="checkbox" id="editFavorite" name="favorite">
-                </div>
-                <div id="btnDiv">
-                    <button type="button" id="cancelEdit" data-translate-key="cancel">Cancelar</button>
-                    <button type="submit" id="saveEdit" data-translate-key="save">Guardar</button>
-                </div>
-
-            </form>
-        </div>
-    </div>
-    <!-- Ventana de Confirmación -->
-    <div id="confirmationDialog" style="display: none;">
-        <div id="confirmBox">
-            <h2 data-translate-key="confirmation">Confirmación</h2>
-            <p data-translate-key="confirmDelete">¿Estás seguro de que deseas eliminar este manga?</p>
-            <div class="flex justify-end">
-                <button id="cancelConfirm" data-translate-key="cancel">Cancelar</button>
-                <button id="confirm" data-translate-key="delete">Eliminar</button>
-            </div>
-        </div>
-    </div>
-    <!--Settings-->
-    <section id="settings">
-        <div id="settingsTitle">
-            <h2 data-translate-key="settings">Settings</h2>
-            <button id="closeBtn">
-                <img src="../public/icons/x.svg">
+            <button type="button" id="closeFiltersDialog" class="absolute top-4 right-4 text-gray-600 hover:text-gray-900">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x h-4 w-4">
+                    <path d="M18 6 6 18"></path>
+                    <path d="m6 6 12 12"></path>
+                </svg>
+                <span class="sr-only">Close</span>
             </button>
         </div>
-        <div id="settingsDiv">
-            <div>
-                <label for="languageSelect" data-translate-key="language">Idioma:</label>
-                <select id="languageSelect">
-                    <option value="es">Español</option>
-                    <option value="en">English</option>
-                    <option value="de">Deutsch</option>
-                    <option value="fr">Français</option>
-                    <option value="zh">Chinese</option>
-                    <option value="ja">Japanese</option>
-                    <option value="ru">Russian</option>
-                    <option value="pt">português</option>
-                </select>
-            </div>
-            <div>
-                <a id="importBookmarks" data-translate-key="importBookmarks"
-                    href="bookmarksDemo.html">Importar Bookmarks</a>
-            </div>
-            <div>
-                <input type="file" id="import" accept="application/json">
-                <button id="export" data-translate-key="export">Export</button>
-            </div>
-        </div>
-    </section>
-    <!--End settings-->
-    <script src="storageHandler.js"></script>
-    <script src="loadMangas.js"></script>
-    <script src="addManga.js"></script>
-    <script src="settingsBtn.js"></script>
-    <script src="domUtils.js"></script>
-    <script src="porter.js"></script>
-    <script src="settingsSave.js"></script>
-    <script src="filter.js"></script>
-    <script src="mangaHandler.js"></script>
-    <script src="translations.js"></script>
-    <script src="getRandom.js"></script>
-</body>
+    </div>
+    
 
+	</body>
+	<script src="storageHandler.js"></script>
+	<script src="loadMangas.js"></script>
+	<script src="addManga.js"></script>
+	<script src="settingsBtn.js"></script>
+	<script src="domUtils.js"></script>
+	<script src="porter.js"></script>
+	<script src="settingsSave.js"></script>
+	<script src="filter.js"></script>
+	<script src="mangaHandler.js"></script>
+	<script src="translations.js"></script>
+	<script src="getRandom.js"></script>
 </html>

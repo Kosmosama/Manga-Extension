@@ -3,7 +3,8 @@ document.getElementById('addButton').addEventListener('click', showAddForm);
 
 function showAddForm() {
     const addFormContainer = document.getElementById('formContainer');
-    addFormContainer.style.display = 'flex';
+    addFormContainer.classList.remove('translate-x-full');
+    addFormContainer.classList.add('translate-x-0');
 }
 
 // Button to hide form
@@ -11,7 +12,8 @@ document.getElementById('cancelButton').addEventListener('click', resetAddForm);
 
 function hideAddForm() {
     const addFormContainer = document.getElementById('formContainer');
-    addFormContainer.style.display = 'none';
+    addFormContainer.classList.add('translate-x-full');
+    addFormContainer.classList.remove('translate-x-0');
 }
 
 function resetAddForm() {
