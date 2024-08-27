@@ -20,6 +20,7 @@ Extension to bookmark mangas you like.
 
 1. **Add "genres" to filter and categorize mangas (e.g., manhua, manhwa, etc). Consider allowing users to create genres. + add a completed status**
 2. **Add synchronization with Google Drive.**
+3. **Make it so the selected image appears on manga addition/edition**
 
 ## Proposals
 
