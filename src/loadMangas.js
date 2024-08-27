@@ -70,15 +70,15 @@ function loadMangas(inputList) {
                 </p>
             </div>
             <div class="flex items-center space-x-1 ml-0 sm:ml-4" id="chapter-controls">
-                <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3" id="addCap">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-minus h-3 w-3" id="minus-icon">
+                <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3" id="removeCap">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-minus h-3 w-3" id="removeCap">
                         <path d="M5 12h14"></path>
                     </svg>
                     <span class="sr-only" id="decrease-label">Decrease chapter count</span>
                 </button>
                 <span class="text-sm font-medium w-16 text-center" id="chapter-count">Ch. ${manga.readChapters}</span>
                 <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3" id="addCap">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus h-3 w-3" id="plus-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus h-3 w-3" id="addCap">
                         <path d="M5 12h14"></path><path d="M12 5v14"></path>
                     </svg>
                     <span class="sr-only" id="increase-label">Increase chapter count</span>
@@ -113,9 +113,11 @@ document.getElementById("mangaListContainer").addEventListener("click", (event) 
         handleFavoriteToggle(manga);
     } else if (event.target.id === 'delete') {
         handleMangaDeletion(manga);
-    } else if (event.target.id === 'edit') {
+    }else if (event.target.id === 'edit') {
         handleMangaEdition(manga);
     } else if (event.target.id === 'addCap') {
         handleAddChapter(manga);
+    }else if (event.target.id === 'removeCap') {
+        handleRemoveCap(manga);
     }
 });
