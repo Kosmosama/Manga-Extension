@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-[1080px] w-[720px]">
+<html lang="en" class="h-[1080px] w-[720px]" id="cadaDiaMasBasado">
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -90,6 +90,12 @@
               <path d="M5.25 7.5L10 12.25 14.75 7.5H5.25z"/>
             </svg>
           </div>
+
+          <label class="inline-flex items-center mb-5 cursor-pointer">
+            <input type="checkbox" id="darkmode" value="" class="sr-only peer">
+            <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+            <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Toggle me</span>
+          </label>
           
 
          <button id="close-dialog" type="button" class="absolute right-4 top-4">
@@ -180,6 +186,7 @@
 
 	</body>
 	<script src="storageHandler.js"></script>
+	<script src="darkmode.js"></script>
 	<script src="loadMangas.js"></script>
 	<script src="addManga.js"></script>
 	<script src="settingsBtn.js"></script>
