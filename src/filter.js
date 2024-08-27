@@ -2,7 +2,6 @@ document.getElementById('menuBtn').addEventListener('click', showFiltersDialog);
 document.getElementById('closeFiltersDialog').addEventListener('click', hideFiltersDialog);
 document.addEventListener('click', closeFiltersDialogOutside);
 
-
 function showFiltersDialog(event) {
     event.stopPropagation();
     const filtersDialog = document.getElementById('filtersDialog');
