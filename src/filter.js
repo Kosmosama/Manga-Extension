@@ -26,7 +26,7 @@ function closeFiltersDialogOutside(event) {
 // Inicialmente oculta el diálogo
 document.getElementById('filtersDialog').classList.add('translate-x-full');
 
-document.getElementById('searchBar').addEventListener('input', actualizarLista);
+document.getElementById('searchBar').addEventListener('input', loadFilteredMangas);
 document.getElementById('deleteSearch').addEventListener('click', handleDeleteSearch);
 
 function handleDeleteSearch() {

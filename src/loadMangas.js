@@ -101,7 +101,6 @@ function loadMangas(inputList) {
 
     mangaListContainer.appendChild(fragment);
 }
-
 // Event delegation for handling manga item interactions
 document.getElementById("mangaListContainer").addEventListener("click", (event) => {
     const mangaItem = event.target.closest('.manga-item');

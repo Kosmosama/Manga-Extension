@@ -1,7 +1,7 @@
 var mangaList = []; // Variable global para la lista de mangas
 
 // Load mangas from storage.local
-function loadMangas() {
+function retrieveMangas() {
     chrome.storage.local.get('mangaList', function(result) {
         if (chrome.runtime.lastError) {
             console.error('Error loading mangas:', chrome.runtime.lastError);
@@ -28,5 +28,4 @@ function saveMangas() {
     });
 }
 
-
-document.addEventListener("DOMContentLoaded", loadMangas);
+document.addEventListener("DOMContentLoaded", retrieveMangas);

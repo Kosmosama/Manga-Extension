@@ -27,8 +27,8 @@
 				</button>
 				<form class="flex-grow relative" data-id="31">
 					<input id="searchBar" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pr-16" placeholder="Search manga..." data-id="32" type="text" value="">
-					<button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10 absolute right-0 top-0 bottom-0" type="submit" data-id="36">
-					<img src="../public/icons/search.svg">
+					<button id="deleteSearch" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10 absolute right-0 top-0 bottom-0" type="button" data-id="36">
+					<img src="../public/icons/x.svg">
 					<span class="sr-only" data-id="38">Search</span>
 					</button>
 				</form>
@@ -59,6 +59,39 @@
            </button>
            <label for="dark-mode" class="text-sm font-medium">Light Mode</label>
          </div>
+         <button type="button" id="export" class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">export</button>
+         
+        <div class="flex items-center justify-center w-full">
+            <label for="import" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                    <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                    </svg>
+                    <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">Only JSON</p>
+                </div>
+                <input id="import" type="file" class="hidden" />
+            </label>
+        </div> 
+
+        <div class="max-w-sm mx-auto relative">
+            <label for="languageSelect" class="sr-only" data-translate-key="language">Idioma:</label>
+            <select id="languageSelect" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
+              <option value="es">Español</option>
+              <option value="en">English</option>
+              <option value="de">Deutsch</option>
+              <option value="fr">Français</option>
+              <option value="zh">Chinese</option>
+              <option value="ja">Japanese</option>
+              <option value="ru">Russian</option>
+              <option value="pt">Português</option>
+            </select>
+            <svg id="arrow_down" class="absolute top-1/2 right-2 transform -translate-y-1/2 pointer-events-none" width="12" height="12" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M5.25 7.5L10 12.25 14.75 7.5H5.25z"/>
+            </svg>
+          </div>
+          
+
          <button id="close-dialog" type="button" class="absolute right-4 top-4">
            <img src="../public/icons/x.svg">
            <span class="sr-only">Close</span>
