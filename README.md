@@ -14,6 +14,7 @@ Extension to bookmark mangas you like.
 8. [x] **Fix dates.**
 9. [x] **Manga names must be unique.**
 10. [ ] **Add dark/bright mode switch in settings.**
+11. [ ] **Make is so if you click outside of settings or manga form, it works as a cancel operation.**
 
 
 ## Next Version

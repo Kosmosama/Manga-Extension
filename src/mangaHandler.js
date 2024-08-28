@@ -34,6 +34,7 @@ function handleAddChapter(manga) {
 }
 function handleRemoveCap(manga) {
     manga.readChapters = (parseInt(manga.readChapters, 10) || 0) - 1;
+    manga.lastRead = new Date().toISOString();
     refreshAndSaveMangas();
 }
 
@@ -67,30 +68,31 @@ function deleteManga(manga) {
 
 // Function to edit a certain manga
 function handleMangaEdition(manga) {
-    fillEditForm(manga);
+    // Use the same form used for adding a new manga
+    const formContainer = document.getElementById('formContainer');
 
-    const formContainer = document.getElementById('editFormContainer');
-    formContainer.style.display = 'flex';
+    // Fill the form with the existing manga data
+    document.getElementById('image').value = manga.image || '';
+    document.getElementById('title').value = manga.title || '';
+    document.getElementById('link').value = manga.link || '';
+    document.getElementById('readChapters').value = manga.readChapters || 0;
+    document.getElementById('favorite').checked = manga.favorite || false;
 
-    function fillEditForm(manga) {
-        document.getElementById('editTitle').value = manga.title || '';
-        document.getElementById('editLink').value = manga.link || '';
-        document.getElementById('editImage').value = manga.image || ''; 
-        document.getElementById('editReadChapters').value = manga.readChapters || 0;
-        document.getElementById('editFavorite').checked = manga.favorite || false;
-    }
+    // Show the form
+    formContainer.classList.remove('translate-x-full');
+    formContainer.classList.add('translate-x-0');
 
-    function resetEditForm() {
-        formContainer.style.display = 'none';
-    }
+    // Replace the form submission behavior with update logic
+    const form = document.getElementById('chapterForm');
+    
+    function updateMangaDetails(event) {
+        event.preventDefault();
 
-    function updateMangaDetails() {
-
-        const title = document.getElementById('editTitle').value.trim();
-        const link = document.getElementById('editLink').value.trim();
-        const image = document.getElementById('editImage').value.trim();
-        const readChapters = parseInt(document.getElementById('editReadChapters').value.trim(), 10);
-        const favorite = document.getElementById('editFavorite').checked;
+        const title = document.getElementById('title').value.trim();
+        const link = document.getElementById('link').value.trim();
+        const image = document.getElementById('image').value.trim();
+        const readChapters = parseInt(document.getElementById('readChapters').value.trim(), 10);
+        const favorite = document.getElementById('favorite').checked;
 
         // Data verification
         if (manga.title !== title && isNameUsed(title)) {
@@ -102,22 +104,30 @@ function handleMangaEdition(manga) {
             return;
         }
 
+        // Update the manga details
         manga.title = title;
         manga.link = link;
         manga.image = image;
         manga.readChapters = readChapters;
         manga.favorite = favorite;
-        manga.dayAdded = manga.dayAdded;
         manga.lastRead = new Date().toISOString();
 
+        // Save and refresh the manga list
         refreshAndSaveMangas();
-        resetEditForm();
+        resetFormValues(); // Clear the form for future use
+        hideAddForm();     // Hide the form after saving
     }
 
-    document.getElementById('editForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        updateMangaDetails();
-    }, { once: true });
+    // Remove any previous submit handlers and add the update handler
+    form.removeEventListener('submit', addNewManga);
+    form.addEventListener('submit', updateMangaDetails, { once: true });
 
-    document.getElementById('cancelEdit').addEventListener('click', resetEditForm, { once: true });
+    // Replace the cancel button behavior to reset the form and hide it
+    document.getElementById('cancelButton').removeEventListener('click', resetAddForm);
+    document.getElementById('cancelButton').addEventListener('click', function() {
+        resetFormValues();
+        hideAddForm();
+        form.removeEventListener('submit', updateMangaDetails); // Clean up event listener
+        form.addEventListener('submit', addNewManga); // Re-add add manga handler
+    }, { once: true });
 }

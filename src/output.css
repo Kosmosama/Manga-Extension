@@ -796,6 +796,10 @@ video {
   height: 24rem;
 }
 
+.h-\[calc\(100vh-300px\)\] {
+  height: calc(100vh - 300px);
+}
+
 .max-h-full {
   max-height: 100%;
 }
