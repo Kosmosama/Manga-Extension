@@ -5,5 +5,3 @@ function getRandomManga() {
     randomIndex = Math.floor(Math.random() * mangaList.length);
     loadMangas([mangaList[randomIndex]]);
 }
-
-//#TODO Delete stoprandom button
