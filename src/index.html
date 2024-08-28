@@ -1,156 +1,244 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="h-[1080px] w-[720px]">
-	<head>
-		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<style>
-			#dropdownMenu {
-			z-index: 1000;
-			}
-		</style>
-		<link href="./output.css" rel="stylesheet">
-	</head>
-	<body class="container mx-auto p-4 max-w-3xl bg-gray-50 dark:bg-gray-500 dark:text-white text-foreground" data-id="1">
-		<div class="bg-card rounded-lg shadow-lg p-4 mb-6 transform transition-all bg-gray-50 dark:bg-gray-900 hover:scale-[1.02]" data-id="2">
-			<header class="flex justify-between items-center mb-4" data-id="3">
-				<button id="open-dialog" class="inline-flex items-center justify-center rounded-md text-sm font-medium h-10 w-10" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-dialog">
-               <img src="../public/icons/settings.svg">
-               <span class="sr-only">Open settings</span>
-             </button>
-				<h1 class="text-2xl font-bold" data-id="17">Manga Library</h1>
-				<div class="w-6" data-id="18"></div>
-			</header>
-			<div class="flex gap-2" data-id="19">
-				<button id="menuBtn" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2" data-id="22" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-:r3:" data-state="closed">
-				<img src="../public/icons/filter.svg">
-				Filters
-				</button>
-				<form class="flex-grow relative" data-id="31">
-					<input id="searchBar" class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pr-16" placeholder="Search manga..." data-id="32" type="text" value="">
-					<button id="deleteSearch" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10 absolute right-0 top-0 bottom-0" type="button" data-id="36">
-					<img src="../public/icons/x.svg">
-					<span class="sr-only" data-id="38">Search</span>
-					</button>
-				</form>
-			</div>
-		</div>
-		<main class="space-y-4 h-[calc(100vh-300px)] overflow-y-auto" data-id="39" style="scrollbar-width: none;">
-			<style data-id="40">
-				.manga-list::-webkit-scrollbar {
-				display: none;
-				}
-			</style>
-			<div class="manga-list space-y-4 pr-4" id="mangaListContainer" data-id="41">
-			</div>
-		</main>
-		<div class=" transform transition-all hover:scale-[1.02]">
-			<button id="addButton" class="inline-flex items-center bg-gray-50 dark:bg-gray-900 justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-10 px-4 py-2 mt-6 w-full" data-id="78">
-			<img src="../public/icons/plus.svg">
-			Add Manga
-			</button>
-		</div>
-      <div role="dialog" id="radix-dialog" class="fixed top-0 right-0 h-full max-w-sm bg-slate-900 p-6 shadow-lg transition-transform transform translate-x-full z-[100] w-3/4 sm:max-w-sm" tabindex="-1">
-         <div class="flex flex-col space-y-2">
-           <h2 id="radix-title" class="text-lg font-semibold">Settings</h2>
-         </div>
-         <div class="flex items-center space-x-2 mt-4">
-           <button type="button" role="switch" aria-checked="false" class="switch peer" id="dark-mode">
-             <span class="switch-thumb"></span>
-           </button>
-           <label for="dark-mode" class="text-sm font-medium">Light Mode</label>
-         </div>
-         <button type="button" id="export" class="py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">export</button>
-         
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        #dropdownMenu {
+            z-index: 1000;
+        }
+    </style>
+    <link href="./output.css" rel="stylesheet" />
+</head>
+
+<body class="container mx-auto p-4 max-w-3xl bg-zinc-200 dark:bg-gray-900 dark:text-white text-gray-800" data-id="1">
+    <!--Header-->
+    <div class="bg-gray-100 dark:bg-gray-800 rounded-lg shadow-lg p-4 mb-6 transform transition-all hover:scale-105"
+        data-id="2">
+        <header class="flex justify-between items-center mb-4" data-id="3">
+            <button id="open-dialog"
+                class="inline-flex items-center justify-center rounded-md text-sm font-medium h-10 w-10 text-gray-700 dark:text-gray-300"
+                type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-dialog">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                    <path
+                        d="M262.29 192.31a64 64 0 1057.4 57.4 64.13 64.13 0 00-57.4-57.4zM416.39 256a154.34 154.34 0 01-1.53 20.79l45.21 35.46a10.81 10.81 0 012.45 13.75l-42.77 74a10.81 10.81 0 01-13.14 4.59l-44.9-18.08a16.11 16.11 0 00-15.17 1.75A164.48 164.48 0 01325 400.8a15.94 15.94 0 00-8.82 12.14l-6.73 47.89a11.08 11.08 0 01-10.68 9.17h-85.54a11.11 11.11 0 01-10.69-8.87l-6.72-47.82a16.07 16.07 0 00-9-12.22 155.3 155.3 0 01-21.46-12.57 16 16 0 00-15.11-1.71l-44.89 18.07a10.81 10.81 0 01-13.14-4.58l-42.77-74a10.8 10.8 0 012.45-13.75l38.21-30a16.05 16.05 0 006-14.08c-.36-4.17-.58-8.33-.58-12.5s.21-8.27.58-12.35a16 16 0 00-6.07-13.94l-38.19-30A10.81 10.81 0 0149.48 186l42.77-74a10.81 10.81 0 0113.14-4.59l44.9 18.08a16.11 16.11 0 0015.17-1.75A164.48 164.48 0 01187 111.2a15.94 15.94 0 008.82-12.14l6.73-47.89A11.08 11.08 0 01213.23 42h85.54a11.11 11.11 0 0110.69 8.87l6.72 47.82a16.07 16.07 0 009 12.22 155.3 155.3 0 0121.46 12.57 16 16 0 0015.11 1.71l44.89-18.07a10.81 10.81 0 0113.14 4.58l42.77 74a10.8 10.8 0 01-2.45 13.75l-38.21 30a16.05 16.05 0 00-6.05 14.08c.33 4.14.55 8.3.55 12.47z"
+                        fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="32" />
+                </svg>
+                <span class="sr-only">Open settings</span>
+            </button>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white" data-id="17">
+                Manga Library
+            </h1>
+            <div class="w-6" data-id="18"></div>
+        </header>
+        <div class="flex gap-2" data-id="19">
+            <button id="menuBtn"
+                class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-gray-100 dark:ring-offset-gray-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 h-10 px-4 py-2"
+                data-id="22" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-:r3:"
+                data-state="closed">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-filter h-4 w-4 mr-2" data-id="23">
+                    <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                </svg>
+                Filters
+            </button>
+            <form class="flex-grow relative" data-id="31">
+                <input id="searchBar"
+                    class="flex h-10 w-full rounded-md border border-gray-300 dark:border-gray-600 bg-gray-50 dark:bg-gray-800 px-3 py-2 text-sm ring-offset-gray-100 dark:ring-offset-gray-800 file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-gray-500 dark:placeholder:text-gray-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pr-16"
+                    placeholder="Search manga..." data-id="32" type="text" value="" />
+                <button id="deleteSearch"
+                    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-gray-100 dark:ring-offset-gray-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-gray-100 dark:hover:bg-gray-700 h-10 w-10 absolute right-0 top-0 bottom-0"
+                    type="button" data-id="36">
+                    <img src="../public/icons/x.svg" />
+                    <span class="sr-only" data-id="38">Search</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!--Mangas-->
+    <main class="space-y-4 h-[calc(100vh-300px)] overflow-y-auto scrollbar-hide" data-id="39">
+        <div class="manga-list space-y-4 pr-4" id="mangaListContainer" data-id="41"></div>
+    </main>
+    <!--add manga button-->
+    <footer class="transform transition-all hover:scale-105">
+        <button id="addButton"
+            class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-gray-100 dark:ring-offset-gray-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-gray-100 shadow-lg dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 h-10 px-4 py-2 mt-6 w-full"
+            data-id="78">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="icon icon-tabler icons-tabler-outline icon-tabler-plus">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                <path d="M12 5l0 14" />
+                <path d="M5 12l14 0" />
+            </svg>
+            Add Manga
+        </button>
+    </footer>
+    <!--Settings-->
+    <section role="dialog" id="radix-dialog"
+        class="fixed top-0 right-0 h-full max-w-sm bg-gray-50 dark:bg-gray-900 p-6 shadow-lg transition-transform transform translate-x-full z-50 w-3/4 sm:max-w-sm"
+        tabindex="-1">
+        <div class="flex flex-col space-y-2">
+            <h2 id="radix-title" class="text-lg font-semibold text-gray-900 dark:text-white">
+                Settings
+            </h2>
+        </div>
+        <div class="flex items-center space-x-2 mt-4">
+            <button type="button" role="switch" aria-checked="false" class="switch peer" id="dark-mode">
+                <span class="switch-thumb"></span>
+            </button>
+            <label for="dark-mode" class="text-sm font-medium text-gray-900 dark:text-white">Light Mode</label>
+        </div>
+        <button type="button" id="export"
+            class="py-2.5 px-5 text-sm font-medium text-gray-900 dark:text-gray-200 focus:outline-none bg-gray-100 dark:bg-gray-800 rounded-lg border border-gray-300 dark:border-gray-700 hover:bg-gray-200 dark:hover:bg-gray-700 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-800">
+            Export
+        </button>
+        <!--Import file-->
         <div class="flex items-center justify-center w-full">
-            <label for="import" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+            <label for="import"
+                class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700">
                 <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                    <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                    <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
                     </svg>
-                    <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                    <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                        <span class="font-semibold">Click to upload</span> or drag and
+                        drop
+                    </p>
                     <p class="text-xs text-gray-500 dark:text-gray-400">Only JSON</p>
                 </div>
                 <input id="import" type="file" class="hidden" />
             </label>
-        </div> 
-
+        </div>
+        <!--Langage select-->
         <div class="max-w-sm mx-auto relative">
-            <label for="languageSelect" class="sr-only" data-translate-key="language">Idioma:</label>
-            <select id="languageSelect" class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer">
-              <option value="es">Español</option>
-              <option value="en">English</option>
-              <option value="de">Deutsch</option>
-              <option value="fr">Français</option>
-              <option value="zh">Chinese</option>
-              <option value="ja">Japanese</option>
-              <option value="ru">Russian</option>
-              <option value="pt">Português</option>
+            <label for="languageSelect" class="sr-only">Idioma:</label>
+            <select id="languageSelect"
+                class="block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-gray-400 dark:border-gray-600 focus:outline-none focus:ring-0 focus:border-gray-300 peer">
+                <option value="es">Español</option>
+                <option value="en">English</option>
+                <option value="de">Deutsch</option>
+                <option value="fr">Français</option>
+                <option value="zh">Chinese</option>
+                <option value="ja">Japanese</option>
+                <option value="ru">Russian</option>
+                <option value="pt">Português</option>
             </select>
-            <svg id="arrow_down" class="absolute top-1/2 right-2 transform -translate-y-1/2 pointer-events-none" width="12" height="12" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M5.25 7.5L10 12.25 14.75 7.5H5.25z"/>
+            <svg id="arrow_down" class="absolute top-1/2 right-2 transform -translate-y-1/2 pointer-events-none"
+                width="12" height="12" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M5.25 7.5L10 12.25 14.75 7.5H5.25z" />
             </svg>
-          </div>
-
-          <label class="inline-flex items-center mb-5 cursor-pointer">
-            <input type="checkbox" id="darkmode" value="" class="sr-only peer">
-            <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+        </div>
+        <!--Change dark mode-->
+        <label class="inline-flex items-center mb-5 cursor-pointer">
+            <input type="checkbox" id="darkmode" value="" class="sr-only peer" />
+            <div
+                class="relative w-11 h-6 bg-white peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+            </div>
             <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Toggle me</span>
-          </label>
-          
+        </label>
+        <!--close-->
+        <button id="close-dialog"
+            class="absolute top-4 right-4 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white focus:outline-none"
+            aria-label="Close dialog">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                    d="M10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414L10 8.586z"
+                    clip-rule="evenodd" />
+            </svg>
+        </button>
+    </section>
 
-         <button id="close-dialog" type="button" class="absolute right-4 top-4">
-           <img src="../public/icons/x.svg">
-           <span class="sr-only">Close</span>
-         </button>
-       </div>
-       <div role="dialog" id="formContainer" class="fixed z-50 gap-4 bg-slate-900 p-6 shadow-lg inset-y-0 right-0 h-full w-3/4 border-l sm:max-w-sm transform translate-x-full transition-transform duration-500 ease-in-out">
-         <div class="flex flex-col space-y-2 text-center sm:text-left">
-             <h2 class="text-lg font-semibold text-foreground" data-translate-key="loadManga">Cargar Manga</h2>
-         </div>
-         <div class="py-4 space-y-4">
-             <form id="chapterForm">
-                 <div class="space-y-1">
-                     <label for="image" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" data-translate-key="imageLabel">Imagen (opcional, solo links de imgur)</label>
-                     <input type="text" id="image" name="image" placeholder="Ingrese la URL de la imagen" class="text-black flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
-                 </div>
-                 <div class="space-y-1">
-                     <label for="title" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" data-translate-key="titleLabel">Título</label>
-                     <input type="text" id="title" name="title" required class="text-black flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
-                 </div>
-                 <div class="space-y-1">
-                     <label for="link" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" data-translate-key="formLinkLabel">Link del manga</label>
-                     <input type="text" id="link" name="link" required class="text-black flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
-                 </div>
-                 <div class="space-y-1">
-                     <label for="readChapters" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" data-translate-key="readChaptersLabel">Capítulos leídos</label>
-                     <input type="number" id="readChapters" name="readChapters" required class="text-black flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
-                 </div>
-                 <div class="flex items-center space-x-2">
-                     <input type="checkbox" id="favorite" name="favorite" class="peer h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground">
-                     <label for="favorite" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70" data-translate-key="favorite">Favorito</label>
-                 </div>
-                 <div class="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
-                     <button type="button" id="cancelButton" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2" data-translate-key="cancel">Cancelar</button>
-                     <button type="submit" id="saveBtn" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2" data-translate-key="save">Guardar</button>
-                 </div>
-             </form>
-         </div>
-         <button type="button" class="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none">
-             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x h-4 w-4">
-                 <path d="M18 6 6 18"></path>
-                 <path d="m6 6 12 12"></path>
-             </svg>
-             <span class="sr-only">Close</span>
-         </button>
-     </div>     
-     
-     <div id="filtersDialog" class="fixed inset-y-0 right-0 z-50 w-3/4 max-w-sm bg-slate-900 shadow-lg transform translate-x-full transition-transform duration-300 ease-in-out">
+    <!--Add manga form-->
+    <div role="dialog" id="formContainer"
+        class="fixed z-50 gap-4 bg-slate-900 p-6 shadow-lg inset-y-0 right-0 h-full w-3/4 border-l sm:max-w-sm transform translate-x-full transition-transform duration-500 ease-in-out">
+        <div class="flex flex-col space-y-2 text-center sm:text-left">
+            <h2 class="text-lg font-semibold text-foreground" data-translate-key="loadManga">
+                Cargar Manga
+            </h2>
+        </div>
+        <div class="py-4 space-y-4">
+            <form id="chapterForm">
+                <div class="space-y-1">
+                    <label for="image"
+                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        data-translate-key="imageLabel">Imagen (opcional, solo links de imgur)</label>
+                    <input type="text" id="image" name="image" placeholder="Ingrese la URL de la imagen"
+                        class="text-black flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" />
+                </div>
+                <div class="space-y-1">
+                    <label for="title"
+                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        data-translate-key="titleLabel">Título</label>
+                    <input type="text" id="title" name="title" required
+                        class="text-black flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" />
+                </div>
+                <div class="space-y-1">
+                    <label for="link"
+                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        data-translate-key="formLinkLabel">Link del manga</label>
+                    <input type="text" id="link" name="link" required
+                        class="text-black flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" />
+                </div>
+                <div class="space-y-1">
+                    <label for="readChapters"
+                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        data-translate-key="readChaptersLabel">Capítulos leídos</label>
+                    <input type="number" id="readChapters" name="readChapters" required
+                        class="text-black flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" />
+                </div>
+                <div class="flex items-center space-x-2">
+                    <input type="checkbox" id="favorite" name="favorite"
+                        class="peer h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground" />
+                    <label for="favorite"
+                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        data-translate-key="favorite">Favorito</label>
+                </div>
+                <div class="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
+                    <button type="button" id="cancelButton"
+                        class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2"
+                        data-translate-key="cancel">
+                        Cancelar
+                    </button>
+                    <button type="submit" id="saveBtn"
+                        class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2"
+                        data-translate-key="save">
+                        Guardar
+                    </button>
+                </div>
+            </form>
+        </div>
+        <button type="button"
+            class="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-x h-4 w-4">
+                <path d="M18 6 6 18"></path>
+                <path d="m6 6 12 12"></path>
+            </svg>
+            <span class="sr-only">Close</span>
+        </button>
+    </div>
+
+    <!--Filter-->
+    <div id="filtersDialog"
+        class="fixed inset-y-0 right-0 z-50 w-3/4 max-w-sm bg-slate-900 shadow-lg transform translate-x-full transition-transform duration-300 ease-in-out">
         <div class="relative p-6 h-full">
             <h2 id="filtersTitle" class="text-lg font-semibold">Filters</h2>
             <div class="py-4">
                 <div class="flex items-center space-x-2">
-                    <button type="button" role="checkbox" aria-checked="false" data-state="unchecked" value="on" class="peer h-4 w-4 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground" id="showFavorites"></button>
-                    <label for="showFavorites" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Show only favorites</label>
+                    <button type="button" role="checkbox" aria-checked="false" data-state="unchecked" value="on"
+                        class="peer h-4 w-4 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
+                        id="showFavorites"></button>
+                    <label for="showFavorites"
+                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Show
+                        only favorites</label>
                 </div>
                 <div class="flex flex-col space-y-4">
                     <div>
@@ -170,11 +258,16 @@
                             <option value="descendente">Descendente</option>
                         </select>
                     </div>
-                    <button id="getRandomManga" class="mt-4 bg-primary text-white p-2 rounded">Get Random Manga</button>
+                    <button id="getRandomManga" class="mt-4 bg-primary text-white p-2 rounded">
+                        Get Random Manga
+                    </button>
                 </div>
             </div>
-            <button type="button" id="closeFiltersDialog" class="absolute top-4 right-4 text-gray-600 hover:text-gray-900">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x h-4 w-4">
+            <button type="button" id="closeFiltersDialog"
+                class="absolute top-4 right-4 text-gray-600 hover:text-gray-900">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="lucide lucide-x h-4 w-4">
                     <path d="M18 6 6 18"></path>
                     <path d="m6 6 12 12"></path>
                 </svg>
@@ -182,19 +275,61 @@
             </button>
         </div>
     </div>
-    
 
-	</body>
-	<script src="storageHandler.js"></script>
-	<script src="darkmode.js"></script>
-	<script src="loadMangas.js"></script>
-	<script src="addManga.js"></script>
-	<script src="settingsBtn.js"></script>
-	<script src="domUtils.js"></script>
-	<script src="porter.js"></script>
-	<script src="settingsSave.js"></script>
-	<script src="filter.js"></script>
-	<script src="mangaHandler.js"></script>
-	<script src="translations.js"></script>
-	<script src="getRandom.js"></script>
+    <!--Confirm delete dialog-->
+    <div id="confirmationDialog" tabindex="-1"
+        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div id="confirmBox" class="relative p-4 w-full max-w-md max-h-full">
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <button type="button" id="cancelConfirm"
+                    class="absolute top-3 end-2.5 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                    data-modal-hide="confirmationDialog">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+                <div class="p-4 md:p-5 text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="mx-auto mb-4 text-red-600 dark:text-white w-24 h-24">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
+                        <path d="M12 8v4" />
+                        <path d="M12 16h.01" />
+                    </svg>
+                    <p data-translate-key="confirmDelete"
+                        class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                        ¿Estás seguro de que deseas eliminar este manga?
+                    </p>
+                    <button id="confirm" type="button"
+                        class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                        Eliminar
+                    </button>
+                    <button id="cancelConfirm2" type="button"
+                        class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="storageHandler.js"></script>
+    <script src="darkmode.js"></script>
+    <script src="loadMangas.js"></script>
+    <script src="addManga.js"></script>
+    <script src="settingsBtn.js"></script>
+    <script src="domUtils.js"></script>
+    <script src="porter.js"></script>
+    <script src="settingsSave.js"></script>
+    <script src="filter.js"></script>
+    <script src="mangaHandler.js"></script>
+    <script src="translations.js"></script>
+    <script src="getRandom.js"></script>
+</body>
+
 </html>
