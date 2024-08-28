@@ -34,6 +34,7 @@ function handleAddChapter(manga) {
 }
 function handleRemoveCap(manga) {
     manga.readChapters = (parseInt(manga.readChapters, 10) || 0) - 1;
+    manga.lastRead = new Date().toISOString();
     refreshAndSaveMangas();
 }
 
