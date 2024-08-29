@@ -4,20 +4,31 @@ document.addEventListener('click', closeFiltersDialogOutside);
 
 function showFiltersDialog(event) {
     event.stopPropagation();
+
+    const button = document.getElementById('menuBtn');  
     const filtersDialog = document.getElementById('filtersDialog');
-    filtersDialog.classList.remove('translate-x-full');
-    filtersDialog.classList.add('translate-x-0');
+
+    if (filtersDialog.classList.contains('shown-form') && button.contains(event.target)) {
+        hideFiltersDialog();
+    } else {
+        filtersDialog.classList.add('shown-form');
+        filtersDialog.classList.remove('translate-x-full');
+        filtersDialog.classList.add('translate-x-0');
+    }
 }
 
 function hideFiltersDialog() {
     const filtersDialog = document.getElementById('filtersDialog');
+    filtersDialog.classList.remove('shown-form');
     filtersDialog.classList.add('translate-x-full');
     filtersDialog.classList.remove('translate-x-0');
 }
 
 function closeFiltersDialogOutside(event) {
     const filtersDialog = document.getElementById('filtersDialog');
-    if (!filtersDialog.contains(event.target) && event.target !== document.getElementById('menuBtn')) {
+    const button = document.getElementById('menuBtn');
+
+    if (!filtersDialog.contains(event.target) && !button.contains(event.target)) { 
         hideFiltersDialog();
     }
 }
