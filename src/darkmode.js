@@ -1,5 +1,5 @@
-const check = document.getElementById('darkmode');
-check.addEventListener('change',handleDarkMode)
+document.getElementById('darkmode').addEventListener('change',handleDarkMode);
+
 function handleDarkMode(){
     if (check.checked){
         document.querySelector('html').classList.add('dark');
