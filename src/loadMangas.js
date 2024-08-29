@@ -102,6 +102,7 @@ function loadMangas(inputList) {
 
     mangaListContainer.appendChild(fragment);
 }
+
 // Event delegation for handling manga item interactions
 document.getElementById("mangaListContainer").addEventListener("click", (event) => {
     const mangaItem = event.target.closest('.manga-item');
@@ -117,8 +118,8 @@ document.getElementById("mangaListContainer").addEventListener("click", (event) 
     }else if (event.target.id === 'edit') {
         handleMangaEdition(manga);
     } else if (event.target.id === 'addCap') {
-        handleAddChapter(manga);
+        handleChapterUpdate(manga, '+');
     }else if (event.target.id === 'removeCap') {
-        handleRemoveCap(manga);
+        handleChapterUpdate(manga, '-');
     }
 });

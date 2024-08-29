@@ -26,14 +26,27 @@ function handleFavoriteToggle(manga) {
     refreshAndSaveMangas();
 }
 
-// Function to +1 a chapter to a certain manga
-function handleAddChapter(manga) {
-    manga.readChapters = (parseInt(manga.readChapters, 10) || 0) + 1;
-    manga.lastRead = new Date().toISOString();
-    refreshAndSaveMangas();
-}
-function handleRemoveCap(manga) {
-    manga.readChapters = (parseInt(manga.readChapters, 10) || 0) - 1;
+/**
+ * Updates the number of read chapters for a given manga based on the specified operation.
+ * 
+ * @param {Object} manga - The manga object to be updated.
+ * @param {string} operation - The operation to perform: '+' to add chapters or '-' to remove chapters.
+ * @param {number} [amount=1] - The number of chapters to add or remove. Defaults to 1 if not provided or if the provided value is not a number.
+ * 
+ * @throws {Error} Throws an error if the operation parameter is not '+' or '-'.
+ */
+function handleChapterUpdate(manga, operation, amount = 1) {
+    amount = parseInt(amount, 10) || 1;
+
+    // Update readChapters based on operation type
+    if (operation === "+") {
+        manga.readChapters = (parseInt(manga.readChapters, 10) || 0) + amount;
+    } else if (operation === "-") {
+        manga.readChapters = (parseInt(manga.readChapters, 10) || 0) - amount;
+    } else {
+        throw new Error("Invalid operation. Use '+' or '-'.");
+    }
+
     manga.lastRead = new Date().toISOString();
     refreshAndSaveMangas();
 }
@@ -65,7 +78,7 @@ function deleteManga(manga) {
     mangaList = mangaList.filter(m => m !== manga);
     refreshAndSaveMangas()
 }
-
+//#TODO Same as addManga
 // Function to edit a certain manga
 function handleMangaEdition(manga) {
     // Use the same form used for adding a new manga

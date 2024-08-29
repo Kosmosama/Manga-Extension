@@ -8,6 +8,7 @@ function showAddForm() {
 }
 
 // Button to hide form
+//#TODO Add x and out of filter to cancel
 document.getElementById('cancelButton').addEventListener('click', resetAddForm);
 
 function hideAddForm() {
