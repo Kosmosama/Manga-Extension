@@ -1,5 +1,5 @@
 const checkbox = document.getElementById('darkmode');
-const languageSelect = document.getElementById('languageSelect');
+// For now, language dropdown is handled in translations.js (Before it was handled here and there)
 
 function handleCheckboxChange() {
   const isChecked = checkbox.checked;
@@ -7,20 +7,13 @@ function handleCheckboxChange() {
   handleDarkMode();
 }
 
-function handleLanguageChange() {
-  const selectedLanguage = languageSelect.value;
-  chrome.storage.local.set({ language: selectedLanguage });
-}
-
 function loadSettings() {
-  chrome.storage.local.get(['darkmode', 'language'], function(result) {
+  chrome.storage.local.get('darkmode', function(result) {
     checkbox.checked = result.darkmode || false;
-    languageSelect.value = result.language || 'es';
     handleDarkMode();
   });
 }
 
 checkbox.addEventListener('change', handleCheckboxChange);
-languageSelect.addEventListener('change', handleLanguageChange);
 
 document.addEventListener('DOMContentLoaded', loadSettings());
