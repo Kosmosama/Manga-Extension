@@ -61,7 +61,7 @@ function loadMangas(inputList) {
                 </div>
             </div>
             <div class="flex-grow ml-0 sm:ml-4 mb-2 sm:mb-0" id="manga-details">
-                <h2 class="text-lg font-semibold" id="manga-title">${manga.title}</h2>
+                <a href="${manga.link}" class="text-lg font-semibold" id="manga-title" target="_blank">${manga.title}</a>
                 <p class="text-sm text-secondary-dates dark:text-secondary-dates-dark flex items-center" id="manga-date">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye h-3 w-3 mr-1" id="eye-icon">
                         <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
