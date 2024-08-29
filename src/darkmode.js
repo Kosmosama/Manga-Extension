@@ -1,11 +1,26 @@
 document.getElementById('darkmode').addEventListener('change', function(event) {
-    handleDarkMode(event.target);
+    handleDarkMode(event.target.checked);
+    saveCheckbox(event.target.checked);
 });
+loadCheckbox();
 
-function handleDarkMode(check){
-    if (check.checked){
-        document.querySelector('html').classList.add('dark');
+function handleDarkMode(isChecked) {
+    const html = document.querySelector('html');
+    if (isChecked) {
+        html.classList.add('dark');
     } else {
-        document.querySelector('html').classList.remove('dark');
+        html.classList.remove('dark');
     }
+}
+
+function saveCheckbox(isChecked) {
+    chrome.storage.local.set({ darkmode: isChecked });
+}
+
+function loadCheckbox() {
+    chrome.storage.local.get('darkmode', function(result) {
+        const isChecked = result.darkmode;
+        document.getElementById('darkmode').checked = isChecked;
+        handleDarkMode(isChecked);
+    });
 }
