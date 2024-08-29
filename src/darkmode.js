@@ -1,9 +1,11 @@
-document.getElementById('darkmode').addEventListener('change',handleDarkMode);
+document.getElementById('darkmode').addEventListener('change', function(event) {
+    handleDarkMode(event.target);
+});
 
-function handleDarkMode(){
+function handleDarkMode(check){
     if (check.checked){
         document.querySelector('html').classList.add('dark');
-    }else{
+    } else {
         document.querySelector('html').classList.remove('dark');
     }
 }
