@@ -1,12 +1,14 @@
+//#TODO Make it so that it works with addManga, editManga and settings
 document.getElementById('menuBtn').addEventListener('click', showFiltersDialog);
 document.getElementById('closeFiltersDialog').addEventListener('click', hideFiltersDialog);
-document.addEventListener('click', closeFiltersDialogOutside);
+document.getElementById('overlay').addEventListener('click', hideFiltersDialog);
 
 function showFiltersDialog(event) {
     event.stopPropagation();
 
     const button = document.getElementById('menuBtn');  
     const filtersDialog = document.getElementById('filtersDialog');
+    const overlay = document.getElementById('overlay');
 
     if (filtersDialog.classList.contains('shown-form') && button.contains(event.target)) {
         hideFiltersDialog();
@@ -14,27 +16,27 @@ function showFiltersDialog(event) {
         filtersDialog.classList.add('shown-form');
         filtersDialog.classList.remove('translate-x-full');
         filtersDialog.classList.add('translate-x-0');
+
+        // Show the overlay
+        overlay.classList.remove('hidden');
+        overlay.classList.add('block');
     }
 }
 
 function hideFiltersDialog() {
     const filtersDialog = document.getElementById('filtersDialog');
+    const overlay = document.getElementById('overlay');
+
     filtersDialog.classList.remove('shown-form');
     filtersDialog.classList.add('translate-x-full');
     filtersDialog.classList.remove('translate-x-0');
+
+    // Hide the overlay
+    overlay.classList.remove('block');
+    overlay.classList.add('hidden');
 }
 
-function closeFiltersDialogOutside(event) {
-    const filtersDialog = document.getElementById('filtersDialog');
-    const button = document.getElementById('menuBtn');
-
-    if (!filtersDialog.contains(event.target) && !button.contains(event.target)) { 
-        hideFiltersDialog();
-    }
-}
-
-// Inicialmente oculta el diálogo
-document.getElementById('filtersDialog').classList.add('translate-x-full');
+// Search bar
 
 document.getElementById('searchBar').addEventListener('input', loadFilteredMangas);
 document.getElementById('deleteSearch').addEventListener('click', handleDeleteSearch);
