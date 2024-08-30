@@ -23,7 +23,6 @@
               "src/storageHandler.js",
               "src/settingsBtn.js",
               "src/getRandom.js",
-              "src/settingsSave.js",
               "src/translations.js",
               "src/filter.js",
               "src/bookmarks.js",
