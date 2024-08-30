@@ -19,7 +19,7 @@ function showFiltersDialog(event) {
 
         // Show the overlay
         overlay.classList.remove('hidden');
-        overlay.classList.add('block');
+        overlay.classList.add('flex');
     }
 }
 
@@ -32,7 +32,7 @@ function hideFiltersDialog() {
     filtersDialog.classList.remove('translate-x-0');
 
     // Hide the overlay
-    overlay.classList.remove('block');
+    overlay.classList.remove('flex');
     overlay.classList.add('hidden');
 }
 
