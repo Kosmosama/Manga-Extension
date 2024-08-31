@@ -78,7 +78,7 @@ function deleteManga(manga) {
     mangaList = mangaList.filter(m => m !== manga);
     refreshAndSaveMangas()
 }
-//#TODO Same as addManga
+
 // Function to edit a certain manga
 function handleMangaEdition(manga) {
     // Use the same form used for adding a new manga
@@ -94,9 +94,6 @@ function handleMangaEdition(manga) {
     // Show the form
     formContainer.classList.remove('translate-x-full');
     formContainer.classList.add('translate-x-0');
-
-    // Replace the form submission behavior with update logic
-    const form = document.getElementById('chapterForm');
     
     function updateMangaDetails(event) {
         event.preventDefault();
@@ -130,6 +127,9 @@ function handleMangaEdition(manga) {
         resetFormValues(); // Clear the form for future use
         hideAddForm();     // Hide the form after saving
     }
+
+    // Replace the form submission behavior with update logic
+    const form = document.getElementById('chapterForm');
 
     // Remove any previous submit handlers and add the update handler
     form.removeEventListener('submit', addNewManga);

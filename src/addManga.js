@@ -8,7 +8,7 @@ function showAddForm() {
 }
 
 // Button to hide form
-//#TODO Add x and out of filter to cancel
+
 document.getElementById('cancelButton').addEventListener('click', resetAddForm);
 
 function hideAddForm() {
@@ -16,6 +16,8 @@ function hideAddForm() {
     addFormContainer.classList.add('translate-x-full');
     addFormContainer.classList.remove('translate-x-0');
 }
+
+// No need to touch under here ----------------- DELETE THIS COMMENT IF YOU SEE IT
 
 function resetAddForm() {
     resetFormValues();

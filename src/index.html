@@ -4,12 +4,6 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <style>
-        #dropdownMenu {
-            z-index: 1000;
-        }
-
-    </style>
     <link href="./output.css" rel="stylesheet" />
 </head>
 
@@ -22,7 +16,7 @@
     <div class="bg-primary-card dark:bg-primary-card-dark rounded-lg shadow-lg p-4 mb-6 transform transition-all hover:scale-105"
         data-id="2">
         <header class="flex justify-center relative mb-4" data-id="3">
-            <button id="open-dialog"
+            <button id="open-dialog" data-dialog-target="radix-dialog"
                 class="absolute left-0 inline-flex items-center justify-center rounded-md text-sm font-medium w-10 text-secondary-base dark:text-secondary-base-dark"
                 type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-dialog">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
@@ -37,7 +31,7 @@
             </h1>
         </header>        
         <div class="flex gap-2" data-id="19">
-            <button id="menuBtn"
+            <button id="menuBtn" data-dialog-target="filtersDialog"
                 class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-gray-100 dark:ring-offset-gray-800 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-secondary-dates dark:border-secondary-dates-dark bg-primary-card dark:bg-primary-card-dark hover:bg-gray-100 dark:hover:bg-gray-700 h-10 px-4 py-2"
                 data-id="22" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-:r3:"
                 data-state="closed">
@@ -85,9 +79,7 @@
     </footer>
 
     <!--Settings-->
-    <section role="dialog" id="radix-dialog"
-    class="fixed z-50 gap-4 bg-primary-card dark:bg-primary-card-dark p-6 shadow-lg inset-y-0 right-0 w-3/4 border-l transform translate-x-full transition-transform duration-500 ease-in-out"
-    tabindex="-1">
+    <section role="dialog" id="radix-dialog" class="dialog fixed z-50 gap-4 bg-primary-card dark:bg-primary-card-dark p-6 shadow-lg inset-y-0 right-0 w-3/4 border-l transform translate-x-full transition-transform duration-500 ease-in-out" tabindex="-1">
         <div class="flex flex-col space-y-2">
             <h2 id="radix-title" class="text-lg font-semibold text-secondary-base dark:text-secondary-base-dark">
                 Settings
@@ -154,7 +146,7 @@
         </label>
         
         <!--close-->
-        <button id="close-dialog"
+        <button id="close-dialog" data-dialog-target="radix-dialog"
             class="absolute top-4 right-4 bg-primary-card dark:bg-primary-card-dark hover:text-gray-900 dark:hover:text-white focus:outline-none"
             aria-label="Close dialog">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
@@ -167,7 +159,7 @@
 
     <!--Add manga form-->
     <div role="dialog" id="formContainer"
-        class="fixed z-50 gap-4 bg-primary-card dark:bg-primary-card-dark p-6 shadow-lg inset-y-0 right-0 w-3/4 border-l transform translate-x-full transition-transform duration-500 ease-in-out">
+        class="dialog fixed z-50 gap-4 bg-primary-card dark:bg-primary-card-dark p-6 shadow-lg inset-y-0 right-0 w-3/4 border-l transform translate-x-full transition-transform duration-500 ease-in-out">
         <div class="flex flex-col space-y-2 text-center sm:text-left">
             <h2 class="text-lg font-semibold text-foreground" data-translate-key="loadManga">
                 Cargar Manga
@@ -235,10 +227,9 @@
             <span class="sr-only">Close</span>
         </button>
     </div>
-    <!-- #TODO change colors -->
+
     <!--Filter-->
-    <div id="filtersDialog"
-        class="fixed inset-y-0 right-0 z-50 w-3/4 max-w-sm bg-primary-base dark:bg-primary-base-dark shadow-lg transform translate-x-full transition-transform duration-300 ease-in-out">
+    <div id="filtersDialog" class="dialog fixed inset-y-0 right-0 z-50 w-3/4 max-w-sm bg-primary-base dark:bg-primary-base-dark shadow-lg transform translate-x-full transition-transform duration-300 ease-in-out">
         <div class="relative p-6 h-full">
             <h2 id="filtersTitle" class="text-lg font-semibold">Filters</h2>
             <div class="py-4">
@@ -273,7 +264,7 @@
                     </button>
                 </div>
             </div>
-            <button type="button" id="closeFiltersDialog"
+            <button type="button" id="closeFiltersDialog" data-dialog-target="filtersDialog"
                 class="absolute top-4 right-4 text-secondary-base dark:text-secondary-base-dark hover:text-secondary-base/80 dark:hover:text-secondary-base-dark/80">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -331,8 +322,8 @@
     <script src="storageHandler.js"></script>
     <script src="darkmode.js"></script>
     <script src="loadMangas.js"></script>
+    <script src="dialogHandler.js"></script>
     <script src="addManga.js"></script>
-    <script src="settingsBtn.js"></script>
     <script src="porter.js"></script>
     <script src="filter.js"></script>
     <script src="mangaHandler.js"></script>

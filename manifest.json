@@ -21,13 +21,13 @@
           "js": [
               "src/loadMangas.js",
               "src/storageHandler.js",
-              "src/settingsBtn.js",
               "src/getRandom.js",
               "src/translations.js",
               "src/filter.js",
               "src/bookmarks.js",
               "src/mangaHandler.js",
-              "src/addManga.js"
+              "src/addManga.js",
+              "src/dialogHandler.js"
           ]
       }
   ],
