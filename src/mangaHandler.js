@@ -81,8 +81,6 @@ function deleteManga(manga) {
 
 // Function to edit a certain manga
 function handleMangaEdition(manga) {
-    // Use the same form used for adding a new manga
-    const formContainer = document.getElementById('formContainer');
 
     // Fill the form with the existing manga data
     document.getElementById('image').value = manga.image || '';
@@ -90,10 +88,6 @@ function handleMangaEdition(manga) {
     document.getElementById('link').value = manga.link || '';
     document.getElementById('readChapters').value = manga.readChapters || 0;
     document.getElementById('favorite').checked = manga.favorite || false;
-
-    // Show the form
-    formContainer.classList.remove('translate-x-full');
-    formContainer.classList.add('translate-x-0');
     
     function updateMangaDetails(event) {
         event.preventDefault();
@@ -127,6 +121,9 @@ function handleMangaEdition(manga) {
         resetFormValues(); // Clear the form for future use
         hideAddForm();     // Hide the form after saving
     }
+
+    // Show the form
+    showAddForm();
 
     // Replace the form submission behavior with update logic
     const form = document.getElementById('chapterForm');
