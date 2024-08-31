@@ -1,33 +1,33 @@
 //#TODO Make it so that it works with addManga, editManga and settings
-document.getElementById('menuBtn').addEventListener('click', handleFiltersDialog);
-document.getElementById('closeFiltersDialog').addEventListener('click', handleFiltersDialog);
-document.getElementById('overlay').addEventListener('click', handleFiltersDialog);
+// document.getElementById('menuBtn').addEventListener('click', handleFiltersDialog);
+// document.getElementById('closeFiltersDialog').addEventListener('click', handleFiltersDialog);
+// document.getElementById('overlay').addEventListener('click', handleFiltersDialog);
 
-function handleFiltersDialog(event){
-    event.stopPropagation();
-    const filtersDialog = document.getElementById('filtersDialog');
+// function handleFiltersDialog(event){
+//     event.stopPropagation();
+//     const filtersDialog = document.getElementById('filtersDialog');
 
-    //if it's hidden, then show it
-    if(filtersDialog.classList.contains('translate-x-full')){
-        filtersDialog.classList.remove('translate-x-full');
-        filtersDialog.classList.add('translate-x-0');
-    }else{ //if it isn't hidden, then hide it
-        filtersDialog.classList.add('translate-x-full');
-        filtersDialog.classList.remove('translate-x-0');
-    }
-    handleOverlay();
-}
+//     //if it's hidden, then show it
+//     if(filtersDialog.classList.contains('translate-x-full')){
+//         filtersDialog.classList.remove('translate-x-full');
+//         filtersDialog.classList.add('translate-x-0');
+//     }else{ //if it isn't hidden, then hide it
+//         filtersDialog.classList.add('translate-x-full');
+//         filtersDialog.classList.remove('translate-x-0');
+//     }
+//     handleOverlay();
+// }
 
-function handleOverlay(){
-    const overlay = document.getElementById('overlay');
-    if (overlay.classList.contains('hidden')){
-        overlay.classList.remove('hidden');
-        overlay.classList.add('flex');
-    }else{
-        overlay.classList.remove('flex');
-        overlay.classList.add('hidden');
-    }
-}
+// function handleOverlay(){
+//     const overlay = document.getElementById('overlay');
+//     if (overlay.classList.contains('hidden')){
+//         overlay.classList.remove('hidden');
+//         overlay.classList.add('flex');
+//     }else{
+//         overlay.classList.remove('flex');
+//         overlay.classList.add('hidden');
+//     }
+// }
 
 
 // Search bar
