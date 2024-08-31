@@ -16,15 +16,7 @@ function closeAllDialogs(dialogs) {
 
 // Function to toggle overlay based on dialog visibility
 function toggleOverlay() {
-    const overlay = document.getElementById('overlay');
-    
-    if (overlay.classList.contains('hidden')) {
-        overlay.classList.remove('hidden');
-        overlay.classList.add('flex');
-    } else {
-        overlay.classList.remove('flex');
-        overlay.classList.add('hidden');
-    }
+    document.getElementById('overlay').classList.toggle('hidden');
 }
 
 // Attach event listeners to dialog toggle buttons
