@@ -100,29 +100,29 @@ function handleMangaEdition(manga) {
         // Data verification
         if (manga.title !== title && isNameUsed(title)) {
             showModal(translate('uniqueTitlesWarning'));
-            return;
+            handleMangaEdition(manga);
         }
-        if (!title || !link || isNaN(readChapters) || readChapters < 0) {
+        else if (!title || !link || isNaN(readChapters) || readChapters < 0) {
             showModal(translate('required'));
-            return;
+            handleMangaEdition(manga);
         }
+        else {
+            // Update the manga details
+            manga.title = title;
+            manga.link = link;
+            manga.image = image;
+            manga.readChapters = readChapters;
+            manga.favorite = favorite;
+            manga.lastRead = new Date().toISOString();
 
+            // Save and refresh the manga list
+            refreshAndSaveMangas();
+            resetFormValues(); // Clear the form for future use
+            hideAddForm();     // Hide the form after saving
 
-        // Update the manga details
-        manga.title = title;
-        manga.link = link;
-        manga.image = image;
-        manga.readChapters = readChapters;
-        manga.favorite = favorite;
-        manga.lastRead = new Date().toISOString();
-
-        // Save and refresh the manga list
-        refreshAndSaveMangas();
-        resetFormValues(); // Clear the form for future use
-        hideAddForm();     // Hide the form after saving
-
-        // Re-add the submit listener for adding a new manga
-        addSubmitListener();
+            // Re-add the submit listener for adding a new manga
+            addSubmitListener();
+        }
     }
 
     // Show the form
