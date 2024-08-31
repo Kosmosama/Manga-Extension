@@ -17,11 +17,10 @@ function hideAddForm() {
     addFormContainer.classList.remove('translate-x-0');
 }
 
-// No need to touch under here ----------------- DELETE THIS COMMENT IF YOU SEE IT
-
 function resetAddForm() {
     resetFormValues();
     hideAddForm();
+    addSubmitListener();
 }
 
 function resetFormValues() {
@@ -32,13 +31,9 @@ function resetFormValues() {
     document.getElementById('favorite').checked = false;
 }
 
-// Button to submit form
-document.getElementById('chapterForm').addEventListener('submit', function(event) {
+function addNewManga(event) {
     event.preventDefault();
-    addNewManga();
-});
 
-function addNewManga() {
     const date = new Date().toISOString();
     
     const image = document.getElementById('image').value.trim();   
@@ -71,3 +66,12 @@ function addNewManga() {
         showModal(translate('required'));
     }
 }
+
+// Function to add eventListener of addnewmanga
+function addSubmitListener() {
+    const form = document.getElementById('chapterForm');
+    form.removeEventListener('submit', addNewManga);
+    form.addEventListener('submit', addNewManga);
+}
+
+addSubmitListener();

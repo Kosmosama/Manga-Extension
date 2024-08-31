@@ -81,14 +81,13 @@ function deleteManga(manga) {
 
 // Function to edit a certain manga
 function handleMangaEdition(manga) {
-
     // Fill the form with the existing manga data
     document.getElementById('image').value = manga.image || '';
     document.getElementById('title').value = manga.title || '';
     document.getElementById('link').value = manga.link || '';
     document.getElementById('readChapters').value = manga.readChapters || 0;
     document.getElementById('favorite').checked = manga.favorite || false;
-    
+
     function updateMangaDetails(event) {
         event.preventDefault();
 
@@ -108,6 +107,7 @@ function handleMangaEdition(manga) {
             return;
         }
 
+
         // Update the manga details
         manga.title = title;
         manga.link = link;
@@ -120,6 +120,9 @@ function handleMangaEdition(manga) {
         refreshAndSaveMangas();
         resetFormValues(); // Clear the form for future use
         hideAddForm();     // Hide the form after saving
+
+        // Re-add the submit listener for adding a new manga
+        addSubmitListener();
     }
 
     // Show the form
@@ -128,16 +131,20 @@ function handleMangaEdition(manga) {
     // Replace the form submission behavior with update logic
     const form = document.getElementById('chapterForm');
 
-    // Remove any previous submit handlers and add the update handler
+    // Remove any previous submit handlers to avoid conflicts
     form.removeEventListener('submit', addNewManga);
+    form.removeEventListener('submit', updateMangaDetails);
+
+    // Add the update manga details handler
     form.addEventListener('submit', updateMangaDetails, { once: true });
 
     // Replace the cancel button behavior to reset the form and hide it
-    document.getElementById('cancelButton').removeEventListener('click', resetAddForm);
-    document.getElementById('cancelButton').addEventListener('click', function() {
+    const cancelButton = document.getElementById('cancelButton');
+    cancelButton.removeEventListener('click', resetAddForm);
+    cancelButton.addEventListener('click', function() {
         resetFormValues();
         hideAddForm();
-        form.removeEventListener('submit', updateMangaDetails); // Clean up event listener
-        form.addEventListener('submit', addNewManga); // Re-add add manga handler
+        form.removeEventListener('submit', updateMangaDetails); // Remove the update listener
+        addSubmitListener(); // Re-add add manga handler
     }, { once: true });
 }
