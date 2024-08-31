@@ -1,40 +1,34 @@
 //#TODO Make it so that it works with addManga, editManga and settings
-document.getElementById('menuBtn').addEventListener('click', showFiltersDialog);
-document.getElementById('closeFiltersDialog').addEventListener('click', hideFiltersDialog);
-document.getElementById('overlay').addEventListener('click', hideFiltersDialog);
+document.getElementById('menuBtn').addEventListener('click', handleFiltersDialog);
+document.getElementById('closeFiltersDialog').addEventListener('click', handleFiltersDialog);
+document.getElementById('overlay').addEventListener('click', handleFiltersDialog);
 
-function showFiltersDialog(event) {
+function handleFiltersDialog(event){
     event.stopPropagation();
-
-    const button = document.getElementById('menuBtn');  
     const filtersDialog = document.getElementById('filtersDialog');
-    const overlay = document.getElementById('overlay');
 
-    if (filtersDialog.classList.contains('shown-form') && button.contains(event.target)) {
-        hideFiltersDialog();
-    } else {
-        filtersDialog.classList.add('shown-form');
+    //if it's hidden, then show it
+    if(filtersDialog.classList.contains('translate-x-full')){
         filtersDialog.classList.remove('translate-x-full');
         filtersDialog.classList.add('translate-x-0');
+    }else{ //if it isn't hidden, then hide it
+        filtersDialog.classList.add('translate-x-full');
+        filtersDialog.classList.remove('translate-x-0');
+    }
+    handleOverlay();
+}
 
-        // Show the overlay
+function handleOverlay(){
+    const overlay = document.getElementById('overlay');
+    if (overlay.classList.contains('hidden')){
         overlay.classList.remove('hidden');
         overlay.classList.add('flex');
+    }else{
+        overlay.classList.remove('flex');
+        overlay.classList.add('hidden');
     }
 }
 
-function hideFiltersDialog() {
-    const filtersDialog = document.getElementById('filtersDialog');
-    const overlay = document.getElementById('overlay');
-
-    filtersDialog.classList.remove('shown-form');
-    filtersDialog.classList.add('translate-x-full');
-    filtersDialog.classList.remove('translate-x-0');
-
-    // Hide the overlay
-    overlay.classList.remove('flex');
-    overlay.classList.add('hidden');
-}
 
 // Search bar
 
