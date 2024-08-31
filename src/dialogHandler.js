@@ -17,12 +17,8 @@ function closeAllDialogs(dialogs) {
 // Function to toggle overlay based on dialog visibility
 function toggleOverlay() {
     const overlay = document.getElementById('overlay');
-    const dialogs = document.querySelectorAll('.dialog');
-    const isAnyDialogOpen = Array.from(dialogs).some(dialog => {
-        return !dialog.classList.contains('translate-x-full');
-    });
-
-    if (isAnyDialogOpen) {
+    
+    if (overlay.classList.contains('hidden')) {
         overlay.classList.remove('hidden');
         overlay.classList.add('flex');
     } else {
