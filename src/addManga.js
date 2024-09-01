@@ -9,18 +9,13 @@ function showAddForm() {
 
 // Button to hide form
 
-document.getElementById('cancelButton').addEventListener('click', resetAddForm);
+document.getElementById('cancelButton').addEventListener('click', resetAddForm); // cancel
+document.getElementById('cancelButton').addEventListener('click', resetAddForm); // cross cross-cancel-mangaForm
 
 function hideAddForm() {
     const addFormContainer = document.getElementById('formContainer');
     addFormContainer.classList.add('translate-x-full');
     addFormContainer.classList.remove('translate-x-0');
-}
-
-function resetAddForm() {
-    resetFormValues();
-    hideAddForm();
-    addSubmitListener();
 }
 
 function resetFormValues() {
@@ -30,6 +25,14 @@ function resetFormValues() {
     document.getElementById('readChapters').value = '';
     document.getElementById('favorite').checked = false;
 }
+
+function resetAddForm() {
+    resetFormValues();
+    hideAddForm();
+    addSubmitListener();
+}
+
+// Function to add the manga
 
 function addNewManga(event) {
     event.preventDefault();
