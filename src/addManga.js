@@ -10,7 +10,7 @@ function showAddForm() {
 // Button to hide form
 
 document.getElementById('cancelButton').addEventListener('click', resetAddForm); // cancel
-document.getElementById('cancelButton').addEventListener('click', resetAddForm); // cross cross-cancel-mangaForm
+document.getElementById('cross-cancel-mangaForm').addEventListener('click', resetAddForm); // cross cross-cancel-mangaForm
 
 function hideAddForm() {
     const addFormContainer = document.getElementById('formContainer');
