@@ -83,9 +83,8 @@
 
     <!--Add manga button-->
     <footer class="transform transition-all hover:scale-105">
-        <button id="addButton"
-            class="inline-flex items-center bg-primary-card justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-secondary-dates dark:ring-offset-secondary-dates-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 shadow-lg dark:bg-primary-card-dark hover:bg-primary-base dark:hover:bg-primary-base-dark h-10 px-4 py-2 mt-6 w-full"
-            data-id="78">
+        <button id="addButton" data-dialog-target="formContainer"
+            class="inline-flex items-center bg-primary-card justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-secondary-dates dark:ring-offset-secondary-dates-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 shadow-lg dark:bg-primary-card-dark hover:bg-primary-base dark:hover:bg-primary-base-dark h-10 px-4 py-2 mt-6 w-full">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                 class="icon icon-tabler icons-tabler-outline icon-tabler-plus">
@@ -96,6 +95,7 @@
             Add Manga
         </button>
     </footer>
+    
 
     <!--Settings-->
     <section role="dialog" id="radix-dialog"
@@ -348,10 +348,9 @@
     <script src="darkmode.js"></script>
     <script src="loadMangas.js"></script>
     <script src="dialogHandler.js"></script>
-    <script src="addManga.js"></script>
+    <script src="mangaHandler.js"></script>
     <script src="porter.js"></script>
     <script src="filter.js"></script>
-    <script src="mangaHandler.js"></script>
     <script src="translations.js"></script>
     <script src="getRandom.js"></script>
 </body>
