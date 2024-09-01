@@ -28,7 +28,6 @@ function handleFormSubmission(event) {
  */
 function handleMangaEdition(manga) {
     fillMangaForm(manga);
-
     const form = document.getElementById('chapterForm');
     form.dataset.editMode = 'true';
     form.dataset.mangaTitle = manga.title;
@@ -48,7 +47,7 @@ function addNewManga() {
         return;
     }
 
-    const date = new Date().toISOString();
+    const date = new Date().toLocaleString();
     const newManga = {
         ...mangaData,
         dayAdded: date,
@@ -76,7 +75,7 @@ function updateMangaDetails(manga) {
         return;
     }
 
-    Object.assign(manga, mangaData, { lastRead: new Date().toISOString() });
+    Object.assign(manga, mangaData, { lastRead: new Date().toLocaleString() });
 
     resetFormValues();
     hideMangaForm();
@@ -200,7 +199,7 @@ function handleChapterUpdate(manga, operation, amount = 1) {
         throw new Error("Invalid operation. Use '+' or '-'.");
     }
 
-    manga.lastRead = new Date().toISOString();
+    manga.lastRead = new Date().toLocaleString();
     refreshAndSaveMangas();
 }
 
@@ -217,16 +216,11 @@ function handleMangaDeletion(manga) {
         confirmDiv.style.display = 'none';
     }
 
-    function deleteManga() {
-        mangaList = mangaList.filter(m => m !== manga);
-        refreshAndSaveMangas();
-    }
-
     document.getElementById('cancelConfirm').addEventListener('click', closeDialog, { once: true });
     document.getElementById('cancelConfirm2').addEventListener('click', closeDialog, { once: true });
 
     document.getElementById('confirm').addEventListener('click', () => {
-        deleteManga();
+        deleteManga(manga);
         closeDialog();
     }, { once: true });
 }
