@@ -1,3 +1,4 @@
+let currentTabURL = ""; // Global variable to store the URL
 // Handles form submission for both adding and editing manga.
 document.getElementById('chapterForm').addEventListener('submit', handleFormSubmission);
 
@@ -83,6 +84,21 @@ function updateMangaDetails(manga) {
 }
 
 /**
+ * Saves the URL of the current active tab into the global variable `currentTabURL`.
+ * 
+ * This function queries the currently active tab in the current window and, if found,
+ * stores its URL in the global variable `currentTabURL`. If no active tab is found,
+ * it logs a warning message to the console.
+ */
+function saveCurrentTabURL() {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+        tabs[0] ? currentTabURL = tabs[0].url : console.warn('There is no current tab');
+    });
+}
+saveCurrentTabURL();  
+  
+
+/**
  * Retrieves the manga data from the form.
  * 
  * @returns {Object} An object containing the manga data from the form.
@@ -91,7 +107,7 @@ function getMangaFormData() {
     return {
         image: document.getElementById('image').value.trim(),
         title: document.getElementById('title').value.trim(),
-        link: document.getElementById('link').value.trim(),
+        link: document.getElementById('link').value.trim() || currentTabURL,
         readChapters: parseInt(document.getElementById('readChapters').value.trim(), 10),
         favorite: document.getElementById('favorite').checked
     };
