@@ -1,5 +1,6 @@
 const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
 let currentIndex = 0;
+
 /**
  * Handles the keydown event to check if the user has entered the Konami Code.
  *
@@ -18,7 +19,6 @@ function handleKonamiCode(event) {
         currentIndex = 0;
     }
 }
-
 
 /**
  * Triggers the Konami Code effect by adding HTML content to the 'konamiContent' element,
@@ -44,8 +44,6 @@ function triggerKonamiCode() {
         }
     }, 52000); // 52 seconds for the video to reach the end and remove
 }
-
-
 
 /**
  * Starts the movement of the 'movingVideo' element across the screen.
