@@ -9,8 +9,6 @@ function retrieveMangas() {
         }
         if (result.mangaList.length > 0) {
             mangaList = result.mangaList;
-            console.log(`Loaded ${result.mangaList.length} mangas:`, mangaList);
-            addTitleLower();
         } else {
             console.log('No mangas found in storage.');
         }
