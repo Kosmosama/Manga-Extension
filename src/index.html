@@ -106,13 +106,6 @@
                 Settings
             </h2>
         </div>
-        <div class="flex items-center space-x-2 mt-4">
-            <button type="button" role="switch" aria-checked="false" class="switch peer" id="dark-mode">
-                <span class="switch-thumb"></span>
-            </button>
-            <label for="dark-mode" class="text-sm font-medium text-secondary-base dark:text-secondary-base-dark">Light
-                Mode</label>
-        </div>
         <button type="button" id="export"
             class="py-2.5 px-5 text-sm font-medium text-secondary-base dark:text-secondary-base-dark focus:outline-none bg-primary-card dark:bg-primary-card-dark rounded-lg border border-secondary-dates dark:border-secondary-dates-dark hover:bg-primary-base dark:hover:bg-primary-base-dark focus:ring-4 focus:ring-primary-base dark:focus:ring-primary-base-dark">
             Export
@@ -159,14 +152,20 @@
         </div>
 
         <!--Change dark mode-->
-        <label class="inline-flex items-center mb-5 cursor-pointer">
-            <input type="checkbox" id="darkmode" value="" class="sr-only peer" />
-            <div
-                class="relative w-11 h-6 bg-primary-card dark:bg-primary-card-dark peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
-            </div>
-            <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Toggle me</span>
-        </label>
-
+        <div class="max-w-sm mx-auto relative">
+            <label for="darkmode" class="sr-only">Modo de Tema:</label>
+            <select id="darkmode"
+                class="block py-2.5 px-0 w-full text-sm text-secondary-base dark:text-secondary-base-dark bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:border-gray-600 focus:outline-none focus:ring-0 focus:border-gray-300 peer">
+                <option value="light" class="bg-primary-base dark:bg-primary-base-dark">Claro</option>
+                <option value="dark" class="bg-primary-base dark:bg-primary-base-dark">Oscuro</option>
+                <option value="system" class="bg-primary-base dark:bg-primary-base-dark">Sistema</option>
+            </select>
+            <svg id="arrow_down" class="absolute top-1/2 right-2 transform -translate-y-1/2 pointer-events-none"
+                width="12" height="12" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M5.25 7.5L10 12.25 14.75 7.5H5.25z" />
+            </svg>
+        </div>
+        
         <!--close-->
         <button id="close-dialog" data-dialog-target="radix-dialog"
             class="absolute top-4 right-4 bg-primary-card dark:bg-primary-card-dark hover:text-gray-900 dark:hover:text-white focus:outline-none"
