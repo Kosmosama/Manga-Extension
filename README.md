@@ -9,12 +9,12 @@ Extension to bookmark mangas you like.
 3. [ ] **Style the import page with CSS.**
 4. [x] **Fix the buttons for deleting manga, favoriting with a star, and editing. (discussion needed)**
 5. [ ] **Save filter options on chrome.storage.local**
-6. [ ] **Fix everything related to filters and search bar.**
+6. [x] **Fix everything related to filters and search bar.**
 7. [x] **Change all functions, variable names and comments to english.**
 8. [x] **Fix dates.**
 9. [x] **Manga names must be unique.**
-10. [ ] **Add dark/bright mode switch in settings.**
-11. [ ] **Make is so if you click outside of settings or manga form, it works as a cancel operation.**
+10. [x] **Add dark/bright mode switch in settings.**
+11. [x] **Make is so if you click outside of settings or manga form, it works as a cancel operation.**
 12. [ ] **Implement another method of setting images when there image isnt found.**
 
 
