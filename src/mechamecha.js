@@ -1,12 +1,12 @@
 const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
 let currentIndex = 0;
-
 /**
  * Handles the keydown event to check if the user has entered the Konami Code.
  *
  * @param {KeyboardEvent} event - The keydown event object.
  * @property {string} event.key - The key that was pressed.
  */
+document.addEventListener('keydown', handleKonamiCode);
 function handleKonamiCode(event) {
     if (event.key === konamiCode[currentIndex]) {
         currentIndex++;
