@@ -1,4 +1,3 @@
-let currentTabURL = ""; // Global variable to store the URL
 // Handles form submission for both adding and editing manga.
 document.getElementById('chapterForm').addEventListener('submit', handleFormSubmission);
 
@@ -7,7 +6,7 @@ document.getElementById('chapterForm').addEventListener('submit', handleFormSubm
  * 
  * @param {Event} event - The form submission event.
  */
-function handleFormSubmission(event) {
+async function handleFormSubmission(event) {
     event.preventDefault();
 
     const form = document.getElementById('chapterForm');
@@ -16,9 +15,9 @@ function handleFormSubmission(event) {
 
     if (isEditMode && mangaTitle) {
         const manga = mangaList.find(m => m.title === mangaTitle);
-        updateMangaDetails(manga);
+        await updateMangaDetails(manga);
     } else {
-        addNewManga();
+        await addNewManga();
     }
 }
 
@@ -39,10 +38,10 @@ function handleMangaEdition(manga) {
 /**
  * Adds a new manga to the manga list.
  */
-function addNewManga() {
-    const mangaData = getMangaFormData();
+async function addNewManga() {
+    const mangaData = await getMangaFormData();
     const validationError = validateMangaData(mangaData);
-
+    
     if (validationError) {
         showModal(validationError);
         return;
@@ -67,10 +66,10 @@ function addNewManga() {
  * 
  * @param {Object} manga - The manga object to be updated.
  */
-function updateMangaDetails(manga) {
-    const mangaData = getMangaFormData();
+async function updateMangaDetails(manga) {
+    const mangaData = await getMangaFormData(true);
     const validationError = validateMangaData(mangaData, manga.title);
-
+    
     if (validationError) {
         showModal(validationError);
         return;
@@ -84,31 +83,42 @@ function updateMangaDetails(manga) {
 }
 
 /**
- * Saves the URL of the current active tab into the global variable `currentTabURL`.
+ * Fetches the URL of the current active tab.
  * 
- * This function queries the currently active tab in the current window and, if found,
- * stores its URL in the global variable `currentTabURL`. If no active tab is found,
- * it logs a warning message to the console.
+ * @returns {Promise<string>} A promise that resolves to the current tab's URL.
  */
-function saveCurrentTabURL() {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-        tabs[0] ? currentTabURL = tabs[0].url : console.warn('There is no current tab');
+function getCurrentTabURL() {
+    return new Promise((resolve) => {
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            if (tabs && tabs.length > 0 && tabs[0].url) {
+                resolve(tabs[0].url);
+            } else {
+                console.warn('No active tab found. Defaulting link to empty string.');
+                resolve('');
+            }
+        });
     });
 }
-saveCurrentTabURL();  
-  
 
 /**
  * Retrieves the manga data from the form.
  * 
- * @returns {Object} An object containing the manga data from the form.
+ * @param {boolean} [isEditMode=false] - Indicates whether the form is in edit mode.
+ * @returns {Promise<Object>} A promise that resolves to an object containing the manga data from the form.
  */
-function getMangaFormData() {
+async function getMangaFormData(isEditMode = false) {
+    const linkInput = document.getElementById('link').value.trim();
+    const link = linkInput || await getCurrentTabURL();
+
+    const readChaptersInput = document.getElementById('readChapters').value.trim();
+    const readChapters = parseInt(readChaptersInput, 10);
+    const validReadChapters = isNaN(readChapters) || readChapters < 0 ? 0 : readChapters;
+
     return {
         image: document.getElementById('image').value.trim(),
         title: document.getElementById('title').value.trim(),
-        link: document.getElementById('link').value.trim() || currentTabURL,
-        readChapters: parseInt(document.getElementById('readChapters').value.trim(), 10),
+        link: link,
+        readChapters: validReadChapters,
         favorite: document.getElementById('favorite').checked
     };
 }
@@ -121,11 +131,11 @@ function getMangaFormData() {
  * @returns {string|null} Validation error message or null if data is valid.
  */
 function validateMangaData(mangaData, originalTitle = '') {
+    if (!mangaData.title) {
+        return translate('requiredTitle');
+    }
     if (mangaData.title !== originalTitle && isNameUsed(mangaData.title)) {
         return translate('uniqueTitlesWarning');
-    }
-    if (!mangaData.title || !mangaData.link || isNaN(mangaData.readChapters) || mangaData.readChapters < 0) {
-        return translate('required');
     }
     return null;
 }
