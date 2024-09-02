@@ -26,7 +26,8 @@
               "src/filter.js",
               "src/bookmarks.js",
               "src/mangaHandler.js",
-              "src/dialogHandler.js"
+              "src/dialogHandler.js",
+              "src/themeHandler.js"
           ]
       }
   ],
