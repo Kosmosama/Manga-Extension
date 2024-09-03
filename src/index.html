@@ -5,6 +5,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="./output.css" rel="stylesheet" />
+    <style>
+    main {
+        scrollbar-width: none;
+    }
+
+    </style>
 </head>
 
 <body
@@ -77,9 +83,10 @@
 
     <!--Mangas-->
 
-    <main class="space-y-4 h-max" data-id="39">
+    <main class="space-y-4 max-h-[300px] overflow-y-auto " data-id="39">
         <div class="manga-list space-y-4 pr-4" id="mangaListContainer" data-id="41"></div>
     </main>
+    
 
     <!--Add manga button-->
     <footer class="transform transition-all hover:scale-105">
