@@ -158,7 +158,7 @@
                 <h3 class="whitespace-nowrap text-xl font-semibold leading-none tracking-tight text-secondary-base dark:text-secondary-base-dark" data-id="87">Theme:</h3>
             </div>
             <!--Dark mode-->
-            <div class="max-w-sm mx-auto relative">
+            <div class="max-w-sm mx-auto relative mb-4">
                 <label for="darkmode" class="sr-only">Modo de Tema:</label>
                 <select id="darkmode"
                 class="pl-4 block py-2.5 px-0 w-full text-sm text-secondary-base dark:text-secondary-base-dark bg-transparent border rounded border-gray-300 appearance-none  dark:border-gray-600 focus:outline-none focus:ring-0 focus:border-gray-300 peer">
@@ -170,12 +170,6 @@
                     width="12" height="12" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M5.25 7.5L10 12.25 14.75 7.5H5.25z" />
                 </svg>
-            </div>
-            <!--Font size #TODO logic of this xd-->
-            <div class="flex flex-col space-y-1.5 p-6">
-                <label for="fontsize" class="block ml-1 mt-4 text-sm font-medium text-secondary-dates dark:text-secondary-dates-dark">Font-size</label>
-                <input id="fontsize" type="range" min="5" max="40" value="30" class="w-[95%] h-2 accent-primary-base-dark dark:accent-primary-base bg-primary-card rounded-lg cursor-pointer dark:bg-primary-base-dark">
-                <span>20 px</span>
             </div>
             <!--close-->
             <button id="close-dialog" data-dialog-target="radix-dialog"
@@ -198,10 +192,10 @@
                 <div class="space-y-2" data-id="90">
                     <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-secondary-base dark:text-secondary-base-dark" for="import" data-id="91">Import from json</label>
                     <div class="flex items-center mr-2" data-id="92">
-                        <!-- Input de tipo file oculto -->
+                        <!-- Hidden file input -->
                         <input class="hidden" id="import" data-id="93" type="file" accept=".json">
                         
-                        <!-- Botón personalizado para subir archivos -->
+                        <!-- Custom upload file button -->
                         <label for="import" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-primary-base dark:ring-offset-primary-base-dark transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-base dark:focus-visible:ring-secondary-base-dark focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-secondary-base dark:border-secondary-base-dark bg-primary-card dark:bg-primary-card-dark hover:bg-primary-base dark:hover:bg-primary-base-dark hover:text-secondary-base dark:hover:text-secondary-base-dark h-10 px-4 py-2 cursor-pointer">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download h-4 w-4 mr-2" data-id="98">
                                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
