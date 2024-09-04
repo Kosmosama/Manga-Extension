@@ -40,28 +40,24 @@ function saveFilterOptions() {
 document.getElementById('searchBar').addEventListener('input', loadFilteredMangas);
 document.getElementById('deleteSearch').addEventListener('click', handleDeleteSearch);
 
+function handleLoadAndSave(){
+    loadFilteredMangas();
+    saveFilterOptions();
+}
+
 function handleDeleteSearch() {
     document.getElementById('searchBar').value = "";
     loadFilteredMangas();
 }
 
 // Favourites only checkbox
-document.getElementById('favourites-only-checkbox').addEventListener('change', function() {
-    loadFilteredMangas();
-    saveFilterOptions();
-});
+document.getElementById('favourites-only-checkbox').addEventListener('change', handleLoadAndSave);
 
 // Filter option
-document.getElementById('sortOption').addEventListener('change', function() {
-    loadFilteredMangas();
-    saveFilterOptions();
-});
+document.getElementById('sortOption').addEventListener('change', handleLoadAndSave);
 
 // Filter order
-document.getElementById('sortOrder').addEventListener('change', function() {
-    loadFilteredMangas();
-    saveFilterOptions();
-});
+document.getElementById('sortOrder').addEventListener('change', handleLoadAndSave);
 
 function loadFilteredMangas() {
     const query = document.getElementById('searchBar').value.toLowerCase();
