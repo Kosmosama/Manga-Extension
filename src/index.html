@@ -312,12 +312,8 @@
             <h2 id="filtersTitle" class="text-lg font-semibold">Filters</h2>
             <div class="py-4">
                 <div class="flex items-center space-x-2">
-                    <button type="button" role="checkbox" aria-checked="false" data-state="unchecked" value="on"
-                        class="peer h-4 w-4 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary-card data-[state=checked]:text-primary-card-dark"
-                        id="showFavorites"></button>
-                    <label for="showFavorites"
-                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Show
-                        only favorites</label>
+                    <input type="checkbox" id="favourites-only-checkbox" class="peer h-4 w-4 rounded-sm border border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" />
+                    <label for="favourites-only-checkbox" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Show only favorites</label>
                 </div>
                 <div class="flex flex-col space-y-4">
                     <div>
