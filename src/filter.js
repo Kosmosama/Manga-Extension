@@ -15,9 +15,6 @@ function loadFilterOptions() {
 
         // Set the sortOption dropdown value, default to a sensible fallback if not set
         document.getElementById('sortOption').value = filterOptions.sortOption || 'favoritos';
-
-        // Set the sortOrder dropdown value, default to a sensible fallback if not set
-        document.getElementById('sortOrder').value = filterOptions.sortOrder || 'ascendente';
     });
 }
 
@@ -25,8 +22,7 @@ function loadFilterOptions() {
 function saveFilterOptions() {
     const filterOptions = {
         favOnly: document.getElementById('favourites-only-checkbox').checked,
-        sortOption: document.getElementById('sortOption').value,
-        sortOrder: document.getElementById('sortOrder').value
+        sortOption: document.getElementById('sortOption').value
     };
 
     chrome.storage.local.set({ filterOptions: filterOptions }, function() {
@@ -34,6 +30,18 @@ function saveFilterOptions() {
             console.error('Error saving filter options:', chrome.runtime.lastError);
         }
     });
+}
+
+// Toggle sort order
+document.getElementById('toggleSortOrder').addEventListener('click', handleToggleSortOrder);
+
+function handleToggleSortOrder() {
+    const currentOrder = document.getElementById('toggleSortOrder').dataset.order || 'ascendente';
+    const newOrder = currentOrder === 'ascendente' ? 'descendente' : 'ascendente';
+    document.getElementById('toggleSortOrder').dataset.order = newOrder;
+
+    // Update the sorting display or icon if needed
+    handleLoadAndSave();
 }
 
 // Search bar
@@ -56,9 +64,6 @@ document.getElementById('favourites-only-checkbox').addEventListener('change', h
 // Filter option
 document.getElementById('sortOption').addEventListener('change', handleLoadAndSave);
 
-// Filter order
-document.getElementById('sortOrder').addEventListener('change', handleLoadAndSave);
-
 function loadFilteredMangas() {
     const query = document.getElementById('searchBar').value.toLowerCase();
     let results = mangaList;
@@ -70,8 +75,8 @@ function loadFilteredMangas() {
     
     const favOnly = document.getElementById('favourites-only-checkbox').checked;
     const sortOption = document.getElementById('sortOption').value;
-    const sortOrder = document.getElementById('sortOrder').value;
-  
+    const sortOrder = document.getElementById('toggleSortOrder').dataset.order || 'ascendente';
+
     // Filter by filters
     results = sortMangas(results, sortOption, sortOrder, favOnly);
   
@@ -88,24 +93,24 @@ function sortMangas(array, filterMethod, order, favOnly) {
         let comparison = 0;
 
         switch (filterMethod) {
-            case 'favoritos':
-                // Should show favorites first
+            case 'favoritos':   
+            // Should show favorites first
                 comparison = b.favorite - a.favorite;
                 break;
             case 'capitulos':
-                // Should show most chapters to least
+             // Should show most chapters to least
                 comparison = b.readChapters - a.readChapters;
                 break;
-            case 'fechaAdicion':
-                // Should show most recent first
+            case 'fechaAdicion':   
+             // Should show most recent first
                 comparison = new Date(b.dayAdded) - new Date(a.dayAdded);
                 break;
             case 'ultimaLectura':
-                // Should show most recent first
+             // Should show most recent first
                 comparison = new Date(b.lastRead) - new Date(a.lastRead);
                 break;
             default:
-                // If "filterMethod" is other, should order alphabetically
+            // If "filterMethod" is other, should order alphabetically        
                 comparison = a.title.localeCompare(b.title);
         }
 

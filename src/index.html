@@ -6,22 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link href="./output.css" rel="stylesheet" />
     <style>
-    main {
-        scrollbar-width: none;
-    }
-    #radix-dialog{
-        scrollbar-width: none;
-    }
-    option {
-        background-color: #dad7d6;  
-    }
-    @media (prefers-color-scheme: dark) {
-    option {
-        background-color: #1c1917;  /* Color de fondo en modo oscuro */
-    }
-}
+        main {
+            scrollbar-width: none;
+        }
 
+        #radix-dialog {
+            scrollbar-width: none;
+        }
 
+        option {
+            background-color: #dad7d6;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            option {
+                background-color: #1c1917;
+                /* Color de fondo en modo oscuro */
+            }
+        }
     </style>
 </head>
 
@@ -31,9 +33,8 @@
 
     <!-- Overlay -->
     <div id="overlay"
-                                                                                                                    
         class="fixed inset-0 bg-primary-base dark:bg-primary-base-dark opacity-0 hidden z-20 transition-opacity duration-500">
-    </div>                                                       <!--If you want to make the fade in faster, change duration here to 200, or 500-->
+    </div> <!--If you want to make the fade in faster, change duration here to 200, or 500-->
 
 
     <!-- Modal -->
@@ -48,6 +49,7 @@
     </div>
 
 
+
     <!--Header-->
     <div class="bg-primary-card dark:bg-primary-card-dark rounded-lg shadow-lg p-4 mb-6 transform transition-all hover:scale-105"
         data-id="2">
@@ -57,10 +59,10 @@
                 type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-dialog">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                     <path
-                    d="M262 192a64 64 0 1 0 58 58 64 64 0 0 0-58-58zm154 64a154 154 0 0 1-1 21l45 35a11 11 0 0 1 3 14l-43 74a11 11 0 0 1-13 5l-45-18a16 16 0 0 0-15 1 164 164 0 0 1-22 13 16 16 0 0 0-9 12l-7 48a11 11 0 0 1-10 9h-86a11 11 0 0 1-10-9l-7-48a16 16 0 0 0-9-12 155 155 0 0 1-22-12 16 16 0 0 0-15-2l-45 18a11 11 0 0 1-13-5l-43-74a11 11 0 0 1 3-13l38-30a16 16 0 0 0 6-15v-24a16 16 0 0 0-6-14l-38-30a11 11 0 0 1-3-14l43-74a11 11 0 0 1 13-5l45 18a16 16 0 0 0 15-1 164 164 0 0 1 22-13 16 16 0 0 0 9-12l7-48a11 11 0 0 1 10-9h86a11 11 0 0 1 10 9l7 48a16 16 0 0 0 9 12 155 155 0 0 1 22 12 16 16 0 0 0 15 2l45-18a11 11 0 0 1 13 5l43 74a11 11 0 0 1-3 13l-38 30a16 16 0 0 0-6 15v12z"
-                    fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" 
-                    stroke-width="32"/>
-                  </svg>
+                        d="M262 192a64 64 0 1 0 58 58 64 64 0 0 0-58-58zm154 64a154 154 0 0 1-1 21l45 35a11 11 0 0 1 3 14l-43 74a11 11 0 0 1-13 5l-45-18a16 16 0 0 0-15 1 164 164 0 0 1-22 13 16 16 0 0 0-9 12l-7 48a11 11 0 0 1-10 9h-86a11 11 0 0 1-10-9l-7-48a16 16 0 0 0-9-12 155 155 0 0 1-22-12 16 16 0 0 0-15-2l-45 18a11 11 0 0 1-13-5l-43-74a11 11 0 0 1 3-13l38-30a16 16 0 0 0 6-15v-24a16 16 0 0 0-6-14l-38-30a11 11 0 0 1-3-14l43-74a11 11 0 0 1 13-5l45 18a16 16 0 0 0 15-1 164 164 0 0 1 22-13 16 16 0 0 0 9-12l7-48a11 11 0 0 1 10-9h86a11 11 0 0 1 10 9l7 48a16 16 0 0 0 9 12 155 155 0 0 1 22 12 16 16 0 0 0 15 2l45-18a11 11 0 0 1 13 5l43 74a11 11 0 0 1-3 13l-38 30a16 16 0 0 0-6 15v12z"
+                        fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                        stroke-width="32" />
+                </svg>
                 <span class="sr-only">Open settings</span>
             </button>
             <h1 class="text-2xl font-bold text-secondary-base dark:text-secondary-base-dark" data-id="17">
@@ -79,26 +81,49 @@
                 </svg>
                 Filters
             </button>
+
+            <!-- Input de búsqueda -->
             <form class="flex-grow relative" data-id="31">
                 <input id="searchBar"
-                    class="flex h-10 w-full rounded-md border border-secondary-dates dark:border-secondary-dates-dark bg-primary-card dark:bg-primary-card-dark px-3 py-2 text-sm ring-offset-secondary-dates dark:ring-offset-secondary-dates-dark file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-secondary-base dark:placeholder:text-secondary-base-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 pr-16"
+                    class="flex h-10 w-full rounded-md border border-secondary-dates dark:border-secondary-dates-dark bg-primary-card dark:bg-primary-card-dark px-3 py-2 text-sm ring-offset-secondary-dates dark:ring-offset-secondary-dates-dark file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-secondary-base dark:placeholder:text-secondary-base-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                     placeholder="Search manga..." data-id="32" type="text" value="" />
+                <!-- Botón de borrar -->
                 <button id="deleteSearch"
-                    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-secondary-dates dark:ring-offset-secondary-dates-dark transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-primary-base dark:hover:bg-primary-base-dark h-10 w-10 absolute right-0 top-0 bottom-0"
-                    type="button" data-id="36">
-                    <img src="../public/icons/x.svg" />
+                    class="inline-flex dark:text-secondary-base-dark text-secondary-base items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-secondary-dates dark:ring-offset-secondary-dates-dark transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-primary-base dark:hover:bg-primary-base-dark h-10 w-10 absolute right-0 top-0 bottom-0"
+                    type="checkbox" data-id="36">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="icon icon-tabler icons-tabler-outline icon-tabler-x">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M18 6l-12 12" />
+                        <path d="M6 6l12 12" />
+                    </svg>
                     <span class="sr-only" data-id="38">Search</span>
                 </button>
             </form>
-        </div>
-    </div>
 
+            <!-- Botón de flechas fuera del input -->
+            <button id="toggleSortOrder"
+                class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-secondary-dates dark:ring-offset-secondary-dates-dark transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-primary-base dark:hover:bg-primary-base-dark h-10 w-10">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    class="icon icon-tabler icons-tabler-outline icon-tabler-arrows-sort">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                    <path d="M3 9l4 -4l4 4m-4 -4v14" />
+                    <path d="M21 15l-4 4l-4 -4m4 4v-14" />
+                </svg>
+                <span class="sr-only">Toggle sort order</span>
+            </button>
+        </div>
+
+    </div>
+    </div>
     <!--Mangas-->
 
     <main class="space-y-4 max-h-[300px] overflow-y-auto " data-id="39">
         <div class="manga-list space-y-4 pr-4" id="mangaListContainer" data-id="41"></div>
     </main>
-    
+
 
     <!--Add manga button-->
     <footer class="transform transition-all hover:scale-105">
@@ -114,10 +139,10 @@
             Add Manga
         </button>
     </footer>
-    
+
 
     <!--Settings-->
-    
+
     <section role="dialog" id="radix-dialog"
         class="dialog fixed z-50 gap-4 bg-primary-card max-h-full overflow-y-auto dark:bg-primary-card-dark p-6 shadow-lg inset-y-0 right-0 w-3/4 transform translate-x-full transition-transform duration-500 ease-in-out"
         tabindex="-1">
@@ -126,11 +151,12 @@
                 Settings
             </h2>
         </div>
-        
+
         <!--Langage select-->
         <div class="rounded-lg border border-secondary-base dark:border-secondary-base-dark shadow-sm" data-id="85">
             <div class="flex flex-col space-y-1.5 p-6" data-id="86">
-                <h3 class="whitespace-nowrap text-xl font-semibold leading-none tracking-tight text-secondary-base dark:text-secondary-base-dark" data-id="87">Language select:</h3>
+                <h3 class="whitespace-nowrap text-xl font-semibold leading-none tracking-tight text-secondary-base dark:text-secondary-base-dark"
+                    data-id="87">Language select:</h3>
             </div>
             <div class="max-w-sm mx-auto relative mb-4">
                 <select id="languageSelect"
@@ -151,17 +177,18 @@
             </div>
         </div>
 
-    
+
         <!--Theme select-->
         <div class="rounded-lg border border-secondary-base dark:border-secondary-base-dark shadow-sm my-8">
             <div class="flex flex-col space-y-1.5 p-6" data-id="86">
-                <h3 class="whitespace-nowrap text-xl font-semibold leading-none tracking-tight text-secondary-base dark:text-secondary-base-dark" data-id="87">Theme:</h3>
+                <h3 class="whitespace-nowrap text-xl font-semibold leading-none tracking-tight text-secondary-base dark:text-secondary-base-dark"
+                    data-id="87">Theme:</h3>
             </div>
             <!--Dark mode-->
             <div class="max-w-sm mx-auto relative mb-4">
                 <label for="darkmode" class="sr-only">Modo de Tema:</label>
                 <select id="darkmode"
-                class="pl-4 block py-2.5 px-0 w-full text-sm text-secondary-base dark:text-secondary-base-dark bg-transparent border rounded border-gray-300 appearance-none  dark:border-gray-600 focus:outline-none focus:ring-0 focus:border-gray-300 peer">
+                    class="pl-4 block py-2.5 px-0 w-full text-sm text-secondary-base dark:text-secondary-base-dark bg-transparent border rounded border-gray-300 appearance-none  dark:border-gray-600 focus:outline-none focus:ring-0 focus:border-gray-300 peer">
                     <option value="light">Claro</option>
                     <option value="dark">Oscuro</option>
                     <option value="system">Sistema</option>
@@ -181,51 +208,67 @@
                         clip-rule="evenodd" />
                 </svg>
             </button>
-            
+
         </div>
         <!--Import/Export-->
-        <div class="rounded-lg border border-secondary-base dark:border-secondary-base-dark bg-card text-card-foreground shadow-sm" data-id="85">
+        <div class="rounded-lg border border-secondary-base dark:border-secondary-base-dark bg-card text-card-foreground shadow-sm"
+            data-id="85">
             <div class="flex flex-col space-y-1.5 p-6" data-id="86">
-                <h3 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight text-secondary-base dark:text-secondary-base-dark" data-id="87">Import/Export</h3>
+                <h3 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight text-secondary-base dark:text-secondary-base-dark"
+                    data-id="87">Import/Export</h3>
             </div>
             <div class="p-6 space-y-4" data-id="89">
                 <div class="space-y-2" data-id="90">
-                    <label class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-secondary-base dark:text-secondary-base-dark" for="import" data-id="91">Import from json</label>
+                    <label
+                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-secondary-base dark:text-secondary-base-dark"
+                        for="import" data-id="91">Import from json</label>
                     <div class="flex items-center mr-2" data-id="92">
                         <!-- Hidden file input -->
                         <input class="hidden" id="import" data-id="93" type="file" accept=".json">
-                        
+
                         <!-- Custom upload file button -->
-                        <label for="import" class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-primary-base dark:ring-offset-primary-base-dark transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-base dark:focus-visible:ring-secondary-base-dark focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-secondary-base dark:border-secondary-base-dark bg-primary-card dark:bg-primary-card-dark hover:bg-primary-base dark:hover:bg-primary-base-dark hover:text-secondary-base dark:hover:text-secondary-base-dark h-10 px-4 py-2 cursor-pointer">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-download h-4 w-4 mr-2" data-id="98">
+                        <label for="import"
+                            class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-primary-base dark:ring-offset-primary-base-dark transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-base dark:focus-visible:ring-secondary-base-dark focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-secondary-base dark:border-secondary-base-dark bg-primary-card dark:bg-primary-card-dark hover:bg-primary-base dark:hover:bg-primary-base-dark hover:text-secondary-base dark:hover:text-secondary-base-dark h-10 px-4 py-2 cursor-pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="lucide lucide-download h-4 w-4 mr-2" data-id="98">
                                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                                 <polyline points="7 10 12 15 17 10"></polyline>
                                 <line x1="12" x2="12" y1="15" y2="3"></line>
                             </svg>
                             Upload File
                         </label>
-                        <span class="text-sm text-secondary-muted dark:text-secondary-muted-dark" data-id="96">or drag and drop</span>
+                        <span class="text-sm text-secondary-muted dark:text-secondary-muted-dark" data-id="96">or drag
+                            and drop</span>
                     </div>
                 </div>
-                <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-primary-base dark:ring-offset-primary-base-dark transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-base dark:focus-visible:ring-secondary-base-dark focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-secondary-base dark:border-secondary-base-dark bg-primary-card dark:bg-primary-card-dark hover:bg-primary-base dark:hover:bg-primary-base-dark hover:text-secondary-base dark:hover:text-secondary-base-dark h-10 px-4 py-2 w-full" id="export" data-id="97">
-    
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-upload h-4 w-4 mr-2" data-id="95">
+                <button
+                    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-primary-base dark:ring-offset-primary-base-dark transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-base dark:focus-visible:ring-secondary-base-dark focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-secondary-base dark:border-secondary-base-dark bg-primary-card dark:bg-primary-card-dark hover:bg-primary-base dark:hover:bg-primary-base-dark hover:text-secondary-base dark:hover:text-secondary-base-dark h-10 px-4 py-2 w-full"
+                    id="export" data-id="97">
+
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="lucide lucide-upload h-4 w-4 mr-2" data-id="95">
                         <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                         <polyline points="17 8 12 3 7 8"></polyline>
                         <line x1="12" x2="12" y1="3" y2="15"></line>
                     </svg>
                     Export Manga Library
                 </button>
-                <div data-orientation="horizontal" role="none" class="shrink-0 bg-secondary-base dark:bg-secondary-base-dark h-[1px] w-full" data-id="99"></div>
-                
+                <div data-orientation="horizontal" role="none"
+                    class="shrink-0 bg-secondary-base dark:bg-secondary-base-dark h-[1px] w-full" data-id="99"></div>
+
                 <!--Import from bookmarks. #TODO this xd-->
-                <a class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-primary-base dark:ring-offset-primary-base-dark transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-base dark:focus-visible:ring-secondary-base-dark focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-secondary-base dark:border-secondary-base-dark bg-primary-card dark:bg-primary-card-dark hover:bg-primary-base dark:hover:bg-primary-base-dark hover:text-secondary-base dark:hover:text-secondary-base-dark h-10 px-4 py-2 w-full" href="bookmarksDemo.html">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" width="44" height="44" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <a class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-primary-base dark:ring-offset-primary-base-dark transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-base dark:focus-visible:ring-secondary-base-dark focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-secondary-base dark:border-secondary-base-dark bg-primary-card dark:bg-primary-card-dark hover:bg-primary-base dark:hover:bg-primary-base-dark hover:text-secondary-base dark:hover:text-secondary-base-dark h-10 px-4 py-2 w-full"
+                    href="bookmarksDemo.html">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" width="44" height="44"
+                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <path d="M15 10v11l-5 -3l-5 3v-11a3 3 0 0 1 3 -3h4a3 3 0 0 1 3 3z" />
                         <path d="M11 3h5a3 3 0 0 1 3 3v11" />
-                      </svg>Import Bookmarks
-                    </a>
+                    </svg>Import Bookmarks
+                </a>
             </div>
         </div>
     </section>
@@ -307,8 +350,11 @@
             <h2 id="filtersTitle" class="text-lg font-semibold">Filters</h2>
             <div class="py-4">
                 <div class="flex items-center space-x-2">
-                    <input type="checkbox" id="favourites-only-checkbox" class="peer h-4 w-4 rounded-sm border border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" />
-                    <label for="favourites-only-checkbox" class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Show only favorites</label>
+                    <input type="checkbox" id="favourites-only-checkbox"
+                        class="peer h-4 w-4 rounded-sm border border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" />
+                    <label for="favourites-only-checkbox"
+                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Show
+                        only favorites</label>
                 </div>
                 <div class="flex flex-col space-y-4">
                     <div>
@@ -320,14 +366,6 @@
                             <option value="capitulos">Número de capítulos leídos</option>
                             <option value="fechaAdicion">Fecha de adición</option>
                             <option value="ultimaLectura">Última lectura</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label for="sortOrder" class="text-sm font-medium">Orden:</label>
-                        <select id="sortOrder"
-                            class="bg-primary-base dark:bg-primary-base-dark text-secondary-base dark:text-secondary-base-dark mt-1 block w-full">
-                            <option value="ascendente">Ascendente</option>
-                            <option value="descendente">Descendente</option>
                         </select>
                     </div>
                     <button id="getRandomManga" class="mt-4 bg-primary text-white p-2 rounded">
