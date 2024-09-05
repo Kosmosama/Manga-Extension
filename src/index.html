@@ -25,7 +25,70 @@
             }
         }
 
-        /* Cosas de los bookmarks, cambiar más tarde (MIRAR EN EL CODIGO LAS CLASES QUE SE USAN Y QUE NO, SI SE CAMBIAN, QUE SIGAN EXISTIENDO LAS COSAS QUE EXISTEN)  */
+        /* Cosas de los bookmarks, cambiar más tarde */
+
+        .folder-label-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .folder-icon, .bookmark-icon {
+            width: 16px;
+            height: 16px;
+            margin-right: 8px;
+        }
+
+        .folder-label-container:hover {
+            cursor: pointer;
+        }
+
+        .folder-checkbox {
+            margin-right: 8px;
+        }
+
+        .folder {
+            margin-bottom: 8px;
+        }
+
+        .bookmark {
+            margin-left: 24px; /* Indent bookmarks inside folders */
+            margin-bottom: 8px;
+        }
+
+        .folder-children {
+            margin-left: 24px; /* Indent children of folders */
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .overlay {
+            /* Assuming some existing styles to make it overlay the screen */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .dialog {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 500px;
+            width: 100%;
+            z-index: 101;
+        }
+
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 
