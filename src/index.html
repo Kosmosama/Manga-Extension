@@ -24,6 +24,8 @@
                 /* Color de fondo en modo oscuro */
             }
         }
+
+        /* Cosas de los bookmarks, cambiar más tarde (MIRAR EN EL CODIGO LAS CLASES QUE SE USAN Y QUE NO, SI SE CAMBIAN, QUE SIGAN EXISTIENDO LAS COSAS QUE EXISTEN)  */
     </style>
 </head>
 
@@ -258,9 +260,10 @@
                 <div data-orientation="horizontal" role="none"
                     class="shrink-0 bg-secondary-base dark:bg-secondary-base-dark h-[1px] w-full" data-id="99"></div>
 
-                <!--Import from bookmarks. #TODO this xd-->
-                <a class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-primary-base dark:ring-offset-primary-base-dark transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-base dark:focus-visible:ring-secondary-base-dark focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-secondary-base dark:border-secondary-base-dark bg-primary-card dark:bg-primary-card-dark hover:bg-primary-base dark:hover:bg-primary-base-dark hover:text-secondary-base dark:hover:text-secondary-base-dark h-10 px-4 py-2 w-full"
-                    href="bookmarksDemo.html">
+                <!--Import from bookmarks.-->
+                <button 
+                    class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-primary-base dark:ring-offset-primary-base-dark transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-base dark:focus-visible:ring-secondary-base-dark focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-secondary-base dark:border-secondary-base-dark bg-primary-card dark:bg-primary-card-dark hover:bg-primary-base dark:hover:bg-primary-base-dark hover:text-secondary-base dark:hover:text-secondary-base-dark h-10 px-4 py-2 w-full"
+                    id="import-bookmarks">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" width="44" height="44"
                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round"
                         stroke-linejoin="round">
@@ -268,7 +271,7 @@
                         <path d="M15 10v11l-5 -3l-5 3v-11a3 3 0 0 1 3 -3h4a3 3 0 0 1 3 3z" />
                         <path d="M11 3h5a3 3 0 0 1 3 3v11" />
                     </svg>Import Bookmarks
-                </a>
+                </button>
             </div>
         </div>
     </section>
@@ -439,6 +442,7 @@
     <script src="filter.js"></script>
     <script src="translations.js"></script>
     <script src="getRandom.js"></script>
+    <script src="bookmarks.js"></script>
 </body>
 
 </html>
