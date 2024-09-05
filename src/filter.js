@@ -15,6 +15,11 @@ function loadFilterOptions() {
 
         // Set the sortOption dropdown value, default to a sensible fallback if not set
         document.getElementById('sortOption').value = filterOptions.sortOption || 'favoritos';
+    
+        // Set the sortOrder, default to 'ascendente' if not set
+        const sortOrder = filterOptions.sortOrder || 'ascendente';
+        document.getElementById('toggleSortOrder').dataset.order = sortOrder;
+        updateSortOrderDisplay(sortOrder);
     });
 }
 
@@ -22,7 +27,8 @@ function loadFilterOptions() {
 function saveFilterOptions() {
     const filterOptions = {
         favOnly: document.getElementById('favourites-only-checkbox').checked,
-        sortOption: document.getElementById('sortOption').value
+        sortOption: document.getElementById('sortOption').value,
+        sortOrder: document.getElementById('toggleSortOrder').dataset.order || 'ascendente'
     };
 
     chrome.storage.local.set({ filterOptions: filterOptions }, function() {
@@ -40,8 +46,23 @@ function handleToggleSortOrder() {
     const newOrder = currentOrder === 'ascendente' ? 'descendente' : 'ascendente';
     document.getElementById('toggleSortOrder').dataset.order = newOrder;
 
+    // Update the button's display to reflect the new order
+   updateSortOrderDisplay(newOrder);
+
     // Update the sorting display or icon if needed
     handleLoadAndSave();
+}
+
+// Helper function to update the button's visual state (optional)
+//#TODO Change button svg
+function updateSortOrderDisplay(order) {
+    const button = document.getElementById('toggleSortOrder');
+    // Update button text/icon based on the order
+    if (order === 'ascendente') {
+        console.log("Change here to ascendant.");
+    } else {
+        console.log("Change here to descendant.");
+    }
 }
 
 // Search bar
