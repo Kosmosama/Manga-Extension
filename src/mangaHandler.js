@@ -67,7 +67,7 @@ async function addNewManga() {
  * @param {Object} manga - The manga object to be updated.
  */
 async function updateMangaDetails(manga) {
-    const mangaData = await getMangaFormData(true);
+    const mangaData = await getMangaFormData();
     const validationError = validateMangaData(mangaData, manga.title);
     
     if (validationError) {
@@ -106,7 +106,7 @@ function getCurrentTabURL() {
  * @param {boolean} [isEditMode=false] - Indicates whether the form is in edit mode.
  * @returns {Promise<Object>} A promise that resolves to an object containing the manga data from the form.
  */
-async function getMangaFormData(isEditMode = false) {
+async function getMangaFormData() {
     const linkInput = document.getElementById('link').value.trim();
     const link = linkInput || await getCurrentTabURL();
 
