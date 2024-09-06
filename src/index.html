@@ -32,7 +32,8 @@
             align-items: center;
         }
 
-        .folder-icon, .bookmark-icon {
+        .folder-icon,
+        .bookmark-icon {
             width: 16px;
             height: 16px;
             margin-right: 8px;
@@ -51,12 +52,14 @@
         }
 
         .bookmark {
-            margin-left: 24px; /* Indent bookmarks inside folders */
+            margin-left: 24px;
+            /* Indent bookmarks inside folders */
             margin-bottom: 8px;
         }
 
         .folder-children {
-            margin-left: 24px; /* Indent children of folders */
+            margin-left: 24px;
+            /* Indent children of folders */
         }
 
         .hidden {
@@ -101,7 +104,6 @@
         class="fixed inset-0 bg-primary-base dark:bg-primary-base-dark opacity-0 hidden z-20 transition-opacity duration-500">
     </div> <!--If you want to make the fade in faster, change duration here to 200, or 500-->
 
-
     <!-- Modal -->
     <div id="alertModal"
         class="fixed inset-0 z-[60] hidden bg-primary-base bg-opacity-50 dark:bg-primary-base-dark dark:bg-opacity-50 overflow-auto">
@@ -112,8 +114,6 @@
             <p class="modal-body"></p>
         </div>
     </div>
-
-
 
     <!--Header-->
     <div class="bg-primary-card dark:bg-primary-card-dark rounded-lg shadow-lg p-4 mb-6 transform transition-all hover:scale-105"
@@ -151,7 +151,8 @@
             <form class="flex-grow relative" data-id="31">
                 <input id="searchBar"
                     class="flex h-10 w-full rounded-md border border-secondary-dates dark:border-secondary-dates-dark bg-primary-card dark:bg-primary-card-dark px-3 py-2 text-sm ring-offset-secondary-dates dark:ring-offset-secondary-dates-dark file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-secondary-base dark:placeholder:text-secondary-base-dark focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                    placeholder="Search manga..." data-id="32" type="text" value="" />
+                    placeholder="Search manga..." data-id="32" type="text" value=""/>
+                
                 <!-- Botón de borrar -->
                 <button id="deleteSearch"
                     class="inline-flex dark:text-secondary-base-dark text-secondary-base items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-secondary-dates dark:ring-offset-secondary-dates-dark transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-primary-base dark:hover:bg-primary-base-dark h-10 w-10 absolute right-0 top-0 bottom-0"
@@ -167,7 +168,7 @@
                 </button>
             </form>
 
-            <!-- Botón de flechas fuera del input -->
+            <!-- Sort order button -->
             <button id="toggleSortOrder"
                 class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-secondary-dates dark:ring-offset-secondary-dates-dark transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-primary-base dark:hover:bg-primary-base-dark h-10 w-10">
                 <div id="sortIcon" class="transition-transform duration-300">
@@ -179,20 +180,15 @@
                         <path d="M21 9l-4 -4l-4 4m4 -4v14" />
                     </svg>
                 </div>
-                
-                          
                 <span class="sr-only">Toggle sort order</span>
             </button>
         </div>
+    </div>
 
-    </div>
-    </div>
     <!--Mangas-->
-
     <main class="space-y-4 max-h-[300px] overflow-y-auto " data-id="39">
         <div class="manga-list space-y-4 pr-4" id="mangaListContainer" data-id="41"></div>
     </main>
-
 
     <!--Add manga button-->
     <footer class="transform transition-all hover:scale-105">
@@ -209,9 +205,7 @@
         </button>
     </footer>
 
-
     <!--Settings-->
-
     <section role="dialog" id="radix-dialog"
         class="dialog fixed z-50 gap-4 bg-primary-card max-h-full overflow-y-auto dark:bg-primary-card-dark p-6 shadow-lg inset-y-0 right-0 w-3/4 transform translate-x-full transition-transform duration-500 ease-in-out"
         tabindex="-1">
@@ -246,7 +240,6 @@
             </div>
         </div>
 
-
         <!--Theme select-->
         <div class="rounded-lg border border-secondary-base dark:border-secondary-base-dark shadow-sm my-8">
             <div class="flex flex-col space-y-1.5 p-6" data-id="86">
@@ -279,6 +272,7 @@
             </button>
 
         </div>
+
         <!--Import/Export-->
         <div class="rounded-lg border border-secondary-base dark:border-secondary-base-dark bg-card text-card-foreground shadow-sm"
             data-id="85">
@@ -328,7 +322,7 @@
                     class="shrink-0 bg-secondary-base dark:bg-secondary-base-dark h-[1px] w-full" data-id="99"></div>
 
                 <!--Import from bookmarks.-->
-                <button 
+                <button
                     class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-primary-base dark:ring-offset-primary-base-dark transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-base dark:focus-visible:ring-secondary-base-dark focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-secondary-base dark:border-secondary-base-dark bg-primary-card dark:bg-primary-card-dark hover:bg-primary-base dark:hover:bg-primary-base-dark hover:text-secondary-base dark:hover:text-secondary-base-dark h-10 px-4 py-2 w-full"
                     id="import-bookmarks">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" width="44" height="44"
@@ -345,7 +339,7 @@
 
     <!--Add manga form-->
     <div role="dialog" id="formContainer"
-        class="dialog fixed z-50 gap-4 bg-primary-card dark:bg-primary-card-dark p-6 shadow-lg inset-y-0 right-0 w-3/4 border-l transform translate-x-full transition-transform duration-500 ease-in-out">
+        class="dialog fixed z-[57] gap-4 bg-primary-card dark:bg-primary-card-dark p-6 shadow-lg inset-y-0 right-0 w-3/4 border-l transform translate-x-full transition-transform duration-500 ease-in-out">
         <div class="flex flex-col space-y-2 text-center sm:text-left">
             <h2 class="text-lg font-semibold text-foreground" data-translate-key="loadManga">
                 Cargar Manga
@@ -413,6 +407,7 @@
             <span class="sr-only">Close</span>
         </button>
     </div>
+
     <!--Filter-->
     <div id="filtersDialog"
         class="dialog fixed inset-y-0 right-0 z-50 w-3/4 max-w-sm bg-primary-card dark:bg-primary-card-dark shadow-lg transform translate-x-full transition-transform duration-300 ease-in-out">
@@ -456,6 +451,38 @@
         </div>
     </div>
 
+    <!--Import bookmarks-->
+    <div role="dialog" id="import-bookmarks-dialog"
+        class="dialog fixed z-[55] gap-4 bg-primary-card dark:bg-primary-card-dark p-6 shadow-lg inset-y-0 right-0 w-3/4 border-l transform translate-x-full transition-transform duration-500 ease-in-out">
+        <div class="flex flex-col space-y-2 text-center sm:text-left">
+            <h2 class="text-lg font-semibold text-foreground">
+                Importar Marcadores
+            </h2>
+        </div>
+        <div id="bookmark-tree">
+            <!-- Dynamically loaded bookmarks will go here -->
+        </div>
+        <button id="import-selected-button"
+            class="relative flex items-center space-x-2 rounded-sm bg-blue-600 text-white px-4 py-2 opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-check h-4 w-4">
+                <path d="M5 13l4 4L19 7"></path>
+            </svg>
+            <span>Import Selected</span>
+        </button>
+        <button id="import-cancel-button"
+            class="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-x h-4 w-4">
+                <path d="M18 6 6 18"></path>
+                <path d="m6 6 12 12"></path>
+            </svg>
+            <span class="sr-only">Close</span>
+        </button>
+    </div>
+
     <!--Confirm delete dialog-->
     <div id="confirmationDialog" tabindex="-1"
         class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -496,8 +523,9 @@
             </div>
         </div>
     </div>
-    <div id="konamiContent"></div>
     
+    <div id="konamiContent"></div>
+
     <!-- Scripts -->
     <script src="storageHandler.js"></script>
     <script src="themeHandler.js"></script>

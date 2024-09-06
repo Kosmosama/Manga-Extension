@@ -1,17 +1,18 @@
 document.getElementById('import-bookmarks').addEventListener('click', openBookmarkDialog);
-document.getElementById('cancelBtn').addEventListener('click', closeBookmarkDialog); //#TODO Actual cancel button
-document.getElementById('importSelectedBtn').addEventListener('click', importSelectedBookmarks); //#TODO Actual import selected button
+document.getElementById('import-cancel-button').addEventListener('click', closeBookmarkDialog);
+document.getElementById('import-selected-button').addEventListener('click', importSelectedBookmarks);
 
 /**
  * Opens the bookmark import dialog and loads the bookmarks.
  * Displays the overlay and loads simulated bookmarks data into the dialog.
+ * #TODO Make use of the overlay and open the actual dialog
  */
 function openBookmarkDialog() {
     document.getElementById('importOverlay').classList.remove('hidden');
 
     chrome.bookmarks.getTree((bookmarkTreeNodes) => {
         if (bookmarkTreeNodes.length > 0) {
-            loadBookmarks(bookmarkTreeNodes[0].children, document.getElementById('bookmarkTree'));
+            loadBookmarks(bookmarkTreeNodes[0].children, document.getElementById('bookmark-tree'));
         }
         else {
             closeBookmarkDialog();
@@ -26,7 +27,7 @@ function openBookmarkDialog() {
  */
 function closeBookmarkDialog() {
     document.getElementById('importOverlay').classList.add('hidden');
-    document.getElementById('bookmarkTree').innerHTML = ''; 
+    document.getElementById('bookmark-tree').innerHTML = ''; 
 }
 
 /**
@@ -170,7 +171,7 @@ function updateFolderAndParents(folder) {
 }
 
 // Updates parent folder checkboxes when child checkboxes change
-document.getElementById('bookmarkTree').addEventListener('change', (event) => {
+document.getElementById('bookmark-tree').addEventListener('change', (event) => {
     if (event.target.classList.contains('bookmark-checkbox')) {
         const folder = event.target.closest('.folder');
         if (folder) {
