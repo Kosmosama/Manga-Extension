@@ -30,8 +30,8 @@ function handleKonamiCode(event) {
 function triggerKonamiCode() {
     const content = `
         <video id="explosionVideo" src="../public/explosion.webm" style="position: fixed; bottom: -50px; left: -50px; width: 300px; height: 300px; z-index: 9999; transform: scale(3);" autoplay></video>
-        <video id="movingVideo" src="../public/joaco.webp" style="position: fixed; bottom: 10px; left: 0; width: 100px; height: 100px; z-index: 150;"></video>
-        <audio src="../public/cuandomeenamoro.mp3" autoplay style="display: none;"></audio>
+        <video id="movingVideo" src="../public/pollo.webm" style="position: fixed; bottom: 10px; left: 0; width: 100px; height: 100px; z-index: 150;"></video>
+        <audio src="../public/mechamecha.mp3" autoplay style="display: none;"></audio>
     `;
     document.getElementById('konamiContent').innerHTML = content;
     startMovingVideo();
