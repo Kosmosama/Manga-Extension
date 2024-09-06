@@ -451,15 +451,15 @@
         </div>
     </div>
 
-    <!--Import bookmarks-->
+    <!-- Import bookmarks -->
     <div role="dialog" id="import-bookmarks-dialog"
-        class="dialog fixed z-[55] gap-4 bg-primary-card dark:bg-primary-card-dark p-6 shadow-lg inset-y-0 right-0 w-3/4 border-l transform translate-x-full transition-transform duration-500 ease-in-out">
+    class="dialog fixed z-[55] gap-4 bg-primary-card dark:bg-primary-card-dark p-6 shadow-lg inset-y-0 right-0 w-3/4 border-l transform translate-x-full transition-transform duration-500 ease-in-out">
         <div class="flex flex-col space-y-2 text-center sm:text-left">
             <h2 class="text-lg font-semibold text-foreground">
                 Importar Marcadores
             </h2>
         </div>
-        <div id="bookmark-tree">
+        <div id="bookmark-tree" class="max-h-[600px] overflow-y-auto">
             <!-- Dynamically loaded bookmarks will go here -->
         </div>
 

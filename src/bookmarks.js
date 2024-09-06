@@ -13,8 +13,8 @@ function openBookmarkDialog() {
             loadBookmarks(bookmarkTreeNodes[0].children, document.getElementById('bookmark-tree'));
         }
         else {
-            closeBookmarkDialog();
-            showModal(translate("No bookmarks found in chrome bookmark tree.")); //#TODO Add key to translations
+            hideImportBookmarkDialog();
+            showModal(translate("No bookmarks found in chrome bookmark tree.")); //#TODO Add key to translations - Leave for later
             console.log("No bookmarks found in the Chrome bookmark tree.");
         }
     });
@@ -189,5 +189,87 @@ function importSelectedBookmarks() {
 
     console.log(selectedBookmarks);
 
-    closeBookmarkDialog();
+    // hideImportBookmarkDialog();
 }
+
+// function importSelectedBookmarks() {
+//     let bookmarksQueue = []; // Queue to store selected bookmarks
+//     let currentBookmarkIndex = 0; // To track the current bookmark being processed
+
+//     function importSelectedBookmarks() {
+//         const checkedCheckboxes = document.querySelectorAll('.bookmark-checkbox:checked');
+        
+//         bookmarksQueue = Array.from(checkedCheckboxes).map(checkbox => {
+//             const bookmarkElement = checkbox.closest('.bookmark');
+//             return {
+//                 title: bookmarkElement.querySelector('label').textContent,
+//                 url: bookmarkElement.getAttribute('data-url')
+//             };
+//         });
+
+//         currentBookmarkIndex = 0;
+        
+//         if (bookmarksQueue.length > 0) {
+//             loadBookmarkIntoForm(bookmarksQueue[currentBookmarkIndex]);
+//         } else {
+//             console.log("No bookmarks selected.");
+//         }
+//     }
+// }
+
+// // Load the bookmark details into the form
+// function loadBookmarkIntoForm(bookmark) {
+//     const form = document.getElementById('chapterForm');
+
+//     // Fill the form with bookmark data
+//     document.getElementById('title').value = bookmark.title;
+//     document.getElementById('link').value = bookmark.url;
+//     document.getElementById('readChapters').value = 0; // Default value
+//     document.getElementById('favorite').checked = false; // Default unchecked
+
+//     // Show the form
+//     showMangaForm();
+
+//     // Change the "Save" button text to indicate the action
+//     document.getElementById('saveBtn').textContent = "Add Manga";
+
+//     // Attach event listener to handle form submission for the current bookmark
+//     form.addEventListener('submit', handleBookmarkFormSubmission, { once: true });
+
+//     // Optionally, add a cancel button listener (can be the same as your existing logic)
+//     document.getElementById('cancelButton').addEventListener('click', cancelBookmarkForm, { once: true });
+// }
+
+// // Handle form submission for a single bookmark
+// function handleBookmarkFormSubmission(event) {
+//     event.preventDefault();
+
+//     const mangaData = {
+//         title: document.getElementById('title').value,
+//         link: document.getElementById('link').value,
+//         readChapters: document.getElementById('readChapters').value,
+//         favorite: document.getElementById('favorite').checked
+//     };
+
+//     // Use addNewManga from mangaHandler.js to add the manga
+//     addNewManga(mangaData);
+
+//     // Move on to the next bookmark in the queue
+//     currentBookmarkIndex++;
+//     if (currentBookmarkIndex < bookmarksQueue.length) {
+//         loadBookmarkIntoForm(bookmarksQueue[currentBookmarkIndex]);
+//     } else {
+//         hideMangaForm(); // Close the form if all bookmarks have been processed
+//     }
+// }
+
+// // Handle cancellation of the form
+// function cancelBookmarkForm() {
+//     hideMangaForm();
+//     currentBookmarkIndex++;
+//     if (currentBookmarkIndex < bookmarksQueue.length) {
+//         loadBookmarkIntoForm(bookmarksQueue[currentBookmarkIndex]);
+//     } else {
+//         hideMangaForm();
+//     }
+// }
