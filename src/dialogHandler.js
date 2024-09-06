@@ -17,15 +17,21 @@ document.getElementById('cancelButton').addEventListener('click', hideMangaForm)
 // Attach event listener for the cross/cancel button in the manga form
 document.getElementById('cross-cancel-mangaForm').addEventListener('click', hideMangaForm);
 
+// Attach event listener for the cancel button in the import bookmarks dialog
+document.getElementById('import-cancel-button').addEventListener('click', hideImportBookmarkDialog);
+
 /**
- * Utility function to toggle the visibility of a dialog.
+ * Utility function to toggle the visibility of a dialog by adding or removing CSS classes.
  * 
  * @param {HTMLElement} dialog - The dialog element to toggle.
+ * @param {boolean} [shouldToggleOverlay=true] - Optional flag to determine whether the overlay should also be toggled. Defaults to true.
  */
-function toggleDialog(dialog) {
+function toggleDialog(dialog, shouldToggleOverlay = true) {
     dialog.classList.toggle('translate-x-full');
     dialog.classList.toggle('translate-x-0');
-    toggleOverlay();
+    if (shouldToggleOverlay) {
+        toggleOverlay();
+    }
 }
 
 /**
@@ -72,9 +78,20 @@ function hideMangaForm() {
 }
 
 /**
- * Function to close all dialogs, including the manga form dialog.
+ * Specific function to open the import bookmark dialog.
  */
-function closeAllDialogsIncludingMangaForm() {
-    const dialogs = document.querySelectorAll('.dialog');
-    closeAllDialogs(dialogs);
+function showImportBookmarkDialog() {
+    const bookmarkDialog = document.getElementById('import-bookmarks-dialog');
+    toggleDialog(bookmarkDialog, false);
+}
+
+/**
+ * Specific function to close the import bookmark dialog.
+ */
+function hideImportBookmarkDialog() {
+    const bookmarkDialog = document.getElementById('import-bookmarks-dialog');
+    if (!bookmarkDialog.classList.contains('translate-x-full')) {
+        document.getElementById('bookmark-tree').innerHTML = '';
+        toggleDialog(bookmarkDialog, false);
+    }
 }

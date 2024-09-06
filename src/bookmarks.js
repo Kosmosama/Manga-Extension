@@ -1,14 +1,12 @@
 document.getElementById('import-bookmarks').addEventListener('click', openBookmarkDialog);
-document.getElementById('import-cancel-button').addEventListener('click', closeBookmarkDialog);
 document.getElementById('import-selected-button').addEventListener('click', importSelectedBookmarks);
 
 /**
  * Opens the bookmark import dialog and loads the bookmarks.
  * Displays the overlay and loads simulated bookmarks data into the dialog.
- * #TODO Make use of the overlay and open the actual dialog
  */
 function openBookmarkDialog() {
-    document.getElementById('importOverlay').classList.remove('hidden');
+    showImportBookmarkDialog();
 
     chrome.bookmarks.getTree((bookmarkTreeNodes) => {
         if (bookmarkTreeNodes.length > 0) {
@@ -16,18 +14,10 @@ function openBookmarkDialog() {
         }
         else {
             closeBookmarkDialog();
+            showModal(translate("No bookmarks found in chrome bookmark tree.")); //#TODO Add key to translations
             console.log("No bookmarks found in the Chrome bookmark tree.");
         }
     });
-}
-
-/**
- * Closes the bookmark import dialog and clears the bookmark tree.
- * #TODO Make use of dialogHandler
- */
-function closeBookmarkDialog() {
-    document.getElementById('importOverlay').classList.add('hidden');
-    document.getElementById('bookmark-tree').innerHTML = ''; 
 }
 
 /**

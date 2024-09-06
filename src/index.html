@@ -462,14 +462,12 @@
         <div id="bookmark-tree">
             <!-- Dynamically loaded bookmarks will go here -->
         </div>
-        <button id="import-selected-button"
-            class="relative flex items-center space-x-2 rounded-sm bg-blue-600 text-white px-4 py-2 opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                class="lucide lucide-check h-4 w-4">
-                <path d="M5 13l4 4L19 7"></path>
-            </svg>
-            <span>Import Selected</span>
+
+        <!-- #TODO Add another button that says "cancel" other than the x , fix css -->
+
+        <button type="button" id="import-selected-button" 
+                class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary-card dark:bg-primary-card-dark text-secondary-base dark:text-secondary-base-dark hover:bg-primary-card/90 dark:hover:bg-primary-card-dark/90 h-10 px-4">
+            Import Selected
         </button>
         <button id="import-cancel-button"
             class="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none">
@@ -523,7 +521,7 @@
             </div>
         </div>
     </div>
-    
+
     <div id="konamiContent"></div>
 
     <!-- Scripts -->
