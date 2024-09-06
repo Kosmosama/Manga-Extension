@@ -53,17 +53,23 @@ function handleToggleSortOrder() {
     handleLoadAndSave();
 }
 
-// Helper function to update the button's visual state (optional)
-//#TODO Change button svg
+
+/**
+ * Updates the display of the sort order button and icon based on the given order.
+ *
+ * @param {string} order - The sort order. It can be either 'ascendente' or 'descendente'.
+ */
 function updateSortOrderDisplay(order) {
-    const button = document.getElementById('toggleSortOrder');
-    // Update button text/icon based on the order
+    const sortIcon = document.getElementById('sortIcon');
     if (order === 'ascendente') {
-        console.log("Change here to ascendant.");
+        sortIcon.classList.remove('scale-y-[-1]');
+        sortIcon.classList.add('scale-y-1');
     } else {
-        console.log("Change here to descendant.");
+        sortIcon.classList.remove('scale-y-1');
+        sortIcon.classList.add('scale-y-[-1]');
     }
 }
+
 
 // Search bar
 document.getElementById('searchBar').addEventListener('input', loadFilteredMangas);

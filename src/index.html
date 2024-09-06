@@ -107,13 +107,17 @@
             <!-- Botón de flechas fuera del input -->
             <button id="toggleSortOrder"
                 class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-secondary-dates dark:ring-offset-secondary-dates-dark transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-primary-base dark:hover:bg-primary-base-dark h-10 w-10">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="icon icon-tabler icons-tabler-outline icon-tabler-arrows-sort">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <path d="M3 9l4 -4l4 4m-4 -4v14" />
-                    <path d="M21 15l-4 4l-4 -4m4 4v-14" />
-                </svg>
+                <div id="sortIcon" class="transition-transform duration-300">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="icon icon-tabler icons-tabler-outline icon-tabler-arrows-sort">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path d="M3 15l4 4l4 -4m-4 4v-14" />
+                        <path d="M21 9l-4 -4l-4 4m4 -4v14" />
+                    </svg>
+                </div>
+                
+                          
                 <span class="sr-only">Toggle sort order</span>
             </button>
         </div>
