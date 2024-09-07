@@ -175,7 +175,9 @@ document.getElementById('bookmark-tree').addEventListener('change', (event) => {
  * Gathers all selected bookmarks by checking which checkboxes are selected.
  * #TODO Button and functionality to add using addManga form
  */
-function importSelectedBookmarks() {
+
+//esto no funciona, mete todo de una
+async function importSelectedBookmarks() {
     const selectedBookmarks = [];
     const checkedCheckboxes = document.querySelectorAll('.bookmark-checkbox:checked');
 
@@ -183,11 +185,23 @@ function importSelectedBookmarks() {
         const bookmarkElement = checkbox.closest('.bookmark');
         selectedBookmarks.push({
             title: bookmarkElement.querySelector('label').textContent,
-            url: bookmarkElement.getAttribute('data-url')
+            link: bookmarkElement.getAttribute('data-url')
         });
     });
 
-    console.log(selectedBookmarks);
+    for (const bookmark of selectedBookmarks) {
+        const mangaData = {
+            image: '',
+            title: bookmark.title,
+            link: bookmark.link,
+            readChapters: 0,
+            favorite: false
+        };
 
-    // hideImportBookmarkDialog();
+        await addNewManga2(mangaData);
+    }
+
+    console.log('Bookmarks added as new mangas:', selectedBookmarks);
+
+    hideImportBookmarkDialog();
 }

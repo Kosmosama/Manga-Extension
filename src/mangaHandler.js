@@ -34,6 +34,25 @@ function handleMangaEdition(manga) {
 
     showMangaForm();
 }
+//Si addManga era tan buena, por qué no había una addNewManga2??
+async function addNewManga2(mangaData) {
+    const validationError = validateMangaData(mangaData);
+    
+    if (validationError) {
+        showModal(validationError);
+        return;
+    }
+
+    const date = new Date().toLocaleString();
+    const newManga = {
+        ...mangaData,
+        dayAdded: date,
+        lastRead: date
+    };
+
+    mangaList.push(newManga);
+    refreshAndSaveMangas();
+}
 
 /**
  * Adds a new manga to the manga list.
@@ -81,6 +100,8 @@ async function updateMangaDetails(manga) {
     hideMangaForm();
     refreshAndSaveMangas();
 }
+
+
 
 /**
  * Fetches the URL of the current active tab.
