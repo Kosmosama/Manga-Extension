@@ -17,12 +17,13 @@ Extension to bookmark mangas you like.
 11. [x] **Make is so if you click outside of settings or manga form, it works as a cancel operation.**
 12. [ ] **Implement another method of setting images when there image isnt found.**
 13. [ ] **Add fixed size to html (it changes when there are less mangas displayed).**
+14. [ ] **Refactor overlay, sometimes it is really annoying to deal with (ex: while importing from bookmarks).**
 
 
 ## Next Version
 
 1. **Add "genres" to filter and categorize mangas (e.g., manhua, manhwa, etc). Consider allowing users to create genres. + add a completed status**
-2. **Add synchronization with Google Drive.**
+2. **Add synchronization with own API.**
 3. **Make it so the selected image appears on manga addition/edition**
 
 ## Proposals

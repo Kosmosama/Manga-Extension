@@ -6,6 +6,7 @@ document.getElementById('import-selected-button').addEventListener('click', impo
  * Displays the overlay and loads simulated bookmarks data into the dialog.
  */
 function openBookmarkDialog() {
+    resetBookmarkTreeContent();
     showImportBookmarkDialog();
 
     chrome.bookmarks.getTree((bookmarkTreeNodes) => {
@@ -175,9 +176,7 @@ document.getElementById('bookmark-tree').addEventListener('change', (event) => {
  * Gathers all selected bookmarks by checking which checkboxes are selected.
  * #TODO Button and functionality to add using addManga form
  */
-
-//esto no funciona, mete todo de una
-async function importSelectedBookmarks() {
+function importSelectedBookmarks() {
     const selectedBookmarks = [];
     const checkedCheckboxes = document.querySelectorAll('.bookmark-checkbox:checked');
 
@@ -188,20 +187,42 @@ async function importSelectedBookmarks() {
             link: bookmarkElement.getAttribute('data-url')
         });
     });
+    
+    handleBookmarkToManga(selectedBookmarks);
+}
 
-    for (const bookmark of selectedBookmarks) {
-        const mangaData = {
-            image: '',
-            title: bookmark.title,
-            link: bookmark.link,
-            readChapters: 0,
-            favorite: false
-        };
+function processRemainingBookmarks() {
+    const form = document.getElementById('chapterForm');
 
-        await addNewManga2(mangaData);
+    const isImportMode = !!form.dataset.importMode;
+    const remainingBookmarks = JSON.parse(form.dataset.remainingBookmarks || '[]');
+
+    if (isImportMode && Array.isArray(remainingBookmarks)) {
+        handleBookmarkToManga(remainingBookmarks);
     }
+}
 
-    console.log('Bookmarks added as new mangas:', selectedBookmarks);
+function removeImportDatasets() {
+    const form = document.getElementById('chapterForm');
 
-    hideImportBookmarkDialog();
+    delete form.dataset.importMode;
+    delete form.dataset.remainingBookmarks;
+} 
+
+function handleBookmarkToManga(remainingBookmarks) {
+    closeAllDialogs();
+    
+    const form = document.getElementById('chapterForm');
+    const firstBookmark = remainingBookmarks.shift();
+
+    fillMangaForm(firstBookmark);
+
+    if (remainingBookmarks.length > 0) {
+        form.dataset.importMode = 'true';
+        form.dataset.remainingBookmarks = JSON.stringify(remainingBookmarks);
+    } else {
+        removeImportDatasets();
+    }  
+
+    showMangaForm(); // Maybe it causes an error with the overlay.
 }

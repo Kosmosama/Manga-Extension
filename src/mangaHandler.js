@@ -2,9 +2,12 @@
 document.getElementById('chapterForm').addEventListener('submit', handleFormSubmission);
 
 /**
- * Handles the form submission by either adding a new manga or updating an existing one.
+ * Handles form submission to either add a new manga or update an existing one.
+ * Processes any remaining bookmarks that have to be converted into mangas.
  * 
- * @param {Event} event - The form submission event.
+ * @param {Event} event - The form submission event. Prevents the default behavior and processes form data.
+ * 
+ * @throws {Error} Logs errors to the console if async operations fail.
  */
 async function handleFormSubmission(event) {
     event.preventDefault();
@@ -13,13 +16,23 @@ async function handleFormSubmission(event) {
     const isEditMode = !!form.dataset.editMode;
     const mangaTitle = form.dataset.mangaTitle;
 
-    if (isEditMode && mangaTitle) {
-        const manga = mangaList.find(m => m.title === mangaTitle);
-        await updateMangaDetails(manga);
-    } else {
-        await addNewManga();
+    try {
+        if (isEditMode && mangaTitle) {
+            const manga = mangaList.find(m => m.title === mangaTitle);
+            if (manga) {
+                await updateMangaDetails(manga);
+            } else {
+                console.error('Manga not found for editing');
+            }
+        } else {
+            await addNewManga();
+            processRemainingBookmarks();
+        }
+    } catch (error) {
+        console.error('An error occurred during form submission:', error);
     }
 }
+
 
 /**
  * Fills the manga form with the details of the manga to be edited.
@@ -33,25 +46,6 @@ function handleMangaEdition(manga) {
     form.dataset.mangaTitle = manga.title;
 
     showMangaForm();
-}
-//Si addManga era tan buena, por qué no había una addNewManga2??
-async function addNewManga2(mangaData) {
-    const validationError = validateMangaData(mangaData);
-    
-    if (validationError) {
-        showModal(validationError);
-        return;
-    }
-
-    const date = new Date().toLocaleString();
-    const newManga = {
-        ...mangaData,
-        dayAdded: date,
-        lastRead: date
-    };
-
-    mangaList.push(newManga);
-    refreshAndSaveMangas();
 }
 
 /**
@@ -100,8 +94,6 @@ async function updateMangaDetails(manga) {
     hideMangaForm();
     refreshAndSaveMangas();
 }
-
-
 
 /**
  * Fetches the URL of the current active tab.

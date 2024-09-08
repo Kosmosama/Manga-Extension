@@ -7,8 +7,7 @@ document.querySelectorAll('[data-dialog-target]').forEach(button => {
 // Attach event listener for the overlay click to close all dialogs
 document.getElementById('overlay').addEventListener('click', (event) => {
     event.stopPropagation();
-    const dialogs = document.querySelectorAll('.dialog');
-    closeAllDialogs(dialogs);
+    closeAllDialogs();
 });
 
 // Attach event listener for the cancel button in the manga form
@@ -36,15 +35,18 @@ function toggleDialog(dialog, shouldToggleOverlay = true) {
 
 /**
  * Function to close all dialogs.
- * 
- * @param {NodeList} dialogs - A list of dialog elements to be closed.
  */
-function closeAllDialogs(dialogs) {
+function closeAllDialogs() {
+    const dialogs = document.querySelectorAll('.dialog');
+
     dialogs.forEach(dialog => {
         dialog.classList.add('translate-x-full');
         dialog.classList.remove('translate-x-0');
     });
     toggleOverlay();
+
+    // It will do it more times than needed, but this is the best place I found for this (at least for now)
+    removeImportDatasets();
 }
 
 /**
@@ -62,9 +64,9 @@ function toggleOverlay() {
 /**
  * Specific function to open the manga form dialog.
  */
-function showMangaForm() {
+function showMangaForm(a = true) {
     const mangaFormDialog = document.getElementById('formContainer');
-    toggleDialog(mangaFormDialog);
+    toggleDialog(mangaFormDialog, a);
 }
 
 /**
@@ -75,6 +77,15 @@ function hideMangaForm() {
     if (!mangaFormDialog.classList.contains('translate-x-full')) {
         toggleDialog(mangaFormDialog);
     }
+
+    processRemainingBookmarks();
+}
+
+/**
+ * Resets the content of the bookmark tree element by setting its inner HTML to an empty string.
+ */
+function resetBookmarkTreeContent() {
+    document.getElementById('bookmark-tree').innerHTML = '';
 }
 
 /**
@@ -91,7 +102,7 @@ function showImportBookmarkDialog() {
 function hideImportBookmarkDialog() {
     const bookmarkDialog = document.getElementById('import-bookmarks-dialog');
     if (!bookmarkDialog.classList.contains('translate-x-full')) {
-        document.getElementById('bookmark-tree').innerHTML = '';
         toggleDialog(bookmarkDialog, false);
+        resetBookmarkTreeContent();
     }
 }
