@@ -180,6 +180,11 @@ function importSelectedBookmarks() {
     const selectedBookmarks = [];
     const checkedCheckboxes = document.querySelectorAll('.bookmark-checkbox:checked');
 
+    if (checkedCheckboxes.length === 0) {
+        closeAllDialogs();
+        showModal("No bookmarks selected."); //#TODO Add key to translations - Leave for later
+        return;
+    }
     checkedCheckboxes.forEach(checkbox => {
         const bookmarkElement = checkbox.closest('.bookmark');
         selectedBookmarks.push({
