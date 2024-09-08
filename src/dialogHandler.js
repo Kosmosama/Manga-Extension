@@ -11,10 +11,10 @@ document.getElementById('overlay').addEventListener('click', (event) => {
 });
 
 // Attach event listener for the cancel button in the manga form
-document.getElementById('cancelButton').addEventListener('click', hideMangaForm);
+document.getElementById('cancelButton').addEventListener('click', cancelManga);
 
 // Attach event listener for the cross/cancel button in the manga form
-document.getElementById('cross-cancel-mangaForm').addEventListener('click', hideMangaForm);
+document.getElementById('cross-cancel-mangaForm').addEventListener('click', cancelManga);
 
 // Attach event listener for the cancel button in the import bookmarks dialog
 document.getElementById('import-cancel-button').addEventListener('click', hideImportBookmarkDialog);
@@ -70,6 +70,14 @@ function showMangaForm(a = true) {
 }
 
 /**
+ * Specific function to cancel the addition / edition of the current manga.
+ */
+function cancelManga() {
+    hideMangaForm();
+    processRemainingBookmarks();
+}
+
+/**
  * Specific function to close the manga form dialog.
  */
 function hideMangaForm() {
@@ -77,8 +85,6 @@ function hideMangaForm() {
     if (!mangaFormDialog.classList.contains('translate-x-full')) {
         toggleDialog(mangaFormDialog);
     }
-
-    processRemainingBookmarks();
 }
 
 /**

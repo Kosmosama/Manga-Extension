@@ -174,7 +174,6 @@ document.getElementById('bookmark-tree').addEventListener('change', (event) => {
 /**
  * Collects selected bookmarks and logs them to the console.
  * Gathers all selected bookmarks by checking which checkboxes are selected.
- * #TODO Button and functionality to add using addManga form
  */
 function importSelectedBookmarks() {
     const selectedBookmarks = [];
@@ -196,6 +195,9 @@ function importSelectedBookmarks() {
     handleBookmarkToManga(selectedBookmarks);
 }
 
+/**
+ * Processes the remaining bookmarks for import if the form is in import mode.
+ */
 function processRemainingBookmarks() {
     const form = document.getElementById('chapterForm');
 
@@ -207,6 +209,9 @@ function processRemainingBookmarks() {
     }
 }
 
+/**
+ * Removes the import-related dataset attributes from the chapter form.
+ */
 function removeImportDatasets() {
     const form = document.getElementById('chapterForm');
 
@@ -214,6 +219,11 @@ function removeImportDatasets() {
     delete form.dataset.remainingBookmarks;
 } 
 
+/**
+ * Handles the current bookmark and prepares the next iteration if more bookmarks exist.
+ *
+ * @param {Array} remainingBookmarks - The list of remaining bookmarks to process.
+ */
 function handleBookmarkToManga(remainingBookmarks) {
     closeAllDialogs();
     
