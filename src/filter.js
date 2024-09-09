@@ -53,6 +53,13 @@ function handleToggleSortOrder() {
     handleLoadAndSave();
 }
 
+document.getElementById('getRandomManga').addEventListener('click', getRandomManga);
+
+// Function to show a random manga (only)
+function getRandomManga() {
+    randomIndex = Math.floor(Math.random() * mangaList.length);
+    loadMangas([mangaList[randomIndex]]);
+}
 
 /**
  * Updates the display of the sort order button and icon based on the given order.

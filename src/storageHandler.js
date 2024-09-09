@@ -1,4 +1,4 @@
-var mangaList = []; // Variable global para la lista de mangas
+var mangaList = []; //Global var for manga list
 
 document.addEventListener("DOMContentLoaded", retrieveMangas);
 
