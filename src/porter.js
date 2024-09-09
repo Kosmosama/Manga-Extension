@@ -4,7 +4,7 @@ function handleFileExport() {
     const date = new Date().toLocaleString();
     const filename = `mangas_${date}.json`;
     const json = JSON.stringify(mangaList, null, 2);
-    const blob = new Blob([json], {type: "application/json"});
+    const blob = new Blob([json], { type: "application/json" });
     const url = URL.createObjectURL(blob);
 
     const a = document.createElement('a');
@@ -35,8 +35,8 @@ function handleFileLoad(e) {
             console.log('Imported mangas:', importedMangas);
             console.log('Current mangas array:', mangaList);
             mangaList.sort((a, b) => new Date(a.dayAdded) - new Date(b.dayAdded));
-            
-            refreshAndSaveMangas(); 
+
+            refreshAndSaveMangas();
             // Might not work and need to go back to:
             // loadFilteredMangas();
             // saveMangas();       

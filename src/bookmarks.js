@@ -191,7 +191,7 @@ function importSelectedBookmarks() {
             link: bookmarkElement.getAttribute('data-url')
         });
     });
-    
+
     handleBookmarkToManga(selectedBookmarks);
 }
 
@@ -217,7 +217,7 @@ function removeImportDatasets() {
 
     delete form.dataset.importMode;
     delete form.dataset.remainingBookmarks;
-} 
+}
 
 /**
  * Handles the current bookmark and prepares the next iteration if more bookmarks exist.
@@ -226,7 +226,7 @@ function removeImportDatasets() {
  */
 function handleBookmarkToManga(remainingBookmarks) {
     closeAllDialogs();
-    
+
     const form = document.getElementById('chapterForm');
     const firstBookmark = remainingBookmarks.shift();
 
@@ -237,7 +237,7 @@ function handleBookmarkToManga(remainingBookmarks) {
         form.dataset.remainingBookmarks = JSON.stringify(remainingBookmarks);
     } else {
         removeImportDatasets();
-    }  
+    }
 
     showMangaForm(); // Maybe it causes an error with the overlay.
 }

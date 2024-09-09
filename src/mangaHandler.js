@@ -54,7 +54,7 @@ function handleMangaEdition(manga) {
 async function addNewManga() {
     const mangaData = await getMangaFormData();
     const validationError = validateMangaData(mangaData);
-    
+
     if (validationError) {
         showModal(validationError);
         return;
@@ -82,7 +82,7 @@ async function addNewManga() {
 async function updateMangaDetails(manga) {
     const mangaData = await getMangaFormData();
     const validationError = validateMangaData(mangaData, manga.title);
-    
+
     if (validationError) {
         showModal(validationError);
         return;

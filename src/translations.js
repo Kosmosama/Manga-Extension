@@ -22,7 +22,7 @@ function translate(key) {
  */
 function loadPreferredLanguage(translations) {
     return new Promise((resolve) => {
-        chrome.storage.local.get(['preferredLanguage'], function(result) {
+        chrome.storage.local.get(['preferredLanguage'], function (result) {
             let lang = result.preferredLanguage || navigator.language.split('-')[0];
             if (!translations[lang]) {
                 console.warn(`Language '${lang}' not found in translations, defaulting to 'en'.`);
@@ -76,7 +76,7 @@ function initializeTranslations(translations) {
         // Set up the language selector dropdown
         //#INFO Might want this in the settings script
         document.getElementById('languageSelect').value = language;
-        document.getElementById('languageSelect').addEventListener('change', function() {
+        document.getElementById('languageSelect').addEventListener('change', function () {
             const selectedLanguage = this.value;
             savePreferredLanguage(selectedLanguage);
             window.language = selectedLanguage; // Update the global variable

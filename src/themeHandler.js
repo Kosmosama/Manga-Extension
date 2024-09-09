@@ -35,8 +35,8 @@ function savePreferredTheme(theme) {
  * @param {string} theme - The selected theme ("light", "dark", or "system").
  */
 function applyTheme(theme) {
-    const isDarkMode = theme === "dark" || 
-                       (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    const isDarkMode = theme === "dark" ||
+        (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
     if (isDarkMode !== document.documentElement.classList.contains("dark")) {
         document.documentElement.classList.toggle("dark", isDarkMode);
     }
