@@ -25,10 +25,3 @@ Extension to bookmark mangas you like.
 1. **Add "genres" to filter and categorize mangas (e.g., manhua, manhwa, etc). Consider allowing users to create genres. + add a completed status**
 2. **Add synchronization with own API.**
 3. **Make it so the selected image appears on manga addition/edition**
-
-## Proposals
-
-1. **When browsing a page within the domain of the site from which the extension was opened, mangas with links to that domain will appear first.**  
-   *There will be a setting in the options tab to enable/disable this feature if it bothers some users.
-   It will be disabled by default.*
-   *-Kosmo*
