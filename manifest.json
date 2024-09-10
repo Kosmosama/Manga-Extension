@@ -21,7 +21,6 @@
           "js": [
               "src/loadMangas.js",
               "src/storageHandler.js",
-              "src/getRandom.js",
               "src/translations.js",
               "src/filter.js",
               "src/bookmarks.js",
