@@ -126,13 +126,16 @@ async function loadFilteredMangas() {
 }
 
 async function sortMangas(array, filterMethod, order, favOnly, currentPageOnly) {
-    let currentUrl = null;
-
     // If currentPageOnly is true, get the current URL and shows only the currentPage mangas.
     if (currentPageOnly) {
-        currentUrl = new URL(await getCurrentTabURL());
-        array = array.filter(manga => manga.link.startsWith(currentUrl.origin));
+        const currentUrl = new URL(await getCurrentTabURL());
+        const mangasInURL = array.filter(manga => manga.link.startsWith(currentUrl.origin));
+
+        if (mangasInURL.length > 0) {
+            array = mangasInURL;
+        }
     }
+
     // Only show favorites if favourites-only-checkbox is checked
     if (favOnly) {
         array = array.filter(manga => manga.favorite);
