@@ -51,7 +51,7 @@ function handleToggleSortOrder() {
     document.getElementById('toggleSortOrder').dataset.order = newOrder;
 
     // Update the button's display to reflect the new order
-   updateSortOrderDisplay(newOrder);
+    updateSortOrderDisplay(newOrder);
 
     // Update the sorting display or icon if needed
     handleLoadAndSave();
