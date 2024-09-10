@@ -23,14 +23,13 @@ document.getElementById('import-cancel-button').addEventListener('click', hideIm
  * Utility function to toggle the visibility of a dialog by adding or removing CSS classes.
  * 
  * @param {HTMLElement} dialog - The dialog element to toggle.
- * @param {boolean} [shouldToggleOverlay=true] - Optional flag to determine whether the overlay should also be toggled. Defaults to true.
  */
-function toggleDialog(dialog, shouldToggleOverlay = true) {
+function toggleDialog(dialog) {
     dialog.classList.toggle('translate-x-full');
     dialog.classList.toggle('translate-x-0');
-    if (shouldToggleOverlay) {
-        toggleOverlay();
-    }
+
+    // Update the overlay visibility after toggling the dialog
+    updateOverlayVisibility();
 }
 
 /**
@@ -43,34 +42,42 @@ function closeAllDialogs() {
         dialog.classList.add('translate-x-full');
         dialog.classList.remove('translate-x-0');
     });
-    toggleOverlay();
+
+    // Update the overlay visibility after closing all dialogs
+    updateOverlayVisibility();
 
     // It will do it more times than needed, but this is the best place I found for this (at least for now)
     removeImportDatasets();
 }
 
 /**
- * Function to toggle the visibility of the overlay based on dialog visibility.
+ * Function to update the visibility of the overlay based on open dialogs.
  */
-function toggleOverlay() {
+function updateOverlayVisibility() {
+    const openDialogs = document.querySelectorAll('.dialog:not(.translate-x-full)');
     const overlay = document.getElementById('overlay');
-    overlay.classList.toggle('hidden');
-    setTimeout(() => {
-        overlay.classList.toggle('opacity-0');
-        overlay.classList.toggle('opacity-50');
-    }, 10);
+
+    if (openDialogs.length > 0) {
+        overlay.classList.remove('hidden');
+        overlay.classList.add('opacity-50');
+        overlay.classList.remove('opacity-0');
+    } else {
+        overlay.classList.add('hidden');
+        overlay.classList.remove('opacity-50');
+        overlay.classList.add('opacity-0');
+    }
 }
 
 /**
  * Specific function to open the manga form dialog.
  */
-function showMangaForm(a = true) {
+function showMangaForm() {
     const mangaFormDialog = document.getElementById('formContainer');
-    toggleDialog(mangaFormDialog, a);
+    toggleDialog(mangaFormDialog);
 }
 
 /**
- * Specific function to cancel the addition / edition of the current manga.
+ * Specific function to cancel the addition/edition of the current manga.
  */
 function cancelManga() {
     hideMangaForm();
@@ -85,6 +92,9 @@ function hideMangaForm() {
     if (!mangaFormDialog.classList.contains('translate-x-full')) {
         toggleDialog(mangaFormDialog);
     }
+
+    // Update the overlay visibility after hiding the dialog
+    updateOverlayVisibility();
 }
 
 /**
@@ -99,7 +109,7 @@ function resetBookmarkTreeContent() {
  */
 function showImportBookmarkDialog() {
     const bookmarkDialog = document.getElementById('import-bookmarks-dialog');
-    toggleDialog(bookmarkDialog, false);
+    toggleDialog(bookmarkDialog);
 }
 
 /**
@@ -108,7 +118,10 @@ function showImportBookmarkDialog() {
 function hideImportBookmarkDialog() {
     const bookmarkDialog = document.getElementById('import-bookmarks-dialog');
     if (!bookmarkDialog.classList.contains('translate-x-full')) {
-        toggleDialog(bookmarkDialog, false);
+        toggleDialog(bookmarkDialog);
         resetBookmarkTreeContent();
     }
+
+    // Update the overlay visibility after hiding the dialog
+    updateOverlayVisibility();
 }
