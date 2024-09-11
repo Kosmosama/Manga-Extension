@@ -1,8 +1,12 @@
 var mangaList = []; //Global var for manga list
 
+// Attach event listener for DOMContentLoaded to retrieve manga list from Chrome's local storage when the page loads
 document.addEventListener("DOMContentLoaded", retrieveMangas);
 
-// Load mangas from storage.local
+/**
+ * Retrieves the manga list from Chrome's local storage and populates
+ * the global `mangaList` variable.
+ */
 function retrieveMangas() {
     chrome.storage.local.get('mangaList', function (result) {
         if (chrome.runtime.lastError) {
@@ -17,7 +21,9 @@ function retrieveMangas() {
     });
 }
 
-// Save mangas to storage.local
+/**
+ * Saves the current manga list to Chrome's local storage.
+ */
 function saveMangas() {
     chrome.storage.local.set({ mangaList: mangaList }, function () {
         if (chrome.runtime.lastError) {

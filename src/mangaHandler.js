@@ -1,4 +1,4 @@
-// Handles form submission for both adding and editing manga.
+// Attach event listener for the form submission button in the manga addition/edition form
 document.getElementById('chapterForm').addEventListener('submit', handleFormSubmission);
 
 /**

@@ -1,6 +1,28 @@
-// Load filter options
+// Attach event listener for DOMContentLoaded to load filter options when the page loads
 document.addEventListener("DOMContentLoaded", loadFilterOptions);
 
+// Attach event listener to toggle sort order when the sort order button is clicked
+document.getElementById('toggleSortOrder').addEventListener('click', handleToggleSortOrder);
+
+// Attach event listener for search bar input to filter mangas
+document.getElementById('searchBar').addEventListener('input', loadFilteredMangas);
+
+// Attach event listener for the delete search button to clear the search bar
+document.getElementById('deleteSearch').addEventListener('click', handleDeleteSearch);
+
+// Attach event listener for the favourites-only checkbox in the filter dialog
+document.getElementById('favourites-only-checkbox').addEventListener('change', handleLoadAndSave);
+
+// Attach event listener for the current-page-only checkbox in the filter dialog
+document.getElementById('currentPage-only-checkbox').addEventListener('change',handleLoadAndSave);
+
+// Attach event listener for the sort option dropdown in the filter dialog
+document.getElementById('sortOption').addEventListener('change', handleLoadAndSave);
+
+/**
+ * Loads the filter options (favorites-only, current-page only, sorting options) from local storage 
+ * and updates the UI components (checkboxes and dropdowns) accordingly.
+ */
 function loadFilterOptions() {
     chrome.storage.local.get({ filterOptions: {} }, function(result) {
         if (chrome.runtime.lastError) {
@@ -26,7 +48,10 @@ function loadFilterOptions() {
     });
 }
 
-// Save filter options
+/**
+ * Saves the current filter options (favorites-only, current-page only, sorting options)
+ * to the local storage.
+ */
 function saveFilterOptions() {
     const filterOptions = {
         favOnly: document.getElementById('favourites-only-checkbox').checked,
@@ -42,9 +67,10 @@ function saveFilterOptions() {
     });
 }
 
-// Toggle sort order
-document.getElementById('toggleSortOrder').addEventListener('click', handleToggleSortOrder);
-
+/**
+ * Handles toggling of the sort order between 'ascendente' and 'descendente'.
+ * Updates the UI and saves the new sort order to storage.
+ */
 function handleToggleSortOrder() {
     const currentOrder = document.getElementById('toggleSortOrder').dataset.order || 'ascendente';
     const newOrder = currentOrder === 'ascendente' ? 'descendente' : 'ascendente';
@@ -57,9 +83,12 @@ function handleToggleSortOrder() {
     handleLoadAndSave();
 }
 
+// Attach event listener for the random manga button in the filter dialog
 document.getElementById('getRandomManga').addEventListener('click', getRandomManga);
 
-// Function to show a random manga (only)
+/**
+ * Loads and displays a random manga from the manga list.
+ */
 function getRandomManga() {
     randomIndex = Math.floor(Math.random() * mangaList.length);
     loadMangas([mangaList[randomIndex]]);
@@ -81,29 +110,27 @@ function updateSortOrderDisplay(order) {
     }
 }
 
-
-// Search bar
-document.getElementById('searchBar').addEventListener('input', loadFilteredMangas);
-document.getElementById('deleteSearch').addEventListener('click', handleDeleteSearch);
-
+/**
+ * Handles reloading and saving of the filtered mangas and filter options.
+ * This is called when filter options change.
+ */
 function handleLoadAndSave(){
     loadFilteredMangas();
     saveFilterOptions();
 }
 
+/**
+ * Clears the search bar and reloads the manga list without any search filter.
+ */
 function handleDeleteSearch() {
     document.getElementById('searchBar').value = "";
     loadFilteredMangas();
 }
 
-// Favourites only checkbox
-document.getElementById('favourites-only-checkbox').addEventListener('change', handleLoadAndSave);
-
-document.getElementById('currentPage-only-checkbox').addEventListener('change',handleLoadAndSave);
-
-// Filter option
-document.getElementById('sortOption').addEventListener('change', handleLoadAndSave);
-
+/**
+ * Loads and filters the manga list based on the search query, current page checkbox, 
+ * favorites checkbox, and sort options.
+ */
 async function loadFilteredMangas() {
     const query = document.getElementById('searchBar').value.toLowerCase();
     let results = mangaList;
@@ -125,6 +152,17 @@ async function loadFilteredMangas() {
     loadMangas(results);
 }
 
+/**
+ * Sorts the manga array based on the selected filter method, order, 
+ * favorites-only, and current-page-only options.
+ * 
+ * @param {Array} array - The array of mangas to sort.
+ * @param {string} filterMethod - The filter method ('favoritos','alfabetico' , 'capitulos', 'fechaAdicion', 'ultimaLectura').
+ * @param {string} order - The sort order ('ascendente' or 'descendente').
+ * @param {boolean} favOnly - Whether to only show favorite mangas.
+ * @param {boolean} currentPageOnly - Whether to only show mangas on the current page.
+ * @returns {Array} The sorted and filtered array of mangas.
+ */
 async function sortMangas(array, filterMethod, order, favOnly, currentPageOnly) {
     // If currentPageOnly is true, get the current URL and shows only the currentPage mangas.
     if (currentPageOnly) {

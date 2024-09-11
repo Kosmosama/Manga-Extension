@@ -1,5 +1,13 @@
+// Attach event listener for the export button in the settings dialog
 document.getElementById('export').addEventListener('click', handleFileExport);
 
+// Attach event listener for the import area in the settings dialog
+document.getElementById('import').addEventListener('change', handleFileImport);
+
+/**
+ * Handles the file export by converting the manga list into a JSON file
+ * and triggering a download in the browser.
+ */
 function handleFileExport() {
     const date = new Date().toLocaleString();
     const filename = `mangas_${date}.json`;
@@ -14,8 +22,12 @@ function handleFileExport() {
     URL.revokeObjectURL(url);
 }
 
-document.getElementById('import').addEventListener('change', handleFileImport);
-
+/**
+ * Handles the file import event, reads the selected file, and processes it
+ * if it is a valid JSON file.
+ * 
+ * @param {Event} event - The file input change event containing the selected file.
+ */
 function handleFileImport(event) {
     const file = event.target.files[0];
     if (file && file.name.endsWith('.json')) {
@@ -27,9 +39,15 @@ function handleFileImport(event) {
     }
 }
 
-function handleFileLoad(e) {
+/**
+ * Processes the loaded file, parses the JSON, validates its contents, 
+ * and appends the valid mangas to the current list.
+ * 
+ * @param {ProgressEvent<FileReader>} event - The file load event containing the file data.
+ */
+function handleFileLoad(event) {
     try {
-        const importedMangas = JSON.parse(e.target.result);
+        const importedMangas = JSON.parse(event.target.result);
         if (Array.isArray(importedMangas) && importedMangas.every(validateMangaObject)) {
             mangaList.push(...importedMangas);
             console.log('Imported mangas:', importedMangas);
@@ -48,7 +66,12 @@ function handleFileLoad(e) {
     }
 }
 
-// Comprobation so each pushed manga has these keys
+/**
+ * Validates that the given object contains all the required keys for a manga entry.
+ * 
+ * @param {Object} obj - The object to validate.
+ * @returns {boolean} - Returns `true` if the object has all required manga keys, `false` otherwise.
+ */
 function validateMangaObject(obj) {
     const requiredKeys = [
         'dayAdded',

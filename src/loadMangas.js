@@ -1,4 +1,8 @@
-// Function to handle image loading errors
+/**
+ * Handles image loading errors by setting a fallback image depending on the current theme (dark or light mode).
+ * 
+ * @param {Event} event - The event object containing the target element that triggered the error.
+ */
 function handleImageError(event) {
     const imgElement = event.target;
     imgElement.onerror = null;
@@ -10,7 +14,12 @@ function handleImageError(event) {
     }
 }
 
-// Function to load all mangas from an array
+/**
+ * Dynamically loads a list of manga objects into the DOM and renders them as interactive elements.
+ * Each manga item includes controls for favorite, edit, delete, and chapter update actions.
+ * 
+ * @param {Array<Object>} inputList - An array of manga objects to be loaded.
+ */
 function loadMangas(inputList) {
     const mangaListContainer = document.getElementById('mangaListContainer');
     mangaListContainer.innerHTML = '';
@@ -101,7 +110,12 @@ function loadMangas(inputList) {
     mangaListContainer.appendChild(fragment);
 }
 
-// Event delegation for handling manga item interactions
+/**
+ * Event delegation for handling manga item interactions such as favorite toggle, deletion, editing, 
+ * and chapter update (increase or decrease).
+ * 
+ * @param {Event} event - The event object triggered by a user interaction.
+ */
 document.getElementById("mangaListContainer").addEventListener("click", (event) => {
     const mangaItem = event.target.closest('.manga-item');
     if (!mangaItem) return;

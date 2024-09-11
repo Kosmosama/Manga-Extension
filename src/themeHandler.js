@@ -1,4 +1,4 @@
-// Load theme options
+// Attach event listener for DOMContentLoaded to load theme options when the page loads
 document.addEventListener("DOMContentLoaded", handleTheme);
 
 /**

@@ -1,3 +1,23 @@
+// Default translations object to use in case of a loading error
+const defaultTranslations = {
+    en: {} //#TODO Default key-value pairs can be defined here
+};
+
+// Fetch translations from a JSON file and initialize the translation system
+fetch('translations.json')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(translations => initializeTranslations(translations))
+    .catch(error => {
+        console.error('Error loading translations:', error);
+        // Use default translations in case of an error
+        initializeTranslations(defaultTranslations);
+    });
+
 /**
  * Translates a given key based on the current language setting.
  * 
@@ -88,23 +108,3 @@ function initializeTranslations(translations) {
         loadFilteredMangas(); // Assumes `mangaList` is already available
     });
 }
-
-// Default translations object to use in case of a loading error
-const defaultTranslations = {
-    en: {} //#TODO Default key-value pairs can be defined here
-};
-
-// Fetch translations from a JSON file and initialize the translation system
-fetch('translations.json')
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(translations => initializeTranslations(translations))
-    .catch(error => {
-        console.error('Error loading translations:', error);
-        // Use default translations in case of an error
-        initializeTranslations(defaultTranslations);
-    });

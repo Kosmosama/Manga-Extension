@@ -1,4 +1,7 @@
+// Attach event listener for the import from bookmarks button in the settings dialog
 document.getElementById('import-bookmarks').addEventListener('click', openBookmarkDialog);
+
+// Attach event listener for the import selected bookmarks button in the import dialog
 document.getElementById('import-selected-button').addEventListener('click', importSelectedBookmarks);
 
 /**
