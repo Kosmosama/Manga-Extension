@@ -1,3 +1,6 @@
+// Load theme options
+document.addEventListener("DOMContentLoaded", handleTheme);
+
 /**
  * Initializes the theme handler by adding an event listener to the theme selector.
  * The event listener detects changes in the user's theme preference and loads the current theme.
@@ -8,8 +11,6 @@ function handleTheme() {
 
     loadThemePreference(themeSelector);
 }
-
-handleTheme();
 
 /**
  * Event listener for theme change. Applies the selected theme and saves the preference.
@@ -36,13 +37,22 @@ function savePreferredTheme(theme) {
 }
 
 /**
+ * Determines if dark mode is enabled based on the user's theme selection or system preference.
+ *
+ * @returns {boolean} - Returns `true` if dark mode is enabled.
+ */
+function isDarkMode() {
+    const themeSelected = document.getElementById("darkmode").value;
+    return themeSelected === "dark" || (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+}
+
+/**
  * Applies the selected theme by toggling the "dark" class on the document element.
  * 
  * @param {string} theme - The selected theme ("light", "dark", or "system").
  */
 function applyTheme(theme) {
-    const isDarkMode = theme === "dark" ||
-        (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    const isDarkMode = theme === "dark" || (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
     if (isDarkMode !== document.documentElement.classList.contains("dark")) {
         document.documentElement.classList.toggle("dark", isDarkMode);
     }

@@ -3,13 +3,11 @@ function handleImageError(event) {
     const imgElement = event.target;
     imgElement.onerror = null;
 
-    // Apply random image
-    imgElement.src = getRandomImage();
-}
-
-function getRandomImage() {
-    const randomIndex = Math.floor(Math.random() * 4);
-    return `../public/logos/${randomIndex}.webp`;
+    if (isDarkMode()) {
+        imgElement.src = '../public/logos/dark-mode-fallback.webp'; //#TODO Set an image
+    } else {
+        imgElement.src = '../public/logos/light-mode-fallback.webp'; //#TODO Set an image
+    }
 }
 
 // Function to load all mangas from an array
