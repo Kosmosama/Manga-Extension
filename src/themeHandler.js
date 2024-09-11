@@ -43,7 +43,7 @@ function savePreferredTheme(theme) {
  */
 function isDarkMode() {
     const themeSelected = document.getElementById("darkmode").value;
-    return themeSelected === "dark" || (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+    return themeSelected === "dark" || (themeSelected === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
 }
 
 /**
@@ -55,6 +55,7 @@ function applyTheme(theme) {
     const isDarkMode = theme === "dark" || (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
     if (isDarkMode !== document.documentElement.classList.contains("dark")) {
         document.documentElement.classList.toggle("dark", isDarkMode);
+        loadFilteredMangas();
     }
 }
 
