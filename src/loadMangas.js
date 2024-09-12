@@ -50,17 +50,19 @@ function loadMangas(inputList) {
                     </svg>
                     <span class="sr-only" id="favorite-status">${manga.favorite ? 'Remove from favorites' : 'Add to favorites'}</span>
                 </button>
-                <div class="relative group" id="image-container">
-                    <img id="manga-image" src="${manga.image}" alt="${manga.title}" class="w-16 h-16 rounded-full">
-                    <div class="absolute inset-0 bg-black bg-opacity-50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity" id="edit">
-                        <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3" id="edit">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-pen h-4 w-4 text-white" id="edit">
-                                <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.375 2.625a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4Z"></path>
-                            </svg>
-                            <span class="sr-only" id="edit">Edit manga</span>
-                        </button>
-                    </div>
+            <div class="relative group" id="image-container">
+                <img id="manga-image" src="${manga.image}" alt="${manga.title}" class="w-16 h-16 object-cover rounded-full">
+                <div class="absolute inset-0 bg-black bg-opacity-50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity" id="edit">
+                    <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3" id="edit">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-pen h-4 w-4 text-white" id="edit">
+                            <path d="M12 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                            <path d="M18.375 2.625a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4Z"></path>
+                        </svg>
+                        <span class="sr-only" id="edit">Edit manga</span>
+                    </button>
                 </div>
+            </div>
+
             </div>
             <div class="flex-grow ml-0 sm:ml-4 mb-2 sm:mb-0" id="manga-details">
                 <a href="${manga.link}" class="text-lg font-semibold text-wrap" id="manga-title" target="_blank"><p title="${manga.title}">${manga.title.length < 20 ? manga.title : manga.title.substring(0, 22 - 3) + "..."}</p></a>
