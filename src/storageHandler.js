@@ -1,4 +1,4 @@
-var mangaList = []; //Global var for manga list
+let mangaList = []; // Global var for manga list
 
 // Attach event listener for DOMContentLoaded to retrieve manga list from Chrome's local storage when the page loads
 document.addEventListener("DOMContentLoaded", retrieveMangas);
