@@ -234,7 +234,13 @@ function handleChapterUpdate(manga, operation, amount = 1) {
     if (operation === "+") {
         manga.readChapters = (parseInt(manga.readChapters, 10) || 0) + amount;
     } else if (operation === "-") {
-        manga.readChapters = (parseInt(manga.readChapters, 10) || 0) - amount;
+        if (manga.readChapters <= 0) {
+            manga.readChapters = 0;
+            //#TODO Add css feedback on clicking "-" to a 0 chapters manga, maybe red background animation
+        } else {
+            manga.readChapters = (parseInt(manga.readChapters, 10) || 0) - amount;
+        }
+        
     } else {
         throw new Error("Invalid operation. Use '+' or '-'.");
     }

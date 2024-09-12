@@ -8,6 +8,7 @@ function handleImageError(event) {
     imgElement.onerror = null;
     imgElement.src = isDarkMode() ? '../public/logos/dark-mode-fallback.svg' : '../public/logos/light-mode-fallback.svg';
 }
+
 /**
  * Dynamically loads a list of manga objects into the DOM and renders them as interactive elements.
  * Each manga item includes controls for favorite, edit, delete, and chapter update actions.
