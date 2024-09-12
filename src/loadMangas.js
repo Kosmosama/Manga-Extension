@@ -117,15 +117,24 @@ document.getElementById("mangaListContainer").addEventListener("click", (event) 
     const mangaTitle = mangaItem.dataset.title;
     const manga = mangaList.find(m => m.title === mangaTitle);
 
-    if (event.target.id === 'fav') {
+    // Traverse up the DOM tree to find the relevant svg button
+    let targetElement = event.target;
+    
+    // Check if the target is a path or child of svg, navigate to the parent svg if necessary
+    if (targetElement.tagName === 'path' || targetElement.tagName === 'polygon') {
+        targetElement = targetElement.closest('svg');
+    }
+
+    if (targetElement.id === 'fav') {
         handleFavoriteToggle(manga);
-    } else if (event.target.id === 'delete') {
+    } else if (targetElement.id === 'delete') {
         handleMangaDeletion(manga);
-    } else if (event.target.id === 'edit') {
+    } else if (targetElement.id === 'edit') {
         handleMangaEdition(manga);
-    } else if (event.target.id === 'addCap') {
+    } else if (targetElement.id === 'addCap') {
         handleChapterUpdate(manga, '+');
-    } else if (event.target.id === 'removeCap') {
+    } else if (targetElement.id === 'removeCap') {
         handleChapterUpdate(manga, '-');
     }
 });
+
