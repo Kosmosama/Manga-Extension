@@ -125,16 +125,22 @@ document.getElementById("mangaListContainer").addEventListener("click", (event) 
         targetElement = targetElement.closest('svg');
     }
 
-    if (targetElement.id === 'fav') {
-        handleFavoriteToggle(manga);
-    } else if (targetElement.id === 'delete') {
-        handleMangaDeletion(manga);
-    } else if (targetElement.id === 'edit') {
-        handleMangaEdition(manga);
-    } else if (targetElement.id === 'addCap') {
-        handleChapterUpdate(manga, '+');
-    } else if (targetElement.id === 'removeCap') {
-        handleChapterUpdate(manga, '-');
+    switch (targetElement.id) {
+        case 'fav':
+            handleFavoriteToggle(manga);
+            break;
+        case 'delete':
+            handleMangaDeletion(manga);
+            break;
+        case 'edit':
+            handleMangaEdition(manga);
+            break;
+        case 'addCap':
+            handleChapterUpdate(manga, '+');
+            break;
+        case 'removeCap':
+            handleChapterUpdate(manga, '-');
+            break;
     }
 });
 
