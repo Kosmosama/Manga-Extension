@@ -105,7 +105,7 @@ function getCurrentTabURL() {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             if (tabs && tabs.length > 0 && tabs[0].url) {
                 let currentUrl = new URL(tabs[0].url);
-                resolve(currentUrl);
+                resolve(currentUrl.href);
             } else {
                 console.warn('No active tab found. Defaulting link to empty string.');
                 resolve('');
