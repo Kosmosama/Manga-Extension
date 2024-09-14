@@ -19,6 +19,26 @@ document.getElementById('currentPage-only-checkbox').addEventListener('change',h
 // Attach event listener for the sort option dropdown in the filter dialog
 document.getElementById('sortOption').addEventListener('change', handleLoadAndSave);
 
+// Attach event listener to update values on range change
+document.getElementById('minChapters').addEventListener('input', function() {
+    document.getElementById('minChapterValue').textContent = this.value;
+});
+
+// Attach event listener to load filtered mangas when mouse is released on min chapters range
+document.getElementById('minChapters').addEventListener('change', function() {
+    loadFilteredMangas();
+});
+
+// Attach event listener to update values on range change
+document.getElementById('maxChapters').addEventListener('input', function() {
+    document.getElementById('maxChapterValue').textContent = this.value;
+});
+
+// Attach event listener to load filtered mangas when mouse is released on max chapters range
+document.getElementById('maxChapters').addEventListener('change', function() {
+    loadFilteredMangas();
+});
+
 /**
  * Loads the filter options (favorites-only, current-page only, sorting options) from local storage 
  * and updates the UI components (checkboxes and dropdowns) accordingly.
@@ -128,8 +148,17 @@ function handleDeleteSearch() {
 }
 
 /**
+ * Returns the maximum number of chapters read from the mangaList.
+ * 
+ * @returns {number} The maximum number of chapters read.
+ */
+function getMaxChapters() {
+    return mangaList.reduce((max, manga) => Math.max(max, manga.readChapters), 1);
+}
+
+/**
  * Loads and filters the manga list based on the search query, current page checkbox, 
- * favorites checkbox, and sort options.
+ * favorites checkbox, min/max chapters ranges and sort options.
  */
 async function loadFilteredMangas() {
     const query = document.getElementById('searchBar').value.toLowerCase();
@@ -144,9 +173,11 @@ async function loadFilteredMangas() {
     const favOnly = document.getElementById('favourites-only-checkbox').checked;
     const sortOption = document.getElementById('sortOption').value;
     const sortOrder = document.getElementById('toggleSortOrder').dataset.order || 'ascendente';
+    const minChapters = +document.getElementById('minChapters').value;
+    const maxChapters = +document.getElementById('maxChapters').value;
 
     // Sort and filter the results (await is necessary because sortMangas is async)
-    results = await sortMangas(results, sortOption, sortOrder, favOnly, currentPageOnly);
+    results = await sortMangas(results, sortOption, sortOrder, favOnly, currentPageOnly, minChapters, maxChapters);
 
     // Load the filtered mangas
     loadMangas(results);
@@ -161,9 +192,12 @@ async function loadFilteredMangas() {
  * @param {string} order - The sort order ('ascendente' or 'descendente').
  * @param {boolean} favOnly - Whether to only show favorite mangas.
  * @param {boolean} currentPageOnly - Whether to only show mangas on the current page.
+ * @param {number} minChapters - The minimum number of chapters a manga should have to be included.
+ * @param {number} maxChapters - The maximum number of chapters a manga should have to be included.
+ * 
  * @returns {Array} The sorted and filtered array of mangas.
  */
-async function sortMangas(array, filterMethod, order, favOnly, currentPageOnly) {
+async function sortMangas(array, filterMethod, order, favOnly, currentPageOnly, minChapters, maxChapters) {
     // If currentPageOnly is true, get the current URL and shows only the currentPage mangas.
     if (currentPageOnly) {
         const currentUrl = new URL(await getCurrentTabURL());
@@ -178,6 +212,9 @@ async function sortMangas(array, filterMethod, order, favOnly, currentPageOnly) 
     if (favOnly) {
         array = array.filter(manga => manga.favorite);
     }
+
+    // Filter based on chapter count
+    array = array.filter(manga => manga.readChapters >= minChapters && manga.readChapters <= maxChapters);
 
     // Sort the array based on the filterMethod and sortOrder
     return array.sort((a, b) => {

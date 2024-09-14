@@ -1,6 +1,8 @@
 // Attach event listeners to dialog toggle buttons
 document.querySelectorAll('[data-dialog-target]').forEach(button => {
     const targetDialog = document.getElementById(button.getAttribute('data-dialog-target'));
+
+    // #TODO remove data-dialog-target="filtersDialog" from "menuBtn"
     button.addEventListener('click', () => toggleDialog(targetDialog));
 });
 
@@ -19,6 +21,9 @@ document.getElementById('cross-cancel-mangaForm').addEventListener('click', canc
 // Attach event listener for the cancel button in the import bookmarks dialog
 document.getElementById('import-cancel-button').addEventListener('click', hideImportBookmarkDialog);
 
+// Attach event listener for the filters button in the main page
+document.getElementById('menuBtn').addEventListener('click', showFiltersDialog);
+
 /**
  * Utility function to toggle the visibility of a dialog by adding or removing CSS classes.
  * 
@@ -27,6 +32,7 @@ document.getElementById('import-cancel-button').addEventListener('click', hideIm
 function toggleDialog(dialog) {
     dialog.classList.toggle('translate-x-full');
     dialog.classList.toggle('translate-x-0');
+    console.log("e?");
 
     // Update the overlay visibility after toggling the dialog
     updateOverlayVisibility();
@@ -95,6 +101,36 @@ function hideMangaForm() {
 
     // Update the overlay visibility after hiding the dialog
     updateOverlayVisibility();
+}
+
+/**
+ * Specific function to open the filters dialog.
+ */
+function showFiltersDialog() {
+    console.log("hola");
+    const filtersDialog = document.getElementById('filtersDialog');
+
+    const maxChapters = getMaxChapters();
+
+    const minChaptersRange = document.getElementById('minChapters');
+    const maxChaptersRange = document.getElementById('maxChapters');
+    const minChaptersSpan = document.getElementById('minChapterValue');
+    const maxChaptersSpan = document.getElementById('maxChapterValue');
+
+    // Set maximum chapters found in only one manga and max for ranges
+    minChaptersRange.max = maxChapters;
+    maxChaptersRange.max = maxChapters;
+
+    // Set values to 0 on min range input
+    minChaptersRange.value = 0;
+    minChaptersSpan.textContent = 0;
+
+    // Set values to max on max range input
+    maxChaptersRange.value = maxChapters;
+    maxChaptersSpan.textContent = maxChapters;
+    console.log("xd");
+
+    toggleDialog(filtersDialog);
 }
 
 /**
