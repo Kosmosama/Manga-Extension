@@ -4,11 +4,7 @@ Extension to bookmark mangas you like.
 
 ## TO-DO
 
-1. [ ] **Style the main page with CSS.**
-2. [ ] **Style the import page with CSS.**
-3. [ ] **Add fixed size to html (it changes when there are less mangas displayed).**
-4. [ ] **Refactor overlay, only works visually when adding imported mangas.**
-
+[Refactor css](TODOCSS.md)
 
 ## Next Version
 
