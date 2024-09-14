@@ -51,6 +51,9 @@
 **(REMEMBER, VERSION 18)**
 - Ensure the shadow/blur doesn't expand to cover the margins ([like this](https://imgur.com/a/uj6A6NL)).
 
+## Scroll bar
+- Eliminate scroll bar from **filters** dialog.
+
 ## Bookmark Import
 - Implement a **visual style** similar to what was done in `v0.dev ver18` **(REMEMBER, VERSION 18)**
 
