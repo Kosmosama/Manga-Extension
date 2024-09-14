@@ -66,13 +66,13 @@
 </head>
 
 <body
-    class="container mx-auto bg-primary-base p-4 text-secondary-base dark:bg-primary-base-dark dark:text-secondary-base-dark"
+    class="min-w-[500] min-h-[800] container mx-auto bg-primary-base p-4 text-secondary-base dark:bg-primary-base-dark dark:text-secondary-base-dark"
     data-id="1">
+    
     <!-- Overlay -->
     <div id="overlay"
         class="fixed inset-0 z-20 hidden bg-primary-base opacity-0 transition-opacity duration-500 dark:bg-primary-base-dark">
     </div>
-    <!--If you want to make the fade in faster, change duration here to 200, or 500-->
 
     <!-- Modal -->
     <div id="alertModal"
@@ -190,7 +190,7 @@
             <div class="flex flex-col space-y-1.5 p-6" data-id="86">
                 <h3 class="whitespace-nowrap text-xl font-semibold leading-none tracking-tight text-secondary-base dark:text-secondary-base-dark"
                     data-id="87">
-                    Language select:
+                    Language select
                 </h3>
             </div>
             <div class="relative mx-auto mb-4 max-w-sm">
@@ -217,7 +217,7 @@
             <div class="flex flex-col space-y-1.5 p-6" data-id="86">
                 <h3 class="whitespace-nowrap text-xl font-semibold leading-none tracking-tight text-secondary-base dark:text-secondary-base-dark"
                     data-id="87">
-                    Theme:
+                    Theme
                 </h3>
             </div>
             <!--Dark mode-->
@@ -274,7 +274,7 @@
                                 <polyline points="7 10 12 15 17 10"></polyline>
                                 <line x1="12" x2="12" y1="15" y2="3"></line>
                             </svg>
-                            Upload File
+                            Import from file
                         </label>
                         <span class="text-secondary-muted dark:text-secondary-muted-dark text-sm" data-id="96">or drag
                             and drop</span>
@@ -425,7 +425,7 @@
                             class="peer-focus:ring-ring peer relative h-6 w-11 rounded-full bg-primary-base after:absolute after:start-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] disabled:cursor-not-allowed disabled:opacity-50 peer-checked:bg-secondary-base peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:ring-2 peer-focus:ring-offset-2 dark:bg-primary-base-dark dark:peer-checked:bg-secondary-dates-dark rtl:peer-checked:after:-translate-x-full">
                         </div>
                         <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Show only
-                            current page mangas</span>
+                            current page mangas <br>(At least 1 has to exist)</span>
                     </label>
                 </div>
             </div>

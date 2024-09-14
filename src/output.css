@@ -1,5 +1,5 @@
 /*
-! tailwindcss v3.4.7 | MIT License | https://tailwindcss.com
+! tailwindcss v3.4.11 | MIT License | https://tailwindcss.com
 */
 
 /*
@@ -844,6 +844,10 @@ video {
   max-height: 100%;
 }
 
+.min-h-\[800\] {
+  min-height: 800;
+}
+
 .w-10 {
   width: 2.5rem;
 }
@@ -894,6 +898,10 @@ video {
 
 .w-full {
   width: 100%;
+}
+
+.min-w-\[500\] {
+  min-width: 500;
 }
 
 .max-w-\[500px\] {
@@ -1073,7 +1081,8 @@ video {
 }
 
 .border-secondary-dates {
-  border-color: C0C0C0;
+  --tw-border-opacity: 1;
+  border-color: rgb(113 113 122 / var(--tw-border-opacity));
 }
 
 .bg-black {
@@ -1088,12 +1097,12 @@ video {
 
 .bg-primary-base {
   --tw-bg-opacity: 1;
-  background-color: rgb(218 215 214 / var(--tw-bg-opacity));
+  background-color: rgb(245 246 247 / var(--tw-bg-opacity));
 }
 
 .bg-primary-card {
   --tw-bg-opacity: 1;
-  background-color: rgb(237 235 234 / var(--tw-bg-opacity));
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
 .bg-secondary-base {
@@ -1111,11 +1120,6 @@ video {
 
 .fill-yellow-400 {
   fill: #facc15;
-}
-
-.object-contain {
-  -o-object-fit: contain;
-     object-fit: contain;
 }
 
 .object-cover {
@@ -1247,7 +1251,8 @@ video {
 }
 
 .text-secondary-dates {
-  color: C0C0C0;
+  --tw-text-opacity: 1;
+  color: rgb(113 113 122 / var(--tw-text-opacity));
 }
 
 .text-white {
@@ -1290,11 +1295,11 @@ video {
 }
 
 .ring-offset-primary-base {
-  --tw-ring-offset-color: #DAD7D6;
+  --tw-ring-offset-color: #F5F6F7;
 }
 
 .ring-offset-secondary-dates {
-  --tw-ring-offset-color: C0C0C0;
+  --tw-ring-offset-color: #71717A;
 }
 
 .filter {
@@ -1447,7 +1452,7 @@ video {
 
 .hover\:bg-primary-base:hover {
   --tw-bg-opacity: 1;
-  background-color: rgb(218 215 214 / var(--tw-bg-opacity));
+  background-color: rgb(245 246 247 / var(--tw-bg-opacity));
 }
 
 .hover\:bg-primary-base-dark:hover {
@@ -1456,11 +1461,11 @@ video {
 }
 
 .hover\:bg-primary-card\/40:hover {
-  background-color: rgb(237 235 234 / 0.4);
+  background-color: rgb(255 255 255 / 0.4);
 }
 
 .hover\:bg-primary-card\/90:hover {
-  background-color: rgb(237 235 234 / 0.9);
+  background-color: rgb(255 255 255 / 0.9);
 }
 
 .hover\:text-blue-700:hover {
@@ -1609,7 +1614,7 @@ video {
 
 .data-\[state\=checked\]\:bg-primary-card[data-state="checked"] {
   --tw-bg-opacity: 1;
-  background-color: rgb(237 235 234 / var(--tw-bg-opacity));
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
 .data-\[state\=checked\]\:text-secondary-base[data-state="checked"] {
@@ -1710,7 +1715,7 @@ video {
 
 .dark\:hover\:bg-primary-base:hover:is(.dark *) {
   --tw-bg-opacity: 1;
-  background-color: rgb(218 215 214 / var(--tw-bg-opacity));
+  background-color: rgb(245 246 247 / var(--tw-bg-opacity));
 }
 
 .dark\:hover\:bg-primary-base-dark:hover:is(.dark *) {

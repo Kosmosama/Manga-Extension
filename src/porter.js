@@ -35,7 +35,8 @@ function handleFileImport(event) {
         reader.onload = handleFileLoad;
         reader.readAsText(file);
     } else {
-        console.error('Please select a valid JSON file.');
+        //#TODO Create modal to say non valid file type or something like that
+        console.error('Not a JSON file.');
     }
 }
 
@@ -54,14 +55,13 @@ function handleFileLoad(event) {
             console.log('Current mangas array:', mangaList);
             mangaList.sort((a, b) => new Date(a.dayAdded) - new Date(b.dayAdded));
 
-            refreshAndSaveMangas();
-            // Might not work and need to go back to:
-            // loadFilteredMangas();
-            // saveMangas();       
+            refreshAndSaveMangas();   
         } else {
+            //#TODO Create modal to say non valid file or something like that
             console.error('The file does not contain a valid mangas array.');
         }
     } catch (error) {
+        //#TODO Create modal to say that an error occurred or something like that
         console.error('Error parsing JSON:', error);
     }
 }
