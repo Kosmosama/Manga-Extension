@@ -29,8 +29,8 @@ function loadMangas(inputList) {
             'sm:flex-row',
             'items-start',
             'sm:items-center',
-            'bg-primary-card',
-            'dark:bg-primary-card-dark',
+            'bg-light-secondary',
+            'dark:bg-dark-primary',
             'rounded-lg',
             'p-4',
             'ml-4',
@@ -66,7 +66,7 @@ function loadMangas(inputList) {
             </div>
             <div class="flex-grow ml-0 sm:ml-4 mb-2 sm:mb-0" id="manga-details">
                 <a href="${manga.link}" class="text-lg font-semibold text-wrap" id="manga-title" target="_blank"><p title="${manga.title}">${manga.title.length < 20 ? manga.title : manga.title.substring(0, 22 - 3) + "..."}</p></a>
-                <p class="text-sm text-secondary-dates dark:text-secondary-dates-dark flex items-center" id="manga-date">
+                <p class="text-sm text-light-secondary-text dark:text-dark-secondary-text flex items-center" id="manga-date">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye h-3 w-3 mr-1" id="eye-icon">
                         <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
                         <circle cx="12" cy="12" r="3"></circle>
@@ -88,8 +88,8 @@ function loadMangas(inputList) {
                     </svg>
                     <span class="sr-only" id="increase-label">Increase chapter count</span>
                 </button>
-                <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3" id="delete">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2 h-4 w-4 text-delete-base dark:text-delete-base-dark" id="delete">
+                <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 h-9 rounded-md px-3" id="delete">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash2 h-4 w-4 text-light-red" id="delete">
                         <path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path><line x1="10" x2="10" y1="11" y2="17"></line><line x1="14" x2="14" y1="11" y2="17"></line>
                     </svg>
                     <span class="sr-only" id="delete">Delete manga</span>

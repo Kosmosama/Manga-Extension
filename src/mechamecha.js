@@ -30,7 +30,7 @@ function handleKonamiCode(event) {
 function triggerKonamiCode() {
     const content = `
         <video id="explosionVideo" src="../public/explosion.webm" style="position: fixed; bottom: -50px; left: -50px; width: 300px; height: 300px; z-index: 9999; transform: scale(3);" autoplay></video>
-        <video id="movingVideo" src="../public/pollo.webm" style="position: fixed; bottom: 10px; left: 0; width: 100px; height: 100px; z-index: 150;"></video>
+        <video id="movingVideo" autoplay loop src="../public/pollo.webm" style="position: fixed; bottom: 10px; left: 0; width: 100px; height: 100px; z-index: 150;"></video>
         <audio src="../public/mechamecha.mp3" autoplay style="display: none;"></audio>
     `;
     document.getElementById('konamiContent').innerHTML = content;
@@ -42,7 +42,7 @@ function triggerKonamiCode() {
         if (konamiContent) {
             konamiContent.innerHTML = ''; // Removes all content within 'konamiContent'
         }
-    }, 52000); // 52 seconds for the video to reach the end and remove
+    }, 49000); // 49 seconds for the video to reach the end and remove
 }
 
 /**
