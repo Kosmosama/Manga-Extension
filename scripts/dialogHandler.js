@@ -71,6 +71,7 @@ function updateOverlayVisibility() {
         overlay.classList.add('hidden');
         overlay.classList.remove('opacity-50');
         overlay.classList.add('opacity-0');
+        resetFormValues();
     }
 }
 
