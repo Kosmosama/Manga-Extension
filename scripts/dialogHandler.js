@@ -87,6 +87,7 @@ function showMangaForm() {
  */
 function cancelManga() {
     hideMangaForm();
+    resetFormValues();
     processRemainingBookmarks();
 }
 
