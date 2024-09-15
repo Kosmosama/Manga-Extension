@@ -29,7 +29,7 @@ function loadMangas(inputList) {
             'sm:flex-row',
             'items-start',
             'sm:items-center',
-            'bg-light-secondary',
+            'bg-light-primary',
             'dark:bg-dark-primary',
             'rounded-lg',
             'p-4',

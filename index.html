@@ -13,6 +13,10 @@
         #radix-dialog {
             scrollbar-width: none;
         }
+        #filtersDialog{
+            scrollbar-width: none;
+        }
+        
 
         option {
             background-color: #F5F5F5;
@@ -66,7 +70,7 @@
 </head>
 
 <body
-    class="container mx-auto bg-light-primary p-4 text-light-primary-text dark:bg-dark-secondary dark:text-dark-primary-text"
+    class="container mx-auto bg-light-secondary p-4 text-light-primary-text dark:bg-dark-secondary dark:text-dark-primary-text"
     data-id="1">
     <!-- Overlay -->
     <div id="overlay"
@@ -87,7 +91,7 @@
     </div>
 
     <!--Header-->
-    <div class="mb-6 transform rounded-lg bg-primary-card p-4 shadow-lg transition-all hover:scale-105 dark:bg-dark-primary"
+    <div class="mb-6 transform rounded-lg bg-light-primary p-4 shadow-lg transition-all hover:scale-105 dark:bg-dark-primary"
         data-id="2">
         <header class="relative mb-4 flex justify-center" data-id="3">
             <button id="open-dialog" data-dialog-target="radix-dialog"
@@ -107,7 +111,7 @@
         </header>
         <div class="flex gap-2" data-id="19">
             <button id="menuBtn"
-                class="inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md border border-light-border bg-primary-card px-4 py-2 text-sm font-medium ring-offset-gray-100 transition-colors hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:border-dark-border dark:bg-dark-primary dark:ring-offset-gray-800 dark:hover:bg-gray-700"
+                class="inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md border border-light-border bg-light-primary px-4 py-2 text-sm font-medium ring-offset-gray-100 transition-colors hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:border-dark-border dark:bg-dark-primary dark:ring-offset-gray-800 dark:hover:bg-gray-700"
                 data-id="22" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-:r3:"
                 data-state="closed">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -177,7 +181,7 @@
 
     <!--Settings-->
     <section role="dialog" id="radix-dialog"
-        class="dialog fixed inset-y-0 right-0 z-50 max-h-full w-3/4 translate-x-full transform gap-4 overflow-y-auto bg-primary-card p-6 shadow-lg transition-transform duration-500 ease-in-out dark:bg-dark-primary"
+        class="dialog fixed inset-y-0 right-0 z-50 max-h-full w-3/4 translate-x-full transform gap-4 overflow-y-auto bg-light-primary p-6 shadow-lg transition-transform duration-500 ease-in-out dark:bg-dark-primary"
         tabindex="-1">
         <div class="mb-4 flex flex-col space-y-2">
             <h2 id="radix-title" class="text-xl font-semibold text-light-primary-text dark:text-dark-primary-text">
@@ -236,7 +240,7 @@
             </div>
             <!--close-->
             <button id="close-dialog" data-dialog-target="radix-dialog"
-                class="hover:text-bg-primary-base absolute right-4 top-4 bg-primary-card focus:outline-none dark:bg-dark-primary dark:hover:text-primary-base-dark"
+                class="hover:text-bg-primary-base absolute right-4 top-4 bg-light-primary focus:outline-none dark:bg-dark-primary dark:hover:text-primary-base-dark"
                 aria-label="Close dialog">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd"
@@ -267,7 +271,7 @@
 
                         <!-- Custom upload file button -->
                         <label for="import"
-                            class="inline-flex h-10 cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-light-border bg-primary-card px-4 py-2 text-sm font-medium ring-offset-primary-base transition-colors hover:bg-primary-base hover:text-secondary-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-base focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:border-dark-border dark:bg-dark-primary dark:ring-offset-primary-base-dark dark:hover:bg-primary-base-dark dark:hover:text-dark-primary-text dark:focus-visible:ring-secondary-base-dark">
+                            class="inline-flex h-10 cursor-pointer items-center justify-center whitespace-nowrap rounded-md border border-light-border bg-light-primary px-4 py-2 text-sm font-medium ring-offset-primary-base transition-colors hover:bg-primary-base hover:text-secondary-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-base focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:border-dark-border dark:bg-dark-primary dark:ring-offset-primary-base-dark dark:hover:bg-primary-base-dark dark:hover:text-dark-primary-text dark:focus-visible:ring-secondary-base-dark">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round" class="lucide lucide-download mr-2 h-4 w-4" data-id="98">
@@ -282,7 +286,7 @@
                     </div>
                 </div>
                 <button
-                    class="inline-flex h-10 w-full items-center justify-center whitespace-nowrap rounded-md border border-light-border bg-primary-card px-4 py-2 text-sm font-medium ring-offset-primary-base transition-colors hover:bg-primary-base hover:text-secondary-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-base focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:border-dark-border dark:bg-dark-primary dark:ring-offset-primary-base-dark dark:hover:bg-primary-base-dark dark:hover:text-dark-primary-text dark:focus-visible:ring-secondary-base-dark"
+                    class="inline-flex h-10 w-full items-center justify-center whitespace-nowrap rounded-md border border-light-border bg-light-primary px-4 py-2 text-sm font-medium ring-offset-primary-base transition-colors hover:bg-primary-base hover:text-secondary-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-base focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:border-dark-border dark:bg-dark-primary dark:ring-offset-primary-base-dark dark:hover:bg-primary-base-dark dark:hover:text-dark-primary-text dark:focus-visible:ring-secondary-base-dark"
                     id="export" data-id="97">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -298,7 +302,7 @@
 
                 <!--Import from bookmarks.-->
                 <button
-                    class="inline-flex h-10 w-full items-center justify-center whitespace-nowrap rounded-md border border-light-border bg-primary-card px-4 py-2 text-sm font-medium ring-offset-primary-base transition-colors hover:bg-primary-base hover:text-secondary-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-base focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:border-dark-border dark:bg-dark-primary dark:ring-offset-primary-base-dark dark:hover:bg-primary-base-dark dark:hover:text-dark-primary-text dark:focus-visible:ring-secondary-base-dark"
+                    class="inline-flex h-10 w-full items-center justify-center whitespace-nowrap rounded-md border border-light-border bg-light-primary px-4 py-2 text-sm font-medium ring-offset-primary-base transition-colors hover:bg-primary-base hover:text-secondary-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-base focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:border-dark-border dark:bg-dark-primary dark:ring-offset-primary-base-dark dark:hover:bg-primary-base-dark dark:hover:text-dark-primary-text dark:focus-visible:ring-secondary-base-dark"
                     id="import-bookmarks">
                     <svg xmlns="http://www.w3.org/2000/svg" class="mr-2 h-5 w-5" width="44" height="44"
                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round"
@@ -315,7 +319,7 @@
 
     <!--Add manga form-->
     <div role="dialog" id="formContainer"
-        class="dialog fixed inset-y-0 right-0 z-[57] w-3/4 translate-x-full transform gap-4 border-l bg-primary-card p-6 shadow-lg transition-transform duration-500 ease-in-out dark:bg-dark-primary">
+        class="dialog fixed inset-y-0 right-0 z-[57] w-3/4 translate-x-full transform gap-4 border-l bg-light-primary p-6 shadow-lg transition-transform duration-500 ease-in-out dark:bg-dark-primary">
         <div class="flex flex-col space-y-2 text-center sm:text-left">
             <h2 class="text-foreground text-lg font-semibold" data-translate-key="loadManga">
                 Cargar Manga
@@ -360,12 +364,12 @@
                 </div>
                 <div class="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
                     <button type="button" id="cancelButton" 
-                        class="  border-input hover:bg-accent hover:text-accent-foreground inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md border bg-primary-card px-4 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:bg-dark-primary"
+                        class="  border-input hover:bg-accent hover:text-accent-foreground inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md border bg-light-primary px-4 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:bg-dark-primary"
                         data-translate-key="cancel"><!--QUE COLORES USO PARA LOS BOTONES DE CANCEL??  #TODO-->
                         Cancelar
                     </button>
                     <button type="submit" id="saveBtn"
-                        class="  inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md bg-primary-card px-4 text-sm font-medium text-light-primary-text transition-colors hover:bg-primary-card/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:bg-dark-primary dark:text-dark-primary-text dark:hover:bg-primary-card-dark/90"
+                        class="  inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md bg-light-primary px-4 text-sm font-medium text-light-primary-text transition-colors hover:bg-primary-card/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:bg-dark-primary dark:text-dark-primary-text dark:hover:bg-primary-card-dark/90"
                         data-translate-key="save">
                         Guardar
                     </button>
@@ -386,7 +390,7 @@
     <!-- De acá para abajo agregué las data-translate-keys y me anoté lo que hay que añadir.-->
     <!--Filter-->
     <div id="filtersDialog"
-        class="dialog fixed inset-y-0 right-0 max-h-[600px] translate-x-full transform overflow-y-auto bg-primary-card shadow-lg transition-transform duration-300 ease-in-out dark:bg-dark-primary p-5 rounded-lg max-w-[500px] w-full z-[101]">
+        class="dialog fixed inset-y-0 right-0 max-h-[600px] translate-x-full transform overflow-y-auto bg-light-primary shadow-lg transition-transform duration-300 ease-in-out dark:bg-dark-primary p-5 rounded-lg max-w-[500px] w-full z-[101]">
         <div class="relative h-full p-6">
             <h2 id="filtersTitle" class="text-lg font-semibold" data-translate-key="filters">Filters</h2>
             <div class="rounded-lg border border-light-border shadow-sm dark:border-dark-border" data-id="85">
@@ -396,7 +400,7 @@
                         Filter method:
                     </h3>
                 </div>
-                <div class="relative mx-auto mb-4 mt-4 max-w-sm">
+                <div class="relative mx-auto bg-light-primary mb-4 mt-4 max-w-sm">
                     <select id="sortOption"
                         class="peer block w-full appearance-none rounded border border-light-border bg-transparent px-0 py-2.5 pl-4 text-sm text-light-primary-text focus:outline-none focus:ring-0 dark:border-dark-border dark:text-dark-primary-text">
                         <option value="favoritos" data-translate-key="favFirst">Favoritos primero</option>
@@ -420,24 +424,6 @@
                             favorites</span>
                     </label>
                 </div>
-                <!-- Chapter Range -->
-                <div class="mt-4 rounded-lg border border-secondary-base shadow-sm dark:border-secondary-base-dark" data-id="85">
-                    <div class="flex flex-col space-y-1.5 p-6" data-id="86">
-                        <h3 class="whitespace-nowrap text-xl font-semibold leading-none tracking-tight text-secondary-base dark:text-secondary-base-dark"
-                            data-id="87">
-                            Chapter Range
-                        </h3>
-                    </div>
-                    <div class="flex flex-col space-y-4 py-4 px-6">
-                        <label for="minChapters" class="text-sm font-medium text-secondary-base dark:text-secondary-base-dark">Minimum Chapters</label>
-                        <input type="range" id="minChapters" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700" min="0" max="1000" value="0">
-                        <span id="minChapterValue">0</span>
-
-                        <label for="maxChapters" class="text-sm font-medium text-secondary-base dark:text-secondary-base-dark">Maximum Chapters</label>
-                        <input type="range" id="maxChapters" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700" min="0" max="1000" value="1000">
-                        <span id="maxChapterValue">1000</span>
-                    </div>
-                </div>
                 <div class="py-4 pl-4">
                     <label class="me-5 inline-flex cursor-pointer items-center">
                         <input type="checkbox" id="currentPage-only-checkbox" class="peer sr-only" checked />
@@ -448,6 +434,25 @@
                     </label>
                 </div>
             </div>
+            <!-- Chapter Range -->
+            <div class="mt-4 rounded-lg border border-secondary-base shadow-sm dark:border-secondary-base-dark" data-id="85">
+                <div class="flex flex-col space-y-1.5 p-6" data-id="86">
+                    <h3 class="whitespace-nowrap text-xl font-semibold leading-none tracking-tight text-secondary-base dark:text-secondary-base-dark"
+                        data-id="87">
+                        Chapter Range
+                    </h3>
+                </div>
+                <div class="flex flex-col space-y-4 py-4 px-6">
+                    <label for="minChapters" class="text-sm font-medium text-secondary-base dark:text-secondary-base-dark">Minimum Chapters</label>
+                    <input type="range" id="minChapters" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700" min="0" max="1000" value="0">
+                    <span id="minChapterValue">0</span>
+
+                    <label for="maxChapters" class="text-sm font-medium text-secondary-base dark:text-secondary-base-dark">Maximum Chapters</label>
+                    <input type="range" id="maxChapters" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700" min="0" max="1000" value="1000">
+                    <span id="maxChapterValue">1000</span>
+                </div>
+            </div>
+
             <div class="mt-4 rounded-lg border border-light-border shadow-sm dark:border-dark-border"
                 data-id="85">
                 <div class="flex flex-col space-y-1.5 p-6" data-id="86">
@@ -459,7 +464,7 @@
                 <div class="flex flex-col space-y-4 py-4">
                     <button
                         data-translate-key="getRandomManga"
-                        class="ml-4 inline-flex h-10 w-44 items-center justify-center whitespace-nowrap rounded-md border border-light-border bg-primary-card py-2 text-sm font-medium transition-all hover:scale-110 focus-visible:outline-none dark:border-dark-border dark:bg-dark-primary dark:hover:text-dark-primary-text"
+                        class="ml-4 inline-flex h-10 w-44 items-center justify-center whitespace-nowrap rounded-md border border-light-border bg-light-primary py-2 text-sm font-medium transition-all hover:scale-110 focus-visible:outline-none dark:border-dark-border dark:bg-dark-primary dark:hover:text-dark-primary-text"
                         id="getRandomManga">
                         <svg xmlns="http://www.w3.org/2000/svg" class="ionicon mr-2 h-5 w-5" viewBox="0 0 512 512">
                             <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -490,7 +495,7 @@
 
     <!-- Import bookmarks -->
     <div role="dialog" id="import-bookmarks-dialog"
-        class="dialog fixed inset-y-0 right-0 z-[55] w-3/4 translate-x-full transform gap-4 border-l bg-primary-card p-6 shadow-lg transition-transform duration-500 ease-in-out dark:bg-dark-primary">
+        class="dialog fixed inset-y-0 right-0 z-[55] w-3/4 translate-x-full transform gap-4 border-l bg-light-primary p-6 shadow-lg transition-transform duration-500 ease-in-out dark:bg-dark-primary">
         <div class="flex flex-col space-y-2 text-center sm:text-left">
             <h2 class="text-foreground text-lg font-semibold" data-translate-key="importBookmarks">
                 Importar Marcadores
@@ -503,7 +508,7 @@
         <!-- #TODO Add another button that says "cancel" other than the x , fix css -->
 
         <button type="button" id="import-selected-button" data-translate-key="importarSel"
-            class="inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md bg-primary-card px-4 text-sm font-medium text-light-primary-text transition-colors hover:bg-primary-card/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:bg-dark-primary dark:text-dark-primary-text dark:hover:bg-primary-card-dark/90">
+            class="inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md bg-light-primary px-4 text-sm font-medium text-light-primary-text transition-colors hover:bg-primary-card/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:bg-dark-primary dark:text-dark-primary-text dark:hover:bg-primary-card-dark/90">
             Import Selected
         </button>
         <button id="import-cancel-button"
@@ -522,7 +527,7 @@
     <div id="confirmationDialog" tabindex="-1"
         class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0">
         <div id="confirmBox" class="relative max-h-full w-full max-w-md p-4">
-            <div class="relative rounded-lg bg-primary-card shadow dark:bg-dark-primary">
+            <div class="relative rounded-lg bg-light-primary shadow dark:bg-dark-primary">
                 <button type="button" id="cancelConfirm"
                     class="absolute end-2.5 top-3 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm hover:bg-primary-card/40 hover:text-secondary-base dark:hover:bg-primary-card-dark/40 dark:hover:text-secondary-base/40"
                     data-modal-hide="confirmationDialog">
@@ -551,7 +556,7 @@
                         Eliminar
                     </button>
                     <button id="cancelConfirm2" type="button" data-translate-key="cancel"
-                        class="ms-3 rounded-lg border border-light-border bg-primary-card px-5 py-2.5 text-sm font-medium text-light-primary-text hover:bg-primary-base-dark  focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-dark-border dark:bg-dark-primary dark:text-dark-primary-text dark:hover:bg-primary-base dark:hover:text-secondary-base dark:focus:ring-gray-700">
+                        class="ms-3 rounded-lg border border-light-border bg-light-primary px-5 py-2.5 text-sm font-medium text-light-primary-text hover:bg-primary-base-dark  focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-dark-border dark:bg-dark-primary dark:text-dark-primary-text dark:hover:bg-primary-base dark:hover:text-secondary-base dark:focus:ring-gray-700">
                         Cancelar
                     </button>
                 </div>
