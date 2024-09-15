@@ -93,9 +93,9 @@
     <!--Header-->
     <div class="mb-6 transform rounded-lg bg-light-primary p-4 shadow-lg transition-all hover:scale-105 dark:bg-dark-primary"
         data-id="2">
-        <header class="relative mb-4 flex justify-center" data-id="3">
+        <header class="relative mb-4 flex items-center" data-id="3">
             <button id="open-dialog" data-dialog-target="radix-dialog"
-                class="absolute left-0 inline-flex w-10 items-center justify-center rounded-md text-sm font-medium text-light-primary-text hover:rotate-45 transition-transform dark:text-dark-primary-text"
+                class="inline-flex w-10 items-center justify-center rounded-md text-sm font-medium text-light-primary-text hover:rotate-45 transition-transform dark:text-dark-primary-text"
                 type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-dialog">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                     <path
@@ -105,10 +105,14 @@
                 </svg>
                 <span class="sr-only">Open settings</span>
             </button>
-            <h1 class="text-2xl font-bold text-light-primary-text dark:text-dark-primary-text" data-id="17">
-                Manga Library
-            </h1>
+            
+            <div class="flex-grow flex justify-center">
+                <h1 class="text-2xl -ml-8 font-bold text-light-primary-text dark:text-dark-primary-text" data-id="17">
+                    Manga Library
+                </h1>
+            </div>
         </header>
+        
         <div class="flex gap-2" data-id="19">
             <button id="menuBtn"
                 class="inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md border border-light-border bg-light-primary px-4 py-2 text-sm font-medium ring-offset-gray-100 transition-colors hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:border-dark-border dark:bg-dark-primary dark:ring-offset-gray-800 dark:hover:bg-gray-700"
