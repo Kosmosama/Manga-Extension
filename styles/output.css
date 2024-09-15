@@ -697,6 +697,14 @@ video {
   z-index: 60;
 }
 
+.z-\[25\] {
+  z-index: 25;
+}
+
+.z-30 {
+  z-index: 30;
+}
+
 .mx-auto {
   margin-left: auto;
   margin-right: auto;
@@ -798,6 +806,10 @@ video {
 
 .-ml-8 {
   margin-left: -2rem;
+}
+
+.mb-96 {
+  margin-bottom: 24rem;
 }
 
 .block {
@@ -1152,6 +1164,11 @@ video {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
+.bg-light-secondary-text {
+  --tw-bg-opacity: 1;
+  background-color: rgb(161 161 161 / var(--tw-bg-opacity));
+}
+
 .bg-opacity-50 {
   --tw-bg-opacity: 0.5;
 }
@@ -1231,6 +1248,10 @@ video {
 
 .pr-40 {
   padding-right: 10rem;
+}
+
+.pb-4 {
+  padding-bottom: 1rem;
 }
 
 .text-center {
@@ -1596,6 +1617,10 @@ video {
   outline-offset: 2px;
 }
 
+.focus\:outline-light-border:focus {
+  outline-color: #E5E5E5;
+}
+
 .focus\:ring-0:focus {
   --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
   --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color);
@@ -1692,6 +1717,11 @@ video {
   opacity: 1;
 }
 
+.peer:checked ~ .peer-checked\:bg-light-secondary {
+  --tw-bg-opacity: 1;
+  background-color: rgb(245 245 245 / var(--tw-bg-opacity));
+}
+
 .peer:checked ~ .peer-checked\:after\:translate-x-full::after {
   content: var(--tw-content);
   --tw-translate-x: 100%;
@@ -1744,6 +1774,11 @@ video {
 .dark\:bg-gray-700:is(.dark *) {
   --tw-bg-opacity: 1;
   background-color: rgb(55 65 81 / var(--tw-bg-opacity));
+}
+
+.dark\:bg-dark-secondary-text:is(.dark *) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(113 113 113 / var(--tw-bg-opacity));
 }
 
 .dark\:bg-opacity-50:is(.dark *) {
@@ -1816,9 +1851,18 @@ video {
   color: rgb(128 1 1 / var(--tw-text-opacity));
 }
 
+.dark\:focus\:outline-dark-border:focus:is(.dark *) {
+  outline-color: #474747;
+}
+
 .dark\:focus\:ring-gray-700:focus:is(.dark *) {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(55 65 81 / var(--tw-ring-opacity));
+}
+
+.peer:checked ~ .dark\:peer-checked\:bg-dark-secondary:is(.dark *) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(25 25 25 / var(--tw-bg-opacity));
 }
 
 @media (min-width: 640px) {

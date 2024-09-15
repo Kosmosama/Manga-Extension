@@ -105,14 +105,12 @@
                 </svg>
                 <span class="sr-only">Open settings</span>
             </button>
-            
             <div class="flex-grow flex justify-center">
                 <h1 class="text-2xl -ml-8 font-bold text-light-primary-text dark:text-dark-primary-text" data-id="17">
                     Manga Library
                 </h1>
             </div>
-        </header>
-        
+        </header>     
         <div class="flex gap-2" data-id="19">
             <button id="menuBtn"
                 class="inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md border border-light-border bg-light-primary px-4 py-2 text-sm font-medium ring-offset-gray-100 transition-colors hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:border-dark-border dark:bg-dark-primary dark:ring-offset-gray-800 dark:hover:bg-gray-700"
@@ -165,11 +163,11 @@
 
     <!--Mangas-->
     <main class="max-h-[300px] space-y-4 overflow-y-auto" data-id="39">
-        <div class="manga-list space-y-4 pr-4" id="mangaListContainer" data-id="41"></div>
+        <div class="manga-list space-y-4 mb-4 pr-4" id="mangaListContainer" data-id="41"></div>
     </main>
 
     <!--Add manga button-->
-    <footer class="transform transition-all hover:scale-105">
+    <footer class="transform transition-all z-20 hover:scale-105">
         <button id="addButton" data-dialog-target="formContainer"
             class="mt-6 inline-flex h-10 w-full items-center justify-center whitespace-nowrap rounded-md bg-light-primary px-4 py-2 text-sm font-medium shadow-lg focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 dark:bg-dark-primary dark:ring-offset-dark-secondary-text">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -336,32 +334,32 @@
                         class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                         data-translate-key="imageLabel">Imagen (opcional)</label>
                     <input type="text" id="image" name="image" placeholder="Ingrese la URL de la imagen"
-                        class="border-light-border dark:border-dark-border  placeholder:text-light-secondary-text dark:placeholder:text-dark-secondary-text flex h-10 w-full rounded-md border bg-light-primary px-3 py-2 text-sm text-light-primary-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-dark-secondary dark:text-dark-primary-text" />
+                        class="border-light-border dark:border-dark-border  placeholder:text-light-secondary-text focus:outline-none focus:outline-light-border dark:focus:outline-dark-border dark:placeholder:text-dark-secondary-text flex h-10 w-full rounded-md border bg-light-primary px-3 py-2 text-sm text-light-primary-text dark:bg-dark-secondary dark:text-dark-primary-text" />
                 </div>
                 <div class="space-y-1">
                     <label for="title"
                         class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                         data-translate-key="titleLabel">Título</label>
                     <input type="text" id="title" name="title" required placeholder="Must be unique"
-                        class="border-light-border dark:border-dark-border  placeholder:text-light-secondary-text dark:placeholder:text-dark-secondary-text flex h-10 w-full rounded-md border bg-light-primary px-3 py-2 text-sm text-light-primary-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-dark-secondary dark:text-dark-primary-text" />
+                        class="border-light-border dark:border-dark-border  placeholder:text-light-secondary-text focus:outline-none focus:outline-light-border dark:focus:outline-dark-border dark:placeholder:text-dark-secondary-text flex h-10 w-full rounded-md border bg-light-primary px-3 py-2 text-sm text-light-primary-text dark:bg-dark-secondary dark:text-dark-primary-text" />
                 </div>
                 <div class="space-y-1">
                     <label for="link"
                         class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                         data-translate-key="formLinkLabel">URL del manga</label>
                     <input type="text" id="link" name="link"
-                       placeholder="Leave in blank to use the current page URL" class="border-light-border dark:border-dark-border  placeholder:text-light-secondary-text dark:placeholder:text-dark-secondary-text  flex h-10 w-full rounded-md border bg-light-primary px-3 py-2 text-sm text-light-primary-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-dark-secondary dark:text-dark-primary-text" />
+                       placeholder="Leave in blank to use the current page URL" class="border-light-border dark:border-dark-border focus:outline-none focus:outline-light-border dark:focus:outline-dark-border  placeholder:text-light-secondary-text dark:placeholder:text-dark-secondary-text  flex h-10 w-full rounded-md border bg-light-primary px-3 py-2 text-sm text-light-primary-text dark:bg-dark-secondary dark:text-dark-primary-text" />
                 </div>
                 <div class="space-y-1">
                     <label for="readChapters"
                         class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                         data-translate-key="readChaptersLabel">Capítulos leídos</label>
                     <input type="number" id="readChapters" name="readChapters"
-                        class="border-light-border dark:border-dark-border  placeholder:text-light-secondary-text dark:placeholder:text-dark-secondary-text  flex h-10 w-full rounded-md border bg-light-primary px-3 py-2 text-sm text-light-primary-text focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 dark:bg-dark-secondary dark:text-dark-primary-text" />
+                        class="border-light-border dark:border-dark-border  placeholder:text-light-secondary-text focus:outline-none focus:outline-light-border dark:focus:outline-dark-border dark:placeholder:text-dark-secondary-text  flex h-10 w-full rounded-md border bg-light-primary px-3 py-2 text-sm text-light-primary-text dark:bg-dark-secondary dark:text-dark-primary-text" />
                 </div>
-                <div class="flex items-center space-x-2">
+                <div class="flex items-center space-x-2 mt-4">
                     <input type="checkbox" id="favorite" name="favorite"
-                        class="border-light-border dark:border-dark-border  peer h-4 w-4 shrink-0 rounded-sm border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary-card data-[state=checked]:text-secondary-base" />
+                        class="border-light-border dark:border-dark-border peer h-4 w-4 shrink-0 rounded-sm border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary-card data-[state=checked]:text-secondary-base" />
                     <label for="favorite"
                         class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                         data-translate-key="favorite">Favorito</label>
@@ -422,8 +420,8 @@
                     <label class="me-5 inline-flex cursor-pointer items-center">
                         <input type="checkbox" id="favourites-only-checkbox" class="peer sr-only" />
                         <div
-                            class=" peer relative h-6 w-11 rounded-full bg-light-primary after:absolute after:start-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-light-border after:bg-white after:transition-all after:content-[''] disabled:cursor-not-allowed disabled:opacity-50 peer-checked:bg-secondary-base peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:ring-2 peer-focus:ring-offset-2 dark:bg-dark-secondary dark:peer-checked:bg-secondary-dates-dark rtl:peer-checked:after:-translate-x-full">
-                        </div>
+                        class="peer relative h-6 w-11 rounded-full bg-light-secondary-text after:absolute after:start-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-light-border after:bg-white after:transition-all after:content-[''] peer-checked:bg-secondary-base peer-checked:after:translate-x-full peer-checked:after:border-white dark:bg-dark-secondary-text dark:peer-checked:bg-dark-secondary rtl:peer-checked:after:-translate-x-full">
+                    </div>
                         <span data-translate-key="onlyFavs" class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Show only
                             favorites</span>
                     </label>
@@ -432,7 +430,7 @@
                     <label class="me-5 inline-flex cursor-pointer items-center">
                         <input type="checkbox" id="currentPage-only-checkbox" class="peer sr-only" checked />
                         <div
-                            class="peer relative h-6 w-11 rounded-full bg-light-primary after:absolute after:start-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-light-border after:bg-white after:transition-all after:content-[''] disabled:cursor-not-allowed disabled:opacity-50 peer-checked:bg-secondary-base peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:ring-2 peer-focus:ring-offset-2 dark:bg-dark-secondary dark:peer-checked:bg-secondary-dates-dark rtl:peer-checked:after:-translate-x-full">
+                            class="peer relative h-6 w-11 rounded-full bg-light-secondary-text after:absolute after:start-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-light-border after:bg-white after:transition-all after:content-[''] peer-checked:bg-secondary-base peer-checked:after:translate-x-full peer-checked:after:border-white dark:bg-dark-secondary-text dark:peer-checked:bg-dark-secondary rtl:peer-checked:after:-translate-x-full">
                         </div>
                         <span class="ms-3 text-sm font-medium text-light-primary-text dark:text-dark-primary-text" data-translate-key="onlyCurrentPage">Show only current page mangas</span>
                     </label>

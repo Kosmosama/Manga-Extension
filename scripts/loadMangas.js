@@ -43,7 +43,7 @@ function loadMangas(inputList) {
         mangaDiv.dataset.title = manga.title;
 
         mangaDiv.innerHTML = `
-            <div class="flex items-center mb-2 sm:mb-0" data-id="43">
+            <div class="flex items-center" data-id="43">
                 <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3 mr-2" id="fav">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="fav" class="lucide transition-colors duration-200 ${manga.favorite ? "hover:fill-light-red" : "hover:fill-yellow-400"} h-4 w-4 ${manga.favorite ? 'fill-yellow-400' : 'fill-transparent'}">
                         <polygon id="fav" points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
