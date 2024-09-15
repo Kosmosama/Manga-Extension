@@ -19,14 +19,14 @@
       {
           "matches": ["<all_urls>"],
           "js": [
-              "src/loadMangas.js",
-              "src/storageHandler.js",
-              "src/translations.js",
-              "src/filter.js",
-              "src/bookmarks.js",
-              "src/mangaHandler.js",
-              "src/dialogHandler.js",
-              "src/themeHandler.js"
+              "scripts/loadMangas.js",
+              "scripts/storageHandler.js",
+              "scripts/translations.js",
+              "scripts/filter.js",
+              "scripts/bookmarks.js",
+              "scripts/mangaHandler.js",
+              "scripts/dialogHandler.js",
+              "scripts/themeHandler.js"
           ]
       }
   ],
