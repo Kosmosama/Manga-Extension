@@ -4,7 +4,7 @@ const defaultTranslations = {
 };
 
 // Fetch translations from a JSON file and initialize the translation system
-fetch('translations.json')
+fetch('data/translations.json')
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');

@@ -12,7 +12,7 @@
       "bookmarks"
   ],
   "action": {
-      "default_popup": "src/index.html",
+      "default_popup": "index.html",
       "default_icon": "public/logos/icon.png"
   },
   "content_scripts": [
@@ -32,7 +32,7 @@
   ],
   "web_accessible_resources": [
       {
-          "resources": ["translations.json"],
+          "resources": ["data/translations.json"],
           "matches": ["<all_urls>"]
       }
   ]
