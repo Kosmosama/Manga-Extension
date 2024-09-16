@@ -6,7 +6,12 @@
 function handleImageError(event) {
     const imgElement = event.target;
     imgElement.onerror = null;
-    imgElement.src = isDarkMode() ? '../public/fallback-images/dark-mode-fallback.svg' : '../public/fallback-images/light-mode-fallback.svg';
+
+    const isDarkMode = document.documentElement.classList.contains("dark");
+
+    imgElement.src = isDarkMode 
+        ? '../public/fallback-images/dark-mode-fallback.svg' 
+        : '../public/fallback-images/light-mode-fallback.svg';
 }
 
 /**

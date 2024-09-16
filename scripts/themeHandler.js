@@ -1,73 +1,55 @@
-// Attach event listener for DOMContentLoaded to load theme options when the page loads
-document.addEventListener("DOMContentLoaded", handleTheme);
+// Attach event listener for DOMContentLoaded to initialize the theme handlers after content is loaded
+document.addEventListener("DOMContentLoaded", initializeThemeHandler);
 
 /**
- * Initializes the theme handler by adding an event listener to the theme selector.
- * The event listener detects changes in the user's theme preference and loads the current theme.
+ * Initializes the theme handler by setting up event listeners and loading the saved theme.
  */
-function handleTheme() {
+function initializeThemeHandler() {
     const themeSelector = document.getElementById("darkmode");
-    themeSelector.addEventListener("change", changePreferredTheme);
+    if (!themeSelector) return;
 
+    // Load and apply the saved theme preference
     loadThemePreference(themeSelector);
+
+    // Set up event listener for theme changes
+    themeSelector.addEventListener("change", changePreferredTheme);
 }
 
 /**
- * Event listener for theme change. Applies the selected theme and saves the preference.
+ * Loads the saved theme preference and applies it.
  * 
- * @param {Event} event - The event object from the theme selector change.
+ * @param {HTMLSelectElement} themeSelector - The DOM element for the theme selector.
  */
-function changePreferredTheme(event) {
-    const selectedTheme = event.target.value;
-    applyTheme(selectedTheme);
-    savePreferredTheme(selectedTheme);
-}
-
-/**
- * Saves the preferred theme to Chrome's local storage.
- * 
- * @param {string} theme - The selected theme ("light", "dark", or "system").
- */
-function savePreferredTheme(theme) {
-    chrome.storage.local.set({ theme }, () => {
-        if (chrome.runtime.lastError) {
-            console.error("Error saving theme preference:", chrome.runtime.lastError);
-        }
-    });
-}
-
-/**
- * Determines if dark mode is enabled based on the user's theme selection or system preference.
- *
- * @returns {boolean} - Returns `true` if dark mode is enabled.
- */
-function isDarkMode() {
-    const themeSelected = document.getElementById("darkmode").value;
-    return themeSelected === "dark" || (themeSelected === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
-}
-
-/**
- * Applies the selected theme by toggling the "dark" class on the document element.
- * 
- * @param {string} theme - The selected theme ("light", "dark", or "system").
- */
-function applyTheme(theme) {
-    const isDarkMode = theme === "dark" || (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
-    if (isDarkMode !== document.documentElement.classList.contains("dark")) {
-        document.documentElement.classList.toggle("dark", isDarkMode);
-        loadFilteredMangas();
+async function loadThemePreference(themeSelector) {
+    try {
+        const theme = await loadTheme();
+        themeSelector.value = theme;
+        applyTheme(theme);
+    } catch (error) {
+        console.error("Failed to load theme preference:", error);
     }
 }
 
 /**
- * Loads the saved theme preference from Chrome's local storage and applies it.
+ * Event listener for theme changes. Saves the new preference and applies the theme.
  * 
- * @param {HTMLSelectElement} themeSelector - The DOM element for the theme selector.
+ * @param {Event} event - The change event from the theme selector.
  */
-function loadThemePreference(themeSelector) {
-    chrome.storage.local.get("theme", (result) => {
-        const savedTheme = result.theme || "system";
-        themeSelector.value = savedTheme;
-        applyTheme(savedTheme);
+function changePreferredTheme(event) {
+    const selectedTheme = event.target.value;
+    applyTheme(selectedTheme);
+    saveThemePreference(selectedTheme);
+}
+
+/**
+ * Saves the preferred theme in Chrome's local storage.
+ * 
+ * @param {string} theme - The selected theme ("light", "dark", or "system").
+ */
+function saveThemePreference(theme) {
+    chrome.storage.local.set({ theme }, () => {
+        if (chrome.runtime.lastError) {
+            console.error("Error saving theme preference:", chrome.runtime.lastError);
+        }
     });
 }
