@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="h-96 w-[720px]">
+<html lang="en" class="h-[544px] w-[720px]">
 
 <head>
     <meta charset="UTF-8" />
@@ -13,13 +13,13 @@
         #radix-dialog {
             scrollbar-width: none;
         }
-        #filtersDialog{
+
+        #filtersDialog {
             scrollbar-width: none;
         }
-        
 
         option {
-            background-color: #F5F5F5;
+            background-color: #f5f5f5;
         }
 
         @media (prefers-color-scheme: dark) {
@@ -110,7 +110,7 @@
                     Manga Library
                 </h1>
             </div>
-        </header>     
+        </header>
         <div class="flex gap-2" data-id="19">
             <button id="menuBtn"
                 class="inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md border border-light-border bg-light-primary px-4 py-2 text-sm font-medium ring-offset-gray-100 transition-colors hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:border-dark-border dark:bg-dark-primary dark:ring-offset-gray-800 dark:hover:bg-gray-700"
@@ -127,14 +127,15 @@
             <!-- Input de búsqueda -->
             <form class="relative flex-grow" data-id="31">
                 <input id="searchBar"
-                    class="flex h-10 w-full rounded-md border border-light-border bg-light-primary dark:bg-dark-primary px-3 py-2 text-sm ring-offset-secondary-dates file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-secondary-base focus-visible:outline-none dark:border-dark-border dark:ring-offset-secondary-dates-dark dark:placeholder:text-dark-secondary-text "
+                    class="flex h-10 w-full rounded-md border border-light-border bg-light-primary dark:bg-dark-primary px-3 py-2 text-sm ring-offset-secondary-dates file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-secondary-base focus-visible:outline-none dark:border-dark-border dark:ring-offset-secondary-dates-dark dark:placeholder:text-dark-secondary-text"
                     placeholder="Search manga..." data-id="32" type="text" value="" />
 
                 <!-- Botón de borrar -->
                 <button id="deleteSearch"
                     class="absolute bottom-0 right-0 top-0 inline-flex h-10 w-10 items-center justify-center whitespace-nowrap rounded-md text-sm font-medium text-light-primary-text ring-offset-secondary-dates transition-colors hover:bg-primary-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:text-dark-primary-text dark:ring-offset-secondary-dates-dark dark:hover:bg-primary-base-dark"
                     type="button" data-id="36">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                         class="icon icon-tabler icons-tabler-outline icon-tabler-x">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                         <path d="M18 6l-12 12" />
@@ -166,20 +167,21 @@
         <div class="manga-list space-y-4 mb-4 pr-4" id="mangaListContainer" data-id="41"></div>
     </main>
 
-    <!--Add manga button-->
-    <footer class="transform transition-all z-20 hover:scale-105">
-        <button id="addButton" data-dialog-target="formContainer"
-            class="mt-6 inline-flex h-10 w-full items-center justify-center whitespace-nowrap rounded-md bg-light-primary px-4 py-2 text-sm font-medium shadow-lg focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 dark:bg-dark-primary dark:ring-offset-dark-secondary-text">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                class="icon icon-tabler icons-tabler-outline icon-tabler-plus">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M12 5l0 14" />
-                <path d="M5 12l14 0" />
-            </svg>
-            Add Manga
-        </button>
-    </footer>
+<!--Add manga button-->
+<footer class="fixed bottom-0 left-0 w-full z-20 transform transition-all hover:scale-105 mb-4">
+    <button id="addButton" data-dialog-target="formContainer"
+        class="w-4/5 mx-auto flex h-10 items-center justify-center whitespace-nowrap rounded-md bg-light-primary px-4 py-2 text-sm font-medium shadow-lg focus-visible:outline-none dark:bg-dark-primary dark:ring-offset-dark-secondary-text">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="mr-2">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <path d="M12 5l0 14" />
+            <path d="M5 12l14 0" />
+        </svg>
+        Add Manga
+    </button>
+</footer>
+
 
     <!--Settings-->
     <section role="dialog" id="radix-dialog"
@@ -255,7 +257,7 @@
         <!--Import/Export-->
         <div class="bg-card text-card-foreground rounded-lg border border-light-border shadow-sm dark:border-dark-border"
             data-id="85">
-            <div class="flex flex-col space-y-1.5 p-6"  >
+            <div class="flex flex-col space-y-1.5 p-6">
                 <h3 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight text-light-primary-text dark:text-dark-primary-text"
                     data-translate-key="importExport">
                     Import/Export
@@ -265,8 +267,7 @@
                 <div class="space-y-2">
                     <label
                         class="text-sm font-medium leading-none text-light-primary-text peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-dark-primary-text"
-                        for="import" 
-                        data-translate-key="importFromJSON">Import from json</label>
+                        for="import" data-translate-key="importFromJSON">Import from json</label>
                     <div class="mr-2 flex items-center" data-id="92">
                         <!-- Hidden file input -->
                         <input class="hidden" id="import" data-id="93" type="file" accept=".json" />
@@ -283,8 +284,8 @@
                             </svg>
                             <span data-translate-key="uploadFile">Upload File</span>
                         </label>
-                        <span class="text-light-secondary-text dark:text-dark-secondary-text text-sm" data-id="96">or drag
-                            and drop</span>
+                        <span class="text-light-secondary-text dark:text-dark-secondary-text text-sm" data-id="96">or
+                            drag and drop</span>
                     </div>
                 </div>
                 <button
@@ -334,28 +335,28 @@
                         class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                         data-translate-key="imageLabel">Imagen (opcional)</label>
                     <input type="text" id="image" name="image" placeholder="Ingrese la URL de la imagen"
-                        class="border-light-border dark:border-dark-border  placeholder:text-light-secondary-text focus:outline-none focus:outline-light-border dark:focus:outline-dark-border dark:placeholder:text-dark-secondary-text flex h-10 w-full rounded-md border bg-light-primary px-3 py-2 text-sm text-light-primary-text dark:bg-dark-secondary dark:text-dark-primary-text" />
+                        class="border-light-border dark:border-dark-border placeholder:text-light-secondary-text focus:outline-none focus:outline-light-border dark:focus:outline-dark-border dark:placeholder:text-dark-secondary-text flex h-10 w-full rounded-md border bg-light-primary px-3 py-2 text-sm text-light-primary-text dark:bg-dark-secondary dark:text-dark-primary-text" />
                 </div>
                 <div class="space-y-1">
                     <label for="title"
                         class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                         data-translate-key="titleLabel">Título</label>
                     <input type="text" id="title" name="title" required placeholder="Must be unique"
-                        class="border-light-border dark:border-dark-border  placeholder:text-light-secondary-text focus:outline-none focus:outline-light-border dark:focus:outline-dark-border dark:placeholder:text-dark-secondary-text flex h-10 w-full rounded-md border bg-light-primary px-3 py-2 text-sm text-light-primary-text dark:bg-dark-secondary dark:text-dark-primary-text" />
+                        class="border-light-border dark:border-dark-border placeholder:text-light-secondary-text focus:outline-none focus:outline-light-border dark:focus:outline-dark-border dark:placeholder:text-dark-secondary-text flex h-10 w-full rounded-md border bg-light-primary px-3 py-2 text-sm text-light-primary-text dark:bg-dark-secondary dark:text-dark-primary-text" />
                 </div>
                 <div class="space-y-1">
                     <label for="link"
                         class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                         data-translate-key="formLinkLabel">URL del manga</label>
-                    <input type="text" id="link" name="link"
-                       placeholder="Leave in blank to use the current page URL" class="border-light-border dark:border-dark-border focus:outline-none focus:outline-light-border dark:focus:outline-dark-border  placeholder:text-light-secondary-text dark:placeholder:text-dark-secondary-text  flex h-10 w-full rounded-md border bg-light-primary px-3 py-2 text-sm text-light-primary-text dark:bg-dark-secondary dark:text-dark-primary-text" />
+                    <input type="text" id="link" name="link" placeholder="Leave in blank to use the current page URL"
+                        class="border-light-border dark:border-dark-border focus:outline-none focus:outline-light-border dark:focus:outline-dark-border placeholder:text-light-secondary-text dark:placeholder:text-dark-secondary-text flex h-10 w-full rounded-md border bg-light-primary px-3 py-2 text-sm text-light-primary-text dark:bg-dark-secondary dark:text-dark-primary-text" />
                 </div>
                 <div class="space-y-1">
                     <label for="readChapters"
                         class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                         data-translate-key="readChaptersLabel">Capítulos leídos</label>
                     <input type="number" id="readChapters" name="readChapters"
-                        class="border-light-border dark:border-dark-border  placeholder:text-light-secondary-text focus:outline-none focus:outline-light-border dark:focus:outline-dark-border dark:placeholder:text-dark-secondary-text  flex h-10 w-full rounded-md border bg-light-primary px-3 py-2 text-sm text-light-primary-text dark:bg-dark-secondary dark:text-dark-primary-text" />
+                        class="border-light-border dark:border-dark-border placeholder:text-light-secondary-text focus:outline-none focus:outline-light-border dark:focus:outline-dark-border dark:placeholder:text-dark-secondary-text flex h-10 w-full rounded-md border bg-light-primary px-3 py-2 text-sm text-light-primary-text dark:bg-dark-secondary dark:text-dark-primary-text" />
                 </div>
                 <div class="flex items-center space-x-2 mt-4">
                     <input type="checkbox" id="favorite" name="favorite"
@@ -365,13 +366,14 @@
                         data-translate-key="favorite">Favorito</label>
                 </div>
                 <div class="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
-                    <button type="button" id="cancelButton" 
-                        class="  border-input hover:bg-accent hover:text-accent-foreground inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md border bg-light-primary px-4 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:bg-dark-primary"
-                        data-translate-key="cancel"><!--QUE COLORES USO PARA LOS BOTONES DE CANCEL??  #TODO-->
+                    <button type="button" id="cancelButton"
+                        class="border-input hover:bg-accent hover:text-accent-foreground inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md border bg-light-primary px-4 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:bg-dark-primary"
+                        data-translate-key="cancel">
+                        <!--QUE COLORES USO PARA LOS BOTONES DE CANCEL??  #TODO-->
                         Cancelar
                     </button>
                     <button type="submit" id="saveBtn"
-                        class="  inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md bg-light-primary px-4 text-sm font-medium text-light-primary-text transition-colors hover:bg-primary-card/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:bg-dark-primary dark:text-dark-primary-text dark:hover:bg-primary-card-dark/90"
+                        class="inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md bg-light-primary px-4 text-sm font-medium text-light-primary-text transition-colors hover:bg-primary-card/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:bg-dark-primary dark:text-dark-primary-text dark:hover:bg-primary-card-dark/90"
                         data-translate-key="save">
                         Guardar
                     </button>
@@ -379,7 +381,7 @@
             </form>
         </div>
         <button type="button" id="cross-cancel-mangaForm"
-            class=" focus:ring-0 absolute right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none disabled:pointer-events-none">
+            class="focus:ring-0 absolute right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none disabled:pointer-events-none">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                 class="lucide lucide-x h-4 w-4">
@@ -394,10 +396,13 @@
     <div id="filtersDialog"
         class="dialog fixed inset-y-0 right-0 max-h-[600px] translate-x-full transform overflow-y-auto bg-light-primary shadow-lg transition-transform duration-300 ease-in-out dark:bg-dark-primary p-5 rounded-lg max-w-[500px] w-full z-[101]">
         <div class="relative h-full p-6">
-            <h2 id="filtersTitle" class="text-lg font-semibold" data-translate-key="filters">Filters</h2>
+            <h2 id="filtersTitle" class="text-lg font-semibold" data-translate-key="filters">
+                Filters
+            </h2>
             <div class="rounded-lg border border-light-border shadow-sm dark:border-dark-border" data-id="85">
                 <div class="flex flex-col space-y-1.5 p-4" data-id="86">
-                    <h3 data-translate-key="filterMethod" class="whitespace-nowrap text-xl font-semibold leading-none tracking-tight text-light-primary-text dark:text-dark-primary-text"
+                    <h3 data-translate-key="filterMethod"
+                        class="whitespace-nowrap text-xl font-semibold leading-none tracking-tight text-light-primary-text dark:text-dark-primary-text"
                         data-id="87">
                         Filter method:
                     </h3>
@@ -405,11 +410,21 @@
                 <div class="relative mx-auto bg-light-primary mb-4 mt-4 max-w-sm">
                     <select id="sortOption"
                         class="peer block w-full appearance-none rounded border border-light-border bg-transparent px-0 py-2.5 pl-4 text-sm text-light-primary-text focus:outline-none focus:ring-0 dark:border-dark-border dark:text-dark-primary-text">
-                        <option value="favoritos" data-translate-key="favFirst">Favoritos primero</option>
-                        <option value="alfabetico" data-translate-key="alphabetically">Alfabéticamente</option>
-                        <option value="capitulos" data-translate-key="chaptersRead">Número de capítulos leídos</option>
-                        <option value="fechaAdicion" data-translate-key="addDate">Fecha de adición</option>
-                        <option value="ultimaLectura" data-translate-key="lastRead">Última lectura</option>
+                        <option value="favoritos" data-translate-key="favFirst">
+                            Favoritos primero
+                        </option>
+                        <option value="alfabetico" data-translate-key="alphabetically">
+                            Alfabéticamente
+                        </option>
+                        <option value="capitulos" data-translate-key="chaptersRead">
+                            Número de capítulos leídos
+                        </option>
+                        <option value="fechaAdicion" data-translate-key="addDate">
+                            Fecha de adición
+                        </option>
+                        <option value="ultimaLectura" data-translate-key="lastRead">
+                            Última lectura
+                        </option>
                     </select>
                     <svg id="arrow_down" class="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 transform"
                         width="12" height="12" fill="currentColor" viewBox="0 0 20 20">
@@ -420,10 +435,10 @@
                     <label class="me-5 inline-flex cursor-pointer items-center">
                         <input type="checkbox" id="favourites-only-checkbox" class="peer sr-only" />
                         <div
-                        class="peer relative h-6 w-11 rounded-full bg-light-secondary-text after:absolute after:start-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-light-border after:bg-white after:transition-all after:content-[''] peer-checked:bg-secondary-base peer-checked:after:translate-x-full peer-checked:after:border-white dark:bg-dark-secondary-text dark:peer-checked:bg-dark-secondary rtl:peer-checked:after:-translate-x-full">
-                    </div>
-                        <span data-translate-key="onlyFavs" class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Show only
-                            favorites</span>
+                            class="peer relative h-6 w-11 rounded-full bg-light-secondary-text after:absolute after:start-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-light-border after:bg-white after:transition-all after:content-[''] peer-checked:bg-secondary-base peer-checked:after:translate-x-full peer-checked:after:border-white dark:bg-dark-secondary-text dark:peer-checked:bg-dark-secondary rtl:peer-checked:after:-translate-x-full">
+                        </div>
+                        <span data-translate-key="onlyFavs"
+                            class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Show only favorites</span>
                     </label>
                 </div>
                 <div class="py-4 pl-4">
@@ -432,12 +447,14 @@
                         <div
                             class="peer relative h-6 w-11 rounded-full bg-light-secondary-text after:absolute after:start-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-light-border after:bg-white after:transition-all after:content-[''] peer-checked:bg-secondary-base peer-checked:after:translate-x-full peer-checked:after:border-white dark:bg-dark-secondary-text dark:peer-checked:bg-dark-secondary rtl:peer-checked:after:-translate-x-full">
                         </div>
-                        <span class="ms-3 text-sm font-medium text-light-primary-text dark:text-dark-primary-text" data-translate-key="onlyCurrentPage">Show only current page mangas</span>
+                        <span class="ms-3 text-sm font-medium text-light-primary-text dark:text-dark-primary-text"
+                            data-translate-key="onlyCurrentPage">Show only current page mangas</span>
                     </label>
                 </div>
             </div>
             <!-- Chapter Range -->
-            <div class="mt-4 rounded-lg border border-secondary-base shadow-sm dark:border-secondary-base-dark" data-id="85">
+            <div class="mt-4 rounded-lg border border-secondary-base shadow-sm dark:border-secondary-base-dark"
+                data-id="85">
                 <div class="flex flex-col space-y-1.5 p-6" data-id="86">
                     <h3 class="whitespace-nowrap text-xl font-semibold leading-none tracking-tight text-secondary-base dark:text-secondary-base-dark"
                         data-id="87">
@@ -445,27 +462,34 @@
                     </h3>
                 </div>
                 <div class="flex flex-col space-y-4 py-4 px-6">
-                    <label for="minChapters" class="text-sm font-medium text-secondary-base dark:text-secondary-base-dark">Minimum Chapters</label>
-                    <input type="range" id="minChapters" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700" min="0" max="1000" value="0">
+                    <label for="minChapters"
+                        class="text-sm font-medium text-secondary-base dark:text-secondary-base-dark">Minimum
+                        Chapters</label>
+                    <input type="range" id="minChapters"
+                        class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+                        min="0" max="1000" value="0" />
                     <span id="minChapterValue">0</span>
 
-                    <label for="maxChapters" class="text-sm font-medium text-secondary-base dark:text-secondary-base-dark">Maximum Chapters</label>
-                    <input type="range" id="maxChapters" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700" min="0" max="1000" value="1000">
+                    <label for="maxChapters"
+                        class="text-sm font-medium text-secondary-base dark:text-secondary-base-dark">Maximum
+                        Chapters</label>
+                    <input type="range" id="maxChapters"
+                        class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+                        min="0" max="1000" value="1000" />
                     <span id="maxChapterValue">1000</span>
                 </div>
             </div>
 
-            <div class="mt-4 rounded-lg border border-light-border shadow-sm dark:border-dark-border"
-                data-id="85">
+            <div class="mt-4 rounded-lg border border-light-border shadow-sm dark:border-dark-border" data-id="85">
                 <div class="flex flex-col space-y-1.5 p-6" data-id="86">
-                    <h3 data-translate-key="otherOptions" class="whitespace-nowrap text-xl font-semibold leading-none tracking-tight text-light-primary-text dark:text-dark-primary-text"
+                    <h3 data-translate-key="otherOptions"
+                        class="whitespace-nowrap text-xl font-semibold leading-none tracking-tight text-light-primary-text dark:text-dark-primary-text"
                         data-id="87">
                         Other options:
                     </h3>
                 </div>
                 <div class="flex flex-col space-y-4 py-4">
-                    <button
-                        data-translate-key="getRandomManga"
+                    <button data-translate-key="getRandomManga"
                         class="ml-4 inline-flex h-10 w-44 items-center justify-center whitespace-nowrap rounded-md border border-light-border bg-light-primary py-2 text-sm font-medium transition-all hover:scale-110 focus-visible:outline-none dark:border-dark-border dark:bg-dark-primary dark:hover:text-dark-primary-text"
                         id="getRandomManga">
                         <svg xmlns="http://www.w3.org/2000/svg" class="ionicon mr-2 h-5 w-5" viewBox="0 0 512 512">
@@ -531,7 +555,7 @@
         <div id="confirmBox" class="relative max-h-full w-full max-w-md p-4">
             <div class="relative rounded-lg bg-light-primary shadow dark:bg-dark-primary">
                 <button type="button" id="cancelConfirm"
-                    class="absolute end-2.5 top-3 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm hover:bg-primary-card/40 hover:text-secondary-base dark:hover:bg-primary-card-dark/40 dark:hover:text-secondary-base/40"
+                    class="absolute end-2.5 top-3 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg text-sm"
                     data-modal-hide="confirmationDialog">
                     <svg class="h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                         viewBox="0 0 14 14">
@@ -540,7 +564,7 @@
                     </svg>
                     <span class="sr-only">Close modal</span>
                 </button>
-                <div class="p-4 text-center md:p-5">
+                <div class="p-4 text-center md:p-5 text-light-red">
                     <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                         class="mx-auto mb-4 h-24 w-24 text-delete-base dark:text-delete-base-dark">
@@ -554,11 +578,11 @@
                         ¿Estás seguro de que deseas eliminarlo?
                     </p>
                     <button id="confirm" type="button" data-translate-key="delete"
-                        class="inline-flex items-center rounded-lg bg-delete-base px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-delete-base-dark focus:outline-none focus:ring-4 focus:ring-delete-base/30 dark:bg-delete-base-dark dark:hover:bg-delete-base dark:focus:ring-delete-base-dark/30">
+                        class="inline-flex transition-colors duration-100 items-center rounded-lg bg-light-red px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-dark-red focus:outline-none focus:ring-4 focus:ring-dark-red/30">
                         Eliminar
                     </button>
                     <button id="cancelConfirm2" type="button" data-translate-key="cancel"
-                        class="ms-3 rounded-lg border border-light-border bg-light-primary px-5 py-2.5 text-sm font-medium text-light-primary-text hover:bg-primary-base-dark  focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-dark-border dark:bg-dark-primary dark:text-dark-primary-text dark:hover:bg-primary-base dark:hover:text-secondary-base dark:focus:ring-gray-700">
+                        class="ms-3 transition-colors duration-100 rounded-lg border border-light-border bg-light-primary px-5 py-2.5 text-sm font-medium text-light-primary-text hover:bg-light-secondary-text focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-dark-border dark:bg-dark-primary dark:text-dark-primary-text dark:hover:bg-dark-secondary dark:hover:text-dark-secondary-text dark:focus:ring-gray-700">
                         Cancelar
                     </button>
                 </div>
@@ -567,7 +591,6 @@
     </div>
 
     <div id="konamiContent"></div>
-
     <!-- Scripts -->
     <script src="scripts/storageHandler.js"></script>
     <script src="scripts/themeHandler.js"></script>
@@ -580,5 +603,3 @@
     <script src="scripts/translations.js"></script>
     <script src="scripts/bookmarks.js"></script>
 </body>
-
-</html>
