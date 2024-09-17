@@ -59,7 +59,7 @@ function loadFilterOptions() {
         document.getElementById('currentPage-only-checkbox').checked =!!filterOptions.currentPage;
 
         // Set the sortOption dropdown value, default to a sensible fallback if not set
-        document.getElementById('sortOption').value = filterOptions.sortOption || 'favoritos';
+        document.getElementById('sortOption').value = filterOptions.sortOption || 'favFirst';
     
         // Set the sortOrder, default to 'ascendente' if not set
         const sortOrder = filterOptions.sortOrder || 'ascendente';
@@ -188,7 +188,7 @@ async function loadFilteredMangas() {
  * favorites-only, and current-page-only options.
  * 
  * @param {Array} array - The array of mangas to sort.
- * @param {string} filterMethod - The filter method ('favoritos','alfabetico' , 'capitulos', 'fechaAdicion', 'ultimaLectura').
+ * @param {string} filterMethod - The filter method ('favFirst','alphabetically' , 'chaptersRead', 'addDate', 'lastRead').
  * @param {string} order - The sort order ('ascendente' or 'descendente').
  * @param {boolean} favOnly - Whether to only show favorite mangas.
  * @param {boolean} currentPageOnly - Whether to only show mangas on the current page.
@@ -221,19 +221,19 @@ async function sortMangas(array, filterMethod, order, favOnly, currentPageOnly, 
         let comparison = 0;
 
         switch (filterMethod) {
-            case 'favoritos':
+            case 'favFirst':
             // Should show favorites first
                 comparison = b.favorite - a.favorite;
                 break;
-            case 'capitulos':
+            case 'chaptersRead':
              // Should show most chapters to least
                 comparison = b.readChapters - a.readChapters;
                 break;
-            case 'fechaAdicion':
+            case 'addDate':
                 // Should show most recent first
                 comparison = new Date(b.dayAdded) - new Date(a.dayAdded);
                 break;
-            case 'ultimaLectura':
+            case 'lastRead':
                 // Should show most recent first
                 comparison = new Date(b.lastRead) - new Date(a.lastRead);
                 break;

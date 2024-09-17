@@ -144,7 +144,7 @@
             <div class="flex flex-col space-y-1.5 p-6" data-id="86">
                 <h3 class="whitespace-nowrap text-xl font-semibold leading-none tracking-tight text-light-primary-text dark:text-dark-primary-text"
                     data-id="87">
-                    Language select:
+                    Language select
                 </h3>
             </div>
             <div class="relative mx-auto mb-4 max-w-sm">
@@ -171,7 +171,7 @@
             <div class="flex flex-col space-y-1.5 p-6" data-id="86">
                 <h3 class="whitespace-nowrap text-xl font-semibold leading-none tracking-tight text-light-primary-text dark:text-dark-primary-text"
                     data-id="87">
-                    Theme:
+                    Theme
                 </h3>
             </div>
             <!--Dark mode-->
@@ -179,9 +179,9 @@
                 <label for="darkmode" class="sr-only">Modo de Tema:</label>
                 <select id="darkmode"
                     class="peer block w-full appearance-none rounded border border-light-border bg-transparent py-2.5 pl-4 text-sm text-light-primary-text focus:border-light-border focus:outline-none focus:ring-0 dark:border-dark-border dark:text-dark-primary-text">
-                    <option value="light">Claro</option>
-                    <option value="dark">Oscuro</option>
-                    <option value="system">Sistema</option>
+                    <option value="light">Light</option>
+                    <option value="dark">Dark</option>
+                    <option value="system">System</option>
                 </select>
                 <svg id="arrow_down" class="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 transform"
                     width="12" height="12" fill="currentColor" viewBox="0 0 20 20">
@@ -258,7 +258,7 @@
                         <path d="M15 10v11l-5 -3l-5 3v-11a3 3 0 0 1 3 -3h4a3 3 0 0 1 3 3z" />
                         <path d="M11 3h5a3 3 0 0 1 3 3v11" />
                     </svg>
-                    <span data-translate-key="importBookmarks">Importar bookmarks</span>
+                    <span data-translate-key="importBookmarks">Import from bookmarks</span>
                 </button>
             </div>
         </div>
@@ -269,7 +269,7 @@
         class="dialog fixed inset-y-0 right-0 z-[57] w-3/4 translate-x-full transform gap-4 border-l border-light-border dark:border-dark-border bg-light-primary p-6 shadow-lg transition-transform duration-500 ease-in-out dark:bg-dark-primary">
         <div class="flex flex-col space-y-2 text-center sm:text-left">
             <h2 class="text-foreground text-lg font-semibold" data-translate-key="loadManga">
-                Cargar Manga
+                Load Manga
             </h2>
         </div>
         <div class="space-y-4 py-4">
@@ -317,13 +317,12 @@
                     <button type="button" id="cancelButton"
                         class="border-input hover:bg-accent hover:text-accent-foreground inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md border bg-light-secondary-text/10 px-4 text-sm font-medium transition-colors hover:bg-light-secondary-text/80 dark:hover:bg-dark-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 dark:bg-dark-secondary"
                         data-translate-key="cancel">
-                        <!--QUE COLORES USO PARA LOS BOTONES DE CANCEL??  #TODO-->
-                        Cancelar
+                        Cancel
                     </button>
                     <button type="submit" id="saveBtn"
                         class="inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md bg-light-highlight-primary hover:bg-light-highlight-primary/80 dark:hover:bg-dark-highlight-primary/80  dark:bg-dark-highlight-primary px-4 text-sm font-medium text-light-highlight-text dark:text-dark-highlight-text transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
                         data-translate-key="save">
-                        Guardar
+                        Save
                     </button>
                 </div>
             </form>
@@ -338,41 +337,46 @@
             <span class="sr-only">Close</span>
         </button>
     </div>
-    <!-- De acá para abajo agregué las data-translate-keys y me anoté lo que hay que añadir.-->
+
     <!--Filter-->
     <div id="filtersDialog"
         class="dialog fixed inset-y-0 right-0 max-h-full translate-x-full transform overflow-y-auto border-l border-light-border dark:border-dark-border bg-light-primary shadow-lg transition-transform duration-300 ease-in-out dark:bg-dark-primary px-5 pb-5 max-w-[500px] w-full z-[101]">
         <div class="relative h-full space-y-8 mb-8 p-6">
+
             <div class="mb-4 flex flex-col">
                 <h2 id="radix-title" class="text-2xl font-semibold text-light-primary-text dark:text-dark-primary-text">
                     Filters
                 </h2>
             </div>
+
+            <!-- Filter methods -->
             <div class="rounded-lg border border-light-border shadow-sm dark:border-dark-border" data-id="85">
                 <div class="flex flex-col space-y-1.5 p-6" data-id="86">
                     <h3 data-translate-key="filterMethod"
                         class="whitespace-nowrap text-xl font-semibold leading-none tracking-tight text-light-primary-text dark:text-dark-primary-text"
                         data-id="87">
-                        Filter method:
+                        Filter method
                     </h3>
                 </div>
+
+                <!-- Method -->
                 <div class="relative mx-auto bg-light-primary dark:bg-dark-primary mb-4 mt-4 max-w-sm">
                     <select id="sortOption"
                         class="peer block w-full appearance-none rounded border border-light-border bg-transparent px-0 py-2.5 pl-4 text-sm text-light-primary-text focus:outline-none focus:ring-0 dark:border-dark-border dark:text-dark-primary-text">
-                        <option value="favoritos" data-translate-key="favFirst">
-                            Favoritos primero
+                        <option value="favFirst" data-translate-key="favFirst">
+                            Favorites first
                         </option>
-                        <option value="alfabetico" data-translate-key="alphabetically">
-                            Alfabéticamente
+                        <option value="alphabetically" data-translate-key="alphabetically">
+                            Alphabetically
                         </option>
-                        <option value="capitulos" data-translate-key="chaptersRead">
-                            Número de capítulos leídos
+                        <option value="chaptersRead" data-translate-key="chaptersRead">
+                            Number of read chapters
                         </option>
-                        <option value="fechaAdicion" data-translate-key="addDate">
-                            Fecha de adición
+                        <option value="addDate" data-translate-key="addDate">
+                            Addition date
                         </option>
-                        <option value="ultimaLectura" data-translate-key="lastRead">
-                            Última lectura
+                        <option value="lastRead" data-translate-key="lastRead">
+                            Last read
                         </option>
                     </select>
                     <svg id="arrow_down" class="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 transform"
@@ -401,6 +405,7 @@
                     </label>
                 </div>
             </div>
+
             <!-- Chapter Range -->
             <div class="rounded-lg border border-light-border dark:border-dark-border"
                 data-id="85">
@@ -429,6 +434,7 @@
                 </div>
             </div>
 
+            <!-- Other options -->
             <div class="rounded-lg border border-light-border shadow-sm dark:border-dark-border" data-id="85">
                 <div class="flex flex-col space-y-1.5 p-6" data-id="86">
                     <h3 data-translate-key="otherOptions"
@@ -454,6 +460,7 @@
                     </button>
                 </div>
             </div>
+            
             <button type="button" id="closeFiltersDialog" data-dialog-target="filtersDialog"
                 class="absolute right-5 mt-3 top-4 text-light-primary-text dark:text-dark-primary-text hover:text-light-red transition-colors dark:hover:text-light-red duration-200">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
@@ -474,8 +481,8 @@
                 Importar Marcadores
             </h2>
         </div>
+
         <div id="bookmark-tree" class="max-h-[600px] overflow-y-auto">
-            <!-- Dynamically loaded bookmarks will go here -->
         </div>
 
         <!-- #TODO Add another button that says "cancel" other than the x , fix css -->
@@ -500,7 +507,7 @@
         class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0">
         <div id="confirmBox" class="relative max-h-full w-full max-w-md p-4">
             <div class="relative rounded-lg bg-light-primary shadow dark:bg-dark-primary">
-                <button type="button" id="cancelConfirm"
+                <button type="button" id="cancelConfirmCross"
                     class="absolute end-2.5 top-3 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg text-sm"
                     data-modal-hide="confirmationDialog">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
@@ -527,7 +534,7 @@
                         class="inline-flex transition-colors duration-100 items-center rounded-lg bg-light-red px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-dark-red focus:outline-none focus:ring-4 focus:ring-dark-red/30">
                         Eliminar
                     </button>
-                    <button id="cancelConfirm2" type="button" data-translate-key="cancel"
+                    <button id="cancelConfirm" type="button" data-translate-key="cancel"
                         class="ms-3 transition-colors duration-100 rounded-lg border border-light-border bg-light-primary px-5 py-2.5 text-sm font-medium text-light-primary-text hover:bg-light-secondary-text focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-dark-border dark:bg-dark-primary dark:text-dark-primary-text dark:hover:bg-dark-secondary dark:hover:text-dark-secondary-text dark:focus:ring-gray-700">
                         Cancelar
                     </button>
@@ -537,6 +544,7 @@
     </div>
 
     <div id="konamiContent"></div>
+
     <!-- Scripts -->
     <script src="scripts/storageHandler.js"></script>
     <script src="scripts/themeHandler.js"></script>
