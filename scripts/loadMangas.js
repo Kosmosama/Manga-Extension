@@ -16,15 +16,27 @@ function handleImageError(event) {
 function handleBlur() {
     const bottomBlur = document.getElementById('bottomBlur');
     const topBlur = document.getElementById('topBlur');
+    const mangaListElement = document.getElementById('scrollContainer'); 
 
-    if (mangaList.length < 3) {
-        bottomBlur.classList.add('opacity-0');
+    const scrollTop = mangaListElement.scrollTop;
+    const scrollHeight = mangaListElement.scrollHeight;
+    const clientHeight = mangaListElement.clientHeight;
+
+    if (mangaListElement.scrollTop === 0) {
         topBlur.classList.add('opacity-0');
     } else {
-        bottomBlur.classList.remove('opacity-0');
         topBlur.classList.remove('opacity-0');
     }
+    if (scrollTop + clientHeight >= scrollHeight) {
+        bottomBlur.classList.add('opacity-0');
+    } else {
+        bottomBlur.classList.remove('opacity-0');
+    }
 }
+
+document.getElementById('scrollContainer').addEventListener('scroll', handleBlur);
+document.addEventListener('DOMContentLoaded', handleBlur);
+
 
 /**
  * Dynamically loads a list of manga objects into the DOM and renders them as interactive elements.
