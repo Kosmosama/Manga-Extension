@@ -13,6 +13,18 @@ function handleImageError(event) {
         ? '../public/fallback-images/dark-mode-fallback.svg' 
         : '../public/fallback-images/light-mode-fallback.svg';
 }
+function handleBlur() {
+    const bottomBlur = document.getElementById('bottomBlur');
+    const topBlur = document.getElementById('topBlur');
+
+    if (mangaList.length < 3) {
+        bottomBlur.classList.add('opacity-0');
+        topBlur.classList.add('opacity-0');
+    } else {
+        bottomBlur.classList.remove('opacity-0');
+        topBlur.classList.remove('opacity-0');
+    }
+}
 
 /**
  * Dynamically loads a list of manga objects into the DOM and renders them as interactive elements.
@@ -112,7 +124,7 @@ function loadMangas(inputList) {
 
         fragment.appendChild(mangaDiv);
     });
-
+    handleBlur();
     mangaListContainer.appendChild(fragment);
 }
 
