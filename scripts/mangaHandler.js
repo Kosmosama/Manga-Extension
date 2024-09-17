@@ -262,8 +262,8 @@ function handleMangaDeletion(manga) {
         confirmDiv.style.display = 'none';
     }
 
+    document.getElementById('cancelConfirmCross').addEventListener('click', closeDialog, { once: true });
     document.getElementById('cancelConfirm').addEventListener('click', closeDialog, { once: true });
-    document.getElementById('cancelConfirm2').addEventListener('click', closeDialog, { once: true });
 
     document.getElementById('confirm').addEventListener('click', () => {
         deleteManga(manga);
