@@ -1039,6 +1039,18 @@ video {
   margin-bottom: calc(2rem * var(--tw-space-y-reverse));
 }
 
+.space-y-5 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(1.25rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(1.25rem * var(--tw-space-y-reverse));
+}
+
+.space-y-3 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.75rem * var(--tw-space-y-reverse));
+}
+
 .overflow-auto {
   overflow: auto;
 }
@@ -1134,6 +1146,18 @@ video {
 
 .bg-transparent {
   background-color: transparent;
+}
+
+.bg-light-secondary-text\/80 {
+  background-color: rgb(161 161 161 / 0.8);
+}
+
+.bg-light-secondary-text\/30 {
+  background-color: rgb(161 161 161 / 0.3);
+}
+
+.bg-light-secondary-text\/10 {
+  background-color: rgb(161 161 161 / 0.1);
 }
 
 .bg-opacity-50 {
@@ -1511,6 +1535,35 @@ video {
   background-color: rgb(161 161 161 / var(--tw-bg-opacity));
 }
 
+.hover\:bg-light-highlight-primary\/50:hover {
+  background-color: rgb(25 25 25 / 0.5);
+}
+
+.hover\:bg-light-highlight-primary\/90:hover {
+  background-color: rgb(25 25 25 / 0.9);
+}
+
+.hover\:bg-light-highlight-primary\/80:hover {
+  background-color: rgb(25 25 25 / 0.8);
+}
+
+.hover\:bg-light-primary\/80:hover {
+  background-color: rgb(255 255 255 / 0.8);
+}
+
+.hover\:bg-light-primary:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.hover\:bg-light-secondary-text\/30:hover {
+  background-color: rgb(161 161 161 / 0.3);
+}
+
+.hover\:bg-light-secondary-text\/80:hover {
+  background-color: rgb(161 161 161 / 0.8);
+}
+
 .hover\:fill-light-red:hover {
   fill: #EB2828;
 }
@@ -1723,6 +1776,23 @@ video {
 .dark\:hover\:bg-gray-700:hover:is(.dark *) {
   --tw-bg-opacity: 1;
   background-color: rgb(55 65 81 / var(--tw-bg-opacity));
+}
+
+.dark\:hover\:bg-dark-highlight-primary\/80:hover:is(.dark *) {
+  background-color: rgb(255 255 255 / 0.8);
+}
+
+.dark\:hover\:bg-dark-primary\/80:hover:is(.dark *) {
+  background-color: rgb(45 45 45 / 0.8);
+}
+
+.dark\:hover\:bg-dark-primary\/20:hover:is(.dark *) {
+  background-color: rgb(45 45 45 / 0.2);
+}
+
+.dark\:hover\:bg-dark-primary:hover:is(.dark *) {
+  --tw-bg-opacity: 1;
+  background-color: rgb(45 45 45 / var(--tw-bg-opacity));
 }
 
 .dark\:hover\:text-dark-primary-text:hover:is(.dark *) {

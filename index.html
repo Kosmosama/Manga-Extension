@@ -268,7 +268,7 @@
             </h2>
         </div>
         <div class="space-y-4 py-4">
-            <form id="chapterForm">
+            <form id="chapterForm" class="space-y-3">
                 <div class="space-y-1">
                     <label for="image"
                         class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -276,21 +276,21 @@
                     <input type="text" id="image" name="image" placeholder="Ingrese la URL de la imagen"
                         class="border-light-border dark:border-dark-border placeholder:text-light-secondary-text focus:outline-none focus:outline-light-border dark:focus:outline-dark-border dark:placeholder:text-dark-secondary-text flex h-10 w-full rounded-md border bg-light-primary px-3 py-2 text-sm text-light-primary-text dark:bg-dark-secondary dark:text-dark-primary-text" />
                 </div>
-                <div class="space-y-1">
+                <div>
                     <label for="title"
                         class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                         data-translate-key="titleLabel">Título</label>
                     <input type="text" id="title" name="title" required placeholder="Must be unique"
                         class="border-light-border dark:border-dark-border placeholder:text-light-secondary-text focus:outline-none focus:outline-light-border dark:focus:outline-dark-border dark:placeholder:text-dark-secondary-text flex h-10 w-full rounded-md border bg-light-primary px-3 py-2 text-sm text-light-primary-text dark:bg-dark-secondary dark:text-dark-primary-text" />
                 </div>
-                <div class="space-y-1">
+                <div>
                     <label for="link"
                         class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                         data-translate-key="formLinkLabel">URL del manga</label>
                     <input type="text" id="link" name="link" placeholder="Leave in blank to use the current page URL"
                         class="border-light-border dark:border-dark-border focus:outline-none focus:outline-light-border dark:focus:outline-dark-border placeholder:text-light-secondary-text dark:placeholder:text-dark-secondary-text flex h-10 w-full rounded-md border bg-light-primary px-3 py-2 text-sm text-light-primary-text dark:bg-dark-secondary dark:text-dark-primary-text" />
                 </div>
-                <div class="space-y-1">
+                <div>
                     <label for="readChapters"
                         class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                         data-translate-key="readChaptersLabel">Capítulos leídos</label>
@@ -310,13 +310,13 @@
                 </div>                
                 <div class="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
                     <button type="button" id="cancelButton"
-                        class="border-input hover:bg-accent hover:text-accent-foreground inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md border bg-light-primary px-4 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:bg-dark-primary"
+                        class="border-input hover:bg-accent hover:text-accent-foreground inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md border bg-light-secondary-text/10 px-4 text-sm font-medium transition-colors hover:bg-light-secondary-text/80 dark:hover:bg-dark-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 dark:bg-dark-secondary"
                         data-translate-key="cancel">
                         <!--QUE COLORES USO PARA LOS BOTONES DE CANCEL??  #TODO-->
                         Cancelar
                     </button>
                     <button type="submit" id="saveBtn"
-                        class="inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md bg-light-primary px-4 text-sm font-medium text-light-primary-text transition-colors hover:bg-primary-card/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:bg-dark-primary dark:text-dark-primary-text dark:hover:bg-primary-card-dark/90"
+                        class="inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md bg-light-highlight-primary hover:bg-light-highlight-primary/80 dark:hover:bg-dark-highlight-primary/80  dark:bg-dark-highlight-primary px-4 text-sm font-medium text-light-highlight-text dark:text-dark-highlight-text transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
                         data-translate-key="save">
                         Guardar
                     </button>
