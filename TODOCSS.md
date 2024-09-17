@@ -1,18 +1,18 @@
 ## Main page UI Hover Effects
 - Add hover effects to the following elements:
-  - **Favourite**
-  - **Delete**
-  - **Title**
-  - **"-" and "+" signs**
-  - **Settings wheel**
+  - **Favourite** - It's ugly, i have to change it
+  - **Delete** - It's ugly, i have to change it
+  - **Title** - It's ugly, i have to change it
+  - **"-" and "+" signs** - It's ugly, i have to change it
+  - **Settings wheel** - Done
 
 ## Input Styles
-- Change the **focus color** of all inputs (currently blue) to `#border`.
+- Change the **focus color** of all inputs (currently blue) to `#border`. - I think it's done
 
-## Fix height and width
-- Add a min/max for the whole width and height of the extension so that, if less mangas appear, the height doesn't change.
+## Fix height and width - Done
+- Add a min/max for the whole width and height of the extension so that, if less mangas appear, the height doesn't change. 
 
-## Add Manga button
+## Add Manga button - Done
 - Add a **fixed position** to the **AddManga button**.
 - Set the button's background color to `#highlight-primary`.
 - Change the text color to `#highlight-text`.
@@ -20,22 +20,22 @@
 ## Search Bar
 - Fix the **"X" button hover** in the search bar (it currently extends beyond the search bar border).
 
-## Borders
+## Borders -I Think it's done
 - Change **ALL borders' color** to `#border`.
 
-## Drag and Drop (remove or do the following)
+## Drag and Drop (remove or do the following) - Done (removed)
 - Add a **hover effect** to the drag-and-drop area from the **Import from file** button to highlight the drop zone.
 - Add a small **left margin** to the "or drag and drop" text.
 - Change the **"drag and drop" text color** to `#secondary-text`.
 
-## Consistency
+## Consistency - i think it's done
 - Ensure that the **title size** for the settings and filter boxes titles are the **same as** the **Import/Export** box title.
 - Update the **checkbox** in the Add Manga form to match the design of checkboxes used in the **filters**.
 - Remove unnecessary **padding/margin** for options in the **Language select** and **Theme select** in the **Settings** dialog.
 - Make all **"X" buttons** consistent in design across the UI.
   - Add a hover effect to them for feedback.
 
-## Padding and Margins
+## Padding and Margins - i think it's done
 - Apply the **same padding/margin** to the **Filter** title in its dialog as used in the **Settings** title.
 
 ## Dropdowns
@@ -51,14 +51,14 @@
 **(REMEMBER, VERSION 18)**
 - Ensure the shadow/blur doesn't expand to cover the margins ([like this](https://imgur.com/a/uj6A6NL)).
 
-## Scroll bar
+## Scroll bar - Done
 - Eliminate scroll bar from **filters** dialog.
 
 ## Bookmark Import
 - Implement a **visual style** similar to what was done in `v0.dev ver18` **(REMEMBER, VERSION 18)**
 
 ## Settings & Filters Form Error
-- Fix the error where, after closing and reopening the **Settings** or **Filters form**, the scroll position is maintained.
+- Fix the error where, after closing and reopening the **Settings** or **Filters form**, the scroll position is maintained. - No.
   - **Reset the form's scroll position** to the top when it is reopened (like restarting the dialog).
 
 ## Colors
