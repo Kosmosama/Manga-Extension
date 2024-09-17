@@ -35,8 +35,8 @@
     </div>
 
     <!--Header-->
-    <div class="mb-6 transform rounded-lg bg-light-primary p-4 shadow-lg transition-all hover:scale-105 dark:bg-dark-primary"
-        data-id="2">
+    <div class="mb-6 transform rounded-lg bg-light-primary p-4 transition-all hover:scale-105 dark:bg-dark-primary"
+    data-id="2">
         <header class="relative mb-4 flex items-center" data-id="3">
             <button id="open-dialog" data-dialog-target="radix-dialog"
                 class="inline-flex w-10 items-center justify-center rounded-md text-sm font-medium text-light-primary-text hover:rotate-45 transition-transform dark:text-dark-primary-text"
@@ -105,10 +105,15 @@
     </div>
 
     <!--Mangas-->
-    <main class="max-h-[300px] space-y-4 overflow-y-auto" data-id="39">
-        <div class="manga-list space-y-4 mb-4 pr-4" id="mangaListContainer" data-id="41"></div>
+<div class="relative">
+    <div class="absolute top-0 left-0 right-0 h-16 pointer-events-none bg-gradient-to-b from-light-secondary via-transparent to-transparent dark:from-dark-secondary dark:via-transparent z-10"></div>
+    <div class="absolute bottom-0 left-0 right-0 h-16 pointer-events-none bg-gradient-to-t from-light-secondary via-transparent to-transparent dark:from-dark-secondary dark:via-transparent z-10"></div>
+    <main class="relative max-h-[300px] overflow-y-auto" id="scrollContainer">
+    <div class="manga-list space-y-4 pr-4" id="mangaListContainer" data-id="41"></div>
     </main>
-
+</div>
+    
+    
     <!--Add manga button-->
     <footer class="fixed bottom-0 left-0 w-full z-20 transform transition-all hover:scale-105 mb-4">
         <button id="addButton" data-dialog-target="formContainer"
