@@ -22,9 +22,13 @@
     <div id="alertModal"
         class="fixed inset-0 z-[60] hidden overflow-auto bg-light-primary bg-opacity-50 dark:bg-dark-secondary dark:bg-opacity-50">
         <div
-            class="relative mx-auto my-16 w-full max-w-md rounded-lg bg-light-primary p-6 shadow-lg dark:bg-dark-secondary">
+            class="relative mx-auto my-16 w-full max-w-md rounded-lg hover:text-light-red transition-colors duration-200 bg-light-primary p-6 shadow-lg dark:bg-dark-secondary">
             <button id="closeModal" class="absolute right-2 top-2 text-2xl font-bold text-gray-500 hover:text-gray-700">
-                &times;
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                        d="M10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414L10 8.586z"
+                        clip-rule="evenodd" />
+                </svg>
             </button>
             <p class="modal-body"></p>
         </div>
@@ -74,12 +78,10 @@
                 <button id="deleteSearch"
                     class="absolute bottom-0 right-0 top-0 inline-flex h-10 w-10 items-center justify-center whitespace-nowrap rounded-md text-sm font-medium text-light-primary-text ring-offset-secondary-dates transition-colors hover:bg-primary-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:text-dark-primary-text dark:ring-offset-secondary-dates-dark dark:hover:bg-primary-base-dark"
                     type="button" data-id="36">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                        class="icon icon-tabler icons-tabler-outline icon-tabler-x">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                        <path d="M18 6l-12 12" />
-                        <path d="M6 6l12 12" />
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414L10 8.586z"
+                            clip-rule="evenodd" />
                     </svg>
                     <span class="sr-only" data-id="38">Search</span>
                 </button>
@@ -127,7 +129,7 @@
         class="dialog fixed inset-y-0 right-0 z-50 max-h-full w-3/4 translate-x-full transform gap-4 overflow-y-auto bg-light-primary p-6 shadow-lg transition-transform duration-500 ease-in-out dark:bg-dark-primary"
         tabindex="-1">
         <div class="mb-4 flex flex-col space-y-2">
-            <h2 id="radix-title" class="text-xl font-semibold text-light-primary-text dark:text-dark-primary-text">
+            <h2 id="radix-title" class="text-2xl font-semibold text-light-primary-text dark:text-dark-primary-text">
                 Settings
             </h2>
         </div>
@@ -171,7 +173,7 @@
             <div class="relative mx-auto mb-4 max-w-sm">
                 <label for="darkmode" class="sr-only">Modo de Tema:</label>
                 <select id="darkmode"
-                    class="peer block w-full appearance-none rounded border border-light-border bg-transparent px-0 py-2.5 pl-4 text-sm text-light-primary-text focus:border-light-border focus:outline-none focus:ring-0 dark:border-dark-border dark:text-dark-primary-text">
+                    class="peer block w-full appearance-none rounded border border-light-border bg-transparent py-2.5 pl-4 text-sm text-light-primary-text focus:border-light-border focus:outline-none focus:ring-0 dark:border-dark-border dark:text-dark-primary-text">
                     <option value="light">Claro</option>
                     <option value="dark">Oscuro</option>
                     <option value="system">Sistema</option>
@@ -183,7 +185,7 @@
             </div>
             <!--close-->
             <button id="close-dialog" data-dialog-target="radix-dialog"
-                class="hover:text-bg-primary-base absolute right-4 top-4 bg-light-primary focus:outline-none dark:bg-dark-primary dark:hover:text-primary-base-dark"
+                class="hover:text-light-red transition-colors duration-200 absolute right-5 mt-3 top-4 bg-light-primary focus:outline-none dark:bg-dark-primary dark:hover:text-primary-base-dark"
                 aria-label="Close dialog">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd"
@@ -194,10 +196,10 @@
         </div>
 
         <!--Import/Export-->
-        <div class="bg-card text-card-foreground rounded-lg border border-light-border shadow-sm dark:border-dark-border"
+        <div class="rounded-lg border border-light-border shadow-sm dark:border-dark-border"
             data-id="85">
             <div class="flex flex-col space-y-1.5 p-6">
-                <h3 class="whitespace-nowrap text-2xl font-semibold leading-none tracking-tight text-light-primary-text dark:text-dark-primary-text"
+                <h3 class="whitespace-nowrap text-xl font-semibold leading-none tracking-tight text-light-primary-text dark:text-dark-primary-text"
                     data-translate-key="importExport">
                     Import/Export
                 </h3>
@@ -223,8 +225,6 @@
                             </svg>
                             <span data-translate-key="uploadFile">Upload File</span>
                         </label>
-                        <span class="text-light-secondary-text dark:text-dark-secondary-text text-sm" data-id="96">or
-                            drag and drop</span>
                     </div>
                 </div>
                 <button
@@ -240,7 +240,7 @@
                     <span data-translate-key="exportMangaLibrary">Export Manga Library</span>
                 </button>
                 <div data-orientation="horizontal" role="none"
-                    class="h-[1px] w-full shrink-0 bg-secondary-base dark:bg-secondary-base-dark" data-id="99"></div>
+                    class="h-[1px] w-full shrink-0 bg-light-border dark:bg-dark-border" data-id="99"></div>
 
                 <!--Import from bookmarks.-->
                 <button
@@ -297,13 +297,17 @@
                     <input type="number" id="readChapters" name="readChapters"
                         class="border-light-border dark:border-dark-border placeholder:text-light-secondary-text focus:outline-none focus:outline-light-border dark:focus:outline-dark-border dark:placeholder:text-dark-secondary-text flex h-10 w-full rounded-md border bg-light-primary px-3 py-2 text-sm text-light-primary-text dark:bg-dark-secondary dark:text-dark-primary-text" />
                 </div>
-                <div class="flex items-center space-x-2 mt-4">
-                    <input type="checkbox" id="favorite" name="favorite"
-                        class="border-light-border dark:border-dark-border peer h-4 w-4 shrink-0 rounded-sm border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary-card data-[state=checked]:text-secondary-base" />
-                    <label for="favorite"
-                        class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        data-translate-key="favorite">Favorito</label>
-                </div>
+                <div class="flex items-center space-x-2 mt-4 py-4 pl-1">
+                    <label class="me-5 inline-flex cursor-pointer items-center">
+                        <input type="checkbox" id="favorite" name="favorite" 
+                            class="peer sr-only border-light-border dark:border-dark-border peer-disabled:cursor-not-allowed peer-disabled:opacity-70 h-4 w-4" />
+                        <div
+                            class="peer relative h-6 w-11 rounded-full bg-light-secondary-text after:absolute after:start-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-light-border after:bg-white after:transition-all after:content-[''] peer-checked:bg-secondary-base peer-checked:after:translate-x-full peer-checked:after:border-white dark:bg-dark-secondary-text dark:peer-checked:bg-dark-secondary rtl:peer-checked:after:-translate-x-full">
+                        </div>
+                        <span for="favorite" class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300" 
+                              data-translate-key="favorite">Favorito</span>
+                    </label>
+                </div>                
                 <div class="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
                     <button type="button" id="cancelButton"
                         class="border-input hover:bg-accent hover:text-accent-foreground inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md border bg-light-primary px-4 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:bg-dark-primary"
@@ -320,12 +324,11 @@
             </form>
         </div>
         <button type="button" id="cross-cancel-mangaForm"
-            class="focus:ring-0 absolute right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none disabled:pointer-events-none">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                class="lucide lucide-x h-4 w-4">
-                <path d="M18 6 6 18"></path>
-                <path d="m6 6 12 12"></path>
+            class="focus:ring-0 absolute right-[1.27rem] mt-3 top-4 rounded-sm hover:text-light-red transition-colors duration-200 focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                    d="M10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414L10 8.586z"
+                    clip-rule="evenodd" />
             </svg>
             <span class="sr-only">Close</span>
         </button>
@@ -333,20 +336,22 @@
     <!-- De acá para abajo agregué las data-translate-keys y me anoté lo que hay que añadir.-->
     <!--Filter-->
     <div id="filtersDialog"
-        class="dialog fixed inset-y-0 right-0 max-h-[600px] translate-x-full transform overflow-y-auto bg-light-primary shadow-lg transition-transform duration-300 ease-in-out dark:bg-dark-primary p-5 rounded-lg max-w-[500px] w-full z-[101]">
-        <div class="relative h-full p-6">
-            <h2 id="filtersTitle" class="text-lg font-semibold" data-translate-key="filters">
-                Filters
-            </h2>
+        class="dialog fixed inset-y-0 right-0 max-h-full translate-x-full transform overflow-y-auto bg-light-primary shadow-lg transition-transform duration-300 ease-in-out dark:bg-dark-primary px-5 pb-5 rounded-lg max-w-[500px] w-full z-[101]">
+        <div class="relative h-full mb-8 p-6">
+            <div class="mb-4 flex flex-col space-y-2">
+                <h2 id="radix-title" class="text-2xl font-semibold text-light-primary-text dark:text-dark-primary-text">
+                    Filters
+                </h2>
+            </div>
             <div class="rounded-lg border border-light-border shadow-sm dark:border-dark-border" data-id="85">
-                <div class="flex flex-col space-y-1.5 p-4" data-id="86">
+                <div class="flex flex-col space-y-1.5 p-6" data-id="86">
                     <h3 data-translate-key="filterMethod"
                         class="whitespace-nowrap text-xl font-semibold leading-none tracking-tight text-light-primary-text dark:text-dark-primary-text"
                         data-id="87">
                         Filter method:
                     </h3>
                 </div>
-                <div class="relative mx-auto bg-light-primary mb-4 mt-4 max-w-sm">
+                <div class="relative mx-auto bg-light-primary dark:bg-dark-primary mb-4 mt-4 max-w-sm">
                     <select id="sortOption"
                         class="peer block w-full appearance-none rounded border border-light-border bg-transparent px-0 py-2.5 pl-4 text-sm text-light-primary-text focus:outline-none focus:ring-0 dark:border-dark-border dark:text-dark-primary-text">
                         <option value="favoritos" data-translate-key="favFirst">
@@ -392,7 +397,7 @@
                 </div>
             </div>
             <!-- Chapter Range -->
-            <div class="mt-4 rounded-lg border border-secondary-base shadow-sm dark:border-secondary-base-dark"
+            <div class="mt-4 rounded-lg border border-light-border dark:border-dark-border"
                 data-id="85">
                 <div class="flex flex-col space-y-1.5 p-6" data-id="86">
                     <h3 class="whitespace-nowrap text-xl font-semibold leading-none tracking-tight text-secondary-base dark:text-secondary-base-dark"
@@ -444,14 +449,12 @@
                     </button>
                 </div>
             </div>
-
             <button type="button" id="closeFiltersDialog" data-dialog-target="filtersDialog"
-                class="absolute right-4 top-4 text-light-primary-text hover:text-secondary-base/80 dark:text-dark-primary-text dark:hover:text-dark-primary-text/80">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="lucide lucide-x h-4 w-4">
-                    <path d="M18 6 6 18"></path>
-                    <path d="m6 6 12 12"></path>
+                class="absolute right-5 mt-3 top-4 text-light-primary-text dark:text-dark-primary-text hover:text-light-red transition-colors dark:hover:text-light-red duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                        d="M10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414L10 8.586z"
+                        clip-rule="evenodd" />
                 </svg>
                 <span class="sr-only">Close</span>
             </button>
@@ -478,11 +481,10 @@
         </button>
         <button id="import-cancel-button"
             class="absolute right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                class="lucide lucide-x h-4 w-4">
-                <path d="M18 6 6 18"></path>
-                <path d="m6 6 12 12"></path>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                <path fill-rule="evenodd"
+                    d="M10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414L10 8.586z"
+                    clip-rule="evenodd" />
             </svg>
             <span class="sr-only" data-translate-key="cancel">Close</span>
         </button>
@@ -496,10 +498,10 @@
                 <button type="button" id="cancelConfirm"
                     class="absolute end-2.5 top-3 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg text-sm"
                     data-modal-hide="confirmationDialog">
-                    <svg class="h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 14 14">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414L10 8.586z"
+                            clip-rule="evenodd" />
                     </svg>
                     <span class="sr-only">Close modal</span>
                 </button>
