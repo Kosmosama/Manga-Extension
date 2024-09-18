@@ -10,8 +10,8 @@ document.getElementById('searchBar').addEventListener('input', loadFilteredManga
 // Attach event listener for the delete search button to clear the search bar
 document.getElementById('deleteSearch').addEventListener('click', handleDeleteSearch);
 
-// Attach event listener for the favourites-only checkbox in the filter dialog
-document.getElementById('favourites-only-checkbox').addEventListener('change', handleLoadAndSave);
+// Attach event listener for the favorites-only checkbox in the filter dialog
+document.getElementById('favorites-only-checkbox').addEventListener('change', handleLoadAndSave);
 
 // Attach event listener for the current-page-only checkbox in the filter dialog
 document.getElementById('currentPage-only-checkbox').addEventListener('change',handleLoadAndSave);
@@ -53,7 +53,7 @@ function loadFilterOptions() {
         const filterOptions = result.filterOptions;
 
         // Set the checkbox state, default to unchecked if not set
-        document.getElementById('favourites-only-checkbox').checked = !!filterOptions.favOnly;
+        document.getElementById('favorites-only-checkbox').checked = !!filterOptions.favOnly;
 
         // Set the currentPage only checkbox state, default to unchecked if not set
         document.getElementById('currentPage-only-checkbox').checked =!!filterOptions.currentPage;
@@ -61,8 +61,8 @@ function loadFilterOptions() {
         // Set the sortOption dropdown value, default to a sensible fallback if not set
         document.getElementById('sortOption').value = filterOptions.sortOption || 'favFirst';
     
-        // Set the sortOrder, default to 'ascendente' if not set
-        const sortOrder = filterOptions.sortOrder || 'ascendente';
+        // Set the sortOrder, default to 'ascending' if not set
+        const sortOrder = filterOptions.sortOrder || 'ascending';
         document.getElementById('toggleSortOrder').dataset.order = sortOrder;
         updateSortOrderDisplay(sortOrder);
     });
@@ -74,10 +74,10 @@ function loadFilterOptions() {
  */
 function saveFilterOptions() {
     const filterOptions = {
-        favOnly: document.getElementById('favourites-only-checkbox').checked,
+        favOnly: document.getElementById('favorites-only-checkbox').checked,
         currentPage: document.getElementById('currentPage-only-checkbox').checked,
         sortOption: document.getElementById('sortOption').value,
-        sortOrder: document.getElementById('toggleSortOrder').dataset.order || 'ascendente'
+        sortOrder: document.getElementById('toggleSortOrder').dataset.order || 'ascending'
     };
 
     chrome.storage.local.set({ filterOptions: filterOptions }, function() {
@@ -88,12 +88,12 @@ function saveFilterOptions() {
 }
 
 /**
- * Handles toggling of the sort order between 'ascendente' and 'descendente'.
+ * Handles toggling of the sort order between 'ascending' and 'descending'.
  * Updates the UI and saves the new sort order to storage.
  */
 function handleToggleSortOrder() {
-    const currentOrder = document.getElementById('toggleSortOrder').dataset.order || 'ascendente';
-    const newOrder = currentOrder === 'ascendente' ? 'descendente' : 'ascendente';
+    const currentOrder = document.getElementById('toggleSortOrder').dataset.order || 'ascending';
+    const newOrder = currentOrder === 'ascending' ? 'descending' : 'ascending';
     document.getElementById('toggleSortOrder').dataset.order = newOrder;
 
     // Update the button's display to reflect the new order
@@ -117,11 +117,11 @@ function getRandomManga() {
 /**
  * Updates the display of the sort order button and icon based on the given order.
  *
- * @param {string} order - The sort order. It can be either 'ascendente' or 'descendente'.
+ * @param {string} order - The sort order. It can be either 'ascending' or 'descending'.
  */
 function updateSortOrderDisplay(order) {
     const sortIcon = document.getElementById('sortIcon');
-    if (order === 'ascendente') {
+    if (order === 'ascending') {
         sortIcon.classList.remove('scale-y-[-1]');
         sortIcon.classList.add('scale-y-1');
     } else {
@@ -170,9 +170,9 @@ async function loadFilteredMangas() {
     }
 
     const currentPageOnly = document.getElementById('currentPage-only-checkbox').checked;
-    const favOnly = document.getElementById('favourites-only-checkbox').checked;
+    const favOnly = document.getElementById('favorites-only-checkbox').checked;
     const sortOption = document.getElementById('sortOption').value;
-    const sortOrder = document.getElementById('toggleSortOrder').dataset.order || 'ascendente';
+    const sortOrder = document.getElementById('toggleSortOrder').dataset.order || 'ascending';
     const minChapters = +document.getElementById('minChapters').value;
     const maxChapters = +document.getElementById('maxChapters').value;
 
@@ -189,7 +189,7 @@ async function loadFilteredMangas() {
  * 
  * @param {Array} array - The array of mangas to sort.
  * @param {string} filterMethod - The filter method ('favFirst','alphabetically' , 'chaptersRead', 'addDate', 'lastRead').
- * @param {string} order - The sort order ('ascendente' or 'descendente').
+ * @param {string} order - The sort order ('ascending' or 'descending').
  * @param {boolean} favOnly - Whether to only show favorite mangas.
  * @param {boolean} currentPageOnly - Whether to only show mangas on the current page.
  * @param {number} minChapters - The minimum number of chapters a manga should have to be included.
@@ -208,7 +208,7 @@ async function sortMangas(array, filterMethod, order, favOnly, currentPageOnly, 
         }
     }
 
-    // Only show favorites if favourites-only-checkbox is checked
+    // Only show favorites if favorites-only-checkbox is checked
     if (favOnly) {
         array = array.filter(manga => manga.favorite);
     }
@@ -248,6 +248,6 @@ async function sortMangas(array, filterMethod, order, favOnly, currentPageOnly, 
         }
 
         // Return sorted result based on ascending/descending order
-        return order === 'ascendente' ? comparison : -comparison;
+        return order === 'ascending' ? comparison : -comparison;
     });
 }

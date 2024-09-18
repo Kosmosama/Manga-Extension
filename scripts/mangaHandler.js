@@ -146,10 +146,10 @@ async function getMangaFormData() {
  */
 function validateMangaData(mangaData, originalTitle = '') {
     if (!mangaData.title) {
-        return translate('requiredTitle');
+        return 'modal-title-required';
     }
     if (mangaData.title !== originalTitle && isNameUsed(mangaData.title)) {
-        return translate('uniqueTitlesWarning');
+        return 'modal-unique-title-required';
     }
     return null;
 }
@@ -198,11 +198,11 @@ function isNameUsed(title) {
 /**
  * Displays a modal with a given message.
  * 
- * @param {string} message - The message to display in the modal.
+ * @param {string} messageKey - The message key to translate and display in the modal.
  */
-function showModal(message) {
+function showModal(messageKey) {
     const modal = document.getElementById('alertModal');
-    modal.querySelector('.modal-body').textContent = message;
+    modal.querySelector('.modal-body').textContent = translate(messageKey);
     modal.style.display = 'block';
 
     document.getElementById('closeModal').addEventListener('click', function () {

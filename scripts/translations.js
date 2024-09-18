@@ -1,6 +1,52 @@
 // Default translations object to use in case of a loading error
 const defaultTranslations = {
-    en: {} //#TODO Default key-value pairs can be defined here
+    "en": {
+        "extension-title": "Manga Library",
+        "filters-title": "Filters",
+        "add-manga-button": "Add Manga",
+        "settings-title": "Settings",
+        "language-select-box-title": "Language Select",
+        "theme-select-box-title": "Theme",
+        "theme-select-option-light": "Light",
+        "theme-select-option-dark": "Dark",
+        "theme-select-option-system": "System",
+        "import-export-box-title": "Import/Export",
+        "upload-file-option": "Upload File",
+        "export-library-option": "Export Manga Library",
+        "import-bookmarks-option": "Import from bookmarks",
+        "load-manga-title": "Load Manga",
+        "image-field-label": "Image link (optional)",
+        "title-field-label": "Title",
+        "link-field-label": "Link",
+        "read-chapters-field-label": "Chapters read",
+        "favorite-checkbox-label": "Mark as favorite",
+        "cancel-button": "Cancel",
+        "save-button": "Save",
+        "delete-button": "Delete",
+        "import-selected-button": "Import Selected",
+        "filter-method-box-title": "Filter method",
+        "favorites-first-option": "Favorites first",
+        "alphabetically-option": "Alphabetically",
+        "read-chapters-option": "Number of chapters read",
+        "addition-date-option": "Addition date",
+        "last-read-option": "Last read",
+        "favorites-only-checkbox": "Show only favorites",
+        "current-page-only-checkbox": "Show only current page mangas",
+        "chapter-range-box-title": "Chapter Range",
+        "minimum-chapters-range": "Minimum chapters",
+        "maximum-chapters-range": "Maximum chapters",
+        "other-options-box-title": "Other options",
+        "random-manga-option": "Get Random Manga",
+        "import-bookmarks-title": "Import bookmarks",
+        "confirm-delete-warning": "Are you sure you want to delete it?",
+        "modal-no-bookmarks-found": "No bookmarks found in chrome bookmark tree.",
+        "modal-no-selected-bookmarks": "No bookmarks selected.",
+        "modal-title-required": "The title field is required.",
+        "modal-unique-title-required": "All titles must be unique.",
+        "modal-invalid-file-type": "Invalid file type. Please upload a valid json file.",
+        "modal-invalid-file": "Invalid file. Please upload a valid file.",
+        "modal-parsing-error": "An error occurred while parsing the file. Please check the file and try again."
+    }
 };
 
 // Fetch translations from a JSON file and initialize the translation system
@@ -86,25 +132,20 @@ function translatePage() {
  */
 function initializeTranslations(translations) {
     loadPreferredLanguage(translations).then((language) => {
-        // Store the language in a global variable for use in other functions
         window.language = language;
         window.translations = translations;
 
-        // Translate the page content based on the selected language
         translatePage();
 
-        // Set up the language selector dropdown
-        //#INFO Might want this in the settings script
         document.getElementById('languageSelect').value = language;
         document.getElementById('languageSelect').addEventListener('change', function () {
             const selectedLanguage = this.value;
             savePreferredLanguage(selectedLanguage);
-            window.language = selectedLanguage; // Update the global variable
+            window.language = selectedLanguage;
             translatePage();
-            loadFilteredMangas(); // Reload the translated manga cards
+            loadFilteredMangas();
         });
 
-        // Load the translated manga cards
-        loadFilteredMangas(); // Assumes `mangaList` is already available
+        loadFilteredMangas();
     });
 }

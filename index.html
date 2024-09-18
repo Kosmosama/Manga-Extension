@@ -12,11 +12,11 @@
 <body
     class="container mx-auto bg-light-secondary p-4 text-light-primary-text dark:bg-dark-secondary dark:text-dark-primary-text"
     data-id="1">
+
     <!-- Overlay -->
     <div id="overlay"
         class="fixed inset-0 z-20 hidden bg-light-primary opacity-0 transition-opacity duration-500 dark:bg-dark-secondary">
     </div>
-    <!--If you want to make the fade in faster, change duration here to 200, or 500-->
 
     <!-- Modal -->
     <div id="alertModal"
@@ -36,7 +36,7 @@
 
     <!--Header-->
     <div class="mb-6 transform rounded-lg bg-light-primary p-4 transition-all hover:scale-105 dark:bg-dark-primary"
-    data-id="2">
+        data-id="2">
         <header class="relative mb-4 flex items-center" data-id="3">
 
             <!-- Open settings button -->
@@ -49,12 +49,11 @@
                         fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                         stroke-width="32" />
                 </svg>
-                <span class="sr-only">Open settings</span>
             </button>
 
             <!-- Title -->
             <div class="flex-grow flex justify-center">
-                <h1 class="text-2xl -ml-8 font-bold text-light-primary-text dark:text-dark-primary-text" data-id="17">
+                <h1 class="text-2xl -ml-8 font-bold text-light-primary-text dark:text-dark-primary-text" data-id="17" data-translate-key="extension-title">
                     Manga Library
                 </h1>
             </div>
@@ -63,7 +62,8 @@
             <button id="menuBtn"
                 class="inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md border border-light-border bg-light-primary px-4 py-2 text-sm font-medium ring-offset-gray-100 transition-colors hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:border-dark-border dark:bg-dark-primary dark:ring-offset-gray-800 dark:hover:bg-gray-700"
                 data-id="22" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-:r3:"
-                data-state="closed">
+                data-state="closed"
+                data-translate-key="filters-title">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                     class="lucide lucide-filter mr-2 h-4 w-4" data-id="23">
@@ -87,7 +87,6 @@
                             d="M10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414L10 8.586z"
                             clip-rule="evenodd" />
                     </svg>
-                    <span class="sr-only" data-id="38">Search</span>
                 </button>
             </form>
 
@@ -103,20 +102,23 @@
                         <path d="M21 9l-4 -4l-4 4m4 -4v14" />
                     </svg>
                 </div>
-                <span class="sr-only">Toggle sort order</span>
             </button>
         </div>
     </div>
 
     <!--Mangas-->
     <div class="relative">
-        <div id="topBlur" class="absolute transition-opacity opacity-0 duration-500 top-0 left-0 right-0 h-16 pointer-events-none bg-gradient-to-b from-light-secondary via-transparent to-transparent dark:from-dark-secondary dark:via-transparent z-10"></div>
-            <div id="bottomBlur" class="absolute transition-opacity opacity-0 duration-500 bottom-0 left-0 right-0 h-16 pointer-events-none bg-gradient-to-t from-light-secondary via-transparent to-transparent dark:from-dark-secondary dark:via-transparent z-10"></div>
-            <main class="relative max-h-[300px] overflow-y-auto" id="scrollContainer">
+        <div id="topBlur"
+            class="absolute transition-opacity opacity-0 duration-500 top-0 left-0 right-0 h-16 pointer-events-none bg-gradient-to-b from-light-secondary via-transparent to-transparent dark:from-dark-secondary dark:via-transparent z-10">
+        </div>
+        <div id="bottomBlur"
+            class="absolute transition-opacity opacity-0 duration-500 bottom-0 left-0 right-0 h-16 pointer-events-none bg-gradient-to-t from-light-secondary via-transparent to-transparent dark:from-dark-secondary dark:via-transparent z-10">
+        </div>
+        <main class="relative max-h-[300px] overflow-y-auto" id="scrollContainer">
             <div class="manga-list space-y-4 pr-4" id="mangaListContainer" data-id="41"></div>
         </main>
     </div>
-    
+
     <!--Add manga button-->
     <footer class="fixed bottom-0 left-0 w-full z-20 transform transition-all hover:scale-105 mb-4">
         <button id="addButton" data-dialog-target="formContainer"
@@ -127,7 +129,7 @@
                 <path d="M12 5l0 14" />
                 <path d="M5 12l14 0" />
             </svg>
-            Add Manga
+            <span data-translate-key="add-manga-button">Add Manga</span>
         </button>
     </footer>
 
@@ -137,7 +139,7 @@
         class="dialog fixed inset-y-0 right-0 z-50 max-h-full w-3/4 translate-x-full border-l border-light-border dark:border-dark-border transform gap-4 overflow-y-auto bg-light-primary p-6 shadow-lg transition-transform duration-500 ease-in-out dark:bg-dark-primary space-y-8"
         tabindex="-1">
         <div class="mb-4 flex flex-col space-y-2">
-            <h2 id="radix-title" class="text-2xl font-semibold text-light-primary-text dark:text-dark-primary-text">
+            <h2 id="radix-title" class="text-2xl font-semibold text-light-primary-text dark:text-dark-primary-text" data-translate-key="settings-title">
                 Settings
             </h2>
         </div>
@@ -146,7 +148,7 @@
         <div class="rounded-lg border border-light-border shadow-sm dark:border-dark-border" data-id="85">
             <div class="flex flex-col space-y-1.5 p-6" data-id="86">
                 <h3 class="whitespace-nowrap text-xl font-semibold leading-none tracking-tight text-light-primary-text dark:text-dark-primary-text"
-                    data-id="87">
+                    data-id="87" data-translate-key="language-select-box-title">
                     Language select
                 </h3>
             </div>
@@ -157,9 +159,9 @@
                     <option value="en">English</option>
                     <option value="de">Deutsch</option>
                     <option value="fr">Français</option>
-                    <option value="zh">Chinese</option>
-                    <option value="ja">Japanese</option>
-                    <option value="ru">Russian</option>
+                    <option value="zh">中文</option>
+                    <option value="ja">日本語</option>
+                    <option value="ru">Русский</option>
                     <option value="pt">Português</option>
                 </select>
                 <svg id="arrow_down" class="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 transform"
@@ -173,24 +175,25 @@
         <div class="rounded-lg border border-light-border shadow-sm dark:border-dark-border">
             <div class="flex flex-col space-y-1.5 p-6" data-id="86">
                 <h3 class="whitespace-nowrap text-xl font-semibold leading-none tracking-tight text-light-primary-text dark:text-dark-primary-text"
-                    data-id="87">
+                    data-id="87" data-translate-key="theme-select-box-title">
                     Theme
                 </h3>
             </div>
+
             <!--Dark mode-->
             <div class="relative mx-auto mb-4 max-w-sm">
-                <label for="darkmode" class="sr-only">Modo de Tema:</label>
                 <select id="darkmode"
                     class="peer block w-full appearance-none rounded border border-light-border bg-transparent py-2.5 pl-4 text-sm text-light-primary-text focus:border-light-border focus:outline-none focus:ring-0 dark:border-dark-border dark:text-dark-primary-text">
-                    <option value="light">Light</option>
-                    <option value="dark">Dark</option>
-                    <option value="system">System</option>
+                    <option value="light" data-translate-key="theme-select-option-light">Light</option>
+                    <option value="dark" data-translate-key="theme-select-option-dark">Dark</option>
+                    <option value="system" data-translate-key="theme-select-option-system">System</option>
                 </select>
                 <svg id="arrow_down" class="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 transform"
                     width="12" height="12" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M5.25 7.5L10 12.25 14.75 7.5H5.25z" />
                 </svg>
             </div>
+
             <!--close-->
             <button id="close-dialog" data-dialog-target="radix-dialog"
                 class="hover:text-light-red transition-colors duration-200 absolute right-5 mt-3 top-4 bg-light-primary focus:outline-none dark:bg-dark-primary dark:hover:text-primary-base-dark"
@@ -204,11 +207,10 @@
         </div>
 
         <!--Import/Export-->
-        <div class="rounded-lg border border-light-border shadow-sm dark:border-dark-border"
-            data-id="85">
+        <div class="rounded-lg border border-light-border shadow-sm dark:border-dark-border" data-id="85">
             <div class="flex flex-col space-y-1.5 p-6">
                 <h3 class="whitespace-nowrap text-xl font-semibold leading-none tracking-tight text-light-primary-text dark:text-dark-primary-text"
-                    data-translate-key="importExport">
+                    data-translate-key="import-export-box-title">
                     Import/Export
                 </h3>
             </div>
@@ -231,10 +233,12 @@
                                 <polyline points="7 10 12 15 17 10"></polyline>
                                 <line x1="12" x2="12" y1="15" y2="3"></line>
                             </svg>
-                            <span data-translate-key="uploadFile">Upload File</span>
+                            <span data-translate-key="upload-file-option">Upload File</span>
                         </label>
                     </div>
                 </div>
+
+                <!-- Export manga library -->
                 <button
                     class="inline-flex h-10 w-full items-center justify-center whitespace-nowrap rounded-md border border-light-border bg-light-primary px-4 py-2 text-sm font-medium ring-offset-primary-base transition-colors hover:bg-primary-base hover:text-secondary-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-base focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:border-dark-border dark:bg-dark-primary dark:ring-offset-primary-base-dark dark:hover:bg-primary-base-dark dark:hover:text-dark-primary-text dark:focus-visible:ring-secondary-base-dark"
                     id="export" data-id="97">
@@ -245,12 +249,12 @@
                         <polyline points="17 8 12 3 7 8"></polyline>
                         <line x1="12" x2="12" y1="3" y2="15"></line>
                     </svg>
-                    <span data-translate-key="exportMangaLibrary">Export Manga Library</span>
+                    <span data-translate-key="export-library-option">Export Manga Library</span>
                 </button>
-                <div data-orientation="horizontal" role="none"
-                    class="h-[1px] w-full shrink-0 bg-light-border dark:bg-dark-border" data-id="99"></div>
 
-                <!--Import from bookmarks.-->
+                <div data-orientation="horizontal" role="none" class="h-[1px] w-full shrink-0 bg-light-border dark:bg-dark-border" data-id="99"></div>
+
+                <!-- Import from bookmarks -->
                 <button
                     class="inline-flex h-10 w-full items-center justify-center whitespace-nowrap rounded-md border border-light-border bg-light-primary px-4 py-2 text-sm font-medium ring-offset-primary-base transition-colors hover:bg-primary-base hover:text-secondary-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-secondary-base focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:border-dark-border dark:bg-dark-primary dark:ring-offset-primary-base-dark dark:hover:bg-primary-base-dark dark:hover:text-dark-primary-text dark:focus-visible:ring-secondary-base-dark"
                     id="import-bookmarks">
@@ -261,7 +265,7 @@
                         <path d="M15 10v11l-5 -3l-5 3v-11a3 3 0 0 1 3 -3h4a3 3 0 0 1 3 3z" />
                         <path d="M11 3h5a3 3 0 0 1 3 3v11" />
                     </svg>
-                    <span data-translate-key="importBookmarks">Import from bookmarks</span>
+                    <span data-translate-key="import-bookmarks-option">Import from bookmarks</span>
                 </button>
             </div>
         </div>
@@ -271,60 +275,60 @@
     <div role="dialog" id="formContainer"
         class="dialog fixed inset-y-0 right-0 z-[57] w-3/4 translate-x-full transform gap-4 border-l border-light-border dark:border-dark-border bg-light-primary p-6 shadow-lg transition-transform duration-500 ease-in-out dark:bg-dark-primary">
         <div class="flex flex-col space-y-2 text-center sm:text-left">
-            <h2 class="text-foreground text-lg font-semibold" data-translate-key="loadManga">
+            <h2 class="text-foreground text-lg font-semibold" data-translate-key="load-manga-title">
                 Load Manga
             </h2>
         </div>
         <div class="space-y-4 py-4">
-            <form id="chapterForm" class="space-y-3">
+            <form id="chapterForm" class="space-y-3"> <!--#TODO How do we translate placeholders-->
                 <div class="space-y-1">
                     <label for="image"
                         class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        data-translate-key="imageLabel">Imagen (opcional)</label>
+                        data-translate-key="image-field-label">Image link (optional)</label>
                     <input type="text" id="image" name="image" placeholder="Ingrese la URL de la imagen"
                         class="border-light-border dark:border-dark-border placeholder:text-light-secondary-text focus:outline-none focus:outline-light-border dark:focus:outline-dark-border dark:placeholder:text-dark-secondary-text flex h-10 w-full rounded-md border bg-light-primary px-3 py-2 text-sm text-light-primary-text dark:bg-dark-secondary dark:text-dark-primary-text" />
                 </div>
                 <div>
                     <label for="title"
                         class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        data-translate-key="titleLabel">Título</label>
+                        data-translate-key="title-field-label">Title</label>
                     <input type="text" id="title" name="title" required placeholder="Must be unique"
                         class="border-light-border dark:border-dark-border placeholder:text-light-secondary-text focus:outline-none focus:outline-light-border dark:focus:outline-dark-border dark:placeholder:text-dark-secondary-text flex h-10 w-full rounded-md border bg-light-primary px-3 py-2 text-sm text-light-primary-text dark:bg-dark-secondary dark:text-dark-primary-text" />
                 </div>
                 <div>
                     <label for="link"
                         class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        data-translate-key="formLinkLabel">URL del manga</label>
+                        data-translate-key="link-field-label">Link</label>
                     <input type="text" id="link" name="link" placeholder="Leave in blank to use the current page URL"
                         class="border-light-border dark:border-dark-border focus:outline-none focus:outline-light-border dark:focus:outline-dark-border placeholder:text-light-secondary-text dark:placeholder:text-dark-secondary-text flex h-10 w-full rounded-md border bg-light-primary px-3 py-2 text-sm text-light-primary-text dark:bg-dark-secondary dark:text-dark-primary-text" />
                 </div>
                 <div>
                     <label for="readChapters"
                         class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                        data-translate-key="readChaptersLabel">Capítulos leídos</label>
+                        data-translate-key="read-chapters-field-label">Chapters read</label>
                     <input type="number" id="readChapters" name="readChapters"
                         class="border-light-border dark:border-dark-border placeholder:text-light-secondary-text focus:outline-none focus:outline-light-border dark:focus:outline-dark-border dark:placeholder:text-dark-secondary-text flex h-10 w-full rounded-md border bg-light-primary px-3 py-2 text-sm text-light-primary-text dark:bg-dark-secondary dark:text-dark-primary-text" />
                 </div>
                 <div class="flex items-center space-x-2 mt-4 py-4 pl-1">
                     <label class="me-5 inline-flex cursor-pointer items-center">
-                        <input type="checkbox" id="favorite" name="favorite" 
+                        <input type="checkbox" id="favorite" name="favorite"
                             class="peer sr-only border-light-border dark:border-dark-border peer-disabled:cursor-not-allowed peer-disabled:opacity-70 h-4 w-4" />
                         <div
                             class="peer relative h-6 w-11 rounded-full bg-light-secondary-text after:absolute after:start-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-light-border after:bg-white after:transition-all after:content-[''] peer-checked:bg-secondary-base peer-checked:after:translate-x-full peer-checked:after:border-white dark:bg-dark-secondary-text dark:peer-checked:bg-dark-secondary rtl:peer-checked:after:-translate-x-full">
                         </div>
-                        <span for="favorite" class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300" 
-                              data-translate-key="favorite">Favorito</span>
+                        <span for="favorite" class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"
+                            data-translate-key="favorite-checkbox-label">Mark as favorite</span>
                     </label>
-                </div>                
+                </div>
                 <div class="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
                     <button type="button" id="cancelButton"
                         class="border-input hover:bg-accent hover:text-accent-foreground inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md border bg-light-secondary-text/10 px-4 text-sm font-medium transition-colors hover:bg-light-secondary-text/80 dark:hover:bg-dark-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 dark:bg-dark-secondary"
-                        data-translate-key="cancel">
+                        data-translate-key="cancel-button">
                         Cancel
                     </button>
                     <button type="submit" id="saveBtn"
                         class="inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md bg-light-highlight-primary hover:bg-light-highlight-primary/80 dark:hover:bg-dark-highlight-primary/80  dark:bg-dark-highlight-primary px-4 text-sm font-medium text-light-highlight-text dark:text-dark-highlight-text transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-                        data-translate-key="save">
+                        data-translate-key="save-button">
                         Save
                     </button>
                 </div>
@@ -337,7 +341,6 @@
                     d="M10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414L10 8.586z"
                     clip-rule="evenodd" />
             </svg>
-            <span class="sr-only">Close</span>
         </button>
     </div>
 
@@ -347,7 +350,7 @@
         <div class="relative h-full space-y-8 mb-8 p-6">
 
             <div class="mb-4 flex flex-col">
-                <h2 id="radix-title" class="text-2xl font-semibold text-light-primary-text dark:text-dark-primary-text">
+                <h2 id="radix-title" class="text-2xl font-semibold text-light-primary-text dark:text-dark-primary-text" data-translate-key="filters-title">
                     Filters
                 </h2>
             </div>
@@ -355,7 +358,7 @@
             <!-- Filter methods -->
             <div class="rounded-lg border border-light-border shadow-sm dark:border-dark-border" data-id="85">
                 <div class="flex flex-col space-y-1.5 p-6" data-id="86">
-                    <h3 data-translate-key="filterMethod"
+                    <h3 data-translate-key="filter-method-box-title"
                         class="whitespace-nowrap text-xl font-semibold leading-none tracking-tight text-light-primary-text dark:text-dark-primary-text"
                         data-id="87">
                         Filter method
@@ -366,19 +369,19 @@
                 <div class="relative mx-auto bg-light-primary dark:bg-dark-primary mb-4 mt-4 max-w-sm">
                     <select id="sortOption"
                         class="peer block w-full appearance-none rounded border border-light-border bg-transparent px-0 py-2.5 pl-4 text-sm text-light-primary-text focus:outline-none focus:ring-0 dark:border-dark-border dark:text-dark-primary-text">
-                        <option value="favFirst" data-translate-key="favFirst">
+                        <option value="favFirst" data-translate-key="favorites-first-option">
                             Favorites first
                         </option>
-                        <option value="alphabetically" data-translate-key="alphabetically">
+                        <option value="alphabetically" data-translate-key="alphabetically-option">
                             Alphabetically
                         </option>
-                        <option value="chaptersRead" data-translate-key="chaptersRead">
-                            Number of read chapters
+                        <option value="chaptersRead" data-translate-key="read-chapters-option">
+                            Number of chapters read
                         </option>
-                        <option value="addDate" data-translate-key="addDate">
+                        <option value="addDate" data-translate-key="addition-date-option">
                             Addition date
                         </option>
-                        <option value="lastRead" data-translate-key="lastRead">
+                        <option value="lastRead" data-translate-key="last-read-option">
                             Last read
                         </option>
                     </select>
@@ -389,11 +392,11 @@
                 </div>
                 <div class="py-4 pl-4">
                     <label class="me-5 inline-flex cursor-pointer items-center">
-                        <input type="checkbox" id="favourites-only-checkbox" class="peer sr-only" />
+                        <input type="checkbox" id="favorites-only-checkbox" class="peer sr-only" />
                         <div
                             class="peer relative h-6 w-11 rounded-full bg-light-secondary-text after:absolute after:start-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-light-border after:bg-white after:transition-all after:content-[''] peer-checked:bg-secondary-base peer-checked:after:translate-x-full peer-checked:after:border-white dark:bg-dark-secondary-text dark:peer-checked:bg-dark-secondary rtl:peer-checked:after:-translate-x-full">
                         </div>
-                        <span data-translate-key="onlyFavs"
+                        <span data-translate-key="favorites-only-checkbox"
                             class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Show only favorites</span>
                     </label>
                 </div>
@@ -404,32 +407,33 @@
                             class="peer relative h-6 w-11 rounded-full bg-light-secondary-text after:absolute after:start-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-light-border after:bg-white after:transition-all after:content-[''] peer-checked:bg-secondary-base peer-checked:after:translate-x-full peer-checked:after:border-white dark:bg-dark-secondary-text dark:peer-checked:bg-dark-secondary rtl:peer-checked:after:-translate-x-full">
                         </div>
                         <span class="ms-3 text-sm font-medium text-light-primary-text dark:text-dark-primary-text"
-                            data-translate-key="onlyCurrentPage">Show only current page mangas</span>
+                            data-translate-key="current-page-only-checkbox">Show only current page mangas</span>
                     </label>
                 </div>
             </div>
 
             <!-- Chapter Range -->
-            <div class="rounded-lg border border-light-border dark:border-dark-border"
-                data-id="85">
+            <div class="rounded-lg border border-light-border dark:border-dark-border" data-id="85">
                 <div class="flex flex-col space-y-1.5 p-6" data-id="86">
                     <h3 class="whitespace-nowrap text-xl font-semibold leading-none tracking-tight text-secondary-base dark:text-secondary-base-dark"
-                        data-id="87">
+                        data-id="87" data-translate-key="chapter-range-box-title">
                         Chapter Range
                     </h3>
                 </div>
                 <div class="flex flex-col space-y-4 py-4 px-6">
-                    <label for="minChapters"
-                        class="text-sm font-medium text-secondary-base dark:text-secondary-base-dark">Minimum
-                        Chapters</label>
+                    <label for="minChapters" data-translate-key="minimum-chapters-range"
+                        class="text-sm font-medium text-secondary-base dark:text-secondary-base-dark">
+                        Minimum Chapters
+                    </label>
                     <input type="range" id="minChapters"
                         class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
                         min="0" max="1000" value="0" />
                     <span id="minChapterValue">0</span>
 
-                    <label for="maxChapters"
-                        class="text-sm font-medium text-secondary-base dark:text-secondary-base-dark">Maximum
-                        Chapters</label>
+                    <label for="maxChapters" data-translate-key="maximum-chapters-range"
+                        class="text-sm font-medium text-secondary-base dark:text-secondary-base-dark">
+                        Maximum Chapters
+                    </label>
                     <input type="range" id="maxChapters"
                         class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
                         min="0" max="1000" value="1000" />
@@ -440,15 +444,14 @@
             <!-- Other options -->
             <div class="rounded-lg border border-light-border shadow-sm dark:border-dark-border" data-id="85">
                 <div class="flex flex-col space-y-1.5 p-6" data-id="86">
-                    <h3 data-translate-key="otherOptions"
+                    <h3 data-translate-key="other-options-box-title"
                         class="whitespace-nowrap text-xl font-semibold leading-none tracking-tight text-light-primary-text dark:text-dark-primary-text"
                         data-id="87">
-                        Other options:
+                        Other options
                     </h3>
                 </div>
                 <div class="flex flex-col space-y-4 py-4">
-                    <button data-translate-key="getRandomManga"
-                        class="ml-4 inline-flex h-10 w-44 items-center justify-center whitespace-nowrap rounded-md border border-light-border bg-light-primary py-2 text-sm font-medium transition-all hover:scale-110 focus-visible:outline-none dark:border-dark-border dark:bg-dark-primary dark:hover:text-dark-primary-text"
+                    <button class="ml-4 inline-flex h-10 w-44 items-center justify-center whitespace-nowrap rounded-md border border-light-border bg-light-primary py-2 text-sm font-medium transition-all hover:scale-110 focus-visible:outline-none dark:border-dark-border dark:bg-dark-primary dark:hover:text-dark-primary-text"
                         id="getRandomManga">
                         <svg xmlns="http://www.w3.org/2000/svg" class="ionicon mr-2 h-5 w-5" viewBox="0 0 512 512">
                             <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -459,11 +462,13 @@
                                 fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                 stroke-width="32" />
                         </svg>
-                        Get Random Manga
+                        <span data-translate-key="random-manga-option">
+                            Get Random Manga
+                        </span>
                     </button>
                 </div>
             </div>
-            
+
             <button type="button" id="closeFiltersDialog" data-dialog-target="filtersDialog"
                 class="absolute right-5 mt-3 top-4 text-light-primary-text dark:text-dark-primary-text hover:text-light-red transition-colors dark:hover:text-light-red duration-200">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
@@ -471,48 +476,44 @@
                         d="M10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414L10 8.586z"
                         clip-rule="evenodd" />
                 </svg>
-                <span class="sr-only">Close</span>
             </button>
         </div>
     </div>
 
     <!-- Import bookmarks -->
     <div role="dialog" id="import-bookmarks-dialog"
-    class="dialog fixed inset-y-0 overflow-y-auto right-0 z-[55] w-3/4 translate-x-full transform gap-4 border-l border-light-border dark:border-dark-border bg-light-primary p-6 shadow-lg transition-transform duration-500 ease-in-out dark:bg-dark-primary flex flex-col">
+        class="dialog fixed inset-y-0 overflow-y-auto right-0 z-[55] w-3/4 translate-x-full transform gap-4 border-l border-light-border dark:border-dark-border bg-light-primary p-6 shadow-lg transition-transform duration-500 ease-in-out dark:bg-dark-primary flex flex-col">
 
-    <div class="flex justify-between items-center mb-4">
-        <h2 class="text-foreground text-lg font-semibold" data-translate-key="importBookmarks">
-            Importar Marcadores
-        </h2>
-        <button type="button" id="import-cancel-button"
-            class="inline-flex h-8 w-8 items-center justify-center rounded-lg hover:text-light-red text-sm"
-            data-modal-hide="confirmationDialog">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-                <path fill-rule="evenodd"
-                    d="M10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414L10 8.586z"
-                    clip-rule="evenodd" />
-            </svg>
-            <span class="sr-only">Close modal</span>
-        </button>
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-foreground text-lg font-semibold" data-translate-key="import-bookmarks-title">
+                Import bookmarks
+            </h2>
+            <button type="button" id="import-cancel-button"
+                class="inline-flex h-8 w-8 items-center justify-center rounded-lg hover:text-light-red text-sm"
+                data-modal-hide="confirmationDialog">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                        d="M10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414L10 8.586z"
+                        clip-rule="evenodd" />
+                </svg>
+            </button>
+        </div>
+
+        <div id="bookmark-tree" class="max-h-[600px] flex-grow overflow-auto"></div>
+
+        <div class="mt-4 flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
+            <button type="button" id="cancelButton"
+                class="border-input hover:bg-accent hover:text-accent-foreground inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md border bg-light-secondary-text/10 px-4 text-sm font-medium transition-colors hover:bg-light-secondary-text/80 dark:hover:bg-dark-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 dark:bg-dark-secondary"
+                data-translate-key="cancel-button">
+                Cancel
+            </button>
+            <button type="button" id="import-selected-button" data-translate-key="importarSel"
+                class="inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md bg-light-highlight-primary hover:bg-light-highlight-primary/80 dark:hover:bg-dark-highlight-primary/80 dark:bg-dark-highlight-primary px-4 text-sm font-medium text-light-highlight-text dark:text-dark-highlight-text transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+                data-translate-key="import">
+                Import Selected
+            </button>
+        </div>
     </div>
-
-    <div id="bookmark-tree" class="max-h-[600px] flex-grow overflow-auto"></div>
-
-    <div class="mt-4 flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
-        <button type="button" id="cancelButton"
-            class="border-input hover:bg-accent hover:text-accent-foreground inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md border bg-light-secondary-text/10 px-4 text-sm font-medium transition-colors hover:bg-light-secondary-text/80 dark:hover:bg-dark-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 dark:bg-dark-secondary"
-            data-translate-key="cancel">
-            Cancel
-        </button>
-        <button type="button" id="import-selected-button" data-translate-key="importarSel"
-            class="inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md bg-light-highlight-primary hover:bg-light-highlight-primary/80 dark:hover:bg-dark-highlight-primary/80 dark:bg-dark-highlight-primary px-4 text-sm font-medium text-light-highlight-text dark:text-dark-highlight-text transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
-            data-translate-key="import">
-            Import Selected
-        </button>
-    </div>
-</div>
-
-
 
     <!--Confirm delete dialog-->
     <div id="confirmationDialog" tabindex="-1"
@@ -527,7 +528,6 @@
                             d="M10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414L10 8.586z"
                             clip-rule="evenodd" />
                     </svg>
-                    <span class="sr-only">Close modal</span>
                 </button>
                 <div class="p-4 text-center md:p-5 text-light-red">
                     <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24" fill="none"
@@ -538,17 +538,17 @@
                         <path d="M12 8v4" />
                         <path d="M12 16h.01" />
                     </svg>
-                    <p data-translate-key="confirmDelete"
+                    <p data-translate-key="confirm-delete-warning"
                         class="mb-5 text-lg font-normal text-light-primary-text dark:text-dark-primary-text">
                         ¿Estás seguro de que deseas eliminarlo?
                     </p>
                     <button id="confirm" type="button" data-translate-key="delete"
                         class="inline-flex transition-colors duration-100 items-center rounded-lg bg-light-red px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-dark-red focus:outline-none focus:ring-4 focus:ring-dark-red/30">
-                        Eliminar
+                        Delete
                     </button>
-                    <button id="cancelConfirm" type="button" data-translate-key="cancel"
+                    <button id="cancelConfirm" type="button" data-translate-key="cancel-button"
                         class="ms-3 transition-colors duration-100 rounded-lg border border-light-border bg-light-primary px-5 py-2.5 text-sm font-medium text-light-primary-text hover:bg-light-secondary-text focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-dark-border dark:bg-dark-primary dark:text-dark-primary-text dark:hover:bg-dark-secondary dark:hover:text-dark-secondary-text dark:focus:ring-gray-700">
-                        Cancelar
+                        Cancel
                     </button>
                 </div>
             </div>

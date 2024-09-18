@@ -18,7 +18,7 @@ function openBookmarkDialog() {
         }
         else {
             hideImportBookmarkDialog();
-            showModal(translate("No bookmarks found in chrome bookmark tree.")); //#TODO Add key to translations - Leave for later
+            showModal("modal-no-bookmarks-found");
             console.log("No bookmarks found in the Chrome bookmark tree.");
         }
     });
@@ -212,7 +212,7 @@ function importSelectedBookmarks() {
 
     if (checkedCheckboxes.length === 0) {
         closeAllDialogs();
-        showModal("No bookmarks selected."); //#TODO Add key to translations - Leave for later
+        showModal("modal-no-selected-bookmarks"); //#TODO Add key to translations - Leave for later
         return;
     }
     checkedCheckboxes.forEach(checkbox => {

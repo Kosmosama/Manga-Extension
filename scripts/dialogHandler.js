@@ -32,7 +32,6 @@ document.getElementById('menuBtn').addEventListener('click', showFiltersDialog);
 function toggleDialog(dialog) {
     dialog.classList.toggle('translate-x-full');
     dialog.classList.toggle('translate-x-0');
-    console.log("e?");
 
     // Update the overlay visibility after toggling the dialog
     updateOverlayVisibility();
@@ -109,7 +108,6 @@ function hideMangaForm() {
  * Specific function to open the filters dialog.
  */
 function showFiltersDialog() {
-    console.log("hola");
     const filtersDialog = document.getElementById('filtersDialog');
 
     const maxChapters = getMaxChapters();
@@ -130,7 +128,6 @@ function showFiltersDialog() {
     // Set values to max on max range input
     maxChaptersRange.value = maxChapters;
     maxChaptersSpan.textContent = maxChapters;
-    console.log("xd");
 
     toggleDialog(filtersDialog);
 }

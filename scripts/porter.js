@@ -35,7 +35,7 @@ function handleFileImport(event) {
         reader.onload = handleFileLoad;
         reader.readAsText(file);
     } else {
-        //#TODO Create modal to say non valid file type or something like that
+        showModal("modal-invalid-file-type");
         console.error('Not a JSON file.');
     }
 }
@@ -51,17 +51,15 @@ function handleFileLoad(event) {
         const importedMangas = JSON.parse(event.target.result);
         if (Array.isArray(importedMangas) && importedMangas.every(validateMangaObject)) {
             mangaList.push(...importedMangas);
-            console.log('Imported mangas:', importedMangas);
-            console.log('Current mangas array:', mangaList);
             mangaList.sort((a, b) => new Date(a.dayAdded) - new Date(b.dayAdded));
 
             refreshAndSaveMangas();   
         } else {
-            //#TODO Create modal to say non valid file or something like that
+            showModal("modal-invalid-file");
             console.error('The file does not contain a valid mangas array.');
         }
     } catch (error) {
-        //#TODO Create modal to say that an error occurred or something like that
+        showModal("modal-parsing-error");
         console.error('Error parsing JSON:', error);
     }
 }

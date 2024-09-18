@@ -77,7 +77,6 @@ function loadMangas(inputList) {
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="fav" class="lucide transition-colors duration-200 ${manga.favorite ? "hover:fill-light-red" : "hover:fill-yellow-400"} h-4 w-4 ${manga.favorite ? 'fill-yellow-400' : 'fill-transparent'}">
                         <polygon id="fav" points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                     </svg>
-                    <span class="sr-only" id="favorite-status">${manga.favorite ? 'Remove from favorites' : 'Add to favorites'}</span>
                 </button>
             <div class="relative group" id="image-container">
                 <img id="manga-image" src="${manga.image}" alt="${manga.title}" class="w-16 h-16 object-cover rounded-full">
@@ -112,20 +111,17 @@ function loadMangas(inputList) {
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-minus h-3 w-3" id="removeCap">
                         <path d="M5 12h14"></path>
                     </svg>
-                    <span class="sr-only" id="decrease-label">Decrease chapter count</span>
                 </button>
                 <span class="text-sm font-medium w-16 text-center" id="chapter-count">Ch. ${manga.readChapters}</span>
                 <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 border hover:text-light-secondary-text dark:hover:text-dark-secondary-text border-light-border dark:border-dark-border hover:bg-light-secondary dark:hover:bg-dark-secondary h-9 rounded-md px-3" id="addCap">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-plus h-3 w-3" id="addCap">
                         <path id="addCap" d="M5 12h14"></path><path d="M12 5v14"></path>
                     </svg>
-                    <span class="sr-only" id="increase-label">Increase chapter count</span>
                 </button>
                 <button class="text-light-red hover:text-dark-red inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none h-9 rounded-md px-3" id="delete">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" id="delete">
                         <path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path><line x1="10" x2="10" y1="11" y2="17"></line><line x1="14" x2="14" y1="11" y2="17"></line>
                     </svg>
-                    <span class="sr-only" id="delete">Delete manga</span>
                 </button>
             </div>
         `;

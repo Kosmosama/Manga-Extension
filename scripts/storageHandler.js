@@ -30,6 +30,5 @@ function saveMangas() {
             console.error('Error saving mangas:', chrome.runtime.lastError);
             return;
         }
-        console.log('Mangas saved to storage.');
     });
 }
