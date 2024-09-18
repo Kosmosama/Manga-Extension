@@ -38,6 +38,8 @@
     <div class="mb-6 transform rounded-lg bg-light-primary p-4 transition-all hover:scale-105 dark:bg-dark-primary"
     data-id="2">
         <header class="relative mb-4 flex items-center" data-id="3">
+
+            <!-- Open settings button -->
             <button id="open-dialog" data-dialog-target="radix-dialog"
                 class="inline-flex w-10 items-center justify-center rounded-md text-sm font-medium text-light-primary-text hover:rotate-45 transition-transform dark:text-dark-primary-text"
                 type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-dialog">
@@ -49,6 +51,8 @@
                 </svg>
                 <span class="sr-only">Open settings</span>
             </button>
+
+            <!-- Title -->
             <div class="flex-grow flex justify-center">
                 <h1 class="text-2xl -ml-8 font-bold text-light-primary-text dark:text-dark-primary-text" data-id="17">
                     Manga Library
@@ -68,13 +72,13 @@
                 Filters
             </button>
 
-            <!-- Input de búsqueda -->
+            <!-- Search bar -->
             <form class="relative flex-grow" data-id="31">
                 <input id="searchBar"
                     class="flex h-10 w-full rounded-md border border-light-border bg-light-primary dark:bg-dark-primary px-3 py-2 text-sm ring-offset-secondary-dates file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-secondary-base focus-visible:outline-none dark:border-dark-border dark:ring-offset-secondary-dates-dark dark:placeholder:text-dark-secondary-text"
                     placeholder="Search manga..." data-id="32" type="text" value="" />
 
-                <!-- Botón de borrar -->
+                <!-- Delete search button -->
                 <button id="deleteSearch"
                     class="absolute bottom-0 right-0 top-0 inline-flex h-10 w-10 items-center justify-center whitespace-nowrap rounded-md text-sm font-medium text-light-primary-text ring-offset-secondary-dates transition-colors hover:bg-primary-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:text-dark-primary-text dark:ring-offset-secondary-dates-dark dark:hover:bg-primary-base-dark"
                     type="button" data-id="36">
@@ -105,14 +109,13 @@
     </div>
 
     <!--Mangas-->
-<div class="relative">
-    <div id="topBlur" class="absolute transition-opacity opacity-0 duration-500 top-0 left-0 right-0 h-16 pointer-events-none bg-gradient-to-b from-light-secondary via-transparent to-transparent dark:from-dark-secondary dark:via-transparent z-10"></div>
-    <div id="bottomBlur" class="absolute transition-opacity opacity-0 duration-500 bottom-0 left-0 right-0 h-16 pointer-events-none bg-gradient-to-t from-light-secondary via-transparent to-transparent dark:from-dark-secondary dark:via-transparent z-10"></div>
-    <main class="relative max-h-[300px] overflow-y-auto" id="scrollContainer">
-    <div class="manga-list space-y-4 pr-4" id="mangaListContainer" data-id="41"></div>
-    </main>
-</div>
-    
+    <div class="relative">
+        <div id="topBlur" class="absolute transition-opacity opacity-0 duration-500 top-0 left-0 right-0 h-16 pointer-events-none bg-gradient-to-b from-light-secondary via-transparent to-transparent dark:from-dark-secondary dark:via-transparent z-10"></div>
+            <div id="bottomBlur" class="absolute transition-opacity opacity-0 duration-500 bottom-0 left-0 right-0 h-16 pointer-events-none bg-gradient-to-t from-light-secondary via-transparent to-transparent dark:from-dark-secondary dark:via-transparent z-10"></div>
+            <main class="relative max-h-[300px] overflow-y-auto" id="scrollContainer">
+            <div class="manga-list space-y-4 pr-4" id="mangaListContainer" data-id="41"></div>
+        </main>
+    </div>
     
     <!--Add manga button-->
     <footer class="fixed bottom-0 left-0 w-full z-20 transform transition-all hover:scale-105 mb-4">
