@@ -9,7 +9,9 @@ main {
 #filtersDialog {
     scrollbar-width: none;
 }
-
+#bookmark-tree{
+    scrollbar-width: none;
+}
 option {
     background-color: #f5f5f5;
 }
@@ -19,41 +21,4 @@ option {
         background-color: #191919;
         color: white;
     }
-}
-
-/* Cosas de los bookmarks, cambiar más tarde */
-
-.folder-label-container {
-    display: flex;
-    align-items: center;
-}
-
-.folder-icon,
-.bookmark-icon {
-    width: 16px;
-    height: 16px;
-    margin-right: 8px;
-}
-
-.folder-label-container:hover {
-    cursor: pointer;
-}
-
-.folder-checkbox {
-    margin-right: 8px;
-}
-
-.folder {
-    margin-bottom: 8px;
-}
-
-.bookmark {
-    margin-left: 24px;
-    /* Indent bookmarks inside folders */
-    margin-bottom: 8px;
-}
-
-.folder-children {
-    margin-left: 24px;
-    /* Indent children of folders */
 }

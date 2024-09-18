@@ -475,32 +475,41 @@
 
     <!-- Import bookmarks -->
     <div role="dialog" id="import-bookmarks-dialog"
-        class="dialog fixed inset-y-0 right-0 z-[55] w-3/4 translate-x-full transform gap-4 border-l bg-light-primary p-6 shadow-lg transition-transform duration-500 ease-in-out dark:bg-dark-primary">
-        <div class="flex flex-col space-y-2 text-center sm:text-left">
-            <h2 class="text-foreground text-lg font-semibold" data-translate-key="importBookmarks">
-                Importar Marcadores
-            </h2>
-        </div>
+    class="dialog fixed inset-y-0 overflow-y-auto right-0 z-[55] w-3/4 translate-x-full transform gap-4 border-l border-light-border dark:border-dark-border bg-light-primary p-6 shadow-lg transition-transform duration-500 ease-in-out dark:bg-dark-primary flex flex-col">
 
-        <div id="bookmark-tree" class="max-h-[600px] overflow-y-auto">
-        </div>
-
-        <!-- #TODO Add another button that says "cancel" other than the x , fix css -->
-
-        <button type="button" id="import-selected-button" data-translate-key="importarSel"
-            class="inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md bg-light-primary px-4 text-sm font-medium text-light-primary-text transition-colors hover:bg-primary-card/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:bg-dark-primary dark:text-dark-primary-text dark:hover:bg-primary-card-dark/90">
-            Import Selected
-        </button>
-        <button id="import-cancel-button"
-            class="absolute right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none">
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-foreground text-lg font-semibold" data-translate-key="importBookmarks">
+            Importar Marcadores
+        </h2>
+        <button type="button" id="import-cancel-button"
+            class="inline-flex h-8 w-8 items-center justify-center rounded-lg hover:text-light-red text-sm"
+            data-modal-hide="confirmationDialog">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd"
                     d="M10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414L10 8.586z"
                     clip-rule="evenodd" />
             </svg>
-            <span class="sr-only" data-translate-key="cancel">Close</span>
+            <span class="sr-only">Close modal</span>
         </button>
     </div>
+
+    <div id="bookmark-tree" class="max-h-[600px] flex-grow overflow-auto"></div>
+
+    <div class="mt-4 flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">
+        <button type="button" id="cancelButton"
+            class="border-input hover:bg-accent hover:text-accent-foreground inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md border bg-light-secondary-text/10 px-4 text-sm font-medium transition-colors hover:bg-light-secondary-text/80 dark:hover:bg-dark-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 dark:bg-dark-secondary"
+            data-translate-key="cancel">
+            Cancel
+        </button>
+        <button type="button" id="import-selected-button" data-translate-key="importarSel"
+            class="inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md bg-light-highlight-primary hover:bg-light-highlight-primary/80 dark:hover:bg-dark-highlight-primary/80 dark:bg-dark-highlight-primary px-4 text-sm font-medium text-light-highlight-text dark:text-dark-highlight-text transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2"
+            data-translate-key="import">
+            Import Selected
+        </button>
+    </div>
+</div>
+
+
 
     <!--Confirm delete dialog-->
     <div id="confirmationDialog" tabindex="-1"

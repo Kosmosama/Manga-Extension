@@ -51,39 +51,56 @@ function loadBookmarks(bookmarks, container) {
  */
 function createFolderElement(bookmark) {
     const folder = document.createElement('div');
-    folder.classList.add('folder');
+    folder.classList.add('folder', 'mb-2');
 
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
-    checkbox.classList.add('folder-checkbox');
+    checkbox.classList.add('folder-checkbox', 'mr-2');
 
     const labelContainer = document.createElement('div');
-    labelContainer.classList.add('folder-label-container');
-    labelContainer.addEventListener('click', () => toggleFolderVisibility(folder));
+    labelContainer.classList.add('flex', 'items-center', 'space-x-2', 'cursor-pointer');
+    labelContainer.addEventListener('click', (e) => {
+        if (e.target !== checkbox){
+            toggleFolderVisibility(folder)
+        }
+    });
 
     const svgIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svgIcon.setAttribute('viewBox', '0 0 24 24');
-    svgIcon.classList.add('folder-icon');
+    setAttributes(svgIcon, {
+        width: '24',
+        height: '24',
+        viewBox: '0 0 24 24',
+        fill: 'none',
+        stroke: 'currentColor',
+        'stroke-width': '2',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+    });
+    svgIcon.classList.add('folder-icon', 'w-4', 'h-4','mr-2','flex-shrink-0');
     svgIcon.innerHTML = `
-        <path d="M10 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-8l-2-2z" fill="currentColor"/>
+        <path d="m6 14 1.5-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.54 6a2 2 0 0 1-1.95 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H18a2 2 0 0 1 2 2v2"></path>
     `;
 
     const label = document.createElement('label');
     label.textContent = bookmark.title;
+    label.classList.add('text-xs','font-bold','cursor-pointer','hover:underline');
 
     const childrenContainer = document.createElement('div');
-    childrenContainer.classList.add('folder-children', 'hidden');
-
+    childrenContainer.classList.add('folder-children', 'hidden', 'ml-6');
     checkbox.addEventListener('change', () => toggleFolderCheckbox(checkbox, childrenContainer));
-
+    
+    labelContainer.appendChild(checkbox);
     labelContainer.appendChild(svgIcon);
     labelContainer.appendChild(label);
-    folder.appendChild(checkbox);
     folder.appendChild(labelContainer);
     folder.appendChild(childrenContainer);
-
+    
     return folder;
 }
+
+function setAttributes(el, attrs) {
+    Object.entries(attrs).forEach(([key, value]) => el.setAttribute(key, value));
+};
 
 /**
  * Creates a bookmark element for individual bookmarks.
@@ -93,28 +110,39 @@ function createFolderElement(bookmark) {
  */
 function createBookmarkElement(bookmark) {
     const bookmarkElement = document.createElement('div');
-    bookmarkElement.classList.add('bookmark');
+    bookmarkElement.classList.add('bookmark', 'flex', 'items-center', 'space-x-2', 'mb-2');
 
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
-    checkbox.classList.add('bookmark-checkbox');
+    checkbox.classList.add('bookmark-checkbox', 'mr-2');
 
     const svgIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svgIcon.setAttribute('viewBox', '0 0 24 24');
-    svgIcon.classList.add('bookmark-icon');
+    setAttributes(svgIcon, {
+        width: '24',
+        height: '24',
+        viewBox: '0 0 24 24',
+        fill: 'none',
+        stroke: 'currentColor',
+        'stroke-width': '2',
+        'stroke-linecap': 'round',
+        'stroke-linejoin': 'round'
+    });
+    svgIcon.classList.add('bookmark-icon', 'w-4', 'h-4', 'mr-2', 'flex-shrink-0');
     svgIcon.innerHTML = `
-        <path d="M6 2c-1.1 0-2 .9-2 2v16l8-4 8 4V4c0-1.1-.9-2-2-2H6z" fill="currentColor"/>
+        <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"></path>
     `;
 
     const label = document.createElement('label');
-    label.textContent = bookmark.title;
+    label.textContent = bookmark.title.length < 35 ? bookmark.title : bookmark.title.substring(0, 35 - 3) + "...";
+    label.setAttribute('title', bookmark.title);
+    label.classList.add('text-xs', 'font-medium');
 
     bookmarkElement.setAttribute('data-url', bookmark.url);
 
     bookmarkElement.appendChild(checkbox);
     bookmarkElement.appendChild(svgIcon);
     bookmarkElement.appendChild(label);
-
+    
     return bookmarkElement;
 }
 
