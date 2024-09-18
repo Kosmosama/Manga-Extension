@@ -349,16 +349,25 @@
         class="dialog fixed inset-y-0 right-0 max-h-full translate-x-full transform overflow-y-auto border-l border-light-border dark:border-dark-border bg-light-primary shadow-lg transition-transform duration-300 ease-in-out dark:bg-dark-primary px-5 pb-5 max-w-[500px] w-full z-[101]">
         <div class="relative h-full space-y-8 mb-8 p-6">
 
-            <div class="mb-4 flex flex-col">
-                <h2 id="radix-title" class="text-2xl font-semibold text-light-primary-text dark:text-dark-primary-text" data-translate-key="filters-title">
+            <div class="flex justify-between items-center mb-4">
+                <h2 id="radix-title" class="text-2xl font-semibold text-light-primary-text dark:text-dark-primary-text">
                     Filters
                 </h2>
+                <button type="button" id="closeFiltersDialog" data-dialog-target="filtersDialog"
+                    class="absolute right-5 mt-3 top-4 text-light-primary-text dark:text-dark-primary-text hover:text-light-red transition-colors dark:hover:text-light-red duration-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd"
+                            d="M10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414L10 8.586z"
+                            clip-rule="evenodd" />
+                    </svg>
+                    <span class="sr-only">Close</span>
+                </button>
             </div>
 
             <!-- Filter methods -->
             <div class="rounded-lg border border-light-border shadow-sm dark:border-dark-border" data-id="85">
                 <div class="flex flex-col space-y-1.5 p-6" data-id="86">
-                    <h3 data-translate-key="filter-method-box-title"
+                    <h3 data-translate-key="filterMethod"
                         class="whitespace-nowrap text-xl font-semibold leading-none tracking-tight text-light-primary-text dark:text-dark-primary-text"
                         data-id="87">
                         Filter method
@@ -369,19 +378,19 @@
                 <div class="relative mx-auto bg-light-primary dark:bg-dark-primary mb-4 mt-4 max-w-sm">
                     <select id="sortOption"
                         class="peer block w-full appearance-none rounded border border-light-border bg-transparent px-0 py-2.5 pl-4 text-sm text-light-primary-text focus:outline-none focus:ring-0 dark:border-dark-border dark:text-dark-primary-text">
-                        <option value="favFirst" data-translate-key="favorites-first-option">
+                        <option value="favFirst" data-translate-key="favFirst">
                             Favorites first
                         </option>
-                        <option value="alphabetically" data-translate-key="alphabetically-option">
+                        <option value="alphabetically" data-translate-key="alphabetically">
                             Alphabetically
                         </option>
-                        <option value="chaptersRead" data-translate-key="read-chapters-option">
-                            Number of chapters read
+                        <option value="chaptersRead" data-translate-key="chaptersRead">
+                            Number of read chapters
                         </option>
-                        <option value="addDate" data-translate-key="addition-date-option">
+                        <option value="addDate" data-translate-key="addDate">
                             Addition date
                         </option>
-                        <option value="lastRead" data-translate-key="last-read-option">
+                        <option value="lastRead" data-translate-key="lastRead">
                             Last read
                         </option>
                     </select>
@@ -392,11 +401,11 @@
                 </div>
                 <div class="py-4 pl-4">
                     <label class="me-5 inline-flex cursor-pointer items-center">
-                        <input type="checkbox" id="favorites-only-checkbox" class="peer sr-only" />
+                        <input type="checkbox" id="favourites-only-checkbox" class="peer sr-only" />
                         <div
                             class="peer relative h-6 w-11 rounded-full bg-light-secondary-text after:absolute after:start-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-light-border after:bg-white after:transition-all after:content-[''] peer-checked:bg-secondary-base peer-checked:after:translate-x-full peer-checked:after:border-white dark:bg-dark-secondary-text dark:peer-checked:bg-dark-secondary rtl:peer-checked:after:-translate-x-full">
                         </div>
-                        <span data-translate-key="favorites-only-checkbox"
+                        <span data-translate-key="onlyFavs"
                             class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Show only favorites</span>
                     </label>
                 </div>
@@ -407,33 +416,32 @@
                             class="peer relative h-6 w-11 rounded-full bg-light-secondary-text after:absolute after:start-[2px] after:top-0.5 after:h-5 after:w-5 after:rounded-full after:border after:border-light-border after:bg-white after:transition-all after:content-[''] peer-checked:bg-secondary-base peer-checked:after:translate-x-full peer-checked:after:border-white dark:bg-dark-secondary-text dark:peer-checked:bg-dark-secondary rtl:peer-checked:after:-translate-x-full">
                         </div>
                         <span class="ms-3 text-sm font-medium text-light-primary-text dark:text-dark-primary-text"
-                            data-translate-key="current-page-only-checkbox">Show only current page mangas</span>
+                            data-translate-key="onlyCurrentPage">Show only current page mangas</span>
                     </label>
                 </div>
             </div>
 
             <!-- Chapter Range -->
-            <div class="rounded-lg border border-light-border dark:border-dark-border" data-id="85">
+            <div class="rounded-lg border border-light-border dark:border-dark-border"
+                data-id="85">
                 <div class="flex flex-col space-y-1.5 p-6" data-id="86">
                     <h3 class="whitespace-nowrap text-xl font-semibold leading-none tracking-tight text-secondary-base dark:text-secondary-base-dark"
-                        data-id="87" data-translate-key="chapter-range-box-title">
+                        data-id="87">
                         Chapter Range
                     </h3>
                 </div>
                 <div class="flex flex-col space-y-4 py-4 px-6">
-                    <label for="minChapters" data-translate-key="minimum-chapters-range"
-                        class="text-sm font-medium text-secondary-base dark:text-secondary-base-dark">
-                        Minimum Chapters
-                    </label>
+                    <label for="minChapters"
+                        class="text-sm font-medium text-secondary-base dark:text-secondary-base-dark">Minimum
+                        Chapters</label>
                     <input type="range" id="minChapters"
                         class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
                         min="0" max="1000" value="0" />
                     <span id="minChapterValue">0</span>
 
-                    <label for="maxChapters" data-translate-key="maximum-chapters-range"
-                        class="text-sm font-medium text-secondary-base dark:text-secondary-base-dark">
-                        Maximum Chapters
-                    </label>
+                    <label for="maxChapters"
+                        class="text-sm font-medium text-secondary-base dark:text-secondary-base-dark">Maximum
+                        Chapters</label>
                     <input type="range" id="maxChapters"
                         class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
                         min="0" max="1000" value="1000" />
@@ -444,14 +452,15 @@
             <!-- Other options -->
             <div class="rounded-lg border border-light-border shadow-sm dark:border-dark-border" data-id="85">
                 <div class="flex flex-col space-y-1.5 p-6" data-id="86">
-                    <h3 data-translate-key="other-options-box-title"
+                    <h3 data-translate-key="otherOptions"
                         class="whitespace-nowrap text-xl font-semibold leading-none tracking-tight text-light-primary-text dark:text-dark-primary-text"
                         data-id="87">
-                        Other options
+                        Other options:
                     </h3>
                 </div>
                 <div class="flex flex-col space-y-4 py-4">
-                    <button class="ml-4 inline-flex h-10 w-44 items-center justify-center whitespace-nowrap rounded-md border border-light-border bg-light-primary py-2 text-sm font-medium transition-all hover:scale-110 focus-visible:outline-none dark:border-dark-border dark:bg-dark-primary dark:hover:text-dark-primary-text"
+                    <button data-translate-key="getRandomManga"
+                        class="ml-4 inline-flex h-10 w-44 items-center justify-center whitespace-nowrap rounded-md border border-light-border bg-light-primary py-2 text-sm font-medium transition-all hover:scale-110 focus-visible:outline-none dark:border-dark-border dark:bg-dark-primary dark:hover:text-dark-primary-text"
                         id="getRandomManga">
                         <svg xmlns="http://www.w3.org/2000/svg" class="ionicon mr-2 h-5 w-5" viewBox="0 0 512 512">
                             <path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
@@ -468,15 +477,6 @@
                     </button>
                 </div>
             </div>
-
-            <button type="button" id="closeFiltersDialog" data-dialog-target="filtersDialog"
-                class="absolute right-5 mt-3 top-4 text-light-primary-text dark:text-dark-primary-text hover:text-light-red transition-colors dark:hover:text-light-red duration-200">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd"
-                        d="M10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414L10 8.586z"
-                        clip-rule="evenodd" />
-                </svg>
-            </button>
         </div>
     </div>
 
