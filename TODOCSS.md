@@ -57,10 +57,6 @@
 ## Bookmark Import
 - Implement a **visual style** similar to what was done in `v0.dev ver18` **(REMEMBER, VERSION 18)**
 
-## Settings & Filters Form Error
-- Fix the error where, after closing and reopening the **Settings** or **Filters form**, the scroll position is maintained. - No.
-  - **Reset the form's scroll position** to the top when it is reopened (like restarting the dialog).
-
 ## Colors
 #### Light Mode
 ```css

@@ -44,7 +44,8 @@
         "modal-unique-title-required": "Todos los títulos deben ser únicos.",
         "modal-invalid-file-type": "Tipo de archivo no válido. Por favor, sube un archivo json válido.",
         "modal-invalid-file": "Archivo no válido. Por favor, sube un archivo válido.",
-        "modal-parsing-error": "Ocurrió un error al analizar el archivo. Por favor, verifica el archivo e intenta de nuevo."
+        "modal-parsing-error": "Ocurrió un error al analizar el archivo. Por favor, verifica el archivo e intenta de nuevo.",
+        "import-from-json-subtitle": "Importar desde JSON"
     },
     "en": {
         "extension-title": "Manga Library",
@@ -91,7 +92,8 @@
         "modal-unique-title-required": "All titles must be unique.",
         "modal-invalid-file-type": "Invalid file type. Please upload a valid json file.",
         "modal-invalid-file": "Invalid file. Please upload a valid file.",
-        "modal-parsing-error": "An error occurred while parsing the file. Please check the file and try again."
+        "modal-parsing-error": "An error occurred while parsing the file. Please check the file and try again.",
+        "import-from-json-subtitle": "Import from JSON"
     },
     "fr": {
         "extension-title": "Bibliothèque de Manga",
@@ -138,7 +140,8 @@
         "modal-unique-title-required": "Tous les titres doivent être uniques.",
         "modal-invalid-file-type": "Type de fichier non valide. Veuillez télécharger un fichier json valide.",
         "modal-invalid-file": "Fichier non valide. Veuillez télécharger un fichier valide.",
-        "modal-parsing-error": "Une erreur est survenue lors de l'analyse du fichier. Veuillez vérifier le fichier et réessayer."
+        "modal-parsing-error": "Une erreur est survenue lors de l'analyse du fichier. Veuillez vérifier le fichier et réessayer.",
+        "import-from-json-subtitle": "Importer depuis JSON"
     },
     "de": {
         "extension-title": "Manga-Bibliothek",
@@ -185,7 +188,8 @@
         "modal-unique-title-required": "Alle Titel müssen eindeutig sein.",
         "modal-invalid-file-type": "Ungültiger Dateityp. Bitte laden Sie eine gültige JSON-Datei hoch.",
         "modal-invalid-file": "Ungültige Datei. Bitte laden Sie eine gültige Datei hoch.",
-        "modal-parsing-error": "Beim Parsen der Datei ist ein Fehler aufgetreten. Bitte überprüfen Sie die Datei und versuchen Sie es erneut."
+        "modal-parsing-error": "Beim Parsen der Datei ist ein Fehler aufgetreten. Bitte überprüfen Sie die Datei und versuchen Sie es erneut.",
+        "import-from-json-subtitle": "Aus JSON importieren"
     },
     "ru": {
         "extension-title": "Библиотека Манги",
@@ -232,7 +236,8 @@
         "modal-unique-title-required": "Все заголовки должны быть уникальными.",
         "modal-invalid-file-type": "Недопустимый тип файла. Загрузите допустимый файл json.",
         "modal-invalid-file": "Недопустимый файл. Загрузите допустимый файл.",
-        "modal-parsing-error": "Произошла ошибка при разборе файла. Проверьте файл и попробуйте еще раз."
+        "modal-parsing-error": "Произошла ошибка при разборе файла. Проверьте файл и попробуйте еще раз.",
+        "import-from-json-subtitle": "Импорт из JSON"
     },
     "pt": {
         "extension-title": "Biblioteca de Manga",
@@ -279,7 +284,8 @@
         "modal-unique-title-required": "Todos os títulos devem ser únicos.",
         "modal-invalid-file-type": "Tipo de arquivo inválido. Envie um arquivo json válido.",
         "modal-invalid-file": "Arquivo inválido. Envie um arquivo válido.",
-        "modal-parsing-error": "Ocorreu um erro ao analisar o arquivo. Verifique o arquivo e tente novamente."
+        "modal-parsing-error": "Ocorreu um erro ao analisar o arquivo. Verifique o arquivo e tente novamente.",
+        "import-from-json-subtitle": "Importar do JSON"
     },
     "zh": {
         "extension-title": "漫画库",
@@ -326,7 +332,8 @@
         "modal-unique-title-required": "所有标题必须是唯一的。",
         "modal-invalid-file-type": "文件类型无效。请上传有效的json文件。",
         "modal-invalid-file": "无效文件。请上传有效的文件。",
-        "modal-parsing-error": "解析文件时发生错误。请检查文件并重试。"
+        "modal-parsing-error": "解析文件时发生错误。请检查文件并重试。",
+        "import-from-json-subtitle": "从 JSON 导入"
     },
     "ja": {
         "extension-title": "マンガライブラリ",
@@ -373,6 +380,7 @@
         "modal-unique-title-required": "すべてのタイトルは一意である必要があります。",
         "modal-invalid-file-type": "無効なファイルタイプです。有効なjsonファイルをアップロードしてください。",
         "modal-invalid-file": "無効なファイルです。有効なファイルをアップロードしてください。",
-        "modal-parsing-error": "ファイルの解析中にエラーが発生しました。ファイルを確認してもう一度お試しください。"
+        "modal-parsing-error": "ファイルの解析中にエラーが発生しました。ファイルを確認してもう一度お試しください。",
+        "import-from-json-subtitle": "JSONからインポート"
     }
 }
