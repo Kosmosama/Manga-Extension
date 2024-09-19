@@ -5,7 +5,7 @@ Extension to bookmark mangas you like.
 ## TO-DO
 
 1. **[Refactor css](TODOCSS.md)**
-2. **Fix the error where, after closing and reopening the **Settings** or **Filters form**, the scroll position is maintained."**
+2. **Fix the error where, after closing and reopening the **Settings** or **Filters dialog**, the scroll position is maintained."**
 3. **Maintain scroll position (if possible) when reloading mangas.**
 
 ## Next Version
