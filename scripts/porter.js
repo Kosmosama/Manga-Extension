@@ -9,7 +9,9 @@ document.getElementById('import').addEventListener('change', handleFileImport);
  * and triggering a download in the browser.
  */
 function handleFileExport() {
-    const date = new Date().toLocaleString();
+    const now = new Date().toISOString().replace(/[:.]/g, '-').split('T');
+    const date = `${now[0]}_${now[1].slice(0, 8)}`;  // YYYY-MM-DD_HH-MM-SS
+
     const filename = `mangas_${date}.json`;
     const json = JSON.stringify(mangaList, null, 2);
     const blob = new Blob([json], { type: "application/json" });

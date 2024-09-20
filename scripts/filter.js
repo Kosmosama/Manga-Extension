@@ -39,6 +39,13 @@ document.getElementById('maxChapters').addEventListener('change', function() {
     loadFilteredMangas();
 });
 
+// Attach event listener for the search bar keydown event to prevent clearing on 'Enter' key
+document.getElementById('searchBar').addEventListener('keydown', function(event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+    }
+});
+
 /**
  * Loads the filter options (favorites-only, current-page only, sorting options) from local storage 
  * and updates the UI components (checkboxes and dropdowns) accordingly.
