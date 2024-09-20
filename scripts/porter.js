@@ -52,9 +52,13 @@ function handleFileLoad(event) {
     try {
         const importedMangas = JSON.parse(event.target.result);
         if (Array.isArray(importedMangas) && importedMangas.every(validateMangaObject)) {
-            mangaList.push(...importedMangas);
-            mangaList.sort((a, b) => new Date(a.dayAdded) - new Date(b.dayAdded));
+            const validMangas = importedMangas.filter(manga => validateMangaData(manga) == null);
 
+            if (validMangas.length != importedMangas.length) {
+                showModal("modal-not-all-mangas-valid")
+            }
+
+            mangaList.push(...validMangas);
             refreshAndSaveMangas();   
         } else {
             showModal("modal-invalid-file");
