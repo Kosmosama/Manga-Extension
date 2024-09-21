@@ -677,6 +677,10 @@ video {
   top: 1rem;
 }
 
+.bottom-96 {
+  bottom: 24rem;
+}
+
 .z-10 {
   z-index: 10;
 }
@@ -1268,6 +1272,11 @@ video {
   padding-bottom: 1rem;
 }
 
+.py-10 {
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem;
+}
+
 .pb-5 {
   padding-bottom: 1.25rem;
 }
@@ -1290,6 +1299,10 @@ video {
 
 .pb-60 {
   padding-bottom: 15rem;
+}
+
+.pb-96 {
+  padding-bottom: 24rem;
 }
 
 .text-center {
