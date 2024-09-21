@@ -13,7 +13,7 @@ function retrieveMangas() {
             console.error('Error loading mangas:', chrome.runtime.lastError);
             return;
         }
-        if (result.mangaList.length > 0) {
+        if (Array.isArray(result.mangaList) && result.mangaList.length > 0) {
             mangaList = result.mangaList;
         } else {
             console.log('No mangas found in storage.');
