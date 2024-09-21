@@ -75,7 +75,7 @@
             <form class="relative flex-grow" data-id="31">
                 <input id="searchBar"
                     class="flex h-10 w-full rounded-md border border-light-border bg-light-primary dark:bg-dark-primary px-3 py-2 text-sm ring-offset-secondary-dates file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-secondary-base focus-visible:outline-none dark:border-dark-border dark:ring-offset-secondary-dates-dark dark:placeholder:text-dark-secondary-text"
-                    placeholder="Search manga..." data-id="32" type="text" value="" />
+                    placeholder="Search manga..." data-id="32" type="text" value="" data-translate-key="placeholder-search-bar"/>
 
                 <!-- Delete search button -->
                 <button id="deleteSearch"
@@ -284,28 +284,28 @@
                     <label for="image"
                         class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                         data-translate-key="image-field-label">Image link (optional)</label>
-                    <input type="text" id="image" name="image" placeholder="Ingrese la URL de la imagen"
+                    <input type="text" id="image" name="image" data-translate-key="placeholder-image-url" placeholder="Provide the image URL."
                         class="border-light-border dark:border-dark-border placeholder:text-light-secondary-text focus:border-light-secondary-text dark:focus:border-dark-secondary-text flex h-10 w-full rounded-md border bg-light-primary px-3 py-2 text-sm text-light-primary-text dark:bg-dark-secondary dark:text-dark-primary-text" />
                 </div>
                 <div>
                     <label for="title"
                         class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                         data-translate-key="title-field-label">Title</label>
-                    <input type="text" id="title" name="title" required placeholder="Must be unique"
+                    <input type="text" id="title" name="title" required data-translate-key="placeholder-manga-title" placeholder="Must be unique."
                     class="border-light-border dark:border-dark-border placeholder:text-light-secondary-text focus:border-light-secondary-text dark:focus:border-dark-secondary-text flex h-10 w-full rounded-md border bg-light-primary px-3 py-2 text-sm text-light-primary-text dark:bg-dark-secondary dark:text-dark-primary-text" />
                 </div>
                 <div>
                     <label for="link"
                         class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                         data-translate-key="link-field-label">Link</label>
-                    <input type="text" id="link" name="link" placeholder="Leave in blank to use the current page URL"
+                    <input type="text" id="link" name="link" data-translate-key="placeholder-manga-link" placeholder="Leave in blank to use the current page URL."
                     class="border-light-border dark:border-dark-border placeholder:text-light-secondary-text focus:border-light-secondary-text dark:focus:border-dark-secondary-text flex h-10 w-full rounded-md border bg-light-primary px-3 py-2 text-sm text-light-primary-text dark:bg-dark-secondary dark:text-dark-primary-text" />
                 </div>
                 <div>
                     <label for="readChapters"
                         class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                         data-translate-key="read-chapters-field-label">Chapters read</label>
-                    <input type="number" id="readChapters" name="readChapters" min="0"
+                    <input type="number" id="readChapters" name="readChapters" min="0" value="0"
                     class="border-light-border dark:border-dark-border placeholder:text-light-secondary-text focus:border-light-secondary-text dark:focus:border-dark-secondary-text flex h-10 w-full rounded-md border bg-light-primary px-3 py-2 text-sm text-light-primary-text dark:bg-dark-secondary dark:text-dark-primary-text" />
                 </div>
                 <div class="flex items-center space-x-2 mt-4 py-4 pl-1">
@@ -349,7 +349,7 @@
         <div class="relative h-full space-y-8 mb-8 p-6">
 
             <div class="flex justify-between items-center mb-4">
-                <h2 id="radix-title" class="text-2xl font-semibold text-light-primary-text dark:text-dark-primary-text">
+                <h2 id="radix-title" class="text-2xl font-semibold text-light-primary-text dark:text-dark-primary-text" data-translate-key="filters-title">
                     Filters
                 </h2>
                 <button type="button" id="closeFiltersDialog" data-dialog-target="filtersDialog"
@@ -425,7 +425,7 @@
                 data-id="85">
                 <div class="flex flex-col space-y-1.5 p-6" data-id="86">
                     <h3 class="whitespace-nowrap text-xl font-semibold leading-none tracking-tight text-secondary-base dark:text-secondary-base-dark"
-                        data-id="87">
+                        data-id="87" data-translate-key="chapter-range-box-title">
                         Chapter Range
                     </h3>
                 </div>

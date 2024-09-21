@@ -46,6 +46,10 @@
         "modal-invalid-file": "Archivo no válido. Por favor, sube un archivo válido.",
         "modal-parsing-error": "Ocurrió un error al analizar el archivo. Por favor, verifica el archivo e intenta de nuevo.",
         "import-from-json-subtitle": "Importar desde JSON",
+        "placeholder-search-bar": "Buscar manga...",
+        "placeholder-image-url": "Proporcione la URL de la imagen. (opcional)",
+        "placeholder-manga-title": "Debe ser único",
+        "placeholder-manga-link": "Deje en blanco para usar la URL de la página actual",
         "modal-not-all-mangas-valid": "Algunas entradas de manga en el JSON eran inválidas y no fueron añadidas."
     },
     "en": {
@@ -95,6 +99,10 @@
         "modal-invalid-file": "Invalid file. Please upload a valid file.",
         "modal-parsing-error": "An error occurred while parsing the file. Please check the file and try again.",
         "import-from-json-subtitle": "Import from JSON",
+        "placeholder-search-bar": "Search manga...",
+        "placeholder-image-url": "Provide the image URL. (optional)",
+        "placeholder-manga-title": "Must be unique",
+        "placeholder-manga-link": "Leave in blank to use the current page URL",
         "modal-not-all-mangas-valid": "Some manga entries in the JSON were invalid and were not added."
     },
     "fr": {
@@ -144,6 +152,10 @@
         "modal-invalid-file": "Fichier non valide. Veuillez télécharger un fichier valide.",
         "modal-parsing-error": "Une erreur est survenue lors de l'analyse du fichier. Veuillez vérifier le fichier et réessayer.",
         "import-from-json-subtitle": "Importer depuis JSON",
+        "placeholder-search-bar": "Rechercher un manga...",
+        "placeholder-image-url": "Fournissez l'URL de l'image. (facultatif)",
+        "placeholder-manga-title": "Doit être unique",
+        "placeholder-manga-link": "Laissez vide pour utiliser l'URL de la page actuelle",
         "modal-not-all-mangas-valid": "Certaines entrées de manga dans le JSON étaient invalides et n'ont pas été ajoutées."
     },
     "de": {
@@ -193,6 +205,10 @@
         "modal-invalid-file": "Ungültige Datei. Bitte laden Sie eine gültige Datei hoch.",
         "modal-parsing-error": "Beim Parsen der Datei ist ein Fehler aufgetreten. Bitte überprüfen Sie die Datei und versuchen Sie es erneut.",
         "import-from-json-subtitle": "Aus JSON importieren",
+        "placeholder-search-bar": "Manga suchen...",
+        "placeholder-image-url": "Geben Sie die Bild-URL an. (optional)",
+        "placeholder-manga-title": "Muss einzigartig sein",
+        "placeholder-manga-link": "Leer lassen, um die URL der aktuellen Seite zu verwenden",
         "modal-not-all-mangas-valid": "Einige Manga-Einträge im JSON waren ungültig und wurden nicht hinzugefügt."
     },
     "ru": {
@@ -242,6 +258,10 @@
         "modal-invalid-file": "Недопустимый файл. Загрузите допустимый файл.",
         "modal-parsing-error": "Произошла ошибка при разборе файла. Проверьте файл и попробуйте еще раз.",
         "import-from-json-subtitle": "Импорт из JSON",
+        "placeholder-search-bar": "Искать мангу...",
+        "placeholder-image-url": "Укажите URL изображения. (необязательно)",
+        "placeholder-manga-title": "Должно быть уникальным",
+        "placeholder-manga-link": "Оставьте пустым, чтобы использовать URL текущей страницы",
         "modal-not-all-mangas-valid": "Некоторые записи манги в JSON были недействительными и не были добавлены."
     },
     "pt": {
@@ -291,6 +311,10 @@
         "modal-invalid-file": "Arquivo inválido. Envie um arquivo válido.",
         "modal-parsing-error": "Ocorreu um erro ao analisar o arquivo. Verifique o arquivo e tente novamente.",
         "import-from-json-subtitle": "Importar do JSON",
+        "placeholder-search-bar": "Pesquisar manga...",
+        "placeholder-image-url": "Forneça a URL da imagem. (opcional)",
+        "placeholder-manga-title": "Deve ser único",
+        "placeholder-manga-link": "Deixe em branco para usar a URL da página atual",
         "modal-not-all-mangas-valid": "Algumas entradas de mangá no JSON eram inválidas e não foram adicionadas."
     },
     "zh": {
@@ -340,6 +364,10 @@
         "modal-invalid-file": "无效文件。请上传有效的文件。",
         "modal-parsing-error": "解析文件时发生错误。请检查文件并重试。",
         "import-from-json-subtitle": "从 JSON 导入",
+        "placeholder-search-bar": "搜索漫画...",
+        "placeholder-image-url": "提供图片 URL。 (可选)",
+        "placeholder-manga-title": "必须是唯一的",
+        "placeholder-manga-link": "留空以使用当前页面的URL",
         "modal-not-all-mangas-valid": "JSON 中的一些漫画条目无效，未添加。"
     },
     "ja": {
@@ -389,6 +417,10 @@
         "modal-invalid-file": "無効なファイルです。有効なファイルをアップロードしてください。",
         "modal-parsing-error": "ファイルの解析中にエラーが発生しました。ファイルを確認してもう一度お試しください。",
         "import-from-json-subtitle": "JSONからインポート",
+        "placeholder-search-bar": "マンガを検索...",
+        "placeholder-image-url": "画像のURLを提供してください。（オプション）",
+        "placeholder-manga-title": "ユニークでなければなりません",
+        "placeholder-manga-link": "現在のページのURLを使用するには空白のままにしてください",
         "modal-not-all-mangas-valid": "JSONの一部のマンガエントリーが無効で、追加されませんでした。"
     }
 }

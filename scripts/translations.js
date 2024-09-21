@@ -45,7 +45,13 @@ const defaultTranslations = {
         "modal-unique-title-required": "All titles must be unique.",
         "modal-invalid-file-type": "Invalid file type. Please upload a valid json file.",
         "modal-invalid-file": "Invalid file. Please upload a valid file.",
-        "modal-parsing-error": "An error occurred while parsing the file. Please check the file and try again."
+        "modal-parsing-error": "An error occurred while parsing the file. Please check the file and try again.",
+        "import-from-json-subtitle": "Import from JSON",
+        "placeholder-search-bar": "Search manga...",
+        "placeholder-image-url": "Provide the image URL. (optional)",
+        "placeholder-manga-title": "Must be unique",
+        "placeholder-manga-link": "Leave in blank to use the current page URL",
+        "modal-not-all-mangas-valid": "Some manga entries in the JSON were invalid and were not added."
     }
 };
 
@@ -109,14 +115,19 @@ function savePreferredLanguage(language) {
 }
 
 /**
- * Translates all elements on the page that have a 'data-translate-key' attribute.
- * Replaces the text content of each element with the corresponding translation.
+ * Translates elements with a 'data-translate-key' attribute.
+ * If it has a placeholder attribute, it translates that instead of the textContent.
  */
 function translatePage() {
     document.querySelectorAll('[data-translate-key]').forEach(element => {
         const key = element.getAttribute('data-translate-key');
         const translatedText = translate(key);
-        element.textContent = translatedText;
+
+        if (element.hasAttribute('placeholder')) {
+            element.setAttribute('placeholder', translatedText);
+        } else {
+            element.textContent = translatedText;
+        }
     });
 }
 
