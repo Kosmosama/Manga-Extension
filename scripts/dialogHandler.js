@@ -34,6 +34,7 @@ function toggleDialog(dialog) {
     dialog.classList.toggle('translate-x-full');
     dialog.classList.toggle('translate-x-0');
 
+    handleScrollReset(dialog);
     // Update the overlay visibility after toggling the dialog
     updateOverlayVisibility();
 }
@@ -47,6 +48,8 @@ function closeAllDialogs() {
     dialogs.forEach(dialog => {
         dialog.classList.add('translate-x-full');
         dialog.classList.remove('translate-x-0');
+        handleScrollReset(dialog);
+        
     });
 
     // Update the overlay visibility after closing all dialogs
@@ -160,4 +163,9 @@ function hideImportBookmarkDialog() {
 
     // Update the overlay visibility after hiding the dialog
     updateOverlayVisibility();
+}
+function handleScrollReset(dialog){
+    setTimeout(()=> {
+        dialog.scrollTop = 0;
+    }, 500);
 }
