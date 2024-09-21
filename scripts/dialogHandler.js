@@ -19,6 +19,7 @@ document.getElementById('cancelButton').addEventListener('click', cancelManga);
 document.getElementById('cross-cancel-mangaForm').addEventListener('click', cancelManga);
 
 // Attach event listener for the cancel button in the import bookmarks dialog
+document.getElementById('import-cross-cancel-button').addEventListener('click', hideImportBookmarkDialog);
 document.getElementById('import-cancel-button').addEventListener('click', hideImportBookmarkDialog);
 
 // Attach event listener for the filters button in the main page
