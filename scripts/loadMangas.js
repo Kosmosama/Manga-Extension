@@ -20,22 +20,21 @@ function handleBlur() {
 
     const scrollTop = mangaListElement.scrollTop;
     const scrollHeight = mangaListElement.scrollHeight;
-    const clientHeight = mangaListElement.clientHeight;
+    const fullHeight  = scrollTop + mangaListElement.clientHeight;
 
-    if (mangaListElement.scrollTop === 0) {
-        topBlur.classList.add('opacity-0');
-    } else {
-        topBlur.classList.remove('opacity-0');
-    }
-    if (scrollTop + clientHeight >= scrollHeight) {
-        bottomBlur.classList.add('opacity-0');
-    } else {
-        bottomBlur.classList.remove('opacity-0');
-    }
+    scrollTop === 0 ? topBlur.classList.add('opacity-0') : topBlur.classList.remove('opacity-0');
+    fullHeight >= scrollHeight ? bottomBlur.classList.add('opacity-0') :  bottomBlur.classList.remove('opacity-0');
 }
-
+function initializeBlur(){
+    const bottomBlur = document.getElementById('bottomBlur');
+    setTimeout(()=>{
+        if (mangaList.length > 3){
+            bottomBlur.classList.remove('opacity-0')
+        }
+    },100)
+}
 document.getElementById('scrollContainer').addEventListener('scroll', handleBlur);
-document.addEventListener('DOMContentLoaded', handleBlur);
+document.addEventListener('DOMContentLoaded', initializeBlur);
 
 
 /**
