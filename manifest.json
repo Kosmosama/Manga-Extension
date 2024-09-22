@@ -34,7 +34,10 @@
                 "scripts/bookmarks.js",
                 "scripts/mangaHandler.js",
                 "scripts/dialogHandler.js",
-                "scripts/themeHandler.js"
+                "scripts/themeHandler.js",
+                "scripts/mechamecha.js",
+                "scripts/porter.js",
+                "scripts/themePreloader.js"
             ]
         }
     ],
