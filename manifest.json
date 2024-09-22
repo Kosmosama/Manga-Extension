@@ -13,7 +13,12 @@
   ],
   "action": {
       "default_popup": "index.html",
-      "default_icon": "./public/logo.png"
+      "icons": {
+        "16": "./public/logos/icon16.png",
+        "32": "./public/logos/icon32.png",
+        "48": "./public/logos/icon48.png",
+        "128": "./public/logos/icon128.png"
+      }
   },
   "content_scripts": [
       {
