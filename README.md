@@ -13,3 +13,4 @@ Extension to bookmark mangas you like.
 2. **Add synchronization with own API.**
 3. **Make it so the selected image appears on manga addition/edition**
 4. **Show indicator of which imported bookmark is being handled in the manga addition after the import.**
+5. **Add keyboard shortcut to add current page link as manga. [example](https://imgur.com/a/a177cZu)**
