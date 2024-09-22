@@ -1,44 +1,51 @@
 {
-  "manifest_version": 3,
-  "name": "Manga Library",
-  "description": "Bookmark for mangas/manhwas/manhuas extension",
-  "version": "1.0",
-  "permissions": [
-      "tabs",
-      "scripting",
-      "storage",
-      "webNavigation",
-      "activeTab",
-      "bookmarks"
-  ],
-  "action": {
-      "default_popup": "index.html",
-      "icons": {
-        "16": "./public/logos/icon16.png",
-        "32": "./public/logos/icon32.png",
-        "48": "./public/logos/icon48.png",
-        "128": "./public/logos/icon128.png"
-      }
-  },
-  "content_scripts": [
-      {
-          "matches": ["<all_urls>"],
-          "js": [
-              "scripts/loadMangas.js",
-              "scripts/storageHandler.js",
-              "scripts/translations.js",
-              "scripts/filter.js",
-              "scripts/bookmarks.js",
-              "scripts/mangaHandler.js",
-              "scripts/dialogHandler.js",
-              "scripts/themeHandler.js"
-          ]
-      }
-  ],
-  "web_accessible_resources": [
-      {
-          "resources": ["data/translations.json"],
-          "matches": ["<all_urls>"]
-      }
-  ]
+    "manifest_version": 3,
+    "name": "Manga Library",
+    "description": "Bookmark for mangas/manhwas/manhuas extension",
+    "version": "1.0",
+    "permissions": [
+        "tabs",
+        "scripting",
+        "storage",
+        "webNavigation",
+        "activeTab",
+        "bookmarks"
+    ],
+    "action": {
+        "default_popup": "index.html",
+        "default_icon": "./public/icons/icon128.png"
+    },
+    "icons": {
+        "16": "./public/icons/icon16.png",
+        "32": "./public/icons/icon32.png",
+        "48": "./public/icons/icon48.png",
+        "128": "./public/icons/icon128.png"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "scripts/loadMangas.js",
+                "scripts/storageHandler.js",
+                "scripts/translations.js",
+                "scripts/filter.js",
+                "scripts/bookmarks.js",
+                "scripts/mangaHandler.js",
+                "scripts/dialogHandler.js",
+                "scripts/themeHandler.js"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "data/translations.json"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ]
 }
