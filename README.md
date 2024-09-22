@@ -8,6 +8,7 @@ Extension to bookmark mangas you like.
 2. **Maintain scroll position (if possible) when reloading mangas.**
 3. **Add lazy loading.**
 4. **"Leave in blank to use current page title" (If already exists -> currentWebTitle(1) )**
+5. **Change all checkboxes styles (from import bookmarks, it's blue)**
 
 ## Next Version
 
