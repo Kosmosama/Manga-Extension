@@ -14,16 +14,16 @@
 
 1. Clone this repository:
 ```git
-    git clone https://github.com/Kosmosama/MangaExtension.git
+git clone https://github.com/Kosmosama/MangaExtension.git
 ```
 3. Navigate to the project directory:
 ```bash
-    cd MangaExtension
+cd MangaExtension
 ```
 3. Install the necessary dependencies:
    If you plan to work on the extension, you'll need to install the required Node.js dependencies (including Tailwind CSS). To do so, run:
 ```node
-    npm install
+npm install
 ```
 ## Loading the Extension in Chrome
 
@@ -47,7 +47,7 @@ If you plan to make changes to the extension, ensure that you run the following 
 
 - To build the Tailwind CSS styles, run:
   ```
-      npx tailwindcss -i ./public/input.css -o ./public/tailwind-styles.css --watch
+  npx tailwindcss -i ./public/input.css -o ./public/tailwind-styles.css --watch
   ```
 
 
