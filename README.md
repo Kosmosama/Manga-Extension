@@ -1,19 +1,56 @@
 # MangaExtension
-Extension to bookmark mangas you like.
 
-## TO-DO
+**Extension to bookmark mangas you like.**
 
-1. **Fix the error where, after closing and reopening the **Settings** or **Filters dialog**, the scroll position is maintained."**
-2. **Maintain scroll position (if possible) when reloading mangas.**
-3. **Add lazy loading.**
-4. **"Leave in blank to use current page title" (If already exists -> currentWebTitle(1) )**
-5. **Change all checkboxes styles (from import bookmarks, it's blue)**
+## Index
 
-## Next Version
+1. [Installation](#installation)
+2. [Loading the Extension in Chrome](#loading-the-extension-in-chrome)
+3. [Direct Download from Chrome Web Store](#direct-download-from-chrome-web-store)
+4. [Development](#development)
+5. [TODO](#todo)
 
-1. **Add "genres" to filter and categorize mangas (e.g., manhua, manhwa, etc). Consider allowing users to create genres. + add a completed status**
-2. **Add synchronization with own API.**
-3. **Make it so the selected image appears on manga addition/edition**
-4. **Show indicator of which imported bookmark is being handled in the manga addition after the import.**
-5. **Add keyboard shortcut to add current page link as manga. [example](https://imgur.com/a/a177cZu)**
-6. **Add "Pick Image" - Similar to colorzilla but for images.**
+## Installation
+
+1. Clone this repository:
+    ```git
+   git clone https://github.com/Kosmosama/MangaExtension.git
+    ```
+2. Navigate to the project directory:
+```bash
+   cd MangaExtension
+```
+3. Install the necessary dependencies:
+   If you plan to work on the extension, you'll need to install the required Node.js dependencies (including Tailwind CSS). To do so, run:
+```node
+   npm install
+```
+## Loading the Extension in Chrome
+
+1. Open Chrome and navigate to chrome://extensions/.
+2. Enable **Developer Mode** (toggle located in the top right corner).
+3. Click on **Load unpacked**.
+4. Select the project folder `MangaExtension` that you cloned earlier.
+
+The extension should now be loaded in Chrome, and you can start using it to bookmark your favorite mangas!
+
+## Direct Download from Chrome Web Store
+
+You can also download and install the extension directly from the Chrome Web Store by following this link:
+
+[MangaExtension on Chrome Web Store](https://chromewebstore.google.com/detail/manga-library/agdepjcnhljkjcnnmanbooinhoaieidc)
+
+
+## Development
+
+If you plan to make changes to the extension, ensure that you run the following commands to build the project:
+
+- To build the Tailwind CSS styles, run:
+  ```
+  npx tailwindcss -i ./public/input.css -o ./public/tailwind-styles.css --watch
+  ```
+
+
+## TODO
+
+For future improvements and pending tasks, check the [TODO.md](./TODO.md) file.
