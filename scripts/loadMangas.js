@@ -1,3 +1,9 @@
+// Attach event listener so the blur is initialized when the html is loaded
+document.addEventListener('DOMContentLoaded', initializeBlur);
+
+// Attach event listener to handle blur :onScroll:
+document.getElementById('scrollContainer').addEventListener('scroll', handleBlur);
+
 /**
  * Handles image loading errors by setting a fallback image depending on the current theme (dark or light mode).
  * 
@@ -13,6 +19,26 @@ function handleImageError(event) {
         ? '../public/fallback-images/dark-mode-fallback.svg' 
         : '../public/fallback-images/light-mode-fallback.svg';
 }
+
+/**
+ * Initializes the bottom blur element based on the length of the manga list.
+ * If the list contains more than 3 items, the opacity of the bottom blur is set
+ * (removes the 'opacity-0' class) after a short delay.
+ */
+function initializeBlur(){
+    const bottomBlur = document.getElementById('bottomBlur');
+    setTimeout(()=>{
+        if (mangaList.length > 3){
+            bottomBlur.classList.remove('opacity-0')
+        }
+    },100)
+}
+
+/**
+ * Updates the opacity of top and bottom blur elements based on the scroll position 
+ * of the manga container. It hides the top blur when scrolled to the top and 
+ * the bottom blur when scrolled to the bottom.
+ */
 function handleBlur() {
     const bottomBlur = document.getElementById('bottomBlur');
     const topBlur = document.getElementById('topBlur');
@@ -25,17 +51,6 @@ function handleBlur() {
     scrollTop === 0 ? topBlur.classList.add('opacity-0') : topBlur.classList.remove('opacity-0');
     fullHeight >= scrollHeight ? bottomBlur.classList.add('opacity-0') :  bottomBlur.classList.remove('opacity-0');
 }
-function initializeBlur(){
-    const bottomBlur = document.getElementById('bottomBlur');
-    setTimeout(()=>{
-        if (mangaList.length > 3){
-            bottomBlur.classList.remove('opacity-0')
-        }
-    },100)
-}
-document.getElementById('scrollContainer').addEventListener('scroll', handleBlur);
-document.addEventListener('DOMContentLoaded', initializeBlur);
-
 
 /**
  * Dynamically loads a list of manga objects into the DOM and renders them as interactive elements.
