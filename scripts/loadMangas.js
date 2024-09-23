@@ -58,34 +58,39 @@ function handleBlur() {
  * 
  * @param {Array<Object>} inputList - An array of manga objects to be loaded.
  */
-function loadMangas(inputList) {
+function loadMangas(inputList, batchSize = 3) {
     const mangaListContainer = document.getElementById('mangaListContainer');
     mangaListContainer.innerHTML = '';
+    
+    let currentIndex = 0;
 
-    const fragment = document.createDocumentFragment();
+    function loadBatch() {
+        const fragment = document.createDocumentFragment();
+        const endIndex = Math.min(currentIndex + batchSize, inputList.length);
 
-    inputList.forEach((manga) => {
-        const mangaDiv = document.createElement("div");
-        mangaDiv.classList.add(
-            'flex',
-            'flex-col',
-            'sm:flex-row',
-            'items-start',
-            'sm:items-center',
-            'bg-light-primary',
-            'dark:bg-dark-primary',
-            'rounded-lg',
-            'p-4',
-            'ml-4',
-            'shadow-lg',
-            'transform',
-            'transition-all',
-            'hover:scale-[1.02]',
-            "manga-item"
-        );
-        mangaDiv.dataset.title = manga.title;
+        for (let i = currentIndex; i < endIndex; i++) {
+            const manga = inputList[i];
+            const mangaDiv = document.createElement("div");
+            mangaDiv.classList.add(
+                'flex',
+                'flex-col',
+                'sm:flex-row',
+                'items-start',
+                'sm:items-center',
+                'bg-light-primary',
+                'dark:bg-dark-primary',
+                'rounded-lg',
+                'p-4',
+                'ml-4',
+                'shadow-lg',
+                'transform',
+                'transition-all',
+                'hover:scale-[1.02]',
+                "manga-item"
+            );
+            mangaDiv.dataset.title = manga.title;
 
-        mangaDiv.innerHTML = `
+            mangaDiv.innerHTML = `
             <div class="flex items-center" data-id="43">
                 <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3 mr-2" id="fav">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" id="fav" class="lucide transition-colors duration-200 ${manga.favorite ? "hover:fill-light-red" : "hover:fill-yellow-400"} h-4 w-4 ${manga.favorite ? 'fill-yellow-400' : 'fill-transparent'}">
@@ -139,15 +144,24 @@ function loadMangas(inputList) {
                 </button>
             </div>
         `;
+            // Error event listener to handle image loading errors
+            const imgElement = mangaDiv.querySelector('#manga-image');
+            imgElement.addEventListener('error', handleImageError);
 
-        // Error event listener to handle image loading errors
-        const imgElement = mangaDiv.querySelector('#manga-image');
-        imgElement.addEventListener('error', handleImageError);
+            fragment.appendChild(mangaDiv);
+        }
 
-        fragment.appendChild(mangaDiv);
-    });
+        mangaListContainer.appendChild(fragment);
+        currentIndex += batchSize;
+
+        // If there's more to load, schedule the next batch
+        if (currentIndex < inputList.length) {
+            setTimeout(loadBatch, 0);
+        }
+    }
     handleBlur();
-    mangaListContainer.appendChild(fragment);
+    // Start loading the first batch
+    loadBatch();
 }
 
 /**
