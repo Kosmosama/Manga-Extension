@@ -1,7 +1,6 @@
 # MangaExtension
 Extension to bookmark mangas you like.
 
-
 ## TO-DO
 
 1. **Fix the error where, after closing and reopening the **Settings** or **Filters dialog**, the scroll position is maintained."**
