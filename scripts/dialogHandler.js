@@ -113,8 +113,15 @@ function hideMangaForm() {
  */
 function showFiltersDialog() {
     const filtersDialog = document.getElementById('filtersDialog');
+    handleMaxChapters();
+    toggleDialog(filtersDialog);
+}
 
-    const maxChapters = getMaxChapters();
+function handleMaxChapters(maxChapters = false){
+    
+    if(!maxChapters){
+        maxChapters = getMaxChapters();
+    }
 
     const minChaptersRange = document.getElementById('minChapters');
     const maxChaptersRange = document.getElementById('maxChapters');
@@ -133,7 +140,6 @@ function showFiltersDialog() {
     maxChaptersRange.value = maxChapters;
     maxChaptersSpan.textContent = maxChapters;
 
-    toggleDialog(filtersDialog);
 }
 
 /**

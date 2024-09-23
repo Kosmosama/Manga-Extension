@@ -232,6 +232,9 @@ function handleChapterUpdate(manga, operation, amount = 1) {
     amount = parseInt(amount, 10) || 1;
 
     if (operation === "+") {
+        if(manga.readChapters+amount > getMaxChapters()){
+            handleMaxChapters(manga.readChapters+amount);
+        }
         manga.readChapters = (parseInt(manga.readChapters, 10) || 0) + amount;
     } else if (operation === "-") {
         if (manga.readChapters <= 0) {
