@@ -179,11 +179,17 @@ function createMangaElement(manga) {
         </div>
     `;
 
-    const imgElement = mangaDiv.querySelector('#manga-image');
-    imgElement.addEventListener('error', handleImageError); // Attach image error handler
-
     return mangaDiv;
 }
+
+/**
+ * Event delegation for handling image load errors.
+ */
+document.getElementById("mangaListContainer").addEventListener("error", (event) => {
+    if (event.target.tagName === 'IMG') {
+        handleImageError(event);
+    }
+}, true);
 
 /**
  * Event delegation for handling manga item interactions such as favorite toggle, deletion, editing, 
