@@ -39,6 +39,7 @@ function changePreferredTheme(event) {
     const selectedTheme = event.target.value;
     applyTheme(selectedTheme);
     saveThemePreference(selectedTheme);
+    refreshAndSaveMangas();
 }
 
 /**

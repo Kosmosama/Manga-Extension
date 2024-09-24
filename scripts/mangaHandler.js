@@ -132,6 +132,7 @@ async function getMangaFormData() {
         image: document.getElementById('image').value.trim(),
         title: document.getElementById('title').value.trim(),
         link: link,
+        isImageWorking: true,
         readChapters: validReadChapters,
         favorite: document.getElementById('favorite').checked
     };

@@ -30,6 +30,16 @@ function debounce(func, wait = 100) {
 }
 
 /**
+ * Selects the fallback image based on the current theme (dark or light mode).
+ *
+ * @returns {string} The URL of the fallback image.
+ */
+function handleImageTheme() {
+    return document.documentElement.classList.contains("dark")
+        ? '../public/fallback-images/dark-mode-fallback.svg'
+        : '../public/fallback-images/light-mode-fallback.svg';
+}
+/**
  * Handles image loading errors by setting a fallback image depending on the current theme (dark or light mode).
  * 
  * @param {Event} event - The event object containing the target element that triggered the error.
@@ -37,12 +47,7 @@ function debounce(func, wait = 100) {
 function handleImageError(event) {
     const imgElement = event.target;
     imgElement.onerror = null;
-
-    const isDarkMode = document.documentElement.classList.contains("dark");
-
-    imgElement.src = isDarkMode 
-        ? '../public/fallback-images/dark-mode-fallback.svg' 
-        : '../public/fallback-images/light-mode-fallback.svg';
+    imgElement.src = handleImageTheme();
 }
 
 /**
@@ -96,7 +101,7 @@ function loadMangas(inputList, batchSize = 3) {
 
         mangaListContainer.appendChild(fragment);
         currentIndex += batchSize;
-
+    
         // If there's more to load, schedule the next batch
         if (currentIndex < inputList.length) {
             requestAnimationFrame(loadBatch);
@@ -132,7 +137,7 @@ function createMangaElement(manga) {
                 </svg>
             </button>
         <div class="relative group" id="image-container">
-            <img id="manga-image" src="${manga.image}" alt="${manga.title}" class="w-16 h-16 object-cover rounded-full" loading="lazy">
+            <img id="manga-image" src="${manga.isImageWorking ? manga.image : handleImageTheme()}" alt="${manga.title}" class="w-16 h-16 object-cover rounded-full" loading="lazy">
             <div class="absolute inset-0 bg-black bg-opacity-50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity" id="edit">
                 <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3" id="edit">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-pen h-4 w-4 text-white" id="edit">
@@ -183,11 +188,30 @@ function createMangaElement(manga) {
 }
 
 /**
+ * Retrieves the closest manga item from the event target.
+ *
+ * @param {Event} event - The event object that triggered the function.
+ * @returns {Object} The manga object that is closest to the event target.
+ * @throws {Error} If no manga item is found within the closest '.manga-item' parent.
+ */
+function getClosestManga(event){
+    const mangaItem = event.target.closest('.manga-item');
+    if (!mangaItem) throw new Error('No manga item found within the closest ".manga-item" parent.');
+    const manga = mangaList.find(m => m.title === mangaItem.dataset.title);
+    if (!manga) throw new Error('No manga found with the given title.');
+    return manga;
+}
+
+/**
  * Event delegation for handling image load errors.
  */
 document.getElementById("mangaListContainer").addEventListener("error", (event) => {
+    const manga = getClosestManga(event);
     if (event.target.tagName === 'IMG') {
-        handleImageError(event);
+        if (manga.isImageWorking){
+            handleImageError(event);
+            manga.isImageWorking = false;
+        }
     }
 }, true);
 
@@ -205,11 +229,8 @@ const actions = {
     'removeCap': (manga) => handleChapterUpdate(manga, '-')
 };
 document.getElementById("mangaListContainer").addEventListener("click", (event) => {
-    const mangaItem = event.target.closest('.manga-item');
-    if (!mangaItem) return;
-
-    const manga = mangaList.find(m => m.title === mangaItem.dataset.title);
-
+    const manga = getClosestManga(event);
+    if(!manga) return;
     // Traverse up the DOM tree to find the relevant svg button
     let targetElement = event.target;
     
