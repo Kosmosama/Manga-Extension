@@ -103,7 +103,7 @@ function loadMangas(inputList, batchSize = 3) {
                     </svg>
                 </button>
             <div class="relative group" id="image-container">
-                <img id="manga-image" src="${manga.image}" alt="${manga.title}" class="w-16 h-16 object-cover rounded-full">
+                <img id="manga-image" src="${manga.image}" alt="${manga.title}" class="w-16 h-16 object-cover rounded-full" loading="lazy">
                 <div class="absolute inset-0 bg-black bg-opacity-50 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity" id="edit">
                     <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-9 rounded-md px-3" id="edit">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-square-pen h-4 w-4 text-white" id="edit">
