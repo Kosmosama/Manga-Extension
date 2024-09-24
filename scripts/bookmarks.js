@@ -217,8 +217,9 @@ function importSelectedBookmarks() {
     }
     checkedCheckboxes.forEach(checkbox => {
         const bookmarkElement = checkbox.closest('.bookmark');
+        const label = bookmarkElement.querySelector('label');
         selectedBookmarks.push({
-            title: bookmarkElement.querySelector('label').textContent,
+            title: label.getAttribute('title'),
             link: bookmarkElement.getAttribute('data-url')
         });
     });
