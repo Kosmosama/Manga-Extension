@@ -52,11 +52,16 @@ function handleBlur() {
     fullHeight >= scrollHeight ? bottomBlur.classList.add('opacity-0') :  bottomBlur.classList.remove('opacity-0');
 }
 
+
+
+
 /**
- * Dynamically loads a list of manga objects into the DOM and renders them as interactive elements.
- * Each manga item includes controls for favorite, edit, delete, and chapter update actions.
+ * Loads a list of manga items into the DOM, with support for batch loading and error handling for image loading.
  * 
- * @param {Array<Object>} inputList - An array of manga objects to be loaded.
+ * @param {Array} inputList - The list of manga objects to be loaded.
+ * @param {number} [batchSize=3] - The number of manga items to load at a time. Default is 3.
+ * 
+ * @returns {void}
  */
 function loadMangas(inputList, batchSize = 3) {
     const mangaListContainer = document.getElementById('mangaListContainer');
@@ -67,7 +72,7 @@ function loadMangas(inputList, batchSize = 3) {
     function loadBatch() {
         const fragment = document.createDocumentFragment();
         const endIndex = Math.min(currentIndex + batchSize, inputList.length);
-
+    
         for (let i = currentIndex; i < endIndex; i++) {
             const manga = inputList[i];
             const mangaDiv = document.createElement("div");
@@ -162,6 +167,7 @@ function loadMangas(inputList, batchSize = 3) {
     handleBlur();
     // Start loading the first batch
     loadBatch();
+
 }
 
 /**
