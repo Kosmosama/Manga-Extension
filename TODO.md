@@ -1,10 +1,9 @@
 
 ## TO-DO
 
-1. **Fix the error where, after closing and reopening the **Settings** or **Filters dialog**, the scroll position is maintained."**
-2. **Maintain scroll position (if possible) when reloading mangas.**
-3. **"Leave in blank to use current page title" (If already exists -> currentWebTitle(1) )**
-4. **Change all checkboxes styles (from import bookmarks, it's blue)**
+1. **Maintain scroll position (if possible) when reloading mangas.**
+2. **"Leave in blank to use current page title" (If already exists -> currentWebTitle(1) )**
+3. **Change all checkboxes styles (from import bookmarks, it's blue)**
 
 ## Next Version
 
