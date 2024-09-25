@@ -55,7 +55,7 @@ function createFolderElement(bookmark) {
 
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
-    checkbox.classList.add('folder-checkbox', 'mr-2');
+    checkbox.classList.add('bookmark-checkbox', 'mr-2','accent-light-primary-text','dark:accent-dark-primary-text');
 
     const labelContainer = document.createElement('div');
     labelContainer.classList.add('flex', 'items-center', 'space-x-2', 'cursor-pointer');
@@ -106,7 +106,6 @@ function setAttributes(el, attrs) {
  * Creates a bookmark element for individual bookmarks.
  * 
  * @param {Object} bookmark - The bookmark object containing title and URL.
- * 
  * @returns {HTMLElement} - The created bookmark element.
  */
 function createBookmarkElement(bookmark) {
@@ -115,7 +114,7 @@ function createBookmarkElement(bookmark) {
 
     const checkbox = document.createElement('input');
     checkbox.type = 'checkbox';
-    checkbox.classList.add('bookmark-checkbox', 'mr-2');
+    checkbox.classList.add('folder-checkbox', 'mr-2','accent-light-primary-text','dark:accent-dark-primary-text');
 
     const svgIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     setAttributes(svgIcon, {

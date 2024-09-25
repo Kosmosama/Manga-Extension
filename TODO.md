@@ -2,7 +2,6 @@
 ## TO-DO
 
 1. **Maintain scroll position (if possible) when reloading mangas.**
-2. **Change all checkboxes styles (from import bookmarks, it's blue)**
 
 ## Next Version
 
