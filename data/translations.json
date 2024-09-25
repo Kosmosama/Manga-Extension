@@ -48,7 +48,7 @@
         "import-from-json-subtitle": "Importar desde JSON",
         "placeholder-search-bar": "Buscar manga...",
         "placeholder-image-url": "Proporcione la URL de la imagen. (opcional)",
-        "placeholder-manga-title": "Debe ser único",
+        "placeholder-manga-title": "Debe ser único. Deje en blanco para usar el título de la página actual.",
         "placeholder-manga-link": "Deje en blanco para usar la URL de la página actual",
         "modal-not-all-mangas-valid": "Algunas entradas de manga en el JSON eran inválidas y no fueron añadidas."
     },
@@ -101,7 +101,7 @@
         "import-from-json-subtitle": "Import from JSON",
         "placeholder-search-bar": "Search manga...",
         "placeholder-image-url": "Provide the image URL. (optional)",
-        "placeholder-manga-title": "Must be unique",
+        "placeholder-manga-title": "Must be unique. Leave in blank to use current page title.",
         "placeholder-manga-link": "Leave in blank to use the current page URL",
         "modal-not-all-mangas-valid": "Some manga entries in the JSON were invalid and were not added."
     },
@@ -154,7 +154,7 @@
         "import-from-json-subtitle": "Importer depuis JSON",
         "placeholder-search-bar": "Rechercher un manga...",
         "placeholder-image-url": "Fournissez l'URL de l'image. (facultatif)",
-        "placeholder-manga-title": "Doit être unique",
+        "placeholder-manga-title": "Doit être unique. Laissez vide pour utiliser le titre de la page actuelle.",
         "placeholder-manga-link": "Laissez vide pour utiliser l'URL de la page actuelle",
         "modal-not-all-mangas-valid": "Certaines entrées de manga dans le JSON étaient invalides et n'ont pas été ajoutées."
     },
@@ -207,7 +207,7 @@
         "import-from-json-subtitle": "Aus JSON importieren",
         "placeholder-search-bar": "Manga suchen...",
         "placeholder-image-url": "Geben Sie die Bild-URL an. (optional)",
-        "placeholder-manga-title": "Muss einzigartig sein",
+        "placeholder-manga-title": "Muss einzigartig sein. Lassen Sie es leer, um den aktuellen Seitentitel zu verwenden.",
         "placeholder-manga-link": "Leer lassen, um die URL der aktuellen Seite zu verwenden",
         "modal-not-all-mangas-valid": "Einige Manga-Einträge im JSON waren ungültig und wurden nicht hinzugefügt."
     },
@@ -260,7 +260,7 @@
         "import-from-json-subtitle": "Импорт из JSON",
         "placeholder-search-bar": "Искать мангу...",
         "placeholder-image-url": "Укажите URL изображения. (необязательно)",
-        "placeholder-manga-title": "Должно быть уникальным",
+        "placeholder-manga-title": "Должно быть уникальным. Оставьте поле пустым, чтобы использовать текущий заголовок страницы.",
         "placeholder-manga-link": "Оставьте пустым, чтобы использовать URL текущей страницы",
         "modal-not-all-mangas-valid": "Некоторые записи манги в JSON были недействительными и не были добавлены."
     },
@@ -313,7 +313,7 @@
         "import-from-json-subtitle": "Importar do JSON",
         "placeholder-search-bar": "Pesquisar manga...",
         "placeholder-image-url": "Forneça a URL da imagem. (opcional)",
-        "placeholder-manga-title": "Deve ser único",
+        "placeholder-manga-title": "Deve ser único. Deixe em branco para usar o título da página atual.",
         "placeholder-manga-link": "Deixe em branco para usar a URL da página atual",
         "modal-not-all-mangas-valid": "Algumas entradas de mangá no JSON eram inválidas e não foram adicionadas."
     },
@@ -366,7 +366,7 @@
         "import-from-json-subtitle": "从 JSON 导入",
         "placeholder-search-bar": "搜索漫画...",
         "placeholder-image-url": "提供图片 URL。 (可选)",
-        "placeholder-manga-title": "必须是唯一的",
+        "placeholder-manga-title": "必须是唯一的。留空以使用当前页面标题。",
         "placeholder-manga-link": "留空以使用当前页面的URL",
         "modal-not-all-mangas-valid": "JSON 中的一些漫画条目无效，未添加。"
     },
@@ -419,7 +419,7 @@
         "import-from-json-subtitle": "JSONからインポート",
         "placeholder-search-bar": "マンガを検索...",
         "placeholder-image-url": "画像のURLを提供してください。（オプション）",
-        "placeholder-manga-title": "ユニークでなければなりません",
+        "placeholder-manga-title": "一意である必要があります。空白のままにすると、現在のページタイトルが使用されます。",
         "placeholder-manga-link": "現在のページのURLを使用するには空白のままにしてください",
         "modal-not-all-mangas-valid": "JSONの一部のマンガエントリーが無効で、追加されませんでした。"
     }

@@ -49,7 +49,7 @@ const defaultTranslations = {
         "import-from-json-subtitle": "Import from JSON",
         "placeholder-search-bar": "Search manga...",
         "placeholder-image-url": "Provide the image URL. (optional)",
-        "placeholder-manga-title": "Must be unique",
+        "placeholder-manga-title": "Must be unique. Leave in blank to use current page title.",
         "placeholder-manga-link": "Leave in blank to use the current page URL",
         "modal-not-all-mangas-valid": "Some manga entries in the JSON were invalid and were not added."
     }
@@ -90,6 +90,7 @@ function translate(key) {
  * If the language is not found in the provided translations, defaults to 'en'.
  * 
  * @param {Object} translations - The object containing translations for various languages.
+ * 
  * @returns {Promise<string>} - A promise that resolves to the preferred language code.
  */
 function loadPreferredLanguage(translations) {

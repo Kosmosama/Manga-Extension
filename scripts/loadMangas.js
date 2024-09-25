@@ -192,6 +192,7 @@ function createMangaElement(manga) {
  * Retrieves the closest manga item from the event target.
  *
  * @param {Event} event - The event object that triggered the function.
+ * 
  * @returns {Object|null} The manga object closest to the event target, or `null` if not found.
  */
 function getClosestManga(event) {

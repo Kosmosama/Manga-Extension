@@ -106,6 +106,7 @@ function setAttributes(el, attrs) {
  * Creates a bookmark element for individual bookmarks.
  * 
  * @param {Object} bookmark - The bookmark object containing title and URL.
+ * 
  * @returns {HTMLElement} - The created bookmark element.
  */
 function createBookmarkElement(bookmark) {

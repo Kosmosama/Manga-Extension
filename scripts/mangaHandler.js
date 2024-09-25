@@ -33,7 +33,6 @@ async function handleFormSubmission(event) {
     }
 }
 
-
 /**
  * Fills the manga form with the details of the manga to be edited.
  * 
@@ -96,41 +95,70 @@ async function updateMangaDetails(manga) {
 }
 
 /**
- * Fetches the URL of the current active tab.
+ * Fetches both the URL and the title of the current active tab.
  * 
- * @returns {Promise<string>} A promise that resolves to the current tab's URL.
+ * @returns {Promise<Object>} A promise that resolves to an object containing the current tab's title and URL.
  */
-function getCurrentTabURL() {
+async function getCurrentTabInfo() {
     return new Promise((resolve) => {
-        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-            if (tabs && tabs.length > 0 && tabs[0].url) {
-                let currentUrl = new URL(tabs[0].url);
-                resolve(currentUrl.href);
+        chrome.tabs.query({ active: true, currentWindow: true }, (tab) => {
+            if (tab && tab.length > 0) {
+                const tabInfo = {
+                    title: tab[0].title || 'Error',
+                    url: tab[0].url ? new URL(tab[0].url).href : 'Error'
+                };
+                resolve(tabInfo);
             } else {
-                console.warn('No active tab found. Defaulting link to empty string.');
-                resolve('');
+                console.warn('No active tab found. Defaulting title and link to empty strings.');
+                resolve({ title: '', url: '' });
             }
         });
     });
 }
 
 /**
- * Retrieves the manga data from the form.
+ * Generates a unique title by appending a counter if the title is already used.
+ *
+ * @param {string} title - The original title.
  * 
- * @param {boolean} [isEditMode=false] - Indicates whether the form is in edit mode.
+ * @returns {string} A unique title that is not currently in use.
+ */
+function generateUniqueTitle(title) {
+    if (!isNameUsed(title)) return title;
+
+    let counter = 1;
+    let newTitle = `${title} (${counter})`;
+
+    // Increment the counter until a unique title is found
+    while (isNameUsed(newTitle)) {
+        counter++;
+        newTitle = `${title} (${counter})`;
+    }
+
+    return newTitle;
+}
+
+/**
+ * Retrieves the manga data from the form.
+ *
  * @returns {Promise<Object>} A promise that resolves to an object containing the manga data from the form.
  */
 async function getMangaFormData() {
     const linkInput = document.getElementById('link').value.trim();
-    const link = linkInput || await getCurrentTabURL();
-
+    const titleInput = document.getElementById('title').value.trim();
     const readChaptersInput = document.getElementById('readChapters').value.trim();
+    
+    const { title: tabTitle, url: tabUrl } = await getCurrentTabInfo();
+    
+    const link = linkInput || tabUrl;
+    const title = titleInput || generateUniqueTitle(tabTitle);
+
     const readChapters = parseInt(readChaptersInput, 10);
     const validReadChapters = isNaN(readChapters) || readChapters < 0 ? 0 : readChapters;
 
     return {
         image: document.getElementById('image').value.trim(),
-        title: document.getElementById('title').value.trim(),
+        title: title,
         link: link,
         isImageWorking: true,
         readChapters: validReadChapters,
@@ -143,6 +171,7 @@ async function getMangaFormData() {
  * 
  * @param {Object} mangaData - The manga data to be validated.
  * @param {string} [originalTitle=''] - The original title of the manga (used for edit mode).
+ * 
  * @returns {string|null} Validation error message or null if data is valid.
  */
 function validateMangaData(mangaData, originalTitle = '') {
@@ -190,6 +219,7 @@ function refreshAndSaveMangas() {
  * Checks if a manga title is already used in the manga list.
  * 
  * @param {string} title - The manga title to check.
+ * 
  * @returns {boolean} True if the title is already used, false otherwise.
  */
 function isNameUsed(title) {
@@ -227,6 +257,7 @@ function handleFavoriteToggle(manga) {
  * @param {Object} manga - The manga object to update.
  * @param {string} operation - The operation to perform ('+' to add, '-' to subtract).
  * @param {number} [amount=1] - The number of chapters to add or subtract.
+ * 
  * @throws {Error} If the operation is not '+' or '-'.
  */
 function handleChapterUpdate(manga, operation, amount = 1) {
@@ -240,7 +271,6 @@ function handleChapterUpdate(manga, operation, amount = 1) {
     } else if (operation === "-") {
         if (manga.readChapters <= 0) {
             manga.readChapters = 0;
-            //#TODO Add css feedback on clicking "-" to a 0 chapters manga, maybe red background animation
         } else {
             manga.readChapters = (parseInt(manga.readChapters, 10) || 0) - amount;
         }

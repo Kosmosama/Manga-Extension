@@ -2,7 +2,6 @@
 document.querySelectorAll('[data-dialog-target]').forEach(button => {
     const targetDialog = document.getElementById(button.getAttribute('data-dialog-target'));
 
-    // #TODO remove data-dialog-target="filtersDialog" from "menuBtn"
     button.addEventListener('click', () => toggleDialog(targetDialog));
 });
 
@@ -170,6 +169,12 @@ function hideImportBookmarkDialog() {
     // Update the overlay visibility after hiding the dialog
     updateOverlayVisibility();
 }
+
+/**
+ * Resets the scroll position of a dialog to the top after a specified delay.
+ *
+ * @param {HTMLElement} dialog - The dialog element whose scroll position should be reset.
+ */
 function handleScrollReset(dialog){
     setTimeout(()=> {
         dialog.scrollTop = 0;

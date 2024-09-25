@@ -207,11 +207,15 @@ async function loadFilteredMangas() {
 async function sortMangas(array, filterMethod, order, favOnly, currentPageOnly, minChapters, maxChapters) {
     // If currentPageOnly is true, get the current URL and shows only the currentPage mangas.
     if (currentPageOnly) {
-        const currentUrl = new URL(await getCurrentTabURL());
-        const mangasInURL = array.filter(manga => manga.link.startsWith(currentUrl.origin));
-
-        if (mangasInURL.length > 0) {
-            array = mangasInURL;
+        const { url: currentUrl } = await getCurrentTabInfo();
+        
+        if (currentUrl) {
+            const currentOrigin = new URL(currentUrl).origin;
+            const mangasInURL = array.filter(manga => manga.link.startsWith(currentOrigin));
+    
+            if (mangasInURL.length > 0) {
+                array = mangasInURL;
+            }
         }
     }
 
