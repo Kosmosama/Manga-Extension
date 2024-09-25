@@ -39,6 +39,7 @@ function handleImageTheme() {
         ? '../public/fallback-images/dark-mode-fallback.svg'
         : '../public/fallback-images/light-mode-fallback.svg';
 }
+
 /**
  * Handles image loading errors by setting a fallback image depending on the current theme (dark or light mode).
  * 
@@ -239,7 +240,7 @@ document.getElementById("mangaListContainer").addEventListener("click", (event) 
         targetElement = targetElement.closest('svg');
     }
 
-    if (actions[targetElement.id]) {
+    if (targetElement && targetElement.id && actions[targetElement.id]) {
         actions[targetElement.id](manga);
     } else {
         // This should never happen tho
