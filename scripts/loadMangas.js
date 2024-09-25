@@ -240,7 +240,5 @@ document.getElementById("mangaListContainer").addEventListener("click", (event) 
 
     if (targetElement && targetElement.id && actions[targetElement.id]) {
         actions[targetElement.id](manga);
-    } else {
-        console.error(`No action found for ID: ${targetElement.id}`);
     }
 });
