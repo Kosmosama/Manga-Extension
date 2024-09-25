@@ -192,14 +192,13 @@ function createMangaElement(manga) {
  * Retrieves the closest manga item from the event target.
  *
  * @param {Event} event - The event object that triggered the function.
- * @returns {Object} The manga object that is closest to the event target.
- * @throws {Error} If no manga item is found within the closest '.manga-item' parent.
+ * @returns {Object|null} The manga object closest to the event target, or `null` if not found.
  */
-function getClosestManga(event){
+function getClosestManga(event) {
     const mangaItem = event.target.closest('.manga-item');
-    if (!mangaItem) throw new Error('No manga item found within the closest ".manga-item" parent.');
+    if (!mangaItem) return null;
     const manga = mangaList.find(m => m.title === mangaItem.dataset.title);
-    if (!manga) throw new Error('No manga found with the given title.');
+    if (!manga) return null;
     return manga;
 }
 
@@ -231,19 +230,16 @@ const actions = {
 };
 document.getElementById("mangaListContainer").addEventListener("click", (event) => {
     const manga = getClosestManga(event);
-    if(!manga) return;
-    // Traverse up the DOM tree to find the relevant svg button
+    if (!manga) return;
+
     let targetElement = event.target;
-    
-    // Check if the target is a path or child of svg, navigate to the parent svg if necessary
     if (targetElement.tagName === 'path' || targetElement.tagName === 'polygon') {
-        targetElement = targetElement.closest('svg');
+        targetElement = targetElement.closest('svg') || targetElement;
     }
 
     if (targetElement && targetElement.id && actions[targetElement.id]) {
         actions[targetElement.id](manga);
     } else {
-        // This should never happen tho
         console.error(`No action found for ID: ${targetElement.id}`);
     }
 });
