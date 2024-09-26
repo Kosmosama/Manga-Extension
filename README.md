@@ -47,7 +47,7 @@ If you plan to make changes to the extension, ensure that you run the following 
 
 - To build the Tailwind CSS styles, run:
   ```
-  npx tailwindcss -i ./public/input.css -o ./public/tailwind-styles.css --watch
+  npx tailwindcss -i ./styles/input.css -o ./styles/tailwind-styles.css --watch
   ```
 
 
