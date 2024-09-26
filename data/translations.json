@@ -50,7 +50,9 @@
         "placeholder-image-url": "Proporcione la URL de la imagen. (opcional)",
         "placeholder-manga-title": "Debe ser único. Deje en blanco para usar el título de la página actual.",
         "placeholder-manga-link": "Deje en blanco para usar la URL de la página actual",
-        "modal-not-all-mangas-valid": "Algunas entradas de manga en el JSON eran inválidas y no fueron añadidas."
+        "modal-not-all-mangas-valid": "Algunas entradas de manga en el JSON eran inválidas y no fueron añadidas.",
+        "confirm-link-reload": "¿Estás seguro de que deseas actualizar el link del capítulo?",
+        "reload-button": "Actualizar"
     },
     "en": {
         "extension-title": "Manga Library",
@@ -103,7 +105,9 @@
         "placeholder-image-url": "Provide the image URL. (optional)",
         "placeholder-manga-title": "Must be unique. Leave in blank to use current page title.",
         "placeholder-manga-link": "Leave in blank to use the current page URL",
-        "modal-not-all-mangas-valid": "Some manga entries in the JSON were invalid and were not added."
+        "modal-not-all-mangas-valid": "Some manga entries in the JSON were invalid and were not added.",
+        "confirm-link-reload": "Are you sure you want to update the chapter link?",
+        "reload-button": "Update"
     },
     "fr": {
         "extension-title": "Bibliothèque de Manga",
@@ -156,7 +160,9 @@
         "placeholder-image-url": "Fournissez l'URL de l'image. (facultatif)",
         "placeholder-manga-title": "Doit être unique. Laissez vide pour utiliser le titre de la page actuelle.",
         "placeholder-manga-link": "Laissez vide pour utiliser l'URL de la page actuelle",
-        "modal-not-all-mangas-valid": "Certaines entrées de manga dans le JSON étaient invalides et n'ont pas été ajoutées."
+        "modal-not-all-mangas-valid": "Certaines entrées de manga dans le JSON étaient invalides et n'ont pas été ajoutées.",
+        "confirm-link-reload": "Êtes-vous sûr de vouloir mettre à jour le lien du chapitre?",
+        "reload-button": "Mettre à jour"
     },
     "de": {
         "extension-title": "Manga-Bibliothek",
@@ -209,7 +215,9 @@
         "placeholder-image-url": "Geben Sie die Bild-URL an. (optional)",
         "placeholder-manga-title": "Muss einzigartig sein. Lassen Sie es leer, um den aktuellen Seitentitel zu verwenden.",
         "placeholder-manga-link": "Leer lassen, um die URL der aktuellen Seite zu verwenden",
-        "modal-not-all-mangas-valid": "Einige Manga-Einträge im JSON waren ungültig und wurden nicht hinzugefügt."
+        "modal-not-all-mangas-valid": "Einige Manga-Einträge im JSON waren ungültig und wurden nicht hinzugefügt.",
+        "confirm-link-reload": "Sind Sie sicher, dass Sie den Kapitel-Link aktualisieren möchten?",
+        "reload-button": "Aktualisieren"
     },
     "ru": {
         "extension-title": "Библиотека Манги",
@@ -262,7 +270,9 @@
         "placeholder-image-url": "Укажите URL изображения. (необязательно)",
         "placeholder-manga-title": "Должно быть уникальным. Оставьте поле пустым, чтобы использовать текущий заголовок страницы.",
         "placeholder-manga-link": "Оставьте пустым, чтобы использовать URL текущей страницы",
-        "modal-not-all-mangas-valid": "Некоторые записи манги в JSON были недействительными и не были добавлены."
+        "modal-not-all-mangas-valid": "Некоторые записи манги в JSON были недействительными и не были добавлены.",
+        "confirm-link-reload": "Вы уверены, что хотите обновить ссылку на главу?",
+        "reload-button": "Обновить"
     },
     "pt": {
         "extension-title": "Biblioteca de Manga",
@@ -315,7 +325,9 @@
         "placeholder-image-url": "Forneça a URL da imagem. (opcional)",
         "placeholder-manga-title": "Deve ser único. Deixe em branco para usar o título da página atual.",
         "placeholder-manga-link": "Deixe em branco para usar a URL da página atual",
-        "modal-not-all-mangas-valid": "Algumas entradas de mangá no JSON eram inválidas e não foram adicionadas."
+        "modal-not-all-mangas-valid": "Algumas entradas de mangá no JSON eram inválidas e não foram adicionadas.",
+        "confirm-link-reload": "Tem certeza de que deseja atualizar o link do capítulo?",
+        "reload-button": "Atualizar"
     },
     "zh": {
         "extension-title": "漫画库",
@@ -368,7 +380,9 @@
         "placeholder-image-url": "提供图片 URL。 (可选)",
         "placeholder-manga-title": "必须是唯一的。留空以使用当前页面标题。",
         "placeholder-manga-link": "留空以使用当前页面的URL",
-        "modal-not-all-mangas-valid": "JSON 中的一些漫画条目无效，未添加。"
+        "modal-not-all-mangas-valid": "JSON 中的一些漫画条目无效，未添加。",
+        "confirm-link-reload": "确定要更新章节链接吗？",
+        "reload-button": "更新"
     },
     "ja": {
         "extension-title": "マンガライブラリ",
@@ -421,6 +435,8 @@
         "placeholder-image-url": "画像のURLを提供してください。（オプション）",
         "placeholder-manga-title": "一意である必要があります。空白のままにすると、現在のページタイトルが使用されます。",
         "placeholder-manga-link": "現在のページのURLを使用するには空白のままにしてください",
-        "modal-not-all-mangas-valid": "JSONの一部のマンガエントリーが無効で、追加されませんでした。"
+        "modal-not-all-mangas-valid": "JSONの一部のマンガエントリーが無効で、追加されませんでした。",
+        "confirm-link-reload": "チャプターリンクを更新してもよろしいですか？",
+        "reload-button": "更新"
     }
 }

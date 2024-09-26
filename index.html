@@ -291,7 +291,7 @@
                     <label for="title"
                         class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                         data-translate-key="title-field-label">Title</label>
-                    <input type="text" autocomplete="off" id="title" name="title" required data-translate-key="placeholder-manga-title" placeholder="Must be unique. Leave in blank to use current page title."
+                    <input type="text" autocomplete="off" id="title" name="title" data-translate-key="placeholder-manga-title" placeholder="Must be unique. Leave in blank to use current page title."
                     class="border-light-border dark:border-dark-border placeholder:text-light-secondary-text focus:border-light-secondary-text dark:focus:border-dark-secondary-text flex h-10 w-full rounded-md border bg-light-primary px-3 py-2 text-sm text-light-primary-text dark:bg-dark-secondary dark:text-dark-primary-text" />
                 </div>
                 <div>
@@ -551,6 +551,50 @@
             </div>
         </div>
     </div>
+    <div id="reloadLink" tabindex="-1"
+    class="fixed left-0 right-0 top-0 z-[101] hidden h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden md:inset-0">
+    <div id="reloadBox" class="relative max-h-full w-full max-w-md p-4">
+        <div class="relative rounded-lg bg-light-primary shadow dark:bg-dark-primary">
+            <button type="button" id="cancelReloadCross"
+                class="absolute end-2.5 top-3 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg text-sm"
+                data-modal-hide="confirmationDialog">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd"
+                        d="M10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414L10 8.586z"
+                        clip-rule="evenodd" />
+                </svg>
+            </button>
+            <div class="p-4 text-center md:p-5">
+                <!-- SVG grande y centrado -->
+                <div class="flex justify-center items-center mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none"
+                        stroke="#00c8ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="icon icon-tabler icons-tabler-outline icon-tabler-reload">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <path
+                            d="M19.933 13.041a8 8 0 1 1 -9.925 -8.788c3.899 -1 7.935 1.007 9.425 4.747" />
+                        <path d="M20 4v5h-5" />
+                    </svg>
+                </div>
+                <p data-translate-key="confirm-link-reload"
+                    class="mb-5 text-lg font-normal text-light-primary-text dark:text-dark-primary-text">
+                    ¿Estás seguro de que deseas actualizar el link del capítulo?
+                </p>
+                <!-- Botón de Reload más visible -->
+                <button id="confirmReload" type="button" data-translate-key="reload-button"
+                    class="inline-flex transition-colors duration-100 items-center rounded-lg bg-[#00c8ff] px-6 py-3 text-center text-sm font-medium text-white hover:bg-[#00a6d1] focus:outline-none focus:ring-4 focus:ring-[#00a6d1]/50">
+                    Reload
+                </button>
+                <button id="cancelReload" type="button" data-translate-key="cancel-button"
+                    class="ms-3 transition-colors duration-100 rounded-lg border border-light-border bg-light-primary px-5 py-2.5 text-sm font-medium text-light-primary-text hover:bg-light-secondary-text focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-dark-border dark:bg-dark-primary dark:text-dark-primary-text dark:hover:bg-dark-secondary dark:hover:text-dark-secondary-text dark:focus:ring-gray-700">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 
     <div id="konamiContent"></div>
 

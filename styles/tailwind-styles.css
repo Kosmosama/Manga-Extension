@@ -604,6 +604,10 @@ video {
   pointer-events: none;
 }
 
+.visible {
+  visibility: visible;
+}
+
 .fixed {
   position: fixed;
 }
@@ -1142,6 +1146,11 @@ video {
   background-color: transparent;
 }
 
+.bg-\[\#00c8ff\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 200 255 / var(--tw-bg-opacity));
+}
+
 .bg-opacity-50 {
   --tw-bg-opacity: 0.5;
 }
@@ -1233,6 +1242,11 @@ video {
 .py-4 {
   padding-top: 1rem;
   padding-bottom: 1rem;
+}
+
+.py-3 {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
 }
 
 .pl-1 {
@@ -1563,6 +1577,11 @@ video {
   background-color: rgb(161 161 161 / 0.8);
 }
 
+.hover\:bg-\[\#00a6d1\]:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(0 166 209 / var(--tw-bg-opacity));
+}
+
 .hover\:fill-light-red:hover {
   fill: #EB2828;
 }
@@ -1628,6 +1647,10 @@ video {
 .focus\:ring-gray-100:focus {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(243 244 246 / var(--tw-ring-opacity));
+}
+
+.focus\:ring-\[\#00a6d1\]\/50:focus {
+  --tw-ring-color: rgb(0 166 209 / 0.5);
 }
 
 .focus-visible\:outline-none:focus-visible {

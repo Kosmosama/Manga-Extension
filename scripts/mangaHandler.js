@@ -73,6 +73,15 @@ async function addNewManga() {
     refreshAndSaveMangas();
 }
 
+function hasChanges(manga, mangaData){
+    return manga.image === mangaData.image &&
+    manga.link === mangaData.link &&
+    manga.readChapters === mangaData.readChapters &&
+    manga.title === mangaData.title &&
+    manga.favorite === mangaData.favorite;
+
+}
+
 /**
  * Updates the details of an existing manga.
  * 
@@ -86,7 +95,10 @@ async function updateMangaDetails(manga) {
         showModal(validationError);
         return;
     }
-
+    if (hasChanges(manga, mangaData)) {
+        handleLinkReload(manga);
+        return;
+    }
     Object.assign(manga, mangaData, { lastRead: new Date().toLocaleString() });
 
     resetFormValues();
@@ -281,6 +293,34 @@ function handleChapterUpdate(manga, operation, amount = 1) {
 
     manga.lastRead = new Date().toLocaleString();
     refreshAndSaveMangas();
+}
+
+async function handleLinkReload(manga) {
+    const reloadDiv = document.getElementById('reloadLink');
+    const newUrl = await getCurrentTabInfo();
+
+    if(manga.link === newUrl.url){
+        closeAllDialogs();
+        return;
+    }
+    reloadDiv.style.display = 'flex';
+
+    function closeDialog() {
+        reloadDiv.style.display = 'none';
+    }
+
+    document.getElementById('cancelReloadCross').addEventListener('click', closeDialog, { once: true });
+    document.getElementById('cancelReload').addEventListener('click', closeDialog, { once: true });
+
+    document.getElementById('confirmReload').addEventListener('click', () => {
+        if(manga.link === newUrl.url){
+            return;
+        }
+        Object.assign(manga, {link: newUrl.url});
+        saveMangas();
+        closeDialog();
+        closeAllDialogs();
+    }, { once: true });
 }
 
 /**
