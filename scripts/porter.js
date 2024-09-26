@@ -74,6 +74,7 @@ function handleFileLoad(event) {
  * Validates that the given object contains all the required keys for a manga entry.
  * 
  * @param {Object} obj - The object to validate.
+ * 
  * @returns {boolean} - Returns `true` if the object has all required manga keys, `false` otherwise.
  */
 function validateMangaObject(obj) {

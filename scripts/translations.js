@@ -74,6 +74,7 @@ fetch('data/translations.json')
  * Translates a given key based on the current language setting.
  * 
  * @param {string} key - The key to translate.
+ * 
  * @returns {string} - The translated string, or the key itself if no translation is found.
  */
 function translate(key) {
