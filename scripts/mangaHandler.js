@@ -289,6 +289,7 @@ function handleFavoriteToggle(manga, event) {
  */
 function handleChapterUpdate(manga, operation, amount = 1, event) {
     const mangaItemElement = event.target.closest('.manga-item');
+    const mangaDateElement = mangaItemElement.querySelector('#date');
     const mangaChaptersElement = mangaItemElement.querySelector('#chapter-count');
     amount = parseInt(amount, 10) || 1;
 
@@ -309,9 +310,12 @@ function handleChapterUpdate(manga, operation, amount = 1, event) {
     }
 
     manga.lastRead = new Date().toLocaleString();
-    
+    mangaDateElement.textContent = manga.lastRead;
     mangaChaptersElement.textContent = "Ch. " + manga.readChapters;
     saveMangas();
+    if(document.getElementById('sortOption').value == 'chaptersRead'){
+        loadFilteredMangas();
+    }
 
 }
 

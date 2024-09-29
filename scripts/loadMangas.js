@@ -163,7 +163,9 @@ function createMangaElement(manga) {
                     <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path>
                     <circle cx="12" cy="12" r="3"></circle>
                 </svg>
+                <span id="date">
                 ${manga.lastRead}
+                </span>
             </p>
         </div>
         <div class="flex items-center space-x-1 ml-0 sm:ml-4" id="chapter-controls">
