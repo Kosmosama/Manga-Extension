@@ -96,6 +96,7 @@ function loadMangas(inputList, batchSize = 3) {
 
         for (let i = currentIndex; i < endIndex; i++) {
             const manga = inputList[i];
+            manga.isImageWorking = true;
             const mangaDiv = createMangaElement(manga);
             fragment.appendChild(mangaDiv);
         }
@@ -223,11 +224,11 @@ document.getElementById("mangaListContainer").addEventListener("error", (event) 
  * @param {Event} event - The event object triggered by a user interaction.
  */
 const actions = {
-    'fav': (manga) => handleFavoriteToggle(manga),
-    'delete': (manga) => handleMangaDeletion(manga),
+    'fav': (manga, event) => handleFavoriteToggle(manga, event),
+    'delete': (manga, event) => handleMangaDeletion(manga, event),
     'edit': (manga) => handleMangaEdition(manga),
-    'addCap': (manga) => handleChapterUpdate(manga, '+'),
-    'removeCap': (manga) => handleChapterUpdate(manga, '-')
+    'addCap': (manga, event) => handleChapterUpdate(manga, '+', 1, event),
+    'removeCap': (manga, event) => handleChapterUpdate(manga, '-', 1, event)
 };
 document.getElementById("mangaListContainer").addEventListener("click", (event) => {
     const manga = getClosestManga(event);
@@ -239,6 +240,6 @@ document.getElementById("mangaListContainer").addEventListener("click", (event) 
     }
 
     if (targetElement && targetElement.id && actions[targetElement.id]) {
-        actions[targetElement.id](manga);
+        actions[targetElement.id](manga, event);
     }
 });

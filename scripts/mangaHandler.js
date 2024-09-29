@@ -258,10 +258,25 @@ function showModal(messageKey) {
  * 
  * @param {Object} manga - The manga object to toggle favorite status for.
  */
-function handleFavoriteToggle(manga) {
+function handleFavoriteToggle(manga, event) {
     manga.favorite = !manga.favorite;
-    refreshAndSaveMangas();
+
+    const fav = event.target;
+    if (manga.favorite) {
+        fav.classList.remove('fill-transparent');
+        fav.classList.add('fill-yellow-400');
+        fav.classList.add('hover:fill-light-red');
+        fav.classList.remove('hover:fill-yellow-400');
+    } else {
+        fav.classList.remove('fill-yellow-400');
+        fav.classList.add('fill-transparent'); 
+        fav.classList.remove('hover:fill-light-red'); 
+        fav.classList.add('hover:fill-yellow-400');
+    }
+    saveMangas();
+
 }
+
 
 /**
  * Updates the number of read chapters for a manga.
@@ -272,7 +287,9 @@ function handleFavoriteToggle(manga) {
  * 
  * @throws {Error} If the operation is not '+' or '-'.
  */
-function handleChapterUpdate(manga, operation, amount = 1) {
+function handleChapterUpdate(manga, operation, amount = 1, event) {
+    const mangaItemElement = event.target.closest('.manga-item');
+    const mangaChaptersElement = mangaItemElement.querySelector('#chapter-count');
     amount = parseInt(amount, 10) || 1;
 
     if (operation === "+") {
@@ -292,7 +309,10 @@ function handleChapterUpdate(manga, operation, amount = 1) {
     }
 
     manga.lastRead = new Date().toLocaleString();
-    refreshAndSaveMangas();
+    
+    mangaChaptersElement.textContent = "Ch. " + manga.readChapters;
+    saveMangas();
+
 }
 
 async function handleLinkReload(manga) {
@@ -328,7 +348,7 @@ async function handleLinkReload(manga) {
  * 
  * @param {Object} manga - The manga object to delete.
  */
-function handleMangaDeletion(manga) {
+function handleMangaDeletion(manga, event) {
     const confirmDiv = document.getElementById('confirmationDialog');
     confirmDiv.style.display = 'flex';
 
@@ -340,7 +360,7 @@ function handleMangaDeletion(manga) {
     document.getElementById('cancelConfirm').addEventListener('click', closeDialog, { once: true });
 
     document.getElementById('confirm').addEventListener('click', () => {
-        deleteManga(manga);
+        deleteManga(manga, event);
         closeDialog();
     }, { once: true });
 }
@@ -350,7 +370,11 @@ function handleMangaDeletion(manga) {
  * 
  * @param {Object} manga - The manga object to delete.
  */
-function deleteManga(manga) {
+function deleteManga(manga, event) {
     mangaList = mangaList.filter(m => m !== manga);
-    refreshAndSaveMangas();
+    
+    const mangaItemElement = event.target.closest('.manga-item');
+    mangaItemElement.parentElement.removeChild(mangaItemElement);
+
+    saveMangas();
 }
