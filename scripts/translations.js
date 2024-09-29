@@ -24,7 +24,7 @@ const defaultTranslations = {
         "save-button": "Save",
         "delete-button": "Delete",
         "import-selected-button": "Import Selected",
-        "filter-method-box-title": "Filter method",
+        "filter-method-box-title": "Sorting method",
         "favorites-first-option": "Favorites first",
         "alphabetically-option": "Alphabetically",
         "read-chapters-option": "Number of chapters read",
