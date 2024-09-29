@@ -176,7 +176,5 @@ function hideImportBookmarkDialog() {
  * @param {HTMLElement} dialog - The dialog element whose scroll position should be reset.
  */
 function handleScrollReset(dialog){
-    setTimeout(()=> {
-        dialog.scrollTop = 0;
-    }, 500);
+    dialog.scrollTop = 0;
 }
