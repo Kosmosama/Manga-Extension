@@ -96,7 +96,6 @@ function loadMangas(inputList, batchSize = 3) {
 
         for (let i = currentIndex; i < endIndex; i++) {
             const manga = inputList[i];
-            manga.isImageWorking = true;
             const mangaDiv = createMangaElement(manga);
             fragment.appendChild(mangaDiv);
         }

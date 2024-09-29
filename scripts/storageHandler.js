@@ -1,7 +1,11 @@
 let mangaList = []; // Global var for manga list
 
 // Attach event listener for DOMContentLoaded to retrieve manga list from Chrome's local storage when the page loads
-document.addEventListener("DOMContentLoaded", retrieveMangas);
+document.addEventListener("DOMContentLoaded", ()=>{
+    retrieveMangas();
+    allImagesWorking();
+
+});
 
 /**
  * Retrieves the manga list from Chrome's local storage and populates
@@ -18,6 +22,12 @@ function retrieveMangas() {
         } else {
             console.log('No mangas found in storage.');
         }
+    });
+}
+
+function allImagesWorking(){
+    mangaList.forEach(manga => {
+        manga.isImageWorking = true;
     });
 }
 
