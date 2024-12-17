@@ -9,6 +9,6 @@
 2. **Add synchronization with own API.**
 3. **Make it so the selected image appears on manga addition/edition**
 4. **Show indicator of which imported bookmark is being handled in the manga addition after the import.**
-5. **Add keyboard shortcut to add current page link as manga. [example](https://imgur.com/a/a177cZu)**
-6. **Add "Pick Image" - Similar to colorzilla but for images.**
-7. **Add integration with MyAnimeList API and AniList API. (Add manga directly from profile)**
+5. **Add integration with MyAnimeList API and AniList API. (Add manga directly from profile)**
+6. **"Replace all" kind of thing, ex: replace all "mangadex7.com" for "mangadex.com"**
+7. **Refactorize code into making use of a framework: Vue, Angular...**
