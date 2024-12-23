@@ -12,3 +12,4 @@
 5. **Add integration with MyAnimeList API and AniList API. (Add manga directly from profile)**
 6. **"Replace all" kind of thing, ex: replace all "mangadex7.com" for "mangadex.com"**
 7. **Refactorize code into making use of a framework: Vue, Angular...**
+8. **Refactorize frontend to use pandacss instead of tailwind >:D**
