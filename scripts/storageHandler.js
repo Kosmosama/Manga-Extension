@@ -42,9 +42,3 @@ function saveMangas() {
         }
     });
 }
-
-/**
-* This function does nothing
-*/
-function doNothing(){
-}
