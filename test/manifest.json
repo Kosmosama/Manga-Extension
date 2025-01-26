@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "Book Manager",
+  "version": "1.0",
+  "description": "A simple Chrome extension to manage your books",
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "permissions": ["storage"]
+}
+
