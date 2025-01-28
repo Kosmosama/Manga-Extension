@@ -9,6 +9,7 @@
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
+    "emitDecoratorMetadata": true,
     "skipLibCheck": true,
     "isolatedModules": true,
     "esModuleInterop": true,
