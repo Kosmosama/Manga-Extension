@@ -1,4 +1,4 @@
-import { ITag } from "../tag";
+import { ITag } from "../tag.interface";
 
 export interface ITagRepository {
     save(tag: ITag): Promise<ITag>;

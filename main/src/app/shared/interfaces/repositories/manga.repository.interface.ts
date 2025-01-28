@@ -1,4 +1,4 @@
-import { IManga } from "../manga";
+import { IManga } from "../manga.interface";
 
 export interface IMangaRepository {
     save(manga: IManga): Promise<IManga>;

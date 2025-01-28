@@ -1,9 +1,8 @@
 import { Injectable, Inject } from "@angular/core";
 import { Repository } from "typeorm";
-import { MangaEntity } from "../shared/models/manga.entity";
 import { IMangaRepository } from "../shared/interfaces/repositories/manga.repository.interface";
-import { IManga } from "../shared/interfaces/manga";
-
+import { IManga } from "../shared/interfaces/manga.interface";
+import { MangaEntity } from "../shared/models/manga.entity";
 
 @Injectable()
 export class MangaRepository implements IMangaRepository{

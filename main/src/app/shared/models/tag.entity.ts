@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { ITag } from "../interfaces/tag";
+import { ITag } from "../interfaces/tag.interface";
 
 @Entity('tag')
 export class TagEntity implements ITag {

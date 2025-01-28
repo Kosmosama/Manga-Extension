@@ -24,8 +24,7 @@
     "sql.js": "^1.12.0",
     "tslib": "^2.3.0",
     "typeorm": "^0.3.20",
-    "typeorm-browser": "^0.0.6",
-    "zone.js": "~0.15.0"
+    "typeorm-browser": "^0.0.6"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^19.0.7",

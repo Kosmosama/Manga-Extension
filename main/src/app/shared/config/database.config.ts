@@ -4,7 +4,7 @@ import { TagEntity } from '../models/tag.entity';
 
 export const AppDataSource = new DataSource({
     type: 'sqljs',
-    location: 'database',
+    location: 'browser',
     autoSave: true,
     entities: [MangaEntity, TagEntity],
     synchronize: true,

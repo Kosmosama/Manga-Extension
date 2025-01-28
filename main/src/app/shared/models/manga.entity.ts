@@ -1,11 +1,12 @@
-import { 
-    Entity, 
-    PrimaryGeneratedColumn, 
-    Column, 
-    OneToMany 
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    OneToMany
 } from 'typeorm';
-import { IManga } from '../interfaces/manga';
+
 import { TagEntity } from './tag.entity';
+import { IManga } from '../interfaces/manga.interface';
 
 @Entity('manga')
 export class MangaEntity implements IManga {
