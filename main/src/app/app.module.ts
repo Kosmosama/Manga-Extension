@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { DATABASE_CONNECTION } from './shared/tokens/database.token';
 import { initializeDatabase } from './shared/config/database.config';
 import { BrowserModule } from '@angular/platform-browser';
+import { MANGA_REPOSITORY } from './shared/tokens/manga.token';
+import { MangaRepository } from './repositories/manga.repository';
 @NgModule({
     declarations: [],
     imports: [BrowserModule],
@@ -13,12 +15,10 @@ import { BrowserModule } from '@angular/platform-browser';
                 return await initializeDatabase();
             }
         },
-        /*{
+        {
             provide: MANGA_REPOSITORY,
-            useClass: MangaRepository <-- #TODO
+            useClass: MangaRepository
         },
-        MangaService <--- #TODO
-        */
     ]
 })
 export class AppModule { }

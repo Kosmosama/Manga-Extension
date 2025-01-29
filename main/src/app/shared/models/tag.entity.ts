@@ -6,13 +6,13 @@ export class TagEntity implements ITag {
     @PrimaryGeneratedColumn()
     id!: number;
 
-    @Column()
+    @Column({type: 'varchar', length: 255})
     name!: string;
 
-    @Column()
+    @Column({type: 'timestamp', default: () => 'CURRENT_TIMESTAMP'})
     updated_at!: Date;
 
-    @Column()
+    @Column({type: 'timestamp', default: () => 'CURRENT_TIMESTAMP'})
     created_at!: Date;
 
 }

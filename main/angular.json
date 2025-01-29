@@ -16,6 +16,9 @@
             "outputPath": "dist/main",
             "index": "src/index.html",
             "browser": "src/main.ts",
+            "allowedCommonJsDependencies": [
+              "typeorm"
+            ],
             "polyfills": [
             ],
             "tsConfig": "tsconfig.app.json",

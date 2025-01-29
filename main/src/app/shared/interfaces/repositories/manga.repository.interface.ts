@@ -9,4 +9,6 @@ export interface IMangaRepository {
     findByTag(tagId: number): Promise<IManga[] | null>;
     findByName(name: string): Promise<IManga[] | null>;
     findFavorites(): Promise<IManga[] | null>;
+    findByType(type: string): Promise<IManga[] | null>;
+    findByState(state: string): Promise<IManga[] | null>;
 }

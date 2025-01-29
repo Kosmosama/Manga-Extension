@@ -1,7 +1,7 @@
 import { Injectable, Inject } from "@angular/core";
 import { Repository } from "typeorm";
 import { IMangaRepository } from "../shared/interfaces/repositories/manga.repository.interface";
-import { IManga } from "../shared/interfaces/manga.interface";
+import { IManga, MangaState, MangaType } from "../shared/interfaces/manga.interface";
 import { MangaEntity } from "../shared/models/manga.entity";
 
 @Injectable()
@@ -48,6 +48,12 @@ export class MangaRepository implements IMangaRepository{
 
     async findFavorites(): Promise<IManga[] | null> {
         return await this.repository.find({ where: { isFavorite: true } });
+    }
+    async findByState(state: MangaState): Promise<IManga[] | null> {
+        return await this.repository.find({ where: {  state: state } });
+    }
+    async findByType(type: MangaType): Promise<IManga[] | null> {
+        return await this.repository.find({ where: { type: type } });
     }
 
 }
