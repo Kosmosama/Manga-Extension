@@ -14,5 +14,7 @@ export interface IManga {
     tags?: number[];
 }
 
+export type INewManga = Omit<IManga, 'id'>;
+
 export type MangaType = "manga" | "manhwa" | "manhua" | "webcomic" | "novel" | "book" | "one-shot" | "doujinshi" | "other";
 export type MangaState = "reading" | "completed" | "on-hold" | "dropped" | "plan-to-read" | "none";
