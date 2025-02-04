@@ -1,75 +1,186 @@
-import { Inject, Injectable } from '@angular/core';
-import { MANGA_REPOSITORY } from '../../shared/tokens/manga.token';
-import type { IMangaRepository } from '../../shared/interfaces/repositories/manga.repository.interface';
-import { IManga, MangaState, MangaType } from '../../shared/interfaces/manga.interface';
+import { Injectable } from '@angular/core';
+import { db } from '../../shared/config/db.config';
+import { INewManga, MangaState, MangaType } from '../../shared/interfaces/manga.interface';
+import { EMangaType, EMangaState } from '../../../utils/things';
+import { ITag } from '../../shared/interfaces/tag.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MangaService {
-  constructor(@Inject(MANGA_REPOSITORY) private readonly mangaRepository: IMangaRepository) {}
 
-  async addOne(manga: IManga): Promise<IManga> {
+  /**
+   * Validates the manga data for creation.
+   */
+  private validateManga(manga: INewManga): void {
     if (!manga) {
-      throw new Error('Manga is required');
+      throw new Error('A manga object is required.');
     }
-    return await this.mangaRepository.save(manga);
+    if (!manga.title || typeof manga.title !== 'string' || manga.title.trim().length === 0) {
+      throw new Error('The manga must have a valid title.');
+    }
+    if (manga.state && !EMangaState.includes(manga.state)) {
+      throw new Error(`Invalid manga state: ${manga.state}`);
+    }
+    if (manga.type && !EMangaType.includes(manga.type)) {
+      throw new Error(`Invalid manga type: ${manga.type}`);
+    }
   }
 
-  async updateOne(manga: IManga): Promise<IManga> {
-    if (!manga || !manga.id) {
-      throw new Error('Valid manga with ID is required');
+  /**
+   * Validates that the tag information is correct.
+   */
+  private validateTag(tag: ITag): void {
+    if (!tag) {
+      throw new Error('A tag object is required.');
     }
-    return await this.mangaRepository.update(manga);
+    if (!tag.name || typeof tag.name !== 'string' || tag.name.trim().length === 0) {
+      throw new Error('The tag must have a valid name.');
+    }
   }
 
+  /**
+   * Adds a new manga.
+   * Uses INewManga, without the id field, as the ORM assigns the id automatically.
+   */
+  async addOne(manga: INewManga): Promise<INewManga> {
+    this.validateManga(manga);
+
+    const existing = await db.mangas.where('title').equalsIgnoreCase(manga.title).first();
+    if (existing) {
+      throw new Error('A manga with the same title already exists.');
+    }
+
+    const now = new Date();
+    const mangaToAdd = {
+      ...manga,
+      created_at: now,
+      updated_at: now
+    };
+
+    const generatedId = await db.mangas.add(mangaToAdd);
+    return { id: generatedId, ...mangaToAdd } as INewManga;
+  }
+
+  /**
+   * Updates an existing manga.
+   */
+  async updateOne(manga: INewManga): Promise<INewManga> {
+    this.validateManga(manga);
+    manga.updated_at = new Date();
+    await db.mangas.put(manga);
+    return manga;
+  }
+
+  /**
+   * Deletes a manga by its id.
+   */
   async deleteOne(id: number): Promise<boolean> {
-    if (!id) {
-      throw new Error('ID is required');
+    if (id == null) {
+      throw new Error('The id is required to delete a manga.');
     }
-    return await this.mangaRepository.delete(id);
-  }
-
-  async getAll(): Promise<IManga[]> {
-    return await this.mangaRepository.getAll();
-  }
-
-  async addTag(mangaId: number, tagId: number): Promise<IManga> {
-    if (!mangaId || !tagId) {
-      throw new Error('Manga ID and Tag ID are required');
+    const existing = await db.mangas.get(id);
+    if (!existing) {
+      throw new Error('The manga does not exist.');
     }
-    return await this.mangaRepository.addTag(mangaId, tagId);
+    await db.mangas.delete(id);
+    return true;
   }
 
-  async findByTag(tagId: number): Promise<IManga[] | null> {
-    if (!tagId) {
-      throw new Error('Tag ID is required');
+  /**
+   * Returns all mangas.
+   */
+  async getAll(): Promise<INewManga[]> {
+    return await db.mangas.toArray();
+  }
+
+  /**
+   * Adds a tag to a manga, avoiding duplicates.
+   */
+  async addTag(mangaId: number, tagId: number): Promise<INewManga> {
+    if (mangaId == null) {
+      throw new Error('The manga id is required.');
     }
-    return await this.mangaRepository.findByTag(tagId);
-  }
-
-  async findByName(name: string): Promise<IManga[] | null> {
-    if (!name) {
-      throw new Error('Name is required');
+    if (tagId == null) {
+      throw new Error('The tag id is required.');
     }
-    return await this.mangaRepository.findByName(name);
-  }
-
-  async findFavorites(): Promise<IManga[] | null> {
-    return await this.mangaRepository.findFavorites();
-  }
-
-  async findByState(state: MangaState): Promise<IManga[] | null> {
-    if (!state) {
-      throw new Error('State is required');
+    const manga = await db.mangas.get(mangaId);
+    if (!manga) {
+      throw new Error('Manga not found.');
     }
-    return await this.mangaRepository.findByState(state);
+    if ((manga.tags ?? []).includes(tagId)) {
+      throw new Error('The tag is already associated with this manga.');
+    }
+    manga.tags = [...(manga.tags || []), tagId];
+    manga.updated_at = new Date();
+    await db.mangas.put(manga);
+    return manga;
   }
 
-  async findByType(type: MangaType): Promise<IManga[] | null> {
-    if (!type) {
-      throw new Error('Type is required');
+  /**
+   * Finds mangas that have the specified tag associated.
+   */
+  async findByTag(tagId: number): Promise<INewManga[]> {
+    if (tagId == null) {
+      throw new Error('The tag id is invalid.');
     }
-    return await this.mangaRepository.findByType(type);
+    return await db.mangas.filter(manga => (manga.tags ?? []).includes(tagId)).toArray();
+  }
+
+  /**
+   * Finds mangas by name (title).
+   */
+  async findByName(name: string): Promise<INewManga[]> {
+    if (!name || typeof name !== 'string' || name.trim().length === 0) {
+      throw new Error('The name is invalid.');
+    }
+    return await db.mangas.where('title').equalsIgnoreCase(name).toArray();
+  }
+
+  /**
+   * Returns the mangas marked as favorites.
+   */
+  async findFavorites(): Promise<INewManga[]> {
+    return await db.mangas.where('isFavorite').equals('true').toArray();
+  }
+
+  /**
+   * Finds mangas by their state.
+   */
+  async findByState(state: MangaState): Promise<INewManga[]> {
+    if (!EMangaState.includes(state)) {
+      throw new Error(`Invalid manga state: ${state}`);
+    }
+    return await db.mangas.where('state').equals(state).toArray();
+  }
+
+  /**
+   * Finds mangas by their type.
+   */
+  async findByType(type: MangaType): Promise<INewManga[]> {
+    if (!EMangaType.includes(type)) {
+      throw new Error(`Invalid manga type: ${type}`);
+    }
+    return await db.mangas.where('type').equals(type).toArray();
+  }
+
+  /**
+   * Returns all tags.
+   */
+  async getAllTags(): Promise<ITag[]> {
+    return await db.tags.toArray();
+  }
+
+  /**
+   * Adds a new tag, verifying that there is no other with the same name.
+   */
+  async addTagEntry(tag: ITag): Promise<ITag> {
+    this.validateTag(tag);
+    const existing = await db.tags.where('name').equalsIgnoreCase(tag.name).first();
+    if (existing) {
+      throw new Error('A tag with that name already exists.');
+    }
+    tag.id = await db.tags.add(tag);
+    return tag;
   }
 }
