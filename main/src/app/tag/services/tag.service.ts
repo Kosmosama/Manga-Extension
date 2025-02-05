@@ -1,44 +1,64 @@
-import { Inject, Injectable } from '@angular/core';
-import { TAG_REPOSITORY } from '../../shared/tokens/tags.token';
-import type { ITagRepository } from '../../shared/interfaces/repositories/tag.repository.interface';
+import { Injectable } from '@angular/core';
 import { ITag } from '../../shared/interfaces/tag.interface';
+import { db } from '../../shared/config/db.config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TagService {
-
-  constructor(@Inject(TAG_REPOSITORY) private readonly tagRepository: ITagRepository) { }
-
-  async addOne(tag: ITag) {
+  private validateTag(tag: ITag): void {
     if (!tag) {
-      throw new Error('Tag is required');
+      throw new Error('A tag object is required.');
     }
-    return await this.tagRepository.save(tag);
+    if (!tag.name || typeof tag.name !== 'string' || tag.name.trim().length === 0) {
+      throw new Error('The tag must have a valid name.');
+    }
+    if(tag.color && typeof tag.color !== 'string') {
+      throw new Error('The tag color must be a string.');
+    }
+    if(!tag.color){
+      tag.color = '#eee'
+    }
   }
 
-  async updateOne(tag: ITag) {
-    if (!tag || !tag.id) {
-      throw new Error('Valid tag with ID is required');
+  private async addOne(tag: ITag){
+    this.validateTag(tag);
+    
+    const existing = await db.tags.where('name').equalsIgnoreCase(tag.name).first();
+
+    if (existing) {
+      throw new Error('A tag with the same name already exists.');
     }
-    return await this.tagRepository.update(tag);
+
+    await db.tags.add(tag);
   }
 
-  async deleteOne(id: number) {
-    if (!id) {
-      throw new Error('ID is required');
+  private async updateOne(tag: ITag){
+    this.validateTag(tag);
+    const existing = await db.tags.where('name').equalsIgnoreCase(tag.name).first();
+
+    if (!existing) {
+      throw new Error('The tag does not exist.');
     }
-    return await this.tagRepository.delete(id);
+
+    return await db.tags.update(existing.id, tag);
+
   }
 
-  async findByName(name: string) {
-    if (!name) {
-      throw new Error('Name is required');
+  private async deleteOne(id: number){
+    if (id == null) {
+      throw new Error('The id is required to delete a manga.');
     }
-    return await this.tagRepository.findByName(name);
+    const existing = await db.tags.get(id);
+    if (!existing) {
+      throw new Error('The manga does not exist.');
+    }
+    return await db.tags.delete(id);
+  }
+  
+
+  private async getAll(){
+    return await db.tags.toArray();
   }
 
-  async getAll() {
-    return await this.tagRepository.getAll();
-  }
 }
