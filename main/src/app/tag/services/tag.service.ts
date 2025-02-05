@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { ITag } from '../../shared/interfaces/tag.interface';
 import { db } from '../../shared/config/db.config';
+import { ITagService } from '../../shared/interfaces/service/tag.service.interface';
 
 @Injectable({
   providedIn: 'root'
 })
-export class TagService {
-  private validateTag(tag: ITag): void {
+export class TagService implements ITagService {
+   validateTag(tag: ITag): void {
     if (!tag) {
       throw new Error('A tag object is required.');
     }
@@ -21,7 +22,7 @@ export class TagService {
     }
   }
 
-  private async addOne(tag: ITag){
+   async save(tag: ITag): Promise<void> {
     this.validateTag(tag);
     
     const existing = await db.tags.where('name').equalsIgnoreCase(tag.name).first();
@@ -33,7 +34,7 @@ export class TagService {
     await db.tags.add(tag);
   }
 
-  private async updateOne(tag: ITag){
+   async update(tag: ITag){
     this.validateTag(tag);
     const existing = await db.tags.where('name').equalsIgnoreCase(tag.name).first();
 
@@ -41,11 +42,11 @@ export class TagService {
       throw new Error('The tag does not exist.');
     }
 
-    return await db.tags.update(existing.id, tag);
+    await db.tags.update(existing.id, tag);
 
   }
 
-  private async deleteOne(id: number){
+   async delete(id: number): Promise<void>{
     if (id == null) {
       throw new Error('The id is required to delete a manga.');
     }
@@ -53,12 +54,16 @@ export class TagService {
     if (!existing) {
       throw new Error('The manga does not exist.');
     }
-    return await db.tags.delete(id);
+    await db.tags.delete(id);
   }
   
 
-  private async getAll(){
+   async getAll(){
     return await db.tags.toArray();
+  }
+
+   async findByName(name: string){
+    return await db.tags.where('name').startsWithIgnoreCase(name).toArray();
   }
 
 }
