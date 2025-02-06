@@ -1,7 +1,9 @@
-export interface ITag {
-    id: number;
+// Tag Interface
+export interface Tag {
+    readonly id: number;
     name: string;
     color?: string;
 }
 
-export type NewTag = Omit<ITag, 'id'>;
+// Tag Creation Interface
+export type NewTag = Omit<Tag, 'id'>;

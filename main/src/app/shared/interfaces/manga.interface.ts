@@ -1,20 +1,40 @@
-import { ITag } from "./tag.interface";
+// Enum for Manga Types
+export enum MangaType {
+    Manga = "manga",
+    Manhwa = "manhwa",
+    Manhua = "manhua",
+    Webcomic = "webcomic",
+    Novel = "novel",
+    Book = "book",
+    OneShot = "one-shot",
+    Doujinshi = "doujinshi",
+    Other = "other"
+}
 
-export interface IManga {
-    id: number;
+// Enum for Manga States
+export enum MangaState {
+    Reading = "reading",
+    Completed = "completed",
+    OnHold = "on-hold",
+    Dropped = "dropped",
+    PlanToRead = "plan-to-read",
+    None = "none"
+}
+
+// Manga Interface
+export interface Manga {
+    readonly id: number;
     title: string;
-    updated_at: Date;
-    created_at: Date;
+    updatedAt: string;
+    createdAt: string;
     link?: string;
     image?: string;
     chapters?: number;
     isFavorite?: boolean;
     type?: MangaType;
-    state?: MangaState
+    state?: MangaState;
     tags?: number[];
 }
 
-export type INewManga = Omit<IManga, 'id'>;
-
-export type MangaType = "manga" | "manhwa" | "manhua" | "webcomic" | "novel" | "book" | "one-shot" | "doujinshi" | "other";
-export type MangaState = "reading" | "completed" | "on-hold" | "dropped" | "plan-to-read" | "none";
+// Manga Creation Interface
+export type NewManga = Omit<Manga, 'id'>;
