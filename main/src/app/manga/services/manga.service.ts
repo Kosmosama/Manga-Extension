@@ -10,7 +10,7 @@ import { PromiseExtended } from 'dexie';
 export class MangaService {
     private database = inject(DatabaseService);
     
-    // #TODO Make a separate function to add tags to a manga (here/tagservice)?
+    // #TODO Make a separate function to get all mangas and their full item of tags
 
     /**
      * Retrieves all mangas from the database.
@@ -65,4 +65,45 @@ export class MangaService {
     deleteManga(id: number): Observable<void> {
         return from(this.database.mangas.delete(id));
     }
+
+    /**
+     * Adds a tag to a manga's list of tags.
+     *
+     * @param {number} mangaId - The ID of the manga to which the tag will be added.
+     * @param {number} tagId - The ID of the tag to be added to the manga.
+     * @returns {Observable<number>} An observable that emits the number of rows affected by the update.
+     * @throws {Error} If the manga with the specified ID is not found.
+     */
+    addTagToManga(mangaId: number, tagId: number): Observable<number> {
+        return from(this.database.mangas.get(mangaId).then(manga => {
+            if (manga) {
+                const updatedTags = [...(manga.tags ?? []), tagId];
+                return this.database.mangas.update(mangaId, { tags: updatedTags });
+            } else {
+                //this won't happen (prolly), but typescript is crying about it
+                throw new Error('Manga not found');
+            }
+        }));
+    }
+    
+    /**
+     * Removes a tag from a manga's list of tags.
+     *
+     * @param {number} mangaId - The ID of the manga from which the tag will be removed.
+     * @param {number} tagId - The ID of the tag to be removed from the manga.
+     * @returns {Observable<number>} An observable that emits the number of rows affected by the update.
+     * @throws {Error} If the manga with the specified ID is not found.
+     */
+    removeTagFromManga(mangaId: number, tagId: number): Observable<number> {
+        return from(this.database.mangas.get(mangaId).then(manga => {
+            if (manga) {
+                const updatedTags = (manga.tags ?? []).filter(tag => tag !== tagId);
+                return this.database.mangas.update(mangaId, { tags: updatedTags });
+            } else {
+                throw new Error('Manga not found');
+            }
+        }));
+    }
+
+    
 }
