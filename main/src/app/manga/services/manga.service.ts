@@ -76,13 +76,12 @@ export class MangaService {
      */
     addTagToManga(mangaId: number, tagId: number): Observable<number> {
         return from(this.database.mangas.get(mangaId).then(manga => {
-            if (manga) {
-                const updatedTags = [...(manga.tags ?? []), tagId];
-                return this.database.mangas.update(mangaId, { tags: updatedTags });
-            } else {
-                //this won't happen (prolly), but typescript is crying about it
+            if(!manga){
                 throw new Error('Manga not found');
             }
+            
+            const updatedTags = [...(manga.tags ?? []), tagId];
+            return this.database.mangas.update(mangaId, { tags: updatedTags });
         }));
     }
     
@@ -96,12 +95,12 @@ export class MangaService {
      */
     removeTagFromManga(mangaId: number, tagId: number): Observable<number> {
         return from(this.database.mangas.get(mangaId).then(manga => {
-            if (manga) {
-                const updatedTags = (manga.tags ?? []).filter(tag => tag !== tagId);
-                return this.database.mangas.update(mangaId, { tags: updatedTags });
-            } else {
+            if(!manga){
                 throw new Error('Manga not found');
             }
+            
+            const updatedTags = (manga.tags ?? []).filter(tag => tag !== tagId);
+            return this.database.mangas.update(mangaId, { tags: updatedTags });
         }));
     }
 
