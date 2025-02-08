@@ -9,16 +9,20 @@ import { PromiseExtended } from 'dexie';
 })
 export class MangaService {
     private database = inject(DatabaseService);
-    
-    // #TODO Make a separate function to get all mangas and their full item of tags
 
     /**
-     * Retrieves all mangas from the database.
-     * 
-     * @returns {Observable<Manga>} An observable of an array of mangas.
+     * Retrieves all mangas from the database and resolves their associated tags.
+     *
+     * @returns {Observable<Manga[]>} An observable that emits an array of mangas with their resolved tags.
      */
     getAllMangas(): Observable<Manga[]> {
-        return from(this.database.mangas.toArray() as PromiseExtended<Manga[]>);
+        return from(this.database.mangas.toArray().then(async mangas => {
+            const mangasWithTags = await Promise.all(mangas.map(async manga => {
+                const resolvedTags = await Promise.all((manga.tags ?? []).map(tagId => this.database.tags.get(tagId)));
+                return { ...manga, resolvedTags: resolvedTags.filter(tag => tag !== undefined) };
+            }));
+            return mangasWithTags;
+        }) as PromiseExtended<Manga[]>);
     }
 
     /**
