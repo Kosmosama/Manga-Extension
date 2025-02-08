@@ -3,6 +3,7 @@ import { Manga, NewManga } from '../../shared/interfaces/manga.interface';
 import { from, Observable } from 'rxjs';
 import { DatabaseService } from '../../shared/services/database.service';
 import { PromiseExtended } from 'dexie';
+import { Tag } from '../../shared/interfaces/tag.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -16,13 +17,33 @@ export class MangaService {
      * @returns {Observable<Manga[]>} An observable that emits an array of mangas with their resolved tags.
      */
     getAllMangas(): Observable<Manga[]> {
-        return from(this.database.mangas.toArray().then(async mangas => {
-            const mangasWithTags = await Promise.all(mangas.map(async manga => {
-                const resolvedTags = await Promise.all((manga.tags ?? []).map(tagId => this.database.tags.get(tagId)));
-                return { ...manga, resolvedTags: resolvedTags.filter(tag => tag !== undefined) };
-            }));
-            return mangasWithTags;
-        }) as PromiseExtended<Manga[]>);
+        return from(
+            this.getMangasWithTags()
+        )
+    }
+    
+    /**
+     * Retrieves a list of mangas with their associated tags resolved.
+     *
+     * @returns {Observable<Manga[]>} An observable that emits an array of mangas, each with their
+     * resolved tags included.
+     */
+    getMangasWithTags(): Observable<Manga[]> {
+        return from(
+            Promise.all([
+                this.database.mangas.toArray(),
+                this.database.tags.toArray() as PromiseExtended<Tag[]>
+            ]).then(([mangas, allTags]) => {
+                const tagMap = new Map(allTags.map(tag => [tag.id, tag]));
+                
+                return mangas.map(manga => ({
+                    ...manga,
+                    resolvedTags: (manga.tags ?? [])
+                        .map(tagId => tagMap.get(tagId))
+                        .filter(Boolean)
+                }));
+            }) as PromiseExtended<Manga[]>
+        );
     }
 
     /**
