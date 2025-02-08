@@ -49,6 +49,35 @@ export class MangaService {
     }
 
     /**
+     * Retrieves all mangas that have a specific tag.
+     * 
+     * @param {number} tagId - The ID of the tag to filter mangas by.
+     * @returns {Observable<Manga[]>} An observable that emits an array of mangas containing the specified tag.
+     */
+    getMangasByTag(tagId: number): Observable<Manga[]> {
+        return from(
+            this.database.mangas.where('tags').equals(tagId).toArray() as PromiseExtended<Manga[]>
+        );
+    }
+
+    /**
+     * Retrieves all mangas between a date range
+     * 
+     * @param {Date} lowerDate - The lower date in the range
+     * @param {Date} upperDate - The upperDate in the range 
+     * @param {'createdAt' | 'updatedAt'} type - the type of the range
+     * @returns {Observable<Manga[]>} An observablke that emits an array of mangas between the spicified dates.
+     */
+    getMangasByDateRange(lowerDate: Date, upperDate: Date, type: 'createdAt' | 'updatedAt'): Observable<Manga[]>{
+        return from(
+            this.database.mangas
+            .where(type)
+            .between(lowerDate, upperDate, true ,true) // dunno if this works
+            .toArray() as PromiseExtended<Manga[]>
+        )
+    }    
+
+    /**
      * Retrieves a manga by its ID.
      * 
      * @param {number} id - The ID of the manga to retrieve.
