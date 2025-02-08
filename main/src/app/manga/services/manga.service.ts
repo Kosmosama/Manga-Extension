@@ -30,19 +30,21 @@ export class MangaService {
      */
     getMangasWithTags(): Observable<Manga[]> {
         return from(
-            Promise.all([
-                this.database.mangas.toArray(),
-                this.database.tags.toArray() as PromiseExtended<Tag[]>
-            ]).then(([mangas, allTags]) => {
-                const tagMap = new Map(allTags.map(tag => [tag.id, tag]));
-                
-                return mangas.map(manga => ({
-                    ...manga,
-                    resolvedTags: (manga.tags ?? [])
-                        .map(tagId => tagMap.get(tagId))
-                        .filter(Boolean)
-                }));
-            }) as PromiseExtended<Manga[]>
+            this.database.mangas.toArray()
+                .then(mangas => {
+                    const tagIds = [...new Set(mangas.flatMap(manga => manga.tags || []))];
+                    
+                    return (this.database.tags.bulkGet(tagIds) as PromiseExtended<Tag[]>)
+                        .then(tags => {
+                            const tagMap = new Map(tags.filter(Boolean).map(tag => [tag.id, tag]));
+                            
+                            return mangas.map(manga => ({...manga,
+                                resolvedTags: (manga.tags || [])
+                                    .map(tagId => tagMap.get(tagId))
+                                    .filter(Boolean)
+                            }));
+                        });
+                }) as PromiseExtended<Manga[]>
         );
     }
 
