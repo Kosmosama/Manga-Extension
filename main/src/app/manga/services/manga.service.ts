@@ -4,12 +4,16 @@ import { from, Observable } from 'rxjs';
 import { DatabaseService } from '../../shared/services/database.service';
 import { PromiseExtended } from 'dexie';
 import { Tag } from '../../shared/interfaces/tag.interface';
+import { OrderMethod, SortMangaMethods } from '../../shared/interfaces/sort.interface';
 
 @Injectable({
     providedIn: 'root'
 })
 export class MangaService {
     private database = inject(DatabaseService);
+
+
+    // #TODO maybe make separeted functions to order the things or integrate the current shit better :v
 
     /**
      * Retrieves all mangas from the database and resolves their associated tags.
@@ -66,16 +70,33 @@ export class MangaService {
      * @param {Date} lowerDate - The lower date in the range
      * @param {Date} upperDate - The upperDate in the range 
      * @param {'createdAt' | 'updatedAt'} type - the type of the range
+     * @param {'SortMangaMethods'} sortMethod - the sort method (name, etc)
+     * @param {'OrderMethod'} orderMethod - 'asc' ascendent | 'desc' descendent
      * @returns {Observable<Manga[]>} An observablke that emits an array of mangas between the spicified dates.
      */
-    getMangasByDateRange(lowerDate: Date, upperDate: Date, type: 'createdAt' | 'updatedAt'): Observable<Manga[]>{
+    getMangasByDateRange(lowerDate: Date, upperDate: Date, type: 'createdAt' | 'updatedAt', sortMethod: SortMangaMethods, orderMethod: OrderMethod): Observable<Manga[]>{
+        let query = this.database.mangas
+        .where(type)
+        .between(lowerDate, upperDate, true, true)
+        .sortBy(sortMethod) as PromiseExtended<Manga[]>;
+
+        if (orderMethod == 'desc') {
+            query = query.then(results => results.reverse()); // can't realize how to use the dexie method .reverse, typescript cries 'bout it
+        }
+
+        return from(query);
+    
+    }    
+
+
+    getMangasByChapterRange(lowerCap: Date, upperCap: Date): Observable<Manga[]>{
         return from(
             this.database.mangas
-            .where(type)
-            .between(lowerDate, upperDate, true ,true) // dunno if this works
+            .where('chapters')
+            .between(lowerCap, upperCap, true, true)
             .toArray() as PromiseExtended<Manga[]>
         )
-    }    
+    }
 
     /**
      * Retrieves a manga by its ID.
