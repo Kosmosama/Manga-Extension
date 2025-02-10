@@ -14,6 +14,7 @@ export class MangaService {
 
 
     // #TODO maybe make separeted functions to order the things or integrate the current shit better :v
+    // #TODO maybe add a method that retrieves all the tags from a collection. Cuz it should be with all the methods.
 
     /**
      * Retrieves all mangas from the database and resolves their associated tags.
