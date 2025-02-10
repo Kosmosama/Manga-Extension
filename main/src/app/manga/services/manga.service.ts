@@ -3,7 +3,7 @@ import { Manga, NewManga } from '../../shared/interfaces/manga.interface';
 import { from, Observable } from 'rxjs';
 import { DatabaseService } from '../../shared/services/database.service';
 import { PromiseExtended } from 'dexie';
-import { Tag } from '../../shared/interfaces/tag.interface';
+import { NewTag, Tag } from '../../shared/interfaces/tag.interface';
 import { OrderMethod, SortMangaMethods } from '../../shared/interfaces/sort.interface';
 
 @Injectable({
@@ -109,6 +109,33 @@ export class MangaService {
     getMangaById(id: number): Observable<Manga | undefined> {
         return from(this.database.mangas.get(id) as Promise<Manga | undefined>);
     }
+
+    /**
+     * Retrieves and resolves tags for a collection of manga.
+     * 
+     * @param {Manga[]} mangas - Array of manga whose tags need to be resolved
+     * @returns {Observable<Manga[]>} Observable that emits the manga array with resolved tag objects 
+     *                               in the resolvedTags property instead of just tag IDs
+     */
+    getTagsByCollection(mangas: Manga[]): Observable<Manga[]> {
+        const tagIds = Array.from(new Set(mangas.flatMap(manga => manga.tags ?? [])));
+      
+        return from(
+          this.database.tags.bulkGet(tagIds).then((result) => {
+            const tags = result.filter((tag): tag is Tag => tag !== undefined);
+            
+            const tagMap = new Map(tags.map(tag => [tag.id, tag]));
+            return mangas.map(manga => ({
+              ...manga,
+              resolvedTags: (manga.tags ?? [])
+                .map(tagId => tagMap.get(tagId))
+                .filter((tag): tag is Tag => tag !== undefined)
+            }));
+          })
+        );
+      }
+      
+      
 
     /**
      * Adds a new manga to the database.
