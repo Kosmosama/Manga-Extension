@@ -63,3 +63,16 @@ button:hover:not(:disabled) {
 }
 
 
+
+.manga-list div {
+  margin-bottom: 16px;
+  padding: 12px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.manga-list p {
+  margin: 4px 0;
+  color: #333;
+  font-size: 14px;
+}

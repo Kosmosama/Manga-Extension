@@ -1,3 +1,5 @@
+import { Tag } from "./tag.interface";
+
 // Enum for Manga Types
 export enum MangaType {
     Manga = "manga",
@@ -34,6 +36,7 @@ export interface Manga {
     type?: MangaType;
     state?: MangaState;
     tags?: number[];
+    resolvedTags?: Tag[];
 }
 
 // Manga Creation Interface
