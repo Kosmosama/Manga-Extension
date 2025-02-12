@@ -36,20 +36,7 @@ export class MangaService {
     getMangasWithTags(): Observable<Manga[]> {
         return from(
             this.database.mangas.toArray()
-                .then(mangas => {
-                    const tagIds = [...new Set(mangas.flatMap(manga => manga.tags || []))];
-                    
-                    return (this.database.tags.bulkGet(tagIds) as PromiseExtended<Tag[]>)
-                        .then(tags => {
-                            const tagMap = new Map(tags.filter(Boolean).map(tag => [tag.id, tag]));
-                            
-                            return mangas.map(manga => ({...manga,
-                                resolvedTags: (manga.tags || [])
-                                    .map(tagId => tagMap.get(tagId))
-                                    .filter(Boolean)
-                            }));
-                        });
-                }) as PromiseExtended<Manga[]>
+                .then(mangas => this.resolveTagsForMangas(mangas as Manga[]))
         );
     }
 
@@ -61,7 +48,11 @@ export class MangaService {
      */
     getMangasByTag(tagId: number): Observable<Manga[]> {
         return from(
-            this.database.mangas.where('tags').equals(tagId).toArray() as PromiseExtended<Manga[]>
+            this.database.mangas
+                .where('tags')
+                .equals(tagId)
+                .toArray()
+                .then(mangas => this.resolveTagsForMangas(mangas as Manga[]))
         );
     }
 
@@ -75,28 +66,45 @@ export class MangaService {
      * @param {'OrderMethod'} orderMethod - 'asc' ascendent | 'desc' descendent
      * @returns {Observable<Manga[]>} An observablke that emits an array of mangas between the spicified dates.
      */
-    getMangasByDateRange(lowerDate: Date, upperDate: Date, type: 'createdAt' | 'updatedAt', sortMethod: SortMangaMethods, orderMethod: OrderMethod): Observable<Manga[]>{
-        let query = this.database.mangas
-        .where(type)
-        .between(lowerDate, upperDate, true, true)
-        .sortBy(sortMethod) as PromiseExtended<Manga[]>;
+    getMangasByDateRange(
+        lowerDate: Date,
+        upperDate: Date,
+        type: 'createdAt' | 'updatedAt',
+        sortMethod: SortMangaMethods,
+        orderMethod: OrderMethod
+    ): Observable<Manga[]> {
+        let collection = this.database.mangas
+            .where(type)
+            .between(lowerDate, upperDate, true, true)
+            .sortBy(sortMethod)
 
-        if (orderMethod == 'desc') {
-            query = query.then(results => results.reverse()); // can't realize how to use the dexie method .reverse, typescript cries 'bout it
+        if (orderMethod === 'desc') {
+            collection = collection.then(coll => coll.reverse());
         }
 
-        return from(query);
-    
-    }    
+        return from(
+            collection
+                .then(mangas => this.resolveTagsForMangas(mangas as Manga[]))
+        );
+    }
+   
 
 
-    getMangasByChapterRange(lowerCap: Date, upperCap: Date): Observable<Manga[]>{
+    /**
+     * Retrieves all mangas that have a chapter count within the specified range.
+     * 
+     * @param {number} lowerCap - The minimum number of chapters (inclusive)
+     * @param {number} upperCap - The maximum number of chapters (inclusive)
+     * @returns {Observable<Manga[]>} An observable that emits an array of mangas with chapter counts within the specified range
+     */
+    getMangasByChapterRange(lowerCap: number, upperCap: number): Observable<Manga[]> {
         return from(
             this.database.mangas
-            .where('chapters')
-            .between(lowerCap, upperCap, true, true)
-            .toArray() as PromiseExtended<Manga[]>
-        )
+                .where('chapters')
+                .between(lowerCap, upperCap, true, true)
+                .toArray()
+                .then(mangas => this.resolveTagsForMangas(mangas as Manga[]))
+        );
     }
 
     /**
@@ -110,30 +118,21 @@ export class MangaService {
         return from(this.database.mangas.get(id) as Promise<Manga | undefined>);
     }
 
-    /**
-     * Retrieves and resolves tags for a collection of manga.
-     * 
-     * @param {Manga[]} mangas - Array of manga whose tags need to be resolved
-     * @returns {Observable<Manga[]>} Observable that emits the manga array with resolved tag objects 
-     *                               in the resolvedTags property instead of just tag IDs
-     */
-    getTagsByCollection(mangas: Manga[]): Observable<Manga[]> {
-        const tagIds = Array.from(new Set(mangas.flatMap(manga => manga.tags ?? [])));
-      
-        return from(
-          this.database.tags.bulkGet(tagIds).then((result) => {
-            const tags = result.filter((tag): tag is Tag => tag !== undefined);
-            
-            const tagMap = new Map(tags.map(tag => [tag.id, tag]));
-            return mangas.map(manga => ({
-              ...manga,
-              resolvedTags: (manga.tags ?? [])
-                .map(tagId => tagMap.get(tagId))
-                .filter((tag): tag is Tag => tag !== undefined)
-            }));
-          })
-        );
-      }
+    private resolveTagsForMangas(mangas: Manga[]): Promise<Manga[]> {
+        const tagIds = [...new Set(mangas.flatMap(manga => manga.tags || []))];
+        return this.database.tags.bulkGet(tagIds)
+            .then(tags => {
+                const validTags = tags.filter((tag): tag is Tag => tag !== undefined);
+                const tagMap = new Map(validTags.map(tag => [tag.id, tag]));
+                
+                return mangas.map(manga => ({
+                    ...manga,
+                    resolvedTags: (manga.tags || [])
+                        .map(tagId => tagMap.get(tagId))
+                        .filter((t): t is Tag => t !== undefined)
+                }));
+            });
+    }
       
       
 
