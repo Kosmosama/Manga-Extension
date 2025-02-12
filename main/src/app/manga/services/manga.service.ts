@@ -12,11 +12,19 @@ import { ChapterRangeFilter, DateRangeFilter, Filters, FilterTypes, TagFilter } 
 export class MangaService {
     private database = inject(DatabaseService);
 
+
+    // #TODO - Implement sorting in all filters - maybe move the filters to a service?
+
     /**
-     * Retrieves all mangas from the database and resolves their associated tags based on the provided filter.
+     * Retrieves filtered mangas from the database based on the provided filter criteria.
+     * Each manga will have its tags resolved into full Tag objects.
      *
-     * @param {Filters} filter - The filter to apply when retrieving mangas
-     * @returns {Observable<Manga[]>} An observable that emits an array of filtered mangas with their resolved tags.
+     * @param {Filters} filter - The filter criteria to apply:
+     *                          - NONE: Returns all mangas
+     *                          - TAG: Filters by specific tag ID
+     *                          - DATE_RANGE: Filters by date range and includes sorting
+     *                          - CHAPTER_RANGE: Filters by chapter count range
+     * @returns {Observable<Manga[]>} An observable that emits an array of filtered mangas with their resolved tags
      */
     getAllMangas(filter: Filters): Observable<Manga[]> {
         const filterHandlers = {    // Maybe this can be better or modularized, but i don't have time, i need to cagar
@@ -34,10 +42,11 @@ export class MangaService {
     }
     
     /**
-     * Retrieves a list of mangas with their associated tags resolved.
+     * Retrieves all mangas from the database and resolves their tag IDs into full Tag objects.
+     * This is the base query used when no filters are applied.
      *
-     * @returns {Observable<Manga[]>} An observable that emits an array of mangas, each with their
-     * resolved tags included.
+     * @returns {Observable<Manga[]>} An observable that emits an array of all mangas with their
+     * tag IDs resolved into complete Tag objects in the resolvedTags property
      */
     getMangasWithTags(): Observable<Manga[]> {
         return from(
@@ -63,14 +72,14 @@ export class MangaService {
     }
 
     /**
-     * Retrieves all mangas between a date range
+     * Retrieves all mangas between a date range with optional sorting.
      * 
-     * @param {Date} lowerDate - The lower date in the range
-     * @param {Date} upperDate - The upperDate in the range 
-     * @param {'createdAt' | 'updatedAt'} type - the type of the range
-     * @param {'SortMangaMethods'} sortMethod - the sort method (name, etc)
-     * @param {'OrderMethod'} orderMethod - 'asc' ascendent | 'desc' descendent
-     * @returns {Observable<Manga[]>} An observablke that emits an array of mangas between the spicified dates.
+     * @param {Date} lowerDate - The lower bound date (inclusive)
+     * @param {Date} upperDate - The upper bound date (inclusive)
+     * @param {'createdAt' | 'updatedAt'} type - The date field to filter by
+     * @param {SortMangaMethods} sortMethod - The field to sort results by
+     * @param {OrderMethod} orderMethod - The sort direction ('asc' for ascending, 'desc' for descending)
+     * @returns {Observable<Manga[]>} An observable that emits an array of mangas within the specified date range
      */
     getMangasByDateRange(
         lowerDate: Date,
@@ -145,9 +154,8 @@ export class MangaService {
     /**
      * Adds a new manga to the database.
      * 
-     * @param manga - The manga to add.
-     * 
-     * @returns An observable of the ID of the added manga.
+     * @param {NewManga} manga - The manga data to add to the database
+     * @returns {Observable<number>} An observable that emits the ID of the newly added manga
      */
     addManga(manga: NewManga): Observable<number> {
         return from(this.database.mangas.add(manga));
