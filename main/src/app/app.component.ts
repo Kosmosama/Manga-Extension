@@ -4,6 +4,7 @@ import { MangaType, MangaState, NewManga, Manga } from './shared/interfaces/mang
 import { MangaService } from './manga/services/manga.service';
 import { TagService } from './tag/services/tag.service';
 import { NewTag, Tag } from './shared/interfaces/tag.interface';
+import { FilterTypes } from './shared/interfaces/filters.interface';
 
 @Component({
   selector: 'app-root',
@@ -41,7 +42,7 @@ export class AppComponent {
   });
 
   ngOnInit() {
-    this.manga.getAllMangas().subscribe({
+    this.manga.getAllMangas({ type: FilterTypes.NONE }).subscribe({
       next: (mangas) => {
         this.MangaList = mangas;
         console.log('Lista de mangas:', mangas);

@@ -5,26 +5,32 @@ import { DatabaseService } from '../../shared/services/database.service';
 import { PromiseExtended } from 'dexie';
 import { NewTag, Tag } from '../../shared/interfaces/tag.interface';
 import { OrderMethod, SortMangaMethods } from '../../shared/interfaces/sort.interface';
-
+import { ChapterRangeFilter, DateRangeFilter, Filters, FilterTypes, TagFilter } from '../../shared/interfaces/filters.interface';
 @Injectable({
     providedIn: 'root'
 })
 export class MangaService {
     private database = inject(DatabaseService);
 
-
-    // #TODO maybe make separeted functions to order the things or integrate the current shit better :v
-    // #TODO maybe add a method that retrieves all the tags from a collection. Cuz it should be with all the methods.
-
     /**
-     * Retrieves all mangas from the database and resolves their associated tags.
+     * Retrieves all mangas from the database and resolves their associated tags based on the provided filter.
      *
-     * @returns {Observable<Manga[]>} An observable that emits an array of mangas with their resolved tags.
+     * @param {Filters} filter - The filter to apply when retrieving mangas
+     * @returns {Observable<Manga[]>} An observable that emits an array of filtered mangas with their resolved tags.
      */
-    getAllMangas(): Observable<Manga[]> {
-        return from(
-            this.getMangasWithTags()
-        )
+    getAllMangas(filter: Filters): Observable<Manga[]> {
+        const filterHandlers = {    // Maybe this can be better or modularized, but i don't have time, i need to cagar
+            [FilterTypes.NONE]: () => this.getMangasWithTags(),
+            [FilterTypes.TAG]: (f: TagFilter) => this.getMangasByTag(f.tagId),
+            [FilterTypes.DATE_RANGE]: (f: DateRangeFilter) => this.getMangasByDateRange(f.lowerDate, f.upperDate, f.dateType, f.sortMethod, f.orderMethod),
+            [FilterTypes.CHAPTER_RANGE]: (f: ChapterRangeFilter) => this.getMangasByChapterRange(f.lowerCap, f.upperCap)
+        } as Record<FilterTypes, (filter: any) => Observable<Manga[]>>;
+
+        const handler = filterHandlers[filter.type];
+        if (!handler) {
+            throw new Error(`Invalid filter type: ${filter.type}`);
+        }
+        return handler(filter);
     }
     
     /**
