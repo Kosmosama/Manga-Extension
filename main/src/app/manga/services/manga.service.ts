@@ -93,7 +93,7 @@ export class MangaService {
             .between(lowerDate, upperDate, true, true)
             .sortBy(sortMethod)
 
-        if (orderMethod === 'desc') {
+        if (orderMethod === 'desc') { // i couldn't find a way to do this with the Dexie .reverse method.
             collection = collection.then(coll => coll.reverse());
         }
 
