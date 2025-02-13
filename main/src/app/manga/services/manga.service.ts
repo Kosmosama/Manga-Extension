@@ -2,9 +2,8 @@ import { inject, Injectable } from '@angular/core';
 import { Manga, NewManga } from '../../shared/interfaces/manga.interface';
 import { from, Observable } from 'rxjs';
 import { DatabaseService } from '../../shared/services/database.service';
-import { PromiseExtended } from 'dexie';
-import { NewTag, Tag } from '../../shared/interfaces/tag.interface';
-import { OrderMethod, SortMangaMethods } from '../../shared/interfaces/sort.interface';
+import { Tag } from '../../shared/interfaces/tag.interface';
+import { OrderMethod, RangeCriteria, RangeCriteriaType, SortMangaMethods } from '../../shared/interfaces/sort.interface';
 import { ChapterRangeFilter, DateRangeFilter, Filters, FilterTypes, TagFilter } from '../../shared/interfaces/filters.interface';
 @Injectable({
     providedIn: 'root'
@@ -27,13 +26,13 @@ export class MangaService {
      * @returns {Observable<Manga[]>} An observable that emits an array of filtered mangas with their resolved tags
      */
     getAllMangas(filter: Filters): Observable<Manga[]> {
-        const filterHandlers = {    // Maybe this can be better or modularized, but i don't have time, i need to cagar
+        const filterHandlers = {
             [FilterTypes.NONE]: () => this.getMangasWithTags(),
             [FilterTypes.TAG]: (f: TagFilter) => this.getMangasByTag(f.tagId),
-            [FilterTypes.DATE_RANGE]: (f: DateRangeFilter) => this.getMangasByDateRange(f.lowerDate, f.upperDate, f.dateType, f.sortMethod, f.orderMethod),
-            [FilterTypes.CHAPTER_RANGE]: (f: ChapterRangeFilter) => this.getMangasByChapterRange(f.lowerCap, f.upperCap)
+            [FilterTypes.DATE_RANGE]: (f: DateRangeFilter) => this.getMangasByRange(f.dateType, f.lowerDate, f.upperDate, f.sortMethod, f.orderMethod),
+            [FilterTypes.CHAPTER_RANGE]: (f: ChapterRangeFilter) => this.getMangasByRange('chapters', f.lowerCap, f.upperCap, 'chapters', 'asc')
         } as Record<FilterTypes, (filter: any) => Observable<Manga[]>>;
-
+    
         const handler = filterHandlers[filter.type];
         if (!handler) {
             throw new Error(`Invalid filter type: ${filter.type}`);
@@ -71,55 +70,36 @@ export class MangaService {
         );
     }
 
-    /**
-     * Retrieves all mangas between a date range with optional sorting.
+     /**
+     * Retrieves mangas within a specific range of criteria and sorts them according to the provided parameters.
      * 
-     * @param {Date} lowerDate - The lower bound date (inclusive)
-     * @param {Date} upperDate - The upper bound date (inclusive)
-     * @param {'createdAt' | 'updatedAt'} type - The date field to filter by
-     * @param {SortMangaMethods} sortMethod - The field to sort results by
-     * @param {OrderMethod} orderMethod - The sort direction ('asc' for ascending, 'desc' for descending)
-     * @returns {Observable<Manga[]>} An observable that emits an array of mangas within the specified date range
+     * @param {RangeCriteria} criteria - The criteria to filter by (e.g., 'updatedAt', 'createdAt', etc.)
+     * @param {RangeCriteriaType} lowerCriteria - The minimum value of the range
+     * @param {RangeCriteriaType} upperCriteria - The maximum value of the range
+     * @param {SortMangaMethods} sortMethod - The sorting method to apply
+     * @param {OrderMethod} orderMethod - The sorting direction ('asc' or 'desc')
+     * @returns {Observable<Manga[]>} An observable that emits an array of mangas matching the criteria,
+     *                               sorted according to the specified parameters and with resolved tags
      */
-    getMangasByDateRange(
-        lowerDate: Date,
-        upperDate: Date,
-        type: 'createdAt' | 'updatedAt',
-        sortMethod: SortMangaMethods,
-        orderMethod: OrderMethod
-    ): Observable<Manga[]> {
-        let collection = this.database.mangas
-            .where(type)
-            .between(lowerDate, upperDate, true, true)
-            .sortBy(sortMethod)
+    getMangasByRange(
+         criteria: RangeCriteria,
+         lowerCriteria: RangeCriteriaType, 
+         upperCriteria: RangeCriteriaType, 
+         sortMethod: SortMangaMethods, 
+         orderMethod: OrderMethod): Observable<Manga[]>{
+            let collection = this.database.mangas
+            .where(criteria)
+            .between(lowerCriteria, upperCriteria, true, true);
 
-        if (orderMethod === 'desc') { // i couldn't find a way to do this with the Dexie .reverse method.
-            collection = collection.then(coll => coll.reverse());
-        }
+            if(orderMethod === 'desc'){
+                collection = collection.reverse();
+            }
 
-        return from(
-            collection
-                .then(mangas => this.resolveTagsForMangas(mangas as Manga[]))
-        );
-    }
-   
-
-
-    /**
-     * Retrieves all mangas that have a chapter count within the specified range.
-     * 
-     * @param {number} lowerCap - The minimum number of chapters (inclusive)
-     * @param {number} upperCap - The maximum number of chapters (inclusive)
-     * @returns {Observable<Manga[]>} An observable that emits an array of mangas with chapter counts within the specified range
-     */
-    getMangasByChapterRange(lowerCap: number, upperCap: number): Observable<Manga[]> {
-        return from(
-            this.database.mangas
-                .where('chapters')
-                .between(lowerCap, upperCap, true, true)
-                .toArray()
-                .then(mangas => this.resolveTagsForMangas(mangas as Manga[]))
-        );
+            return from(
+                collection
+                    .sortBy(sortMethod)
+                    .then(mangas => this.resolveTagsForMangas(mangas as Manga[]))
+            );
     }
 
     /**
