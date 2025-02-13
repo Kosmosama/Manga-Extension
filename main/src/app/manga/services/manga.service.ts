@@ -11,7 +11,6 @@ import { ChapterRangeFilter, DateRangeFilter, Filters, FilterTypes, TagFilter } 
 export class MangaService {
     private database = inject(DatabaseService);
 
-
     // #TODO - Implement sorting in all filters - maybe move the filters to a service?
 
     /**
@@ -32,14 +31,14 @@ export class MangaService {
             [FilterTypes.DATE_RANGE]: (f: DateRangeFilter) => this.getMangasByRange(f.dateType, f.lowerDate, f.upperDate, f.sortMethod, f.orderMethod),
             [FilterTypes.CHAPTER_RANGE]: (f: ChapterRangeFilter) => this.getMangasByRange('chapters', f.lowerCap, f.upperCap, 'chapters', 'asc')
         } as Record<FilterTypes, (filter: any) => Observable<Manga[]>>;
-    
+
         const handler = filterHandlers[filter.type];
         if (!handler) {
             throw new Error(`Invalid filter type: ${filter.type}`);
         }
         return handler(filter);
     }
-    
+
     /**
      * Retrieves all mangas from the database and resolves their tag IDs into full Tag objects.
      * This is the base query used when no filters are applied.
@@ -70,7 +69,7 @@ export class MangaService {
         );
     }
 
-     /**
+    /**
      * Retrieves mangas within a specific range of criteria and sorts them according to the provided parameters.
      * 
      * @param {RangeCriteria} criteria - The criteria to filter by (e.g., 'updatedAt', 'createdAt', etc.)
@@ -82,24 +81,24 @@ export class MangaService {
      *                               sorted according to the specified parameters and with resolved tags
      */
     getMangasByRange(
-         criteria: RangeCriteria,
-         lowerCriteria: RangeCriteriaType, 
-         upperCriteria: RangeCriteriaType, 
-         sortMethod: SortMangaMethods, 
-         orderMethod: OrderMethod): Observable<Manga[]>{
-            let collection = this.database.mangas
+        criteria: RangeCriteria,
+        lowerCriteria: RangeCriteriaType,
+        upperCriteria: RangeCriteriaType,
+        sortMethod: SortMangaMethods,
+        orderMethod: OrderMethod): Observable<Manga[]> {
+        let collection = this.database.mangas
             .where(criteria)
             .between(lowerCriteria, upperCriteria, true, true);
 
-            if(orderMethod === 'desc'){
-                collection = collection.reverse();
-            }
+        if (orderMethod === 'desc') {
+            collection = collection.reverse();
+        }
 
-            return from(
-                collection
-                    .sortBy(sortMethod)
-                    .then(mangas => this.resolveTagsForMangas(mangas as Manga[]))
-            );
+        return from(
+            collection
+                .sortBy(sortMethod)
+                .then(mangas => this.resolveTagsForMangas(mangas as Manga[]))
+        );
     }
 
     /**
@@ -119,7 +118,7 @@ export class MangaService {
             .then(tags => {
                 const validTags = tags.filter((tag): tag is Tag => tag !== undefined);
                 const tagMap = new Map(validTags.map(tag => [tag.id, tag]));
-                
+
                 return mangas.map(manga => ({
                     ...manga,
                     resolvedTags: (manga.tags || [])
@@ -128,14 +127,13 @@ export class MangaService {
                 }));
             });
     }
-      
-      
 
     /**
      * Adds a new manga to the database.
      * 
-     * @param {NewManga} manga - The manga data to add to the database
-     * @returns {Observable<number>} An observable that emits the ID of the newly added manga
+     * @param {NewManga} manga - The manga data to add to the database.
+     * 
+     * @returns {Observable<number>} An observable that emits the ID of the newly added manga.
      */
     addManga(manga: NewManga): Observable<number> {
         return from(this.database.mangas.add(manga));
@@ -152,7 +150,7 @@ export class MangaService {
     updateManga(id: number, changes: Partial<Manga>): Observable<number> {
         return from(this.database.mangas.update(id, changes));
     }
-    
+
     /**
      * Deletes a manga from the database.
      * 
@@ -169,20 +167,22 @@ export class MangaService {
      *
      * @param {number} mangaId - The ID of the manga to which the tag will be added.
      * @param {number} tagId - The ID of the tag to be added to the manga.
+     * 
      * @returns {Observable<number>} An observable that emits the number of rows affected by the update.
      * @throws {Error} If the manga with the specified ID is not found.
      */
     addTagToManga(mangaId: number, tagId: number): Observable<number> {
         return from(this.database.mangas.get(mangaId).then(manga => {
-            if(!manga){
+            if (!manga) {
                 throw new Error('Manga not found');
             }
-            
+
+            // #TODO Check if tags exist before adding them (?)
             const updatedTags = [...(manga.tags ?? []), tagId];
             return this.database.mangas.update(mangaId, { tags: updatedTags });
         }));
     }
-    
+
     /**
      * Removes a tag from a manga's list of tags.
      *
@@ -193,14 +193,13 @@ export class MangaService {
      */
     removeTagFromManga(mangaId: number, tagId: number): Observable<number> {
         return from(this.database.mangas.get(mangaId).then(manga => {
-            if(!manga){
+            if (!manga) {
                 throw new Error('Manga not found');
             }
-            
+
+            // #TODO Check what happens if we delete a tag that isnt in a manga and solve if a bug
             const updatedTags = (manga.tags ?? []).filter(tag => tag !== tagId);
             return this.database.mangas.update(mangaId, { tags: updatedTags });
         }));
     }
-
-    
 }
