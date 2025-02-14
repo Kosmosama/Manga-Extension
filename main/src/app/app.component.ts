@@ -45,7 +45,7 @@ export class AppComponent {
     });
 
     ngOnInit() {
-        this.manga.getAllMangas({ type: FilterTypes.NONE }).subscribe({
+        this.manga.getAllMangasold({ type: FilterTypes.NONE }).subscribe({
             next: (mangas) => {
                 this.MangaList = mangas;
                 console.log('Lista de mangas:', mangas);
@@ -100,7 +100,7 @@ export class AppComponent {
             });
         }
     }
-    
+
     getTagNames(tags: any[]): string {
         return tags?.map(tag => tag.name).join(', ') || 'Sin tags';
     }

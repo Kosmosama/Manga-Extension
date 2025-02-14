@@ -3,8 +3,9 @@ import { Manga, NewManga } from '../../shared/interfaces/manga.interface';
 import { from, Observable } from 'rxjs';
 import { DatabaseService } from '../../shared/services/database.service';
 import { Tag } from '../../shared/interfaces/tag.interface';
-import { OrderMethod, RangeCriteria, RangeCriteriaType, SortMangaMethods } from '../../shared/interfaces/sort.interface';
-import { ChapterRangeFilter, DateRangeFilter, Filters, FilterTypes, TagFilter } from '../../shared/interfaces/filters.interface';
+import { OrderingMethod, RangeCriteria, RangeCriteriaType, SortMangaMethods } from '../../shared/interfaces/sort.interface';
+import { ChapterRangeFilter, DateRangeFilter, Filters, FilterTypes, MangaFilters, OrderMethod, SortMethod, TagFilter } from '../../shared/interfaces/filters.interface';
+import { Collection } from 'dexie';
 @Injectable({
     providedIn: 'root'
 })
@@ -24,7 +25,7 @@ export class MangaService {
      *                          - CHAPTER_RANGE: Filters by chapter count range
      * @returns {Observable<Manga[]>} An observable that emits an array of filtered mangas with their resolved tags
      */
-    getAllMangas(filter: Filters): Observable<Manga[]> {
+    getAllMangasold(filter: Filters): Observable<Manga[]> {
         const filterHandlers = {
             [FilterTypes.NONE]: () => this.getMangasWithTags(),
             [FilterTypes.TAG]: (f: TagFilter) => this.getMangasByTag(f.tagId),
@@ -38,6 +39,57 @@ export class MangaService {
         }
         return handler(filter);
     }
+
+    // getAllMangas(filters: MangaFilters) {
+    //     let query = this.database.mangas;
+    
+    //     if (filters.chapterRange) {
+    //         query = query.where('chapters').between(filters.chapterRange.min, filters.chapterRange.max, true, true);
+    //     }
+    //     if (filters.lastSeenRange) {
+    //         query = query.where('lastSeen').between(filters.lastSeenRange.start, filters.lastSeenRange.end, true, true);
+    //     }
+    //     if (filters.addedRange) {
+    //         query = query.where('createdAt').between(filters.addedRange.start, filters.addedRange.end, true, true);
+    //     }
+    
+    //     let collection = query.toCollection();
+    
+    //     if (filters.search) {
+    //         collection = this.applySearchFilter(collection, filters.search);
+    //     }
+    //     if (filters.includeTags?.length || filters.excludeTags?.length) {
+    //         collection = this.applyTagFilters(collection, filters.includeTags, filters.excludeTags);
+    //     }
+    
+    //     return collection;
+    // }
+
+    // private applySearchFilter(query: Collection<NewManga, number, NewManga>, search: string): Collection<NewManga, number, NewManga> {
+    //     return query.filter(manga => manga.title.toLowerCase().includes(search.toLowerCase()));
+    // }
+
+    // private applyTagFilters(query: Collection<NewManga, number, NewManga>, includeTags: number[] = [], excludeTags: number[] = []): Collection<NewManga, number, NewManga> {    
+    //     return query.filter(manga => {
+    //         const tagSet = new Set(manga.tags ?? []);
+            
+    //         const hasAllIncluded = includeTags ? includeTags.every(tag => tagSet.has(tag)) : true;
+    //         const hasNoExcluded = excludeTags ? !excludeTags.some(tag => tagSet.has(tag)) : true;
+            
+    //         return hasAllIncluded && hasNoExcluded;
+    //     });
+    // }
+
+    // private applyChapterRangeFilter(query: Collection<NewManga, number, NewManga>, range: { min: number; max: number }): Collection<NewManga, number, NewManga> {
+    //     return query.where('chapters').between(range.min, range.max, true, true);
+    // }
+
+    // private applyDateRangeFilter(query: Collection<NewManga, number, NewManga>, field: 'lastSeen' | 'createdAt', range: { start: Date; end: Date }): Collection<NewManga, number, NewManga> {
+    //     return query.where(field).between(range.start, range.end, true, true);
+    // }
+
+    // private async applySorting(query: Collection<NewManga, number, NewManga>, sortBy: SortMethod = 'title', order: OrderMethod = 'asc'): Promise<NewManga[]> {
+    // }
 
     /**
      * Retrieves all mangas from the database and resolves their tag IDs into full Tag objects.
@@ -85,7 +137,7 @@ export class MangaService {
         lowerCriteria: RangeCriteriaType,
         upperCriteria: RangeCriteriaType,
         sortMethod: SortMangaMethods,
-        orderMethod: OrderMethod): Observable<Manga[]> {
+        orderMethod: OrderingMethod): Observable<Manga[]> {
         let collection = this.database.mangas
             .where(criteria)
             .between(lowerCriteria, upperCriteria, true, true);

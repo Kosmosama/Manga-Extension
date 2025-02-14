@@ -1,4 +1,4 @@
-import { OrderMethod, SortMangaMethods } from "./sort.interface";
+import { OrderingMethod, SortMangaMethods } from "./sort.interface";
 
 export enum FilterTypes {
     TAG = 'tag',
@@ -36,3 +36,20 @@ export interface NoFilter extends BaseFilter {
 }
 
 export type Filters = TagFilter | DateRangeFilter | ChapterRangeFilter | NoFilter;
+
+// # NEW #
+
+export type OrderMethod = 'asc' | 'desc';
+export type SortMethod = 'isFavorite' | 'updatedAt' | 'createdAt' | 'chapters' | 'title';
+export type RangeCriteriaType = number | Date;
+
+export interface MangaFilters {
+    search?: string;
+    includeTags?: number[];
+    excludeTags?: number[];
+    chapterRange?: { min: number; max: number };
+    lastSeenRange?: { start: Date; end: Date };
+    addedRange?: { start: Date; end: Date };
+    sortBy?: SortMethod;
+    order?: OrderMethod;
+}
