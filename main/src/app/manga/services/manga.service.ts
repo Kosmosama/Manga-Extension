@@ -23,7 +23,7 @@ export class MangaService {
 
         if (filters.search) 
             query = this.applySearchFilter(query, filters.search);
-        if ((!filters.includeTags || filters.includeTags.length === 0) && (!filters.excludeTags || filters.excludeTags.length === 0))
+        if ((filters.includeTags && filters.includeTags.length > 0) || (filters.excludeTags && filters.excludeTags.length > 0))
             query = this.applyTagFilters(query, filters.includeTags, filters.excludeTags);
         if (filters.chapterRange)
             query = this.applyChapterRangeFilter(query, filters.chapterRange);
