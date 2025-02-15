@@ -4,6 +4,7 @@ import { from, Observable } from 'rxjs';
 import { MangaFilters, Range } from '../../shared/interfaces/filters.interface';
 import { Manga, NewManga } from '../../shared/interfaces/manga.interface';
 import { DatabaseService } from '../../shared/services/database.service';
+import { Tag } from '../../shared/interfaces/tag.interface';
 @Injectable({
     providedIn: 'root'
 })
@@ -21,7 +22,7 @@ export class MangaService {
     getAllMangas(filters: MangaFilters): Observable<NewManga[]> {
         let query = this.database.mangas.toCollection();
 
-        if (filters.search) 
+        if (filters.search)
             query = this.applySearchFilter(query, filters.search);
         if (filters.includeTags || filters.excludeTags)
             query = this.applyTagFilters(query, filters.includeTags, filters.excludeTags);
@@ -53,20 +54,21 @@ export class MangaService {
      * Filters mangas based on included and excluded tags.
      * 
      * @param {Collection<NewManga, number, NewManga>} query - The manga collection query.
-     * @param {number[]} includeTags - Tags that must be included.
-     * @param {number[]} excludeTags - Tags that must be excluded.
+     * @param {number[]} includeTags - Tag IDs that must be included.
+     * @param {number[]} excludeTags - Tag IDs that must be excluded.
      * 
-     * @returns {Collection<NewManga, number, NewManga>} The filtered query.
+     * @returns {Collection<Manga, number, Manga>} The filtered query.
      */
-    private applyTagFilters(query: Collection<NewManga, number, NewManga>, includeTags: number[] = [], excludeTags: number[] = []): Collection<NewManga, number, NewManga> {    
+    private applyTagFilters(query: Collection<NewManga, number, NewManga>, includeTags: number[] = [], excludeTags: number[] = []): Collection<Manga, number, Manga> {
         return query.filter(manga => {
-            const tagSet = new Set(manga.tags ?? []);
-            
-            const hasAllIncluded = includeTags ? includeTags.every(tag => tagSet.has(tag)) : true;
-            const hasNoExcluded = excludeTags ? !excludeTags.some(tag => tagSet.has(tag)) : true;
-            
+            const mangaTagIds = (manga.tags ?? []).map(tag => tag.id);
+            const tagSet = new Set(mangaTagIds);
+
+            const hasAllIncluded = includeTags ? includeTags.every(tagId => tagSet.has(tagId)) : true;
+            const hasNoExcluded = excludeTags ? !excludeTags.some(tagId => tagSet.has(tagId)) : true;
+
             return hasAllIncluded && hasNoExcluded;
-        });
+        }) as Collection<Manga, number, Manga>;
     }
 
     /**
@@ -80,7 +82,7 @@ export class MangaService {
     private applyChapterRangeFilter(query: Collection<NewManga, number, NewManga>, range: Range<number>): Collection<NewManga, number, NewManga> {
         return query.filter(manga => manga.chapters >= range.min && manga.chapters <= range.max);
     }
-    
+
     /**
      * Filters mangas based on their last updated date within a specified range.
      * 
@@ -157,43 +159,53 @@ export class MangaService {
     }
 
     /**
-     * Adds a tag to a manga's list of tags.
+     * Adds multiple tags to a manga's list of tags.
      *
-     * @param {number} mangaId - The ID of the manga to which the tag will be added.
-     * @param {number} tagId - The ID of the tag to be added to the manga.
-     * 
-     * @returns {Observable<number>} An observable that emits the number of rows affected by the update.
-     * @throws {Error} If the manga with the specified ID is not found.
+     * @param {number} mangaId - The ID of the manga to which the tags will be added
+     * @param {number[]} tagIds - Array of tag IDs to be added to the manga
+     * @returns {Observable<number>} An observable that emits the number of rows affected by the update
+     * @throws {Error} If the manga with the specified ID is not found or if any tag doesn't exist
      */
-    addTagToManga(mangaId: number, tagId: number): Observable<number> {
-        return from(this.database.mangas.get(mangaId).then(manga => {
-            if (!manga) {
-                throw new Error('Manga not found');
-            }
+    addTagToManga(mangaId: number, tagIds: number[]): Observable<number> {
+        return from(
+            Promise.all([ // maybe it can be done without promise all but my brain is off
+                this.database.mangas.get(mangaId),
+                this.database.tags.bulkGet(tagIds)
+            ]).then(([manga, tags]) => {
+                if (!manga) {
+                    throw new Error('Manga not found');
+                }
 
-            // #TODO Check if tags exist before adding them (?)
-            const updatedTags = [...(manga.tags ?? []), tagId];
-            return this.database.mangas.update(mangaId, { tags: updatedTags });
-        }));
+                const validTags = tags.filter((tag): tag is Tag => tag !== undefined);
+                if (validTags.length !== tagIds.length) {
+                    throw new Error('Some tags do not exist xdd');
+                }
+
+                const existingTags = manga.tags ?? [];
+
+                const allTags = [...existingTags, ...validTags];
+                
+                return this.database.mangas.update(mangaId, { tags: allTags });
+            })
+        );
     }
+    // /**
+    //  * Removes a tag from a manga's list of tags.
+    //  *
+    //  * @param {number} mangaId - The ID of the manga from which the tag will be removed.
+    //  * @param {number} tagId - The ID of the tag to be removed from the manga.
+    //  * @returns {Observable<number>} An observable that emits the number of rows affected by the update.
+    //  * @throws {Error} If the manga with the specified ID is not found.
+    //  */
+    // removeTagFromManga(mangaId: number, tagId: number): Observable<number> {
+    //     return from(this.database.mangas.get(mangaId).then(manga => {
+    //         if (!manga) {
+    //             throw new Error('Manga not found');
+    //         }
 
-    /**
-     * Removes a tag from a manga's list of tags.
-     *
-     * @param {number} mangaId - The ID of the manga from which the tag will be removed.
-     * @param {number} tagId - The ID of the tag to be removed from the manga.
-     * @returns {Observable<number>} An observable that emits the number of rows affected by the update.
-     * @throws {Error} If the manga with the specified ID is not found.
-     */
-    removeTagFromManga(mangaId: number, tagId: number): Observable<number> {
-        return from(this.database.mangas.get(mangaId).then(manga => {
-            if (!manga) {
-                throw new Error('Manga not found');
-            }
-
-            // #TODO Check what happens if we delete a tag that isnt in a manga and solve if a bug
-            const updatedTags = (manga.tags ?? []).filter(tag => tag !== tagId);
-            return this.database.mangas.update(mangaId, { tags: updatedTags });
-        }));
-    }
+    //         // #TODO Check what happens if we delete a tag that isnt in a manga and solve if a bug
+    //         const updatedTags = (manga.tags ?? []).filter(tag => tag !== tagId);
+    //         return this.database.mangas.update(mangaId, { tags: updatedTags });
+    //     }));
+    // }
 }
