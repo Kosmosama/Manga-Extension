@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import Dexie, { Table } from 'dexie';
-import { NewManga } from '../interfaces/manga.interface';
-import { NewTag } from '../interfaces/tag.interface';
+import { Manga, NewManga } from '../interfaces/manga.interface';
+import { NewTag, Tag } from '../interfaces/tag.interface';
 
 @Injectable({
     providedIn: 'root'
 })
 export class DatabaseService extends Dexie {
-    mangas!: Table<NewManga, number>;
-    tags!: Table<NewTag, number>;
+    mangas!: Table<Manga, number>;
+    tags!: Table<Tag, number>;
     
     constructor() {
         super('mangadb');
@@ -18,6 +18,9 @@ export class DatabaseService extends Dexie {
             tags: '++id, name, color'
         });
 
-        // this.on('populate', () => this.populate());
+        this.on('populate', () => this.populate());
+    }
+    populate(){
+        console.log('Tf is a signal')
     }
 }
