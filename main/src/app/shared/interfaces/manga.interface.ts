@@ -31,7 +31,7 @@ export interface Manga {
     createdAt: string;
     link?: string;
     image?: string;
-    chapters?: number;
+    chapters: number;
     isFavorite?: boolean;
     type?: MangaType;
     state?: MangaState;

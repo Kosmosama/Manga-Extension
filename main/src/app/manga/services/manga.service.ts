@@ -1,156 +1,114 @@
 import { inject, Injectable } from '@angular/core';
-import { Manga, NewManga } from '../../shared/interfaces/manga.interface';
-import { from, Observable } from 'rxjs';
-import { DatabaseService } from '../../shared/services/database.service';
-import { Tag } from '../../shared/interfaces/tag.interface';
-import { OrderingMethod, RangeCriteria, RangeCriteriaType, SortMangaMethods } from '../../shared/interfaces/sort.interface';
-import { ChapterRangeFilter, DateRangeFilter, Filters, FilterTypes, MangaFilters, OrderMethod, SortMethod, TagFilter } from '../../shared/interfaces/filters.interface';
 import { Collection } from 'dexie';
+import { from, Observable } from 'rxjs';
+import { MangaFilters, Range } from '../../shared/interfaces/filters.interface';
+import { Manga, NewManga } from '../../shared/interfaces/manga.interface';
+import { DatabaseService } from '../../shared/services/database.service';
 @Injectable({
     providedIn: 'root'
 })
 export class MangaService {
     private database = inject(DatabaseService);
 
-    // #TODO - Implement sorting in all filters - maybe move the filters to a service?
-
     /**
-     * Retrieves filtered mangas from the database based on the provided filter criteria.
-     * Each manga will have its tags resolved into full Tag objects.
-     *
-     * @param {Filters} filter - The filter criteria to apply:
-     *                          - NONE: Returns all mangas
-     *                          - TAG: Filters by specific tag ID
-     *                          - DATE_RANGE: Filters by date range and includes sorting
-     *                          - CHAPTER_RANGE: Filters by chapter count range
-     * @returns {Observable<Manga[]>} An observable that emits an array of filtered mangas with their resolved tags
-     */
-    getAllMangasold(filter: Filters): Observable<Manga[]> {
-        const filterHandlers = {
-            [FilterTypes.NONE]: () => this.getMangasWithTags(),
-            [FilterTypes.TAG]: (f: TagFilter) => this.getMangasByTag(f.tagId),
-            [FilterTypes.DATE_RANGE]: (f: DateRangeFilter) => this.getMangasByRange(f.dateType, f.lowerDate, f.upperDate, f.sortMethod, f.orderMethod),
-            [FilterTypes.CHAPTER_RANGE]: (f: ChapterRangeFilter) => this.getMangasByRange('chapters', f.lowerCap, f.upperCap, 'chapters', 'asc')
-        } as Record<FilterTypes, (filter: any) => Observable<Manga[]>>;
-
-        const handler = filterHandlers[filter.type];
-        if (!handler) {
-            throw new Error(`Invalid filter type: ${filter.type}`);
-        }
-        return handler(filter);
-    }
-
-    // getAllMangas(filters: MangaFilters) {
-    //     let query = this.database.mangas;
-    
-    //     if (filters.chapterRange) {
-    //         query = query.where('chapters').between(filters.chapterRange.min, filters.chapterRange.max, true, true);
-    //     }
-    //     if (filters.lastSeenRange) {
-    //         query = query.where('lastSeen').between(filters.lastSeenRange.start, filters.lastSeenRange.end, true, true);
-    //     }
-    //     if (filters.addedRange) {
-    //         query = query.where('createdAt').between(filters.addedRange.start, filters.addedRange.end, true, true);
-    //     }
-    
-    //     let collection = query.toCollection();
-    
-    //     if (filters.search) {
-    //         collection = this.applySearchFilter(collection, filters.search);
-    //     }
-    //     if (filters.includeTags?.length || filters.excludeTags?.length) {
-    //         collection = this.applyTagFilters(collection, filters.includeTags, filters.excludeTags);
-    //     }
-    
-    //     return collection;
-    // }
-
-    // private applySearchFilter(query: Collection<NewManga, number, NewManga>, search: string): Collection<NewManga, number, NewManga> {
-    //     return query.filter(manga => manga.title.toLowerCase().includes(search.toLowerCase()));
-    // }
-
-    // private applyTagFilters(query: Collection<NewManga, number, NewManga>, includeTags: number[] = [], excludeTags: number[] = []): Collection<NewManga, number, NewManga> {    
-    //     return query.filter(manga => {
-    //         const tagSet = new Set(manga.tags ?? []);
-            
-    //         const hasAllIncluded = includeTags ? includeTags.every(tag => tagSet.has(tag)) : true;
-    //         const hasNoExcluded = excludeTags ? !excludeTags.some(tag => tagSet.has(tag)) : true;
-            
-    //         return hasAllIncluded && hasNoExcluded;
-    //     });
-    // }
-
-    // private applyChapterRangeFilter(query: Collection<NewManga, number, NewManga>, range: { min: number; max: number }): Collection<NewManga, number, NewManga> {
-    //     return query.where('chapters').between(range.min, range.max, true, true);
-    // }
-
-    // private applyDateRangeFilter(query: Collection<NewManga, number, NewManga>, field: 'lastSeen' | 'createdAt', range: { start: Date; end: Date }): Collection<NewManga, number, NewManga> {
-    //     return query.where(field).between(range.start, range.end, true, true);
-    // }
-
-    // private async applySorting(query: Collection<NewManga, number, NewManga>, sortBy: SortMethod = 'title', order: OrderMethod = 'asc'): Promise<NewManga[]> {
-    // }
-
-    /**
-     * Retrieves all mangas from the database and resolves their tag IDs into full Tag objects.
-     * This is the base query used when no filters are applied.
-     *
-     * @returns {Observable<Manga[]>} An observable that emits an array of all mangas with their
-     * tag IDs resolved into complete Tag objects in the resolvedTags property
-     */
-    getMangasWithTags(): Observable<Manga[]> {
-        return from(
-            this.database.mangas.toArray()
-                .then(mangas => this.resolveTagsForMangas(mangas as Manga[]))
-        );
-    }
-
-    /**
-     * Retrieves all mangas that have a specific tag.
+     * Retrieves all mangas from the database based on the provided filters.
      * 
-     * @param {number} tagId - The ID of the tag to filter mangas by.
-     * @returns {Observable<Manga[]>} An observable that emits an array of mangas containing the specified tag.
+     * @param {MangaFilters} filters - The filters to apply to the manga collection.
+     * 
+     * @returns {Observable<NewManga[]>} An observable containing the filtered list of mangas.
      */
-    getMangasByTag(tagId: number): Observable<Manga[]> {
-        return from(
-            this.database.mangas
-                .where('tags')
-                .equals(tagId)
-                .toArray()
-                .then(mangas => this.resolveTagsForMangas(mangas as Manga[]))
-        );
+    // #TODO Maybe make it so that tags are placed onto the manga objects? - depends on the UI
+    getAllMangas(filters: MangaFilters): Observable<NewManga[]> {
+        let query = this.database.mangas.toCollection();
+
+        if (filters.search) 
+            query = this.applySearchFilter(query, filters.search);
+        if ((!filters.includeTags || filters.includeTags.length === 0) && (!filters.excludeTags || filters.excludeTags.length === 0))
+            query = this.applyTagFilters(query, filters.includeTags, filters.excludeTags);
+        if (filters.chapterRange)
+            query = this.applyChapterRangeFilter(query, filters.chapterRange);
+        if (filters.lastSeenRange)
+            query = this.applyUpdatedAtRangeFilter(query, filters.lastSeenRange);
+        if (filters.addedRange)
+            query = this.applyCreatedAtRangeFilter(query, filters.addedRange);
+
+        query.sortBy(filters.sortBy ? filters.sortBy : 'title');
+
+        return from(filters.order === 'desc' ? query.reverse().toArray() : query.toArray());
     }
 
     /**
-     * Retrieves mangas within a specific range of criteria and sorts them according to the provided parameters.
+     * Applies a search filter to the query based on the manga title.
      * 
-     * @param {RangeCriteria} criteria - The criteria to filter by (e.g., 'updatedAt', 'createdAt', etc.)
-     * @param {RangeCriteriaType} lowerCriteria - The minimum value of the range
-     * @param {RangeCriteriaType} upperCriteria - The maximum value of the range
-     * @param {SortMangaMethods} sortMethod - The sorting method to apply
-     * @param {OrderMethod} orderMethod - The sorting direction ('asc' or 'desc')
-     * @returns {Observable<Manga[]>} An observable that emits an array of mangas matching the criteria,
-     *                               sorted according to the specified parameters and with resolved tags
+     * @param {Collection<NewManga, number, NewManga>} query - The manga collection query.
+     * @param {string} search - The search term.
+     * 
+     * @returns {Collection<NewManga, number, NewManga>} The filtered query.
      */
-    getMangasByRange(
-        criteria: RangeCriteria,
-        lowerCriteria: RangeCriteriaType,
-        upperCriteria: RangeCriteriaType,
-        sortMethod: SortMangaMethods,
-        orderMethod: OrderingMethod): Observable<Manga[]> {
-        let collection = this.database.mangas
-            .where(criteria)
-            .between(lowerCriteria, upperCriteria, true, true);
+    private applySearchFilter(query: Collection<NewManga, number, NewManga>, search: string): Collection<NewManga, number, NewManga> {
+        return query.filter(manga => manga.title.toLowerCase().includes(search.toLowerCase()));
+    }
 
-        if (orderMethod === 'desc') {
-            collection = collection.reverse();
-        }
+    /**
+     * Filters mangas based on included and excluded tags.
+     * 
+     * @param {Collection<NewManga, number, NewManga>} query - The manga collection query.
+     * @param {number[]} includeTags - Tags that must be included.
+     * @param {number[]} excludeTags - Tags that must be excluded.
+     * 
+     * @returns {Collection<NewManga, number, NewManga>} The filtered query.
+     */
+    private applyTagFilters(query: Collection<NewManga, number, NewManga>, includeTags: number[] = [], excludeTags: number[] = []): Collection<NewManga, number, NewManga> {    
+        return query.filter(manga => {
+            const tagSet = new Set(manga.tags ?? []);
+            
+            const hasAllIncluded = includeTags ? includeTags.every(tag => tagSet.has(tag)) : true;
+            const hasNoExcluded = excludeTags ? !excludeTags.some(tag => tagSet.has(tag)) : true;
+            
+            return hasAllIncluded && hasNoExcluded;
+        });
+    }
 
-        return from(
-            collection
-                .sortBy(sortMethod)
-                .then(mangas => this.resolveTagsForMangas(mangas as Manga[]))
-        );
+    /**
+     * Filters mangas based on the number of chapters within a specified range.
+     * 
+     * @param {Collection<NewManga, number, NewManga>} query - The manga collection query.
+     * @param {Range<number>} range - The chapter range.
+     * 
+     * @returns {Collection<NewManga, number, NewManga>} The filtered query.
+     */
+    private applyChapterRangeFilter(query: Collection<NewManga, number, NewManga>, range: Range<number>): Collection<NewManga, number, NewManga> {
+        return query.filter(manga => manga.chapters >= range.min && manga.chapters <= range.max);
+    }
+    
+    /**
+     * Filters mangas based on their last updated date within a specified range.
+     * 
+     * @param {Collection<NewManga, number, NewManga>} query - The manga collection query.
+     * @param {Range<number>} range - The date range for last updated time.
+     * 
+     * @returns {Collection<NewManga, number, NewManga>} The filtered query.
+     */
+    private applyUpdatedAtRangeFilter(query: Collection<NewManga, number, NewManga>, range: Range<Date>): Collection<NewManga, number, NewManga> {
+        return query.filter(manga => {
+            const dateValue = new Date(manga.updatedAt);
+            return dateValue >= range.min && dateValue <= range.max;
+        });
+    }
+
+    /**
+     * Filters mangas based on their creation date within a specified range.
+     * 
+     * @param {Collection<NewManga, number, NewManga>} query - The manga collection query.
+     * @param {Range<number>} range - The date range for creation time.
+     * 
+     * @returns {Collection<NewManga, number, NewManga>} The filtered query.
+     */
+    private applyCreatedAtRangeFilter(query: Collection<NewManga, number, NewManga>, range: Range<Date>): Collection<NewManga, number, NewManga> {
+        return query.filter(manga => {
+            const dateValue = new Date(manga.createdAt);
+            return dateValue >= range.min && dateValue <= range.max;
+        });
     }
 
     /**
@@ -162,22 +120,6 @@ export class MangaService {
      */
     getMangaById(id: number): Observable<Manga | undefined> {
         return from(this.database.mangas.get(id) as Promise<Manga | undefined>);
-    }
-
-    private resolveTagsForMangas(mangas: Manga[]): Promise<Manga[]> {
-        const tagIds = [...new Set(mangas.flatMap(manga => manga.tags || []))];
-        return this.database.tags.bulkGet(tagIds)
-            .then(tags => {
-                const validTags = tags.filter((tag): tag is Tag => tag !== undefined);
-                const tagMap = new Map(validTags.map(tag => [tag.id, tag]));
-
-                return mangas.map(manga => ({
-                    ...manga,
-                    resolvedTags: (manga.tags || [])
-                        .map(tagId => tagMap.get(tagId))
-                        .filter((t): t is Tag => t !== undefined)
-                }));
-            });
     }
 
     /**
