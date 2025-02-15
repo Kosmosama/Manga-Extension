@@ -9,7 +9,7 @@ import { NewTag } from '../interfaces/tag.interface';
 export class DatabaseService extends Dexie {
     mangas!: Table<NewManga, number>;
     tags!: Table<NewTag, number>;
-    // #TODO Create enum with fields, and change every single string in the project with that
+    
     constructor() {
         super('mangadb');
 

@@ -20,22 +20,22 @@ export class MangaService {
      */
     // #TODO Maybe make it so that tags are placed onto the manga objects? - depends on the UI
     getAllMangas(filters: MangaFilters): Observable<NewManga[]> {
-        let query = this.database.mangas.toCollection();
+        let query: Collection<NewManga, number, NewManga>;
 
-        if (filters.search)
-            query = this.applySearchFilter(query, filters.search);
-        if (filters.includeTags || filters.excludeTags)
-            query = this.applyTagFilters(query, filters.includeTags, filters.excludeTags);
-        if (filters.chapterRange)
-            query = this.applyChapterRangeFilter(query, filters.chapterRange);
-        if (filters.lastSeenRange)
-            query = this.applyUpdatedAtRangeFilter(query, filters.lastSeenRange);
-        if (filters.addedRange)
-            query = this.applyCreatedAtRangeFilter(query, filters.addedRange);
+        if (filters.sortBy) {
+            query = this.database.mangas.orderBy(filters.sortBy);
+            if (filters.order === 'desc') query = query.reverse();
+        } else {
+            query = this.database.mangas.toCollection();
+        }
 
-        query.sortBy(filters.sortBy ? filters.sortBy : 'title');
+        if (filters.search) query = this.applySearchFilter(query, filters.search);
+        if (filters.includeTags || filters.excludeTags) query = this.applyTagFilters(query, filters.includeTags, filters.excludeTags);
+        if (filters.chapterRange) query = this.applyChapterRangeFilter(query, filters.chapterRange);
+        if (filters.lastSeenRange) query = this.applyUpdatedAtRangeFilter(query, filters.lastSeenRange);
+        if (filters.addedRange) query = this.applyCreatedAtRangeFilter(query, filters.addedRange);
 
-        return from(filters.order === 'desc' ? query.reverse().toArray() : query.toArray());
+        return from(query.toArray());
     }
 
     /**
@@ -64,12 +64,19 @@ export class MangaService {
             const mangaTagIds = (manga.tags ?? []).map(tag => tag.id);
             const tagSet = new Set(mangaTagIds);
 
-            const hasAllIncluded = includeTags ? includeTags.every(tagId => tagSet.has(tagId)) : true;
-            const hasNoExcluded = excludeTags ? !excludeTags.some(tagId => tagSet.has(tagId)) : true;
+            const hasAllIncluded = includeTags.every(tagId => tagSet.has(tagId));
+            const hasNoExcluded = !excludeTags.some(tagId => tagSet.has(tagId));
 
             return hasAllIncluded && hasNoExcluded;
         }) as Collection<Manga, number, Manga>;
     }
+
+    // private applyTagFilters(query: Collection<Manga, number>, includeTags: number[] = [], excludeTags: number[] = []) {
+    //     return query.filter(manga => {
+    //         const tagIds = manga.tags?.map(tag => tag.id) ?? [];
+    //         return includeTags.every(tagId => tagIds.includes(tagId)) && !excludeTags.some(tagId => tagIds.includes(tagId));
+    //     });
+    // }
 
     /**
      * Filters mangas based on the number of chapters within a specified range.
