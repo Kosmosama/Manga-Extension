@@ -2,9 +2,9 @@ import { inject, Injectable } from '@angular/core';
 import { Collection } from 'dexie';
 import { from, Observable } from 'rxjs';
 import { MangaFilters, Range } from '../../shared/interfaces/filters.interface';
-import { Manga, NewManga } from '../../shared/interfaces/manga.interface';
 import { DatabaseService } from '../../shared/services/database.service';
 import { Tag } from '../../shared/interfaces/tag.interface';
+import { Manga } from '../../shared/interfaces/manga.interface';
 @Injectable({
     providedIn: 'root'
 })
@@ -16,10 +16,10 @@ export class MangaService {
      * 
      * @param {MangaFilters} filters - The filters to apply to the manga collection.
      * 
-     * @returns {Observable<NewManga[]>} An observable containing the filtered list of mangas.
+     * @returns {Observable<Manga[]>} An observable containing the filtered list of mangas.
      */
     // #TODO Maybe make it so that tags are placed onto the manga objects? - depends on the UI
-    getAllMangas(filters: MangaFilters): Observable<NewManga[]> {
+    getAllMangas(filters: MangaFilters): Observable<Manga[]> {
         let query = this.database.mangas.toCollection();
 
         if (filters.search)
@@ -41,25 +41,25 @@ export class MangaService {
     /**
      * Applies a search filter to the query based on the manga title.
      * 
-     * @param {Collection<NewManga, number, NewManga>} query - The manga collection query.
+     * @param {Collection<Manga, number, Manga>} query - The manga collection query.
      * @param {string} search - The search term.
      * 
-     * @returns {Collection<NewManga, number, NewManga>} The filtered query.
+     * @returns {Collection<Manga, number, Manga>} The filtered query.
      */
-    private applySearchFilter(query: Collection<NewManga, number, NewManga>, search: string): Collection<NewManga, number, NewManga> {
+    private applySearchFilter(query: Collection<Manga, number, Manga>, search: string): Collection<Manga, number, Manga> {
         return query.filter(manga => manga.title.toLowerCase().includes(search.toLowerCase()));
     }
 
     /**
      * Filters mangas based on included and excluded tags.
      * 
-     * @param {Collection<NewManga, number, NewManga>} query - The manga collection query.
+     * @param {Collection<Manga, number, Manga>} query - The manga collection query.
      * @param {number[]} includeTags - Tag IDs that must be included.
      * @param {number[]} excludeTags - Tag IDs that must be excluded.
      * 
      * @returns {Collection<Manga, number, Manga>} The filtered query.
      */
-    private applyTagFilters(query: Collection<NewManga, number, NewManga>, includeTags: number[] = [], excludeTags: number[] = []): Collection<Manga, number, Manga> {
+    private applyTagFilters(query: Collection<Manga, number, Manga>, includeTags: number[] = [], excludeTags: number[] = []): Collection<Manga, number, Manga> {
         return query.filter(manga => {
             const mangaTagIds = (manga.tags ?? []).map(tag => tag.id);
             const tagSet = new Set(mangaTagIds);
@@ -74,24 +74,24 @@ export class MangaService {
     /**
      * Filters mangas based on the number of chapters within a specified range.
      * 
-     * @param {Collection<NewManga, number, NewManga>} query - The manga collection query.
+     * @param {Collection<Manga, number, Manga>} query - The manga collection query.
      * @param {Range<number>} range - The chapter range.
      * 
-     * @returns {Collection<NewManga, number, NewManga>} The filtered query.
+     * @returns {Collection<Manga, number, Manga>} The filtered query.
      */
-    private applyChapterRangeFilter(query: Collection<NewManga, number, NewManga>, range: Range<number>): Collection<NewManga, number, NewManga> {
+    private applyChapterRangeFilter(query: Collection<Manga, number, Manga>, range: Range<number>): Collection<Manga, number, Manga> {
         return query.filter(manga => manga.chapters >= range.min && manga.chapters <= range.max);
     }
 
     /**
      * Filters mangas based on their last updated date within a specified range.
      * 
-     * @param {Collection<NewManga, number, NewManga>} query - The manga collection query.
+     * @param {Collection<Manga, number, Manga>} query - The manga collection query.
      * @param {Range<number>} range - The date range for last updated time.
      * 
-     * @returns {Collection<NewManga, number, NewManga>} The filtered query.
+     * @returns {Collection<Manga, number, Manga>} The filtered query.
      */
-    private applyUpdatedAtRangeFilter(query: Collection<NewManga, number, NewManga>, range: Range<Date>): Collection<NewManga, number, NewManga> {
+    private applyUpdatedAtRangeFilter(query: Collection<Manga, number, Manga>, range: Range<Date>): Collection<Manga, number, Manga> {
         return query.filter(manga => {
             const dateValue = new Date(manga.updatedAt);
             return dateValue >= range.min && dateValue <= range.max;
@@ -101,12 +101,12 @@ export class MangaService {
     /**
      * Filters mangas based on their creation date within a specified range.
      * 
-     * @param {Collection<NewManga, number, NewManga>} query - The manga collection query.
+     * @param {Collection<Manga, number, Manga>} query - The manga collection query.
      * @param {Range<number>} range - The date range for creation time.
      * 
-     * @returns {Collection<NewManga, number, NewManga>} The filtered query.
+     * @returns {Collection<Manga, number, Manga>} The filtered query.
      */
-    private applyCreatedAtRangeFilter(query: Collection<NewManga, number, NewManga>, range: Range<Date>): Collection<NewManga, number, NewManga> {
+    private applyCreatedAtRangeFilter(query: Collection<Manga, number, Manga>, range: Range<Date>): Collection<Manga, number, Manga> {
         return query.filter(manga => {
             const dateValue = new Date(manga.createdAt);
             return dateValue >= range.min && dateValue <= range.max;
@@ -127,11 +127,11 @@ export class MangaService {
     /**
      * Adds a new manga to the database.
      * 
-     * @param {NewManga} manga - The manga data to add to the database.
+     * @param {Manga} manga - The manga data to add to the database.
      * 
      * @returns {Observable<number>} An observable that emits the ID of the newly added manga.
      */
-    addManga(manga: NewManga): Observable<number> {
+    addManga(manga: Manga): Observable<number> {
         return from(this.database.mangas.add(manga));
     }
 

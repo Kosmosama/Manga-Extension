@@ -4,7 +4,6 @@ import { MangaType, MangaState, NewManga, Manga } from './shared/interfaces/mang
 import { MangaService } from './manga/services/manga.service';
 import { TagService } from './tag/services/tag.service';
 import { NewTag, Tag } from './shared/interfaces/tag.interface';
-import { FilterTypes } from './shared/interfaces/filters.interface';
 
 @Component({
     selector: 'app-root',
@@ -45,7 +44,7 @@ export class AppComponent {
     });
 
     ngOnInit() {
-        this.manga.getAllMangasold({ type: FilterTypes.NONE }).subscribe({
+        this.manga.getAllMangas({}).subscribe({
             next: (mangas) => {
                 this.MangaList = mangas;
                 console.log('Lista de mangas:', mangas);
@@ -77,7 +76,8 @@ export class AppComponent {
     }
 
     saveManga() {
-        const newManga: NewManga = {
+        const newManga: Manga = {
+            id: Date.now(),
             ...this.mangaForm.getRawValue()
         };
 
@@ -88,7 +88,7 @@ export class AppComponent {
 
     addTagToManga() {
         if (this.selectedMangaId !== null && this.selectedTagId !== null) {
-            this.manga.addTagToManga(this.selectedMangaId, this.selectedTagId).subscribe({
+            this.manga.addTagToManga(this.selectedMangaId, [this.selectedTagId]).subscribe({
                 next: () => {
                     console.log(`Tag ${this.selectedTagId} añadido a manga ${this.selectedMangaId}`);
                     this.selectedMangaId = null; // Reset después de asignar
