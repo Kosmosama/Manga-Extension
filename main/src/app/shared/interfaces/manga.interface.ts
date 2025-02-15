@@ -27,8 +27,8 @@ export enum MangaState {
 export interface Manga {
     readonly id: number;
     title: string;
-    updatedAt: string;
-    createdAt: string;
+    updatedAt: Date;
+    createdAt: Date;
     link?: string;
     image?: string;
     chapters: number;

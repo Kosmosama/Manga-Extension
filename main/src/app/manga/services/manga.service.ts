@@ -31,9 +31,9 @@ export class MangaService {
 
         if (filters.search) query = this.applySearchFilter(query, filters.search);
         if (filters.includeTags || filters.excludeTags) query = this.applyTagFilters(query, filters.includeTags, filters.excludeTags);
-        if (filters.chapterRange) query = this.applyChapterRangeFilter(query, filters.chapterRange);
-        if (filters.lastSeenRange) query = this.applyUpdatedAtRangeFilter(query, filters.lastSeenRange);
-        if (filters.addedRange) query = this.applyCreatedAtRangeFilter(query, filters.addedRange);
+        if (filters.chapterRange) query = this.applyRangeFilter(query, filters.chapterRange, 'chapters');
+        if (filters.lastSeenRange) query = this.applyRangeFilter(query, filters.lastSeenRange, 'updatedAt');
+        if (filters.addedRange) query = this.applyRangeFilter(query, filters.addedRange, 'createdAt');
 
         return from(query.toArray());
     }
@@ -71,52 +71,23 @@ export class MangaService {
         }) as Collection<Manga, number, Manga>;
     }
 
-    // private applyTagFilters(query: Collection<Manga, number>, includeTags: number[] = [], excludeTags: number[] = []) {
-    //     return query.filter(manga => {
-    //         const tagIds = manga.tags?.map(tag => tag.id) ?? [];
-    //         return includeTags.every(tagId => tagIds.includes(tagId)) && !excludeTags.some(tagId => tagIds.includes(tagId));
-    //     });
-    // }
-
     /**
-     * Filters mangas based on the number of chapters within a specified range.
+     * Filters mangas based on a specified field within a given range.
      * 
      * @param {Collection<NewManga, number, NewManga>} query - The manga collection query.
-     * @param {Range<number>} range - The chapter range.
+     * @param {Range<T>} range - The range for filtering.
+     * @param {keyof NewManga} field - The field to filter by (must be a number or Date).
      * 
      * @returns {Collection<NewManga, number, NewManga>} The filtered query.
      */
-    private applyChapterRangeFilter(query: Collection<NewManga, number, NewManga>, range: Range<number>): Collection<NewManga, number, NewManga> {
-        return query.filter(manga => manga.chapters >= range.min && manga.chapters <= range.max);
-    }
-
-    /**
-     * Filters mangas based on their last updated date within a specified range.
-     * 
-     * @param {Collection<NewManga, number, NewManga>} query - The manga collection query.
-     * @param {Range<number>} range - The date range for last updated time.
-     * 
-     * @returns {Collection<NewManga, number, NewManga>} The filtered query.
-     */
-    private applyUpdatedAtRangeFilter(query: Collection<NewManga, number, NewManga>, range: Range<Date>): Collection<NewManga, number, NewManga> {
+    private applyRangeFilter<T extends number | Date>(
+        query: Collection<NewManga, number, NewManga>, 
+        range: Range<T>, 
+        field: keyof NewManga
+    ): Collection<NewManga, number, NewManga> {
         return query.filter(manga => {
-            const dateValue = new Date(manga.updatedAt);
-            return dateValue >= range.min && dateValue <= range.max;
-        });
-    }
-
-    /**
-     * Filters mangas based on their creation date within a specified range.
-     * 
-     * @param {Collection<NewManga, number, NewManga>} query - The manga collection query.
-     * @param {Range<number>} range - The date range for creation time.
-     * 
-     * @returns {Collection<NewManga, number, NewManga>} The filtered query.
-     */
-    private applyCreatedAtRangeFilter(query: Collection<NewManga, number, NewManga>, range: Range<Date>): Collection<NewManga, number, NewManga> {
-        return query.filter(manga => {
-            const dateValue = new Date(manga.createdAt);
-            return dateValue >= range.min && dateValue <= range.max;
+            const value = manga[field];
+            return value !== undefined && value >= range.min && value <= range.max;
         });
     }
 
