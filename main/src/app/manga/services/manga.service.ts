@@ -18,7 +18,6 @@ export class MangaService {
      * 
      * @returns {Observable<Manga[]>} An observable containing the filtered list of mangas.
      */
-    // #TODO Maybe make it so that tags are placed onto the manga objects? - depends on the UI
     getAllMangas(filters: MangaFilters): Observable<Manga[]> {
         let query = this.database.mangas.toCollection();
 
@@ -150,7 +149,7 @@ export class MangaService {
             }
 
             for (const id of tagIds) {
-                const isValidTag = await this.checkIfTagExists(id);
+                const isValidTag = await this.tagExists(id);
                 if (!isValidTag) {
                     throw new Error(`Tag ${id} not found and was removed from all mangas`);
                 }
@@ -161,7 +160,7 @@ export class MangaService {
         }));
     }
 
-    private async checkIfTagExists(tagId: number) {
+    private async tagExists(tagId: number): Promise<boolean> {
         const tag = await this.database.tags.get(tagId);
         if (tag) return true;
 
@@ -174,7 +173,6 @@ export class MangaService {
 
         return false;
     }
-
 
     private resolveTagsForMangas(mangas: Manga[]): Promise<Manga[]> {
         const tagIds = [...new Set(mangas.flatMap(m => m.tags || []))];
@@ -189,5 +187,15 @@ export class MangaService {
               .filter((t): t is Tag => t !== undefined)
           }));
         });
-      }
+    }
+
+    removeTagFromAllMangas(tagId: number): Promise<void> {
+        return this.database.mangas
+            .where('tags')
+            .equals(tagId)
+            .modify(manga => {
+                manga.tags = manga.tags?.filter(t => t !== tagId);
+            })
+            .then(() => {});
+    }
 }

@@ -3,12 +3,14 @@ import { DatabaseService } from '../../shared/services/database.service';
 import { from, Observable } from 'rxjs';
 import { NewTag, Tag } from '../../shared/interfaces/tag.interface';
 import { PromiseExtended } from 'dexie';
+import { MangaService } from '../../manga/services/manga.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class TagService {
     private database = inject(DatabaseService);
+    private mangaService = inject(MangaService);
 
     getAllTags(): Observable<Tag[]> {
         return from(this.database.tags.toArray() as PromiseExtended<Tag[]>);
@@ -27,6 +29,14 @@ export class TagService {
     }
 
     deleteTag(id: number): Observable<void> {
-        return from(this.database.tags.delete(id));
+        return from(
+            this.database.transaction('rw', this.database.mangas, this.database.tags, async () => {
+                await this.mangaService.removeTagFromAllMangas(id);
+    
+                // Delete the tag from the database
+                await this.database.tags.delete(id);
+            })
+        );
     }
+    
 }
