@@ -106,6 +106,24 @@ export class MangaService {
     }
 
     /**
+     * Removes a tag from a specific manga.
+     * 
+     * @param {number} mangaId - The ID of the manga.
+     * @param {number} tagId - The ID of the tag to remove.
+     * @returns {Observable<number>} An observable with the number of affected rows.
+     */
+    removeTagFromManga(mangaId: number, tagId: number): Observable<number> {
+        return from(this.database.mangas.get(mangaId).then(manga => {
+            if (!manga) {
+                throw new Error('Manga not found');
+            }
+
+            const updatedTags = (manga.tags ?? []).filter(id => id !== tagId);
+            return this.database.mangas.update(mangaId, { tags: updatedTags });
+        }));
+    }
+
+    /**
      * Removes a tag from all mangas in the database.
      * 
      * @param {number} tagId - The ID of the tag to remove.
