@@ -18,7 +18,7 @@ export class TagService {
         return from(this.database.tags.get(id) as Promise<Tag | undefined>);
     }
 
-    addTag(tag: NewTag): Observable<number> {
+    addTag(tag: Tag): Observable<number> {
         return from(this.database.tags.add(tag));
     }
 

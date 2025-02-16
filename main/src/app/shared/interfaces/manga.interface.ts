@@ -35,7 +35,8 @@ export interface Manga {
     isFavorite?: boolean;
     type?: MangaType;
     state?: MangaState;
-    tags?: Tag[];
+    tags?: number[];
+    resolvedTags?: Tag[];
 }
 
 // Manga Creation Interface

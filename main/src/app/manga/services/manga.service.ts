@@ -35,7 +35,7 @@ export class MangaService {
         if (filters.lastSeenRange) query = this.applyRangeFilter(query, filters.lastSeenRange, 'updatedAt');
         if (filters.addedRange) query = this.applyRangeFilter(query, filters.addedRange, 'createdAt');
 
-        return from(query.toArray());
+        return from(query.toArray().then(mangas => this.resolveTagsForMangas(mangas)));
     }
 
     /**
@@ -61,7 +61,7 @@ export class MangaService {
      */
     private applyTagFilters(query: Collection<Manga, number, Manga>, includeTags: number[] = [], excludeTags: number[] = []): Collection<Manga, number, Manga> {
         return query.filter(manga => {
-            const mangaTagIds = (manga.tags ?? []).map(tag => tag.id);
+            const mangaTagIds = manga.tags ?? [];
             const tagSet = new Set(mangaTagIds);
 
             const hasAllIncluded = includeTags.every(tagId => tagSet.has(tagId));
@@ -137,36 +137,60 @@ export class MangaService {
     }
 
     /**
-     * Adds multiple tags to a manga's list of tags.
+     * Adds tags to a manga's list of tags.
      *
-     * @param {number} mangaId - The ID of the manga to which the tags will be added
-     * @param {number[]} tagIds - Array of tag IDs to be added to the manga
-     * @returns {Observable<number>} An observable that emits the number of rows affected by the update
-     * @throws {Error} If the manga with the specified ID is not found or if any tag doesn't exist
+     * @param mangaId - The ID of the manga
+     * @param tagIds - Array of tag IDs to add
+     * @returns Observable with affected rows count
      */
     addTagToManga(mangaId: number, tagIds: number[]): Observable<number> {
-        return from(
-            Promise.all([ // maybe it can be done without promise all but my brain is off
-                this.database.mangas.get(mangaId),
-                this.database.tags.bulkGet(tagIds)
-            ]).then(([manga, tags]) => {
-                if (!manga) {
-                    throw new Error('Manga not found');
+        return from(this.database.mangas.get(mangaId).then(async manga => {
+            if (!manga) {
+                throw new Error('Manga not found');
+            }
+
+            for (const id of tagIds) {
+                const isValidTag = await this.checkIfTagExistsIfItIsntRemoveItFromAllMangasThisFunctionCanBeUsedInAddTagToMangaAndInOtherPlacesTooMaybeInResolveTagsOrSomethingAtThisPointImOnlyDisociatingInTheNameOfThisKosmoWillTakeTheShitOutOfMeMañanaNoMeAcuerdoComoSeEscribeTomorrowEnInglesLolXdAhoraSoloIntentoHacerloInclusoMasLargoAVerSiTSMePuteaXDDDD(id);
+                if (!isValidTag) {
+                    throw new Error(`Tag ${id} not found and was removed from all mangas`);
                 }
+            }
 
-                const validTags = tags.filter((tag): tag is Tag => tag !== undefined);
-                if (validTags.length !== tagIds.length) {
-                    throw new Error('Some tags do not exist xdd');
-                }
-
-                const existingTags = manga.tags ?? [];
-
-                const allTags = [...existingTags, ...validTags];
-                
-                return this.database.mangas.update(mangaId, { tags: allTags });
-            })
-        );
+            const updatedTags = [...new Set([...(manga.tags ?? []), ...tagIds])];
+            return this.database.mangas.update(mangaId, { tags: updatedTags });
+        }));
     }
+
+    private async checkIfTagExistsIfItIsntRemoveItFromAllMangasThisFunctionCanBeUsedInAddTagToMangaAndInOtherPlacesTooMaybeInResolveTagsOrSomethingAtThisPointImOnlyDisociatingInTheNameOfThisKosmoWillTakeTheShitOutOfMeMañanaNoMeAcuerdoComoSeEscribeTomorrowEnInglesLolXdAhoraSoloIntentoHacerloInclusoMasLargoAVerSiTSMePuteaXDDDD(tagId: number) {
+        const tag = await this.database.tags.get(tagId);
+        if (tag) return true;
+
+        this.database.mangas
+            .where('tags')
+            .equals(tagId)
+            .modify(manga => {
+                manga.tags = manga.tags?.filter(t => t !== tagId);
+            });
+
+        return false;
+    }
+
+
+    private resolveTagsForMangas(mangas: Manga[]): Promise<Manga[]> {
+        const tagIds = [...new Set(mangas.flatMap(m => m.tags || []))];
+        return this.database.tags.bulkGet(tagIds).then(tags => {
+          const validTags = tags.filter((t): t is Tag => t !== undefined);
+          const tagMap = new Map(validTags.map(t => [t.id, t]));
+    
+          return mangas.map(m => ({
+            ...m,
+            resolvedTags: (m.tags || [])
+              .map(tagId => tagMap.get(tagId))
+              .filter((t): t is Tag => t !== undefined)
+          }));
+        });
+      }
+
     // /**
     //  * Removes a tag from a manga's list of tags.
     //  *
