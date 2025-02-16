@@ -150,7 +150,7 @@ export class MangaService {
             }
 
             for (const id of tagIds) {
-                const isValidTag = await this.checkIfTagExistsIfItIsntRemoveItFromAllMangasThisFunctionCanBeUsedInAddTagToMangaAndInOtherPlacesTooMaybeInResolveTagsOrSomethingAtThisPointImOnlyDisociatingInTheNameOfThisKosmoWillTakeTheShitOutOfMeMañanaNoMeAcuerdoComoSeEscribeTomorrowEnInglesLolXdAhoraSoloIntentoHacerloInclusoMasLargoAVerSiTSMePuteaXDDDD(id);
+                const isValidTag = await this.checkIfTagExists(id);
                 if (!isValidTag) {
                     throw new Error(`Tag ${id} not found and was removed from all mangas`);
                 }
@@ -161,7 +161,7 @@ export class MangaService {
         }));
     }
 
-    private async checkIfTagExistsIfItIsntRemoveItFromAllMangasThisFunctionCanBeUsedInAddTagToMangaAndInOtherPlacesTooMaybeInResolveTagsOrSomethingAtThisPointImOnlyDisociatingInTheNameOfThisKosmoWillTakeTheShitOutOfMeMañanaNoMeAcuerdoComoSeEscribeTomorrowEnInglesLolXdAhoraSoloIntentoHacerloInclusoMasLargoAVerSiTSMePuteaXDDDD(tagId: number) {
+    private async checkIfTagExists(tagId: number) {
         const tag = await this.database.tags.get(tagId);
         if (tag) return true;
 
@@ -190,24 +190,4 @@ export class MangaService {
           }));
         });
       }
-
-    // /**
-    //  * Removes a tag from a manga's list of tags.
-    //  *
-    //  * @param {number} mangaId - The ID of the manga from which the tag will be removed.
-    //  * @param {number} tagId - The ID of the tag to be removed from the manga.
-    //  * @returns {Observable<number>} An observable that emits the number of rows affected by the update.
-    //  * @throws {Error} If the manga with the specified ID is not found.
-    //  */
-    // removeTagFromManga(mangaId: number, tagId: number): Observable<number> {
-    //     return from(this.database.mangas.get(mangaId).then(manga => {
-    //         if (!manga) {
-    //             throw new Error('Manga not found');
-    //         }
-
-    //         // #TODO Check what happens if we delete a tag that isnt in a manga and solve if a bug
-    //         const updatedTags = (manga.tags ?? []).filter(tag => tag !== tagId);
-    //         return this.database.mangas.update(mangaId, { tags: updatedTags });
-    //     }));
-    // }
 }
