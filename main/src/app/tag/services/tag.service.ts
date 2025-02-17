@@ -19,7 +19,7 @@ export class TagService {
      * @returns {Observable<Tag | undefined>} An observable containing the tag or undefined if not found.
      */
     getTagById(id: number): Observable<Tag | undefined> {
-        return from(this.database.tags.get(id) as Promise<Tag | undefined>);
+        return from(this.database.tags.get(id));
     }
 
     /**
@@ -27,7 +27,7 @@ export class TagService {
      * @returns {Observable<Tag[]>} An observable containing an array of tags.
      */
     getAllTags(): Observable<Tag[]> {
-        return from(this.database.tags.toArray() as PromiseExtended<Tag[]>);
+        return from(this.database.tags.toArray());
     }
 
     /**

@@ -22,7 +22,7 @@ export class MangaService {
      * @returns {Observable<Manga | undefined>} An observable with the manga or undefined if not found.
      */
     getMangaById(id: number): Observable<Manga | undefined> {
-        return from(this.database.mangas.get(id) as Promise<Manga | undefined>);
+        return from(this.database.mangas.get(id));
     }
 
     /**
