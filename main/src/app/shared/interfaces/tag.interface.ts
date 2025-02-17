@@ -4,6 +4,3 @@ export interface Tag {
     name: string;
     color?: string;
 }
-
-// Tag Creation Interface
-export type NewTag = Omit<Tag, 'id'>;

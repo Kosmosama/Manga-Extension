@@ -38,6 +38,3 @@ export interface Manga {
     tags?: number[];
     resolvedTags?: Tag[];
 }
-
-// Manga Creation Interface
-export type NewManga = Omit<Manga, 'id'>;

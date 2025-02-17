@@ -18,7 +18,6 @@ export class MangaService {
      * 
      * @returns {Observable<Manga[]>} An observable containing the filtered list of mangas.
      */
-    // #TODO Maybe make it so that tags are placed onto the manga objects? - depends on the UI
     getAllMangas(filters: MangaFilters): Observable<Manga[]> {
         let query = this.database.mangas.toCollection();
 
@@ -81,8 +80,8 @@ export class MangaService {
      * @returns {Collection<Manga, number, Manga>} The filtered query.
      */
     private applyRangeFilter<T extends number | Date>(
-        query: Collection<Manga, number, Manga>, 
-        range: Range<T>, 
+        query: Collection<Manga, number, Manga>,
+        range: Range<T>,
         field: keyof Manga
     ): Collection<Manga, number, Manga> {
         return query.filter(manga => {
@@ -179,17 +178,17 @@ export class MangaService {
     private resolveTagsForMangas(mangas: Manga[]): Promise<Manga[]> {
         const tagIds = [...new Set(mangas.flatMap(m => m.tags || []))];
         return this.database.tags.bulkGet(tagIds).then(tags => {
-          const validTags = tags.filter((t): t is Tag => t !== undefined);
-          const tagMap = new Map(validTags.map(t => [t.id, t]));
-    
-          return mangas.map(m => ({
-            ...m,
-            resolvedTags: (m.tags || [])
-              .map(tagId => tagMap.get(tagId))
-              .filter((t): t is Tag => t !== undefined)
-          }));
+            const validTags = tags.filter((t): t is Tag => t !== undefined);
+            const tagMap = new Map(validTags.map(t => [t.id, t]));
+
+            return mangas.map(m => ({
+                ...m,
+                resolvedTags: (m.tags || [])
+                    .map(tagId => tagMap.get(tagId))
+                    .filter((t): t is Tag => t !== undefined)
+            }));
         });
-      }
+    }
 
     // /**
     //  * Removes a tag from a manga's list of tags.
