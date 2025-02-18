@@ -16,4 +16,6 @@ export interface MangaFilters {
     addedRange?: Range<Date>;
     sortBy?: SortMethod;
     order?: OrderMethod;
+    random?: boolean;
+    limit?: number;
 }

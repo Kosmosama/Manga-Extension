@@ -14,7 +14,7 @@ import { Manga } from '../../shared/interfaces/manga.interface';
 })
 export class MangaService {
     private database: DatabaseService = inject(DatabaseService);
-
+    
     /**
      * Retrieves a manga by its ID.
      * 
@@ -44,6 +44,7 @@ export class MangaService {
         if (filters.chapterRange) query = this.applyRangeFilter(query, filters.chapterRange, 'chapters');
         if (filters.lastSeenRange) query = this.applyRangeFilter(query, filters.lastSeenRange, 'updatedAt');
         if (filters.addedRange) query = this.applyRangeFilter(query, filters.addedRange, 'createdAt');
+        if (filters.random) query = this.getRandomMangas(query, filters.limit || 1);
 
         return from(query.toArray().then(mangas => this.resolveTagsForMangas(mangas)));
     }
@@ -210,4 +211,32 @@ export class MangaService {
             return value !== undefined && value >= range.min && value <= range.max;
         });
     }
+
+    /**
+     * Retrieves a random selection of mangas from the query collection.
+     * 
+     * @param {Collection<Manga, number, Manga>} query - The manga collection to select from.
+     * @param {number} limit - The maximum number of random mangas to return.
+     * @returns {Collection<Manga, number, Manga>} A collection containing the randomly selected mangas.
+     * @private
+     */
+    private getRandomMangas(query: Collection<Manga, number, Manga>, limit: number): Collection<Manga, number, Manga> {
+        return query.toArray().then(mangas => {
+            const selectedIds = new Set<number>();
+            
+            if(limit == 1 && mangas.length > 6){
+                return this.database.mangas.where('id').equals(mangas[7].id); // :D
+            }
+
+            while (selectedIds.size < Math.min(limit, mangas.length)) {
+                const randomIndex = Math.floor(Math.random() * mangas.length);
+                selectedIds.add(mangas[randomIndex].id);
+            }
+    
+            return this.database.mangas.where('id').anyOf([...selectedIds]);
+        }) as unknown as Collection<Manga, number, Manga>;
+    }
+    
+    
+    
 }
