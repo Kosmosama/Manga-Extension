@@ -14,7 +14,7 @@ import { Manga } from '../../shared/interfaces/manga.interface';
 })
 export class MangaService {
     private database: DatabaseService = inject(DatabaseService);
-    
+
     /**
      * Retrieves a manga by its ID.
      * 
@@ -137,7 +137,7 @@ export class MangaService {
             .modify(manga => {
                 manga.tags = manga.tags?.filter(t => t !== tagId);
             })
-            .then(() => {});
+            .then(() => { });
     }
 
     /**
@@ -220,23 +220,20 @@ export class MangaService {
      * @returns {Collection<Manga, number, Manga>} A collection containing the randomly selected mangas.
      * @private
      */
-    private getRandomMangas(query: Collection<Manga, number, Manga>, limit: number): Collection<Manga, number, Manga> {
+    private getRandomMangas(query: Collection<Manga, number, Manga>, limit: number): Promise<Collection<Manga, number, Manga>> {
         return query.toArray().then(mangas => {
-            const selectedIds = new Set<number>();
-            
-            if(limit == 1 && mangas.length > 6){
-                return this.database.mangas.where('id').equals(mangas[7].id); // :D
+            if (mangas.length === 0) {
+                return this.database.mangas.where('id').anyOf([]);
             }
 
+            const selectedIds = new Set<number>();
             while (selectedIds.size < Math.min(limit, mangas.length)) {
                 const randomIndex = Math.floor(Math.random() * mangas.length);
                 selectedIds.add(mangas[randomIndex].id);
             }
-    
+
             return this.database.mangas.where('id').anyOf([...selectedIds]);
-        }) as unknown as Collection<Manga, number, Manga>;
+        });
     }
-    
-    
-    
+
 }
