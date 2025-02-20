@@ -44,7 +44,10 @@ export class MangaService {
         if (filters.chapterRange) query = this.applyRangeFilter(query, filters.chapterRange, 'chapters');
         if (filters.lastSeenRange) query = this.applyRangeFilter(query, filters.lastSeenRange, 'updatedAt');
         if (filters.addedRange) query = this.applyRangeFilter(query, filters.addedRange, 'createdAt');
-        if (filters.random) query = this.getRandomMangas(query, filters.limit || 1);
+
+        const resultPromise = filters.random
+            ? this.getRandomMangas(query, filters.limit || 1).then(randomQuery => randomQuery.toArray())
+            : query.toArray();
 
         return from(query.toArray().then(mangas => this.resolveTagsForMangas(mangas)));
     }
@@ -220,20 +223,19 @@ export class MangaService {
      * @returns {Collection<Manga, number, Manga>} A collection containing the randomly selected mangas.
      * @private
      */
-    private getRandomMangas(query: Collection<Manga, number, Manga>, limit: number): Promise<Collection<Manga, number, Manga>> {
-        return query.toArray().then(mangas => {
-            if (mangas.length === 0) {
-                return this.database.mangas.where('id').anyOf([]);
-            }
+    private async getRandomMangas(query: Collection<Manga, number, Manga>, limit: number): Promise<Collection<Manga, number, Manga>> {
+        const mangas = await query.toArray();
 
-            const selectedIds = new Set<number>();
-            while (selectedIds.size < Math.min(limit, mangas.length)) {
-                const randomIndex = Math.floor(Math.random() * mangas.length);
-                selectedIds.add(mangas[randomIndex].id);
-            }
+        if (mangas.length === 0) {
+            return this.database.mangas.toCollection();
+        }
 
-            return this.database.mangas.where('id').anyOf([...selectedIds]);
-        });
+        const selectedIds = new Set<number>();
+        while (selectedIds.size < Math.min(limit, mangas.length)) {
+            const randomIndex = Math.floor(Math.random() * mangas.length);
+            selectedIds.add(mangas[randomIndex].id);
+        }
+
+        return this.database.mangas.where('id').anyOf([...selectedIds]);
     }
-
 }

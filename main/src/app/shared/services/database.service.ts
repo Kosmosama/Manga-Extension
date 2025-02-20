@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import Dexie, { Table } from 'dexie';
-import { Manga, NewManga } from '../interfaces/manga.interface';
-import { NewTag, Tag } from '../interfaces/tag.interface';
+import { Manga } from '../interfaces/manga.interface';
+import { Tag } from '../interfaces/tag.interface';
 
 @Injectable({
     providedIn: 'root'
