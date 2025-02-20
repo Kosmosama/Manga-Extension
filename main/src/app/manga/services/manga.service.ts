@@ -49,7 +49,7 @@ export class MangaService {
             ? this.getRandomMangas(query, filters.limit || 1).then(randomQuery => randomQuery.toArray())
             : query.toArray();
 
-        return from(query.toArray().then(mangas => this.resolveTagsForMangas(mangas)));
+        return from(resultPromise.then(mangas => this.resolveTagsForMangas(mangas)));
     }
 
     /**
