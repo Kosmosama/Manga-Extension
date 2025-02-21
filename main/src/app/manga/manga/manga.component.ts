@@ -56,9 +56,8 @@ export class MangaComponent {
      * @param chapters - The new number of chapters.
      */
     // #TODO Batch update chapters or optimize this method another way to avoid multiple instant requests, also ui should update instantly (not after the response)
-    updateChapters(chapters: number) {
+    updateChapters(chapters: number = 1) {
         this.mangaService
-            // #TODO Create updateChapters(id, chapters): Observable<void> method in manga.service.ts
             .updateChapters(this.manga().id, chapters)
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(() => {

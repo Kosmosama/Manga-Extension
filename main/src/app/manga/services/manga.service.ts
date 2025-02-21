@@ -144,6 +144,40 @@ export class MangaService {
     }
 
     /**
+     * Updates the number of chapters based on the given chapters count - chapters should be negative to substract (maybe should be refactorized)
+     * 
+     * @param {number} chapters - The ammount of chapters to update.
+     * @param {number} mangaId - The id of the manga to update the chapters count 
+     * @returns {Observable<void>}
+     */
+    updateChapters(mangaId: number, chapters: number): Observable<void>{
+        return from(
+            this.database.mangas
+            .where('id')
+            .equals(mangaId)
+            .modify(
+                manga => {
+                    if(!manga.chapters && chapters < 0) return;
+                    manga.chapters = (manga.chapters || 0) + chapters;
+                })
+            )
+    }
+
+    /**
+     * Toggles the favorite status based on the actual favorite status
+     * 
+     * @param {number} mangaId - The id of the manga to toggle
+     * @param {boolean} actualFavoriteStatus - The actual favorite status of the manga - maybe we can do a get for this 
+     */
+    toggleFavorite(mangaId: number, actualFavoriteStatus: boolean | undefined): Observable<void> {
+        return from(
+            this.database.mangas
+                .update(mangaId, {
+                    isFavorite: !actualFavoriteStatus
+                })
+        )
+    }
+    /**
      * Checks if a tag exists in the database.
      * If the tag doesn't exist, it removes it from all mangas.
      * 
