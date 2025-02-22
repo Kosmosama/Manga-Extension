@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { Collection } from 'dexie';
-import { from, Observable } from 'rxjs';
+import { from, map, Observable } from 'rxjs';
 import { MangaFilters, Range } from '../../shared/interfaces/filters.interface';
 import { DatabaseService } from '../../shared/services/database.service';
 import { Tag } from '../../shared/interfaces/tag.interface';
@@ -144,30 +144,29 @@ export class MangaService {
     }
 
     /**
-     * Updates the number of chapters based on the given chapters count - chapters should be negative to substract (maybe should be refactorized)
-     * 
-     * @param {number} chapters - The ammount of chapters to update.
-     * @param {number} mangaId - The id of the manga to update the chapters count 
-     * @returns {Observable<void>}
+     * Updates the number of chapters for a specific manga.
+     *
+     * @param mangaId - The ID of the manga to update.
+     * @param chapters - The new number of chapters. If the value is less than 0, the update will not be performed.
+     * @returns An Observable that completes when the update is done.
      */
-    updateChapters(mangaId: number, chapters: number): Observable<void>{
+    updateChapters(mangaId: number, chapters: number): Observable<void> {
         return from(
             this.database.mangas
-            .where('id')
-            .equals(mangaId)
-            .modify(
-                manga => {
-                    if(!manga.chapters && chapters < 0) return;
-                    manga.chapters = (manga.chapters || 0) + chapters;
+                .where('id')
+                .equals(mangaId)
+                .modify(manga => {
+                    if (chapters < 0) return;
+                    manga.chapters = chapters;
                 })
-            )
+        ).pipe(map(() => {}));
     }
 
     /**
-     * Toggles the favorite status based on the actual favorite status
+     * Toggles the favorite status based on the actual favorite status.
      * 
-     * @param {number} mangaId - The id of the manga to toggle
-     * @param {boolean} actualFavoriteStatus - The actual favorite status of the manga - maybe we can do a get for this 
+     * @param {number} mangaId - The id of the manga to toggle.
+     * @param {boolean} actualFavoriteStatus - The actual favorite status of the manga.
      */
     toggleFavorite(mangaId: number, actualFavoriteStatus: boolean | undefined): Observable<void> {
         return from(
@@ -175,7 +174,7 @@ export class MangaService {
                 .update(mangaId, {
                     isFavorite: !actualFavoriteStatus
                 })
-        )
+        ).pipe(map(() => { }));
     }
     /**
      * Checks if a tag exists in the database.

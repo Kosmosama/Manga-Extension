@@ -18,7 +18,7 @@ export class MangaComponent {
 
     deleted = output<number>(); // Emit the ID of the deleted manga
 
-    // #TODO Implement (error)="imageError()" in the img tag in the template 
+    // #TODO Implement (error)="imageNotFound()" in the img tag in the template 
     isImageValid = signal<boolean>(true);
 
     /**
@@ -41,7 +41,6 @@ export class MangaComponent {
      */
     toggleFavorite() {
         this.mangaService
-            // #TODO Create toggleFavorite(id,actualFavoriteStatus): Observable<void> method in manga.service.ts
             .toggleFavorite(this.manga().id, this.manga().isFavorite)
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(() => {
@@ -55,7 +54,6 @@ export class MangaComponent {
      * 
      * @param chapters - The new number of chapters.
      */
-    // #TODO Batch update chapters or optimize this method another way to avoid multiple instant requests, also ui should update instantly (not after the response)
     updateChapters(chapters: number = 1) {
         this.mangaService
             .updateChapters(this.manga().id, chapters)
