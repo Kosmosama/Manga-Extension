@@ -1,7 +1,8 @@
-import { ChangeDetectorRef, Component, DestroyRef, inject, model, output, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, computed, DestroyRef, inject, model, output, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Manga } from '../../shared/interfaces/manga.interface';
 import { MangaService } from '../services/manga.service';
+import { map, Subject } from 'rxjs';
 
 @Component({
     selector: 'app-manga',
@@ -16,10 +17,28 @@ export class MangaComponent {
 
     manga = model.required<Manga>();
 
+    private chapterChangeSubject = new Subject<number>();
+    private pendingChapterChange = 0;
+
     deleted = output<number>(); // Emit the ID of the deleted manga
 
     // #TODO Implement (error)="imageNotFound()" in the img tag in the template 
     isImageValid = signal<boolean>(true);
+
+    constructor() {
+        this.chapterChangeSubject
+            .pipe(
+                map(() => {
+                    const finalChapters = this.manga().chapters + this.pendingChapterChange;
+                    const updateObservable = this.mangaService.updateChapters(this.manga().id, finalChapters);
+                    
+                    this.pendingChapterChange = 0;
+                    return updateObservable;
+                }),
+                takeUntilDestroyed(this.destroyRef)
+            )
+            .subscribe(() => {});
+    }
 
     /**
      * Deletes the current manga by its ID and emits the deleted event.
@@ -52,16 +71,12 @@ export class MangaComponent {
     /**
      * Updates the chapters of the current manga.
      * 
-     * @param chapters - The new number of chapters.
+     * @param change - The increment or decrement to chapter count.
      */
-    updateChapters(chapters: number = 1) {
-        this.mangaService
-            .updateChapters(this.manga().id, chapters)
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe(() => {
-                this.manga().chapters = chapters;
-                this.cdr.detectChanges();
-            });
+    updateChapters(change: number = 1) {
+        this.manga().chapters += change;
+        this.pendingChapterChange += change;
+        this.chapterChangeSubject.next(this.pendingChapterChange);
     }        
 
     /**

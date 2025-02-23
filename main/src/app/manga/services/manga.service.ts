@@ -148,7 +148,7 @@ export class MangaService {
      *
      * @param mangaId - The ID of the manga to update.
      * @param chapters - The new number of chapters. If the value is less than 0, the update will not be performed.
-     * @returns An Observable that completes when the update is done.
+     * @returns {Observable<void>} An Observable that completes when the update is done.
      */
     updateChapters(mangaId: number, chapters: number): Observable<void> {
         return from(
