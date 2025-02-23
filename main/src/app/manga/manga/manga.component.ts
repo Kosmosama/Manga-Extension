@@ -74,7 +74,14 @@ export class MangaComponent {
      * @param change - The increment or decrement to chapter count.
      */
     updateChapters(change: number = 1) {
+        if (this.manga().chapters + change < 0) {
+            // #MAYBE Shake -chapter button
+            return;
+        }
+
         this.manga().chapters += change;
+        // this.cdr.detectChanges(); In case chapter count is not updated
+
         this.pendingChapterChange += change;
         this.chapterChangeSubject.next(this.pendingChapterChange);
     }        

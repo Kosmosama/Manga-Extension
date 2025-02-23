@@ -140,11 +140,11 @@ export class MangaService {
             .modify(manga => {
                 manga.tags = manga.tags?.filter(t => t !== tagId);
             })
-            .then(() => { });
+            .then(() => {});
     }
 
     /**
-     * Updates the number of chapters for a specific manga.
+     * Updates the number of chapters for a specific manga and updates the `updatedAt` timestamp.
      *
      * @param mangaId - The ID of the manga to update.
      * @param chapters - The new number of chapters. If the value is less than 0, the update will not be performed.
@@ -158,6 +158,7 @@ export class MangaService {
                 .modify(manga => {
                     if (chapters < 0) return;
                     manga.chapters = chapters;
+                    manga.updatedAt = new Date();
                 })
         ).pipe(map(() => {}));
     }
