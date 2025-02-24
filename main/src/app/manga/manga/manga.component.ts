@@ -20,7 +20,7 @@ export class MangaComponent {
     private chapterChangeSubject = new Subject<number>();
     private pendingChapterChange = 0;
 
-    deleted = output<number>(); // Emit the ID of the deleted manga
+    deleted = output<number>(); // Emit the ID of the deleted manga // why?
 
     // #TODO Implement (error)="imageNotFound()" in the img tag in the template 
     isImageValid = signal<boolean>(true);
@@ -50,7 +50,7 @@ export class MangaComponent {
             .subscribe(() => this.deleted.emit(this.manga().id));
     }
 
-    // #TODO Create and implement modal to edit manga, open it here
+    // #TODO Create and implement modal to edit manga, open it here // how tf do a modal in angular
     editManga() {
         console.log(`Editing manga: ${this.manga().title}`);
     }
@@ -75,7 +75,7 @@ export class MangaComponent {
      */
     updateChapters(change: number = 1) {
         if (this.manga().chapters + change < 0) {
-            // #MAYBE Shake -chapter button
+            // #MAYBE Shake -chapter button // how tf do you shake a button, signals maybe?
             return;
         }
 
@@ -92,5 +92,10 @@ export class MangaComponent {
      */
     imageNotFound() {
         this.isImageValid.set(false);
+        //  #TODO implement once theme service is available - or idk how we will do the theme
+        //  this.themeService.getTheme().subscribe(theme => {
+        //      this.manga().image = theme === 'dark' ? 'public/fallback-images/dark-mode-fallback.png' : 'public/fallback-images/light-mode-fallback.png';
+        //  });
+        this.manga().image = 'public/fallback-images/dark-mode-fallback.png';
     }
 }
