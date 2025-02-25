@@ -1,55 +1,44 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal, WritableSignal } from '@angular/core';
 import { Manga } from '../../shared/interfaces/manga.interface';
+import { Theme } from '../../shared/interfaces/theme.interface';
+import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class ThemeService {
+    private themeSignal: WritableSignal<Theme> = signal(Theme.System);
 
-    constructor() {
-        this.applyInitialTheme();
+    get theme(): Theme {
+        return this.themeSignal();
     }
 
-    /**
-     * Loads the theme preference from Chrome storage or defaults to "system".
-     * @returns {Promise<string>} - The selected theme ("light", "dark", or "system").
-     */
-    private loadTheme(): Promise<string> {
-        return new Promise((resolve, reject) => {
-            chrome.storage.local.get("theme", (result) => {
-                if (chrome.runtime.lastError) {
-                    reject(chrome.runtime.lastError);
-                } else {
-                    resolve(result["theme"] || "system"); // Fix applied here
-                }
+    constructor() {
+        this.loadTheme();
+    }
+
+    private loadTheme() {
+        this.getStoredTheme().subscribe((storedTheme) => {
+            this.setTheme(storedTheme);
+        });
+    }
+
+    private getStoredTheme(): Observable<Theme> {
+        return new Observable<Theme>((observer) => {
+            chrome.storage.local.get('theme', (result: { theme?: Theme }) => {
+                observer.next(result.theme ?? this.getSystemTheme());
+                observer.complete();
             });
         });
     }
 
-    /**
-     * Applies the selected theme by toggling the "dark" class.
-     * @param {string} theme - The selected theme ("light", "dark", or "system").
-     */
-    private applyTheme(theme: string): void {
-        const isDarkMode = theme === "dark" || (theme === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
-        document.documentElement.classList.toggle("dark", isDarkMode);
+    private getSystemTheme(): Theme {
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? Theme.Dark : Theme.Light;
     }
 
-    /**
-     * Loads and applies the theme preference before the application initializes.
-     */
-    private applyInitialTheme(): void {
-        this.loadTheme()
-            .then((theme) => this.applyTheme(theme))
-            .catch(console.error);
+    setTheme(theme: Theme) {
+        this.themeSignal.set(theme);
+        document.documentElement.classList.toggle('dark', theme === Theme.Dark || (theme === Theme.System && this.getSystemTheme() === Theme.Dark));
+        chrome.storage.local.set({ theme });
     }
-
-    private getTheme(): string {
-        return document.documentElement.classList.contains("dark") ? "dark" : "light";
-    }
-
-    setFallbackImage(manga: Manga): void {
-        manga.image = this.getTheme() === 'dark' ? 'public/fallback-images/dark-mode-fallback.png' : 'public/fallback-images/light-mode-fallback.png';
-    }
-
 }
