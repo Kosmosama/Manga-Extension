@@ -3,6 +3,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Manga } from '../../shared/interfaces/manga.interface';
 import { MangaService } from '../services/manga.service';
 import { map, Subject } from 'rxjs';
+import { ThemeService } from '../../settings/services/theme.service';
 
 @Component({
     selector: 'app-manga',
@@ -14,7 +15,7 @@ export class MangaComponent {
     private mangaService = inject(MangaService);
     private destroyRef = inject(DestroyRef);
     private cdr = inject(ChangeDetectorRef);
-
+    private themeService = inject(ThemeService)
     manga = model.required<Manga>();
 
     private chapterChangeSubject = new Subject<number>();
@@ -92,10 +93,6 @@ export class MangaComponent {
      */
     imageNotFound() {
         this.isImageValid.set(false);
-        //  #TODO implement once theme service is available - or idk how we will do the theme
-        //  this.themeService.getTheme().subscribe(theme => {
-        //      this.manga().image = theme === 'dark' ? 'public/fallback-images/dark-mode-fallback.png' : 'public/fallback-images/light-mode-fallback.png';
-        //  });
-        this.manga().image = 'public/fallback-images/dark-mode-fallback.png';
+        this.themeService.setFallbackImage(this.manga());
     }
 }

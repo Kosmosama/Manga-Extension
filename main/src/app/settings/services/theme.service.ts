@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Manga } from '../../shared/interfaces/manga.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -42,4 +43,13 @@ export class ThemeService {
             .then((theme) => this.applyTheme(theme))
             .catch(console.error);
     }
+
+    private getTheme(): string {
+        return document.documentElement.classList.contains("dark") ? "dark" : "light";
+    }
+
+    setFallbackImage(manga: Manga): void {
+        manga.image = this.getTheme() === 'dark' ? 'public/fallback-images/dark-mode-fallback.png' : 'public/fallback-images/light-mode-fallback.png';
+    }
+
 }
