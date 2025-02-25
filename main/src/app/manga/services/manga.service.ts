@@ -158,7 +158,7 @@ export class MangaService {
                 .modify(manga => {
                     if (chapters < 0) return;
                     manga.chapters = chapters;
-                    manga.updatedAt = new Date();
+                    manga.updatedAt = String(Date.now());
                 })
         ).pipe(map(() => {}));
     }

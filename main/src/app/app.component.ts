@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { MangaType, MangaState, NewManga, Manga } from './shared/interfaces/manga.interface';
+import { MangaType, MangaState, Manga } from './shared/interfaces/manga.interface';
 import { MangaService } from './manga/services/manga.service';
 import { TagService } from './tag/services/tag.service';
-import { NewTag, Tag } from './shared/interfaces/tag.interface';
+import { Tag } from './shared/interfaces/tag.interface';
 
 @Component({
     selector: 'app-root',
@@ -66,7 +66,8 @@ export class AppComponent {
     }
 
     saveTag() {
-        const newTag: NewTag = {
+        const newTag: Tag = {
+            id: Date.now(),
             ...this.tagsForm.getRawValue()
         };
 
@@ -76,12 +77,12 @@ export class AppComponent {
     }
 
     saveManga() {
-        const newManga: Manga = {
+        const newManga: Partial<Manga> = {
             id: Date.now(),
             ...this.mangaForm.getRawValue()
         };
 
-        this.manga.addManga(newManga).subscribe(() => {
+        this.manga.addManga(newManga as Manga).subscribe(() => {
             this.mangaForm.reset();
         });
     }
