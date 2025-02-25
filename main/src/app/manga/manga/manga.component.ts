@@ -4,6 +4,7 @@ import { Manga } from '../../shared/interfaces/manga.interface';
 import { MangaService } from '../services/manga.service';
 import { map, Subject } from 'rxjs';
 import { ThemeService } from '../../settings/services/theme.service';
+import { Theme } from '../../shared/interfaces/theme.interface';
 
 @Component({
     selector: 'app-manga',
@@ -25,6 +26,12 @@ export class MangaComponent {
 
     // #TODO Implement (error)="imageNotFound()" in the img tag in the template 
     isImageValid = signal<boolean>(true);
+
+    fallbackImage = computed(() =>
+        this.themeService.theme === Theme.Dark
+            ? 'public/fallback-images/dark-mode-fallback.png'
+            : 'public/fallback-images/light-mode-fallback.png'
+    );
 
     constructor() {
         this.chapterChangeSubject
@@ -93,6 +100,5 @@ export class MangaComponent {
      */
     imageNotFound() {
         this.isImageValid.set(false);
-        this.themeService.setFallbackImage(this.manga());
     }
 }

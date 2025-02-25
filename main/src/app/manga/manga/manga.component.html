@@ -1,1 +1,21 @@
-<p>manga works!</p>
+<div class="manga-card">
+    <img [src]="isImageValid() ? manga().image : fallbackImage()" [alt]="manga().title" (error)="imageNotFound()"
+        class="manga-cover" />
+
+    <div class="manga-info">
+        <h2>{{ manga().title }}</h2>
+        <p>Chapters: {{ manga().chapters }}</p>
+        <p>Updated: {{ manga().updatedAt }}</p>
+
+        <div class="actions">
+            <button (click)="updateChapters(-1)" [disabled]="manga().chapters <= 0">-</button>
+            <button (click)="updateChapters(1)">+</button>
+            <button (click)="toggleFavorite()" [class.favorited]="manga().isFavorite">
+                {{ manga().isFavorite ? '★' : '☆' }}
+            </button>
+            <button (click)="deleteManga()">🗑</button>
+        </div>
+
+        <button (click)="editManga()">Edit</button>
+    </div>
+</div>
