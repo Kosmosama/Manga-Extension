@@ -22,7 +22,7 @@ export class MangaComponent {
     private chapterChangeSubject = new Subject<number>();
     private pendingChapterChange = 0;
 
-    deleted = output<number>(); // Emit the ID of the deleted manga // why?
+    deleted = output<number>(); // Emit the ID of the deleted manga
 
     // #TODO Implement (error)="imageNotFound()" in the img tag in the template 
     isImageValid = signal<boolean>(true);
@@ -58,7 +58,7 @@ export class MangaComponent {
             .subscribe(() => this.deleted.emit(this.manga().id));
     }
 
-    // #TODO Create and implement modal to edit manga, open it here // how tf do a modal in angular
+    // #TODO Create and implement modal to edit manga, open it here
     editManga() {
         console.log(`Editing manga: ${this.manga().title}`);
     }
@@ -83,7 +83,7 @@ export class MangaComponent {
      */
     updateChapters(change: number = 1) {
         if (this.manga().chapters + change < 0) {
-            // #MAYBE Shake -chapter button // how tf do you shake a button, signals maybe?
+            // #MAYBE Shake -chapter button
             return;
         }
 

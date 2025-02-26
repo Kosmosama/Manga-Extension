@@ -32,7 +32,7 @@ export interface Manga {
     link?: string;
     image?: string;
     chapters: number;
-    isFavorite?: boolean;
+    isFavorite: boolean;
     type?: MangaType;
     state?: MangaState;
     tags?: number[];
