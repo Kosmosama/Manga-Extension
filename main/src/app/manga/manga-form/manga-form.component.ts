@@ -1,4 +1,4 @@
-import { Component, effect, inject, input } from '@angular/core';
+import { Component, inject, input, OnInit } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MangaService } from '../services/manga.service';
 import { Manga, MangaState, MangaType } from './../../shared/interfaces/manga.interface';
@@ -10,7 +10,7 @@ import { Manga, MangaState, MangaType } from './../../shared/interfaces/manga.in
     templateUrl: './manga-form.component.html',
     styleUrl: './manga-form.component.css'
 })
-export class MangaFormComponent {
+export class MangaFormComponent implements OnInit {
     private mangaService = inject(MangaService);
     private fb = inject(NonNullableFormBuilder);
 
@@ -22,24 +22,24 @@ export class MangaFormComponent {
         image: [""],
         chapters: [0, [Validators.required, Validators.min(0)]],
         isFavorite: [false],
-        type: [MangaType.Other], // #MAYBE Dont add this in the form, use the enum to loop through and if nothing is selected use MangaState.None
-        state: [MangaState.None], // #MAYBE Same ^            ^
-        tags: [[] as number[]], // #MAYBE Same ^
+        type: [MangaType.Other],
+        state: [MangaState.None],
+        tags: [[] as number[]],
     });
 
-    constructor() {
-        effect(() => {
-            if (this.manga()) {
-                this.mangaForm.get('title')?.setValue(this.manga()!.title);
-                this.mangaForm.get('image')?.setValue(this.manga()!.image || "");
-                this.mangaForm.get('chapters')?.setValue(this.manga()!.chapters);
-                this.mangaForm.get('isFavorite')?.setValue(this.manga()!.isFavorite || false);
-                this.mangaForm.get('type')?.setValue(this.manga()!.type || MangaType.Other);
-                this.mangaForm.get('state')?.setValue(this.manga()!.state || MangaState.None);
-                this.mangaForm.get('tags')?.setValue(this.manga()!.tags || []);
-                this.mangaForm.markAllAsTouched();
-            }
-        });
+    ngOnInit() {
+        if (this.manga()) {
+            this.mangaForm.patchValue({
+                title: this.manga()!.title,
+                image: this.manga()!.image || "",
+                chapters: this.manga()!.chapters,
+                isFavorite: this.manga()!.isFavorite || false,
+                type: this.manga()!.type || MangaType.Other,
+                state: this.manga()!.state || MangaState.None,
+                tags: this.manga()!.tags || []
+            });
+            this.mangaForm.markAllAsTouched();
+        }
     }
 
     submitManga() {
@@ -51,14 +51,12 @@ export class MangaFormComponent {
             ...this.mangaForm.getRawValue(),
             createdAt: now,
             updatedAt: now,
-            id: Date.now() + Math.floor(Math.random() * 10000)
+            id: Number(`${Date.now()}${Math.floor(Math.random() * 10000)}`)
         };
 
         this.mangaService.addManga(newManga).subscribe({
-            next: () => {
-                console.log("Something.")
-            },
-            error: () => console.log("Something.")
+            next: () => console.log("Created:", newManga),
+            error: (err) => console.error("Errpr:", err)
         });
     }
 }
