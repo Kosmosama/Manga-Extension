@@ -1,1 +1,103 @@
-<p>mangas-page works!</p>
+<h1>Gestión de Manga y Tags</h1>
+
+<section class="form-container">
+    <!-- Formulario para Tags -->
+    <div class="tag-form">
+        <h2>Añadir Tag</h2>
+        <form [formGroup]="tagsForm" (ngSubmit)="saveTag()">
+            <div class="form-group">
+                <label for="tagName">Nombre del Tag:</label>
+                <input type="text" formControlName="name" id="tagName" name="tagName" required />
+            </div>
+            <div class="form-group">
+                <label for="tagColor">Color:</label>
+                <input type="color" id="tagColor" formControlName="color" name="tagColor" />
+            </div>
+            <button type="submit">Añadir Tag</button>
+        </form>
+    </div>
+
+    <!-- Formulario para Manga -->
+    <div class="manga-form">
+        <h2>Añadir Manga</h2>
+        <form [formGroup]="mangaForm" (ngSubmit)="saveManga()">
+            <div class="form-group">
+                <label for="mangaTitle">Título:</label>
+                <input type="text" id="mangaTitle" name="mangaTitle" formControlName='title' required />
+            </div>
+
+            <div class="form-group">
+                <label for="link">link:</label>
+                <input type="text" id="link" name="link" required formControlName='link' />
+            </div>
+
+            <div class="form-group">
+                <label for="image">image:</label>
+                <input type="text" id="image" name="image" formControlName='image' required />
+            </div>
+            <div class="form-group">
+                <label for="mangaChapters">Capítulos:</label>
+                <input type="number" id="mangaChapters" name="mangaChapters" min="0" formControlName='chapters' />
+            </div>
+            <div class="form-group">
+                <label for="mangaType">Tipo:</label>
+                <select id="mangaType" name="mangaType" formControlName='type'>
+                    <option value="manga">Manga</option>
+                    <option value="manhwa">Manhwa</option>
+                    <option value="manhua">Manhua</option>
+                    <option value="webcomic">Webcomic</option>
+                    <option value="novel">Novel</option>
+                    <option value="book">Book</option>
+                    <option value="one-shot">One-shot</option>
+                    <option value="doujinshi">Doujinshi</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="state">Estado:</label>
+                <select id="state" name="state" formControlName='state'>
+                    <option value="reading">Leyendo</option>
+                    <option value="completed">Completado</option>
+                    <option value="on-hold">En pausa</option>
+                    <option value="dropped">Abandonado</option>
+                    <option value="plan-to-read">Plan por leer</option>
+                    <option value="none">Ninguno</option>
+                </select>
+            </div>
+
+            <button type="submit">Añadir Manga</button>
+        </form>
+    </div>
+</section>
+<section class="manga-list">
+    <h2>Lista de Mangas</h2>
+    <div>
+        @for (manga of MangaList; track $index) {
+        <div>
+            <p><strong>Título:</strong> {{ manga.title }}</p>
+            <p><strong>Tags:</strong> {{ manga.resolvedTags ? getTagNames(manga.resolvedTags) : 'ola' }}</p>
+            <button (click)="selectedMangaId = manga.id">Seleccionar</button>
+        </div>
+        }
+    </div>
+</section>
+
+<section class="tag-list">
+    <h2>Lista de Tags</h2>
+    <div>
+        @for (tag of TagList; track $index) {
+        <div>
+            <p><strong>Nombre:</strong> {{ tag.name }}</p>
+            <p><strong>Color:</strong> {{ tag.color }}</p>
+            <button (click)="selectedTagId = tag.id">Seleccionar</button>
+        </div>
+        }
+    </div>
+</section>
+
+<section class="assign-tag">
+    <h2>Asignar Tag a Manga</h2>
+    <p><strong>Manga seleccionado ID:</strong> {{ selectedMangaId || 'Ninguno' }}</p>
+    <p><strong>Tag seleccionado ID:</strong> {{ selectedTagId || 'Ninguno' }}</p>
+    <button (click)="addTagToManga()" [disabled]="!selectedMangaId || !selectedTagId">Asignar</button>
+</section>
