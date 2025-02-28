@@ -1,1 +1,43 @@
-<p>manga-form works!</p>
+<form [formGroup]="mangaForm" (ngSubmit)="submitManga()">
+    <label for="title">Title:</label>
+    <input id="title" formControlName="title" required>
+    @if (mangaForm.get('title')?.invalid && mangaForm.get('title')?.touched) {
+    <div>Title is required (min 3 characters)</div>
+    }
+
+    <label for="link">Link:</label>
+    <input id="link" formControlName="link">
+
+    <label for="image">Image URL:</label>
+    <input id="image" formControlName="image">
+
+    <label for="chapters">Chapters:</label>
+    <input id="chapters" type="number" formControlName="chapters" required>
+    @if (mangaForm.get('chapters')?.invalid && mangaForm.get('chapters')?.touched) {
+    <div>Must be a non-negative number</div>
+    }
+
+    <label>
+        <input type="checkbox" formControlName="isFavorite"> Favorite
+    </label>
+
+    <label for="type">Type:</label>
+    <select id="type" formControlName="type">
+        <option value="asdads">asdasd</option>
+        <option value="asdads">asdasd</option>
+        <option value="asdads">asdasd</option>
+    </select>
+
+    <label for="state">State:</label>
+    <select id="state" formControlName="state">
+        <option value="asdads">asdasd</option>
+        <option value="asdads">asdasd</option>
+        <option value="asdads">asdasd</option>
+        <option value="asdads">asdasd</option>
+    </select>
+
+    <label for="tags">Tags:</label>
+    <input id="tags" formControlName="tags">
+
+    <button type="submit" [disabled]="mangaForm.invalid">Submit</button>
+</form>

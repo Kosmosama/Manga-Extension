@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
 import { Manga, MangaState, MangaType } from '../../shared/interfaces/manga.interface';
 import { MangaService } from '../services/manga.service';
-import { TagService } from '../../tag/services/tag.service';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Tag } from '../../shared/interfaces/tag.interface';
+import { TagService } from '../services/tag.service';
 
 @Component({
     selector: 'app-mangas-page',

@@ -17,6 +17,7 @@ export class MangaComponent {
     private destroyRef = inject(DestroyRef);
     private cdr = inject(ChangeDetectorRef);
     private themeService = inject(ThemeService)
+    
     manga = model.required<Manga>();
 
     private chapterChangeSubject = new Subject<number>();
