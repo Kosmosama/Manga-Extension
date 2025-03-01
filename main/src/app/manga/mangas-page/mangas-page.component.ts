@@ -16,7 +16,7 @@ export class MangasPageComponent {
     public tags = inject(TagService);
     private fb = inject(NonNullableFormBuilder);
 
-    // #TODO Change into using signals... // Tf is a signal tho
+    // #TODO Change into using signals... 
 
     public MangaList: Manga[] = [];
     public TagList: Tag[] = [];
