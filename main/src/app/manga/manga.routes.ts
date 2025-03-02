@@ -1,9 +1,8 @@
 import { Routes } from "@angular/router";
-import { MangasPageComponent } from "./mangas-page/mangas-page.component";
 
 export const mangaRoutes: Routes = [
     {
         path: '',
-        component: MangasPageComponent,
+        loadComponent: () => import('./mangas-page/mangas-page.component').then(m => m.MangasPageComponent),
     }
 ];
