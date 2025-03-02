@@ -24,7 +24,6 @@ export class MangaComponent {
     private pendingChapterChange = 0;
 
     deleted = output<number>(); // Emit the ID of the deleted manga
-    edited = output<Manga>(); // #TODO Emit the new manga data after editing
 
     // #TODO Implement (error)="imageNotFound()" in the img tag in the template 
     isImageValid = signal<boolean>(true);
@@ -63,6 +62,12 @@ export class MangaComponent {
     // #TODO Create and implement modal to edit manga, open it here
     editManga() {
         console.log(`Editing manga: ${this.manga().title}`);
+
+        const newTestManga: Manga = {
+            ...this.manga(),
+        };
+
+        this.manga.set(newTestManga);
     }
 
     /**

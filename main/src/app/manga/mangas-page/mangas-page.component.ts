@@ -22,6 +22,7 @@ export class MangasPageComponent implements OnInit {
     ngOnInit() {
         effect(() => {
             this.manga.getAllMangas().subscribe(mangas => this.mangaList.set(mangas));
+            console.log("Mangas were fetched");
         });
     }
 
@@ -32,14 +33,5 @@ export class MangasPageComponent implements OnInit {
      */
     handleMangaDeletion(id: number) {
         this.mangaList.update((mangas) => mangas.filter(manga => manga.id !== id));
-    }
-
-    /**
-     * Changes the edited manga data.
-     * 
-     * @param id The ID of the edited manga.
-     */
-    handleMangaEdition(manga: Manga) {
-        this.mangaList.update((mangas) => mangas.map(m => m.id === manga.id ? manga : m));
     }
 }
