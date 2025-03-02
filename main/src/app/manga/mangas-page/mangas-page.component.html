@@ -80,7 +80,18 @@
     </div>
     <main class="relative max-h-[300px] overflow-y-auto" id="scrollContainer">
         <div class="manga-list space-y-4 pr-4" id="mangaListContainer" data-id="41">
-            <!-- add mangas here -->
+            @if (mangaList().length) {
+                @for (manga of mangaList(); track manga.id) {
+                <manga [manga]="manga" (deleted)="handleMangaDeletion($event)"></manga>
+                }
+            }
+            @else {
+                <div class="col">
+                    <div class="alert alert-info" role="alert">
+                        No events found.
+                    </div>
+                </div>
+            }
         </div>
     </main>
 </div>

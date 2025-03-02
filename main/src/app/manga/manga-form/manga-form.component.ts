@@ -4,7 +4,7 @@ import { MangaService } from '../services/manga.service';
 import { Manga, MangaState, MangaType } from './../../shared/interfaces/manga.interface';
 
 @Component({
-    selector: 'app-manga-form',
+    selector: 'manga-form',
     standalone: true,
     imports: [ReactiveFormsModule],
     templateUrl: './manga-form.component.html',

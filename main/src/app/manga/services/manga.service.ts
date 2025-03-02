@@ -31,7 +31,7 @@ export class MangaService {
      * @param {MangaFilters} filters - The filters to apply to the manga collection.
      * @returns {Observable<Manga[]>} An observable containing the filtered list of mangas.
      */
-    getAllMangas(filters: MangaFilters): Observable<Manga[]> {
+    getAllMangas(filters: MangaFilters  = {}): Observable<Manga[]> {
         let query = this.database.mangas.toCollection();
 
         if (filters.sortBy) {

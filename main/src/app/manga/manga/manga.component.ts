@@ -7,7 +7,7 @@ import { ThemeService } from '../../settings/services/theme.service';
 import { Theme } from '../../shared/interfaces/theme.interface';
 
 @Component({
-    selector: 'app-manga',
+    selector: 'manga',
     imports: [],
     templateUrl: './manga.component.html',
     styleUrl: './manga.component.css'
@@ -24,6 +24,7 @@ export class MangaComponent {
     private pendingChapterChange = 0;
 
     deleted = output<number>(); // Emit the ID of the deleted manga
+    edited = output<Manga>(); // #TODO Emit the new manga data after editing
 
     // #TODO Implement (error)="imageNotFound()" in the img tag in the template 
     isImageValid = signal<boolean>(true);

@@ -1,107 +1,45 @@
-import { Component, inject } from '@angular/core';
-import { Manga, MangaState, MangaType } from '../../shared/interfaces/manga.interface';
-import { MangaService } from '../services/manga.service';
-import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { MangaFilters } from './../../shared/interfaces/filters.interface';
+import { Component, effect, inject, OnInit, signal } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { Manga } from '../../shared/interfaces/manga.interface';
 import { Tag } from '../../shared/interfaces/tag.interface';
+import { MangaService } from '../services/manga.service';
 import { TagService } from '../services/tag.service';
+import { MangaComponent } from '../manga/manga.component';
 
 @Component({
-    selector: 'app-mangas-page',
-    imports: [ReactiveFormsModule],
+    selector: 'mangas-page',
+    imports: [ReactiveFormsModule, MangaComponent],
     templateUrl: './mangas-page.component.html',
     styleUrl: './mangas-page.component.css'
 })
-export class MangasPageComponent {
+export class MangasPageComponent implements OnInit {
     public manga = inject(MangaService);
     public tags = inject(TagService);
-    private fb = inject(NonNullableFormBuilder);
 
-    // #TODO Change into using signals... 
-
-    public MangaList: Manga[] = [];
-    public TagList: Tag[] = [];
-
-    public selectedMangaId: number | null = null; // Para identificar el manga seleccionado
-    public selectedTagId: number | null = null; // Para identificar el tag seleccionado
-
-    tagsForm = this.fb.group({
-        name: [''],
-        color: ['']
-    });
-
-    mangaForm = this.fb.group({
-        title: [''],
-        chapters: [0],
-        updatedAt: [new Date().toISOString()],
-        createdAt: [new Date().toISOString()],
-        link: [''],
-        image: [''],
-        type: [MangaType.Manga],
-        state: [MangaState.None],
-        isFavorite: [false],
-        tags: [[]]
-    });
+    public mangaList = signal<Manga[]>([]);
 
     ngOnInit() {
-        this.manga.getAllMangas({}).subscribe({
-            next: (mangas) => {
-                this.MangaList = mangas;
-                console.log('Lista de mangas:', mangas);
-            },
-            error: (err) => {
-                console.error('Error al obtener los mangas:', err);
-            }
-        });
-
-        this.tags.getAllTags().subscribe({
-            next: (tagList) => {
-                this.TagList = tagList;
-                console.log('Lista de tags:', tagList);
-            },
-            error: (err) => {
-                console.error('Error al obtener los tags:', err);
-            }
+        effect(() => {
+            this.manga.getAllMangas().subscribe(mangas => this.mangaList.set(mangas));
         });
     }
 
-    saveTag() {
-        const newTag: Tag = {
-            id: Date.now(),
-            ...this.tagsForm.getRawValue()
-        };
-
-        this.tags.addTag(newTag).subscribe(() => {
-            this.tagsForm.reset();
-        });
+    /**
+     * Deletes a manga by ID from the list.
+     * 
+     * @param id The ID of the manga to delete.
+     */
+    handleMangaDeletion(id: number) {
+        this.mangaList.update((mangas) => mangas.filter(manga => manga.id !== id));
     }
 
-    saveManga() {
-        const newManga: Partial<Manga> = {
-            id: Date.now(),
-            ...this.mangaForm.getRawValue()
-        };
-
-        this.manga.addManga(newManga as Manga).subscribe(() => {
-            this.mangaForm.reset();
-        });
-    }
-
-    addTagToManga() {
-        if (this.selectedMangaId !== null && this.selectedTagId !== null) {
-            this.manga.addTagToManga(this.selectedMangaId, [this.selectedTagId]).subscribe({
-                next: () => {
-                    console.log(`Tag ${this.selectedTagId} añadido a manga ${this.selectedMangaId}`);
-                    this.selectedMangaId = null; // Reset después de asignar
-                    this.selectedTagId = null; // Reset después de asignar
-                },
-                error: (err) => {
-                    console.error('Error al añadir tag al manga:', err);
-                }
-            });
-        }
-    }
-
-    getTagNames(tags: any[]): string {
-        return tags?.map(tag => tag.name).join(', ') || 'Sin tags';
+    /**
+     * Changes the edited manga data.
+     * 
+     * @param id The ID of the edited manga.
+     */
+    handleMangaEdition(manga: Manga) {
+        this.mangaList.update((mangas) => mangas.map(m => m.id === manga.id ? manga : m));
     }
 }
