@@ -1,11 +1,7 @@
-<div class="mb-6 transform rounded-lg bg-light-primary p-4 transition-all hover:scale-105 dark:bg-dark-primary"
-    data-id="2">
-    <header class="relative mb-4 flex items-center" data-id="3">
-
+<div>
+    <header>
         <!-- Open settings button -->
-        <button id="open-dialog" data-dialog-target="radix-dialog"
-            class="inline-flex w-10 items-center justify-center rounded-md text-sm font-medium text-light-primary-text hover:rotate-45 transition-transform dark:text-dark-primary-text"
-            type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-dialog">
+        <button>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                 <path
                     d="M262 192a64 64 0 1 0 58 58 64 64 0 0 0-58-58zm154 64a154 154 0 0 1-1 21l45 35a11 11 0 0 1 3 14l-43 74a11 11 0 0 1-13 5l-45-18a16 16 0 0 0-15 1 164 164 0 0 1-22 13 16 16 0 0 0-9 12l-7 48a11 11 0 0 1-10 9h-86a11 11 0 0 1-10-9l-7-48a16 16 0 0 0-9-12 155 155 0 0 1-22-12 16 16 0 0 0-15-2l-45 18a11 11 0 0 1-13-5l-43-74a11 11 0 0 1 3-13l38-30a16 16 0 0 0 6-15v-24a16 16 0 0 0-6-14l-38-30a11 11 0 0 1-3-14l43-74a11 11 0 0 1 13-5l45 18a16 16 0 0 0 15-1 164 164 0 0 1 22-13 16 16 0 0 0 9-12l7-48a11 11 0 0 1 10-9h86a11 11 0 0 1 10 9l7 48a16 16 0 0 0 9 12 155 155 0 0 1 22 12 16 16 0 0 0 15 2l45-18a11 11 0 0 1 13 5l43 74a11 11 0 0 1-3 13l-38 30a16 16 0 0 0-6 15v12z"
@@ -15,18 +11,14 @@
         </button>
 
         <!-- Title -->
-        <div class="flex-grow flex justify-center">
-            <h1 class="text-2xl -ml-8 font-bold text-light-primary-text dark:text-dark-primary-text" data-id="17"
-                data-translate-key="extension-title">
+        <div>
+            <h1>
                 Manga Library
             </h1>
         </div>
     </header>
-    <div class="flex gap-2" data-id="19">
-        <button id="menuBtn"
-            class="inline-flex h-10 items-center justify-center whitespace-nowrap rounded-md border border-light-border bg-light-primary px-4 py-2 text-sm font-medium ring-offset-gray-100 transition-colors hover:bg-gray-100 focus-visible:outline-none focus-visible:ring-2 dark:border-dark-border dark:bg-dark-primary dark:ring-offset-gray-800 dark:hover:bg-dark-secondary"
-            data-id="22" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="radix-:r3:"
-            data-state="closed">
+    <div>
+        <button>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                 class="lucide lucide-filter mr-2 h-4 w-4" data-id="23">
@@ -36,16 +28,11 @@
         </button>
 
         <!-- Search bar -->
-        <form class="relative flex-grow" data-id="31">
-            <input id="searchBar"
-                class="flex h-10 w-full rounded-md border border-light-border bg-light-primary dark:bg-dark-primary px-3 py-2 text-sm ring-offset-secondary-dates file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-secondary-base focus-visible:outline-none dark:border-dark-border dark:ring-offset-secondary-dates-dark dark:placeholder:text-dark-secondary-text"
-                placeholder="Search manga..." data-id="32" type="text" value=""
-                data-translate-key="placeholder-search-bar" />
+        <form>
+            <input/>
 
             <!-- Delete search button -->
-            <button id="deleteSearch"
-                class="absolute bottom-0 right-0 top-0 inline-flex h-10 w-10 items-center justify-center whitespace-nowrap rounded-md text-sm font-medium text-light-primary-text ring-offset-secondary-dates transition-colors hover:bg-primary-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:text-dark-primary-text dark:ring-offset-secondary-dates-dark dark:hover:bg-primary-base-dark"
-                type="button" data-id="36">
+            <button>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd"
                         d="M10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414L10 8.586z"
@@ -55,9 +42,8 @@
         </form>
 
         <!-- Sort order button -->
-        <button id="toggleSortOrder"
-            class="inline-flex h-10 w-10 items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-secondary-dates transition-colors hover:bg-primary-base focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:ring-offset-secondary-dates-dark dark:hover:bg-primary-base-dark">
-            <div id="sortIcon" class="transition-transform duration-300">
+        <button>
+            <div>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                     class="icon icon-tabler icons-tabler-outline icon-tabler-arrows-sort">
@@ -71,25 +57,17 @@
 </div>
 
 <!--Mangas-->
-<div class="relative">
-    <div id="topBlur"
-        class="absolute transition-opacity opacity-0 duration-200 top-0 left-0 right-0 h-16 pointer-events-none bg-gradient-to-b from-light-secondary via-transparent to-transparent dark:from-dark-secondary dark:via-transparent z-10">
-    </div>
-    <div id="bottomBlur"
-        class="absolute transition-opacity opacity-0 duration-200 bottom-0 left-0 right-0 h-16 pointer-events-none bg-gradient-to-t from-light-secondary via-transparent to-transparent dark:from-dark-secondary dark:via-transparent z-10">
-    </div>
-    <main class="relative max-h-[300px] overflow-y-auto" id="scrollContainer">
-        <div class="manga-list space-y-4 pr-4" id="mangaListContainer" data-id="41">
+<div>
+    <main>
+        <div>
             @if (mangaList().length) {
                 @for (manga of mangaList(); track manga.id) {
                 <manga [manga]="manga" (deleted)="handleMangaDeletion($event)"></manga>
                 }
             }
             @else {
-                <div class="col">
-                    <div class="alert alert-info" role="alert">
-                        No events found.
-                    </div>
+                <div>
+                    No events found.
                 </div>
             }
         </div>
@@ -97,15 +75,14 @@
 </div>
 
 <!--Add manga button-->
-<footer class="fixed bottom-0 left-0 w-full z-20 transform transition-all hover:scale-105 mb-4">
-    <button id="addButton" data-dialog-target="formContainer"
-        class="w-4/5 mx-auto flex h-10 items-center justify-center whitespace-nowrap rounded-md text-light-highlight-text dark:text-dark-highlight-text bg-light-highlight-primary dark:bg-dark-highlight-primary px-4 py-2 text-sm font-medium shadow-lg focus-visible:outline-none dark:ring-offset-dark-secondary-text">
+<footer>
+    <button>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
             <path d="M12 5l0 14" />
             <path d="M5 12l14 0" />
         </svg>
-        <span data-translate-key="add-manga-button">Add Manga</span>
+        <span>Add Manga</span>
     </button>
 </footer>
