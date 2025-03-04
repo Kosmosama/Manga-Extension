@@ -1,6 +1,5 @@
 <div>
     <header>
-        <!-- Open settings button -->
         <button>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                 <path
@@ -10,12 +9,9 @@
             </svg>
         </button>
 
-        <!-- Title -->
-        <div>
-            <h1>
-                Manga Library
-            </h1>
-        </div>
+        <h1>
+            Manga Library
+        </h1>
     </header>
     <div>
         <button>
@@ -27,11 +23,9 @@
             <span data-translate-key="filters-title">Filters</span>
         </button>
 
-        <!-- Search bar -->
         <form>
             <input/>
 
-            <!-- Delete search button -->
             <button>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd"
@@ -41,7 +35,6 @@
             </button>
         </form>
 
-        <!-- Sort order button -->
         <button>
             <div>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -56,13 +49,12 @@
     </div>
 </div>
 
-<!--Mangas-->
 <div>
     <main>
         <div>
             @if (mangaList().length) {
                 @for (manga of mangaList(); track manga.id) {
-                <manga [manga]="manga" (deleted)="handleMangaDeletion($event)"></manga>
+                <manga-card [manga]="manga" (deleted)="handleMangaDeletion($event)"></manga-card>
                 }
             }
             @else {
@@ -74,7 +66,6 @@
     </main>
 </div>
 
-<!--Add manga button-->
 <footer>
     <button>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"

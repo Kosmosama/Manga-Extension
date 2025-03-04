@@ -7,7 +7,7 @@ import { ThemeService } from '../../settings/services/theme.service';
 import { Theme } from '../../shared/interfaces/theme.interface';
 
 @Component({
-    selector: 'manga',
+    selector: 'manga-card',
     imports: [],
     templateUrl: './manga.component.html',
     styleUrl: './manga.component.css'
