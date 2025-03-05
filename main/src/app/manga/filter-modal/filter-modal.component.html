@@ -1,0 +1,33 @@
+<div class="modal" *if="isModalOpen">
+    <div class="modal-content">
+        <header>
+            <h2>Filter Manga</h2>
+            <button (click)="closeModal()">Close</button>
+        </header>
+        <form [formGroup]="filtersForm" (ngSubmit)="applyFilters()">
+            <label for="search">Search:</label>
+            <input id="search" formControlName="search" type="text" />
+
+            <label for="includeTags">Include Tags:</label>
+            <select id="includeTags" formControlName="includeTags" multiple>
+                @for (tag of tags(); track tag.id) {
+                    <option [value]="tag.id">{{ tag.name }}</option>
+                }
+            </select>
+
+            <label for="excludeTags">Exclude Tags:</label>
+            <select id="excludeTags" formControlName="excludeTags" multiple>
+                @for (tag of tags(); track tag.id) {
+                    <option [value]="tag.id">{{ tag.name }}</option>
+                }
+            </select>
+
+            <label for="chapterRange">Chapter Range:</label>
+            <input id="chapterRange" formControlName="chapterRange" type="number" />
+
+            <!-- #TODO Still have to add the rest of the filters, added these just to try -->
+
+            <button type="submit">Apply Filters</button>
+        </form>
+    </div>
+</div>

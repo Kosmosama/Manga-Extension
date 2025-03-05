@@ -31,7 +31,7 @@ export class MangaService {
      * @param {MangaFilters} filters - The filters to apply to the manga collection.
      * @returns {Observable<Manga[]>} An observable containing the filtered list of mangas.
      */
-    getAllMangas(filters: MangaFilters  = {}): Observable<Manga[]> {
+    getAllMangas(filters: MangaFilters = {}): Observable<Manga[]> {
         let query = this.database.mangas.toCollection();
 
         if (filters.sortBy) {
@@ -45,8 +45,10 @@ export class MangaService {
         if (filters.lastSeenRange) query = this.applyRangeFilter(query, filters.lastSeenRange, 'updatedAt');
         if (filters.addedRange) query = this.applyRangeFilter(query, filters.addedRange, 'createdAt');
 
+        const limit = filters.limit && filters.limit > 0 ? filters.limit : 1;
+
         const resultPromise = filters.random
-            ? this.getRandomMangas(query, filters.limit || 1).then(randomQuery => randomQuery.toArray())
+            ? this.getRandomMangas(query, limit).then(randomQuery => randomQuery.toArray())
             : query.toArray();
 
         return from(resultPromise.then(mangas => this.resolveTagsForMangas(mangas)));
@@ -140,7 +142,7 @@ export class MangaService {
             .modify(manga => {
                 manga.tags = manga.tags?.filter(t => t !== tagId);
             })
-            .then(() => {});
+            .then(() => { });
     }
 
     /**
@@ -160,7 +162,7 @@ export class MangaService {
                     manga.chapters = chapters;
                     manga.updatedAt = String(Date.now());
                 })
-        ).pipe(map(() => {}));
+        ).pipe(map(() => { }));
     }
 
     /**

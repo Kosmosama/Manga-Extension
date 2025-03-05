@@ -26,6 +26,8 @@ export class MangasPageComponent implements OnInit {
         });
     }
 
+    // #TODO Implement filter modal (modal(filter-modal component)), tried as the documentation says and as a dialog, and they dont work, i'll try with material tomorrow
+
     /**
      * Deletes a manga by ID from the list.
      * 
