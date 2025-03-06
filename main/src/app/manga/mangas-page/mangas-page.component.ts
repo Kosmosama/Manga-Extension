@@ -6,6 +6,8 @@ import { Tag } from '../../shared/interfaces/tag.interface';
 import { MangaService } from '../services/manga.service';
 import { TagService } from '../services/tag.service';
 import { MangaComponent } from '../manga/manga.component';
+import { MatDialog } from '@angular/material/dialog';
+import { MangaFormComponent } from '../manga-form/manga-form.component';
 
 @Component({
     selector: 'mangas-page',
@@ -14,19 +16,18 @@ import { MangaComponent } from '../manga/manga.component';
     styleUrl: './mangas-page.component.css'
 })
 export class MangasPageComponent implements OnInit {
-    public manga = inject(MangaService);
-    public tags = inject(TagService);
+    private mangaService = inject(MangaService);
+    private tagService = inject(TagService);
+    private dialog = inject(MatDialog);
 
-    public mangaList = signal<Manga[]>([]);
+    mangaList = signal<Manga[]>([]);
 
     ngOnInit() {
         effect(() => {
-            this.manga.getAllMangas().subscribe(mangas => this.mangaList.set(mangas));
+            this.mangaService.getAllMangas().subscribe(mangas => this.mangaList.set(mangas));
             console.log("Mangas were fetched");
         });
     }
-
-    // #TODO Implement filter modal (modal(filter-modal component)), tried as the documentation says and as a dialog, and they dont work, i'll try with material tomorrow
 
     /**
      * Deletes a manga by ID from the list.
@@ -35,5 +36,17 @@ export class MangasPageComponent implements OnInit {
      */
     handleMangaDeletion(id: number) {
         this.mangaList.update((mangas) => mangas.filter(manga => manga.id !== id));
+    }
+
+    openDialog() {
+        const dialogRef = this.dialog.open(MangaFormComponent, {
+            width: '400px',
+        });
+    
+        dialogRef.afterClosed().subscribe((result: Manga | undefined) => {
+            if (result) {
+                console.log("Manga submitted:", result);
+            }
+        });
     }
 }
