@@ -6,8 +6,6 @@ import { Tag } from '../../shared/interfaces/tag.interface';
 import { MangaService } from '../services/manga.service';
 import { TagService } from '../services/tag.service';
 import { MangaComponent } from '../manga/manga.component';
-import { MatDialog } from '@angular/material/dialog';
-import { MangaFormComponent } from '../manga-form/manga-form.component';
 
 @Component({
     selector: 'mangas-page',
@@ -17,8 +15,6 @@ import { MangaFormComponent } from '../manga-form/manga-form.component';
 })
 export class MangasPageComponent implements OnInit {
     private mangaService = inject(MangaService);
-    private tagService = inject(TagService);
-    private dialog = inject(MatDialog);
 
     mangaList = signal<Manga[]>([]);
 
@@ -36,17 +32,5 @@ export class MangasPageComponent implements OnInit {
      */
     handleMangaDeletion(id: number) {
         this.mangaList.update((mangas) => mangas.filter(manga => manga.id !== id));
-    }
-
-    openDialog() {
-        const dialogRef = this.dialog.open(MangaFormComponent, {
-            width: '400px',
-        });
-    
-        dialogRef.afterClosed().subscribe((result: Manga | undefined) => {
-            if (result) {
-                console.log("Manga submitted:", result);
-            }
-        });
     }
 }

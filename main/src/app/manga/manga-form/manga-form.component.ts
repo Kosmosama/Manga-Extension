@@ -2,23 +2,19 @@ import { Component, inject, input, OnInit } from '@angular/core';
 import { FormsModule, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MangaService } from '../services/manga.service';
 import { Manga, MangaState, MangaType } from './../../shared/interfaces/manga.interface';
-import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
     selector: 'manga-form',
     standalone: true,
-    imports: [ReactiveFormsModule, MatDialogModule, FormsModule],
+    imports: [ReactiveFormsModule],
     templateUrl: './manga-form.component.html',
     styleUrl: './manga-form.component.css'
 })
 export class MangaFormComponent implements OnInit {
     private mangaService = inject(MangaService);
     private fb = inject(NonNullableFormBuilder);
-    private dialogRef = inject(MatDialogRef<MangaFormComponent>);
     
     manga = input<Manga>();
-    
-    outputMangaData: Manga = inject(MAT_DIALOG_DATA);
     
     mangaForm = this.fb.group({
         title: ["", [Validators.required, Validators.minLength(3)]],
@@ -59,15 +55,8 @@ export class MangaFormComponent implements OnInit {
         };
 
         this.mangaService.addManga(newManga).subscribe({
-            next: () => {
-                console.log("Created:", newManga);
-                this.dialogRef.close(newManga);
-            } ,
+            next: () => console.log("Created:", newManga),
             error: (err) => console.error("Errpr:", err)
         });
-    }
-
-    onCancelClick(): void {
-        this.dialogRef.close();
     }
 }
