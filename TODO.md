@@ -1,16 +1,29 @@
+## TODO
 
-## TO-DO
+- [ ] Fix resolution.
+- [ ] Create reusable modal component (similar to what was done in legacy).
+- [ ] Minor CSS so everything can be seen properly.
+- [ ] Test whether databaseService's populate works or not.
 
-1. **Maintain scroll position (if possible) when reloading mangas.**
+- **Main functionality**
+    - [ ] Finish manga card component.
+    - [ ] Finish manga page component.
+    - [ ] Page(?) to create and see all tags.
+    - [ ] Finish form component (will be used for edition and addition).
+        - Make it so the image appears on manga addition/edition.
 
-## Next Version
+- **Settings page**
+    - [ ] Settings handling.
+    - [ ] Theme handling.
+    - [ ] Import from chrome.
+    - [ ] Import/Export from extension.
+    - [ ] Multilanguage support.
 
-1. **Add "genres" to filter and categorize mangas (e.g., manhua, manhwa, etc). Consider allowing users to create genres. + add a completed status**
-2. **Add synchronization with own API.**
-3. **Make it so the selected image appears on manga addition/edition**
-4. **Show indicator of which imported bookmark is being handled in the manga addition after the import.**
-5. **Add integration with MyAnimeList API and AniList API. (Add manga directly from profile)**
-6. **"Replace all" kind of thing, ex: replace all "mangadex7.com" for "mangadex.com"**
-7. **Refactorize code into making use of a framework: Vue, Angular...**
-8. **Refactorize frontend to use pandacss instead of tailwind >:D**
-9. **Use analytics (https://ahrefs.com/web-analytics)**
+### **Additional features**
+- [ ] Instead of using chrome's extension popup, use web based UI.
+- [ ] Pick (and crop) image from page.
+- [ ] Rename all mangas with x string in name/link. ex: replace all "mangadex7.com" for "mangadex.com"
+
+## MAYBE
+- Use analytics (https://ahrefs.com/web-analytics)
+- Integration with MyAnimeList API and AniList API. (Add manga directly from profile)
