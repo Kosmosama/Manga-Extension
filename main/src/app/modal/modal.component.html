@@ -1,0 +1,15 @@
+@if (isVisible()) {
+    <div class="modal-overlay" (click)="close()">
+        <div class="modal-content" #modalContainer>
+            <div class="modal-header">
+                <h2>{{ title() }}</h2>
+                @if (showCloseButton()) {
+                    <button (click)="close()">X</button>
+                }
+            </div>
+            <div class="modal-body">
+                <ng-content></ng-content>
+            </div>
+        </div>
+    </div>
+}

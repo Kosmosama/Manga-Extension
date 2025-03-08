@@ -1,7 +1,7 @@
 ## TODO
 
 - [x] Fix resolution.
-- [ ] Create reusable modal component (similar to what was done in legacy).
+- [x] Create reusable modal component (similar to what was done in legacy). - Done, but i should change the design xd
 - [ ] Minor CSS so everything can be seen properly.
 - [ ] Test whether databaseService's populate works or not.
 
