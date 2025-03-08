@@ -9,7 +9,6 @@ export class ModalComponent {
     readonly title = input<string>("My Modal");
     readonly showCloseButton = input<boolean>(true);
 
-
     closed = output<void>();
 
     public isVisible = signal(false);
