@@ -18,9 +18,10 @@ import { MangaFormComponent } from "../manga-form/manga-form.component";
 export class MangasPageComponent implements OnInit {
     private mangaService = inject(MangaService);
 
-    addMangaModal = viewChild.required<ModalComponent>('myModal');
+    modal = viewChild.required<ModalComponent>('modal');
 
     mangaList = signal<Manga[]>([]);
+    selectedManga = signal<Manga | null>(null);
 
     ngOnInit() {
         effect(() => {
@@ -38,15 +39,28 @@ export class MangasPageComponent implements OnInit {
         this.mangaList.update((mangas) => mangas.filter(manga => manga.id !== id));
     }
 
-    openAddManga() {
-        this.addMangaModal().open();
+    /**
+     * Opens the modal to create or edit a manga.
+     */
+    openForm(manga?: Manga) {
+        this.selectedManga.set(manga || null);
+        this.modal().open();
     }
 
-    onModalClosed() {
-        console.log('Modal cerrado');
-    }
-
-    confirmAction() {
-        console.log('Acción confirmada');
+    /**
+     * Handles the form submission.
+     * 
+     * @param manga The manga to add or update.
+     */
+    handleFormSumbission(manga: Manga) {
+        this.mangaList.update((mangas) => {
+            const index = mangas.findIndex(m => m.id === manga.id);
+            if (index === -1) {
+                return [...mangas, manga];
+            } else {
+                mangas[index] = manga;
+                return mangas;
+            }
+        });
     }
 }

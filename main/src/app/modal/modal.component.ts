@@ -9,9 +9,9 @@ export class ModalComponent {
     readonly title = input<string>("My Modal");
     readonly showCloseButton = input<boolean>(true);
 
-    closed = output<void>();
+    isVisible = signal(false);
 
-    public isVisible = signal(false);
+    closed = output<void>();    
 
     modalContainer = viewChild.required<ElementRef<HTMLDivElement>>
 
@@ -23,5 +23,4 @@ export class ModalComponent {
         this.isVisible.set(false);
         this.closed.emit();
     }
-
 }

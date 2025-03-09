@@ -1,4 +1,4 @@
-<form [formGroup]="mangaForm" (ngSubmit)="submitManga()">
+<form [formGroup]="mangaForm" (ngSubmit)="submit()">
     <label for="title">Title:</label>
     <input id="title" formControlName="title" required>
     @if (mangaForm.get('title')?.invalid && mangaForm.get('title')?.touched) {

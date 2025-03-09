@@ -1,4 +1,4 @@
-import { Component, inject, input, OnInit } from '@angular/core';
+import { Component, inject, input, OnInit, output } from '@angular/core';
 import { FormsModule, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MangaService } from '../services/manga.service';
 import { Manga, MangaState, MangaType } from './../../shared/interfaces/manga.interface';
@@ -14,7 +14,9 @@ export class MangaFormComponent implements OnInit {
     private mangaService = inject(MangaService);
     private fb = inject(NonNullableFormBuilder);
     
-    manga = input<Manga>();
+    manga = input<Manga | null>();
+
+    formSumbitted = output<Manga>();
     
     mangaForm = this.fb.group({
         title: ["", [Validators.required, Validators.minLength(3)]],
@@ -42,7 +44,7 @@ export class MangaFormComponent implements OnInit {
         }
     }
 
-    submitManga() {
+    submit() {
         if (this.mangaForm.invalid) return;
 
         const now: string = new Date().toISOString();
@@ -55,7 +57,10 @@ export class MangaFormComponent implements OnInit {
         };
 
         this.mangaService.addManga(newManga).subscribe({
-            next: () => console.log("Created:", newManga),
+            next: () => {
+                this.formSumbitted.emit(newManga);
+                console.log("Manga added successfully");
+            },
             error: (err) => console.error("Errpr:", err)
         });
     }
