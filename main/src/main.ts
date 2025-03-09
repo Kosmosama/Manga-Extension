@@ -1,7 +1,13 @@
 import "reflect-metadata";
 import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
 import { AppComponent } from './app/app.component';
+import { inject, provideAppInitializer } from "@angular/core";
+import { ThemeService } from "./app/settings/services/theme.service";
 
-bootstrapApplication(AppComponent, appConfig)
-  .catch((err) => console.error(err));
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideAppInitializer(() => {
+      inject(ThemeService);
+    })
+  ],
+});

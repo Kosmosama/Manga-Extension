@@ -6,13 +6,14 @@ import { Theme } from '../../shared/interfaces/theme.interface';
     providedIn: 'root'
 })
 export class ThemeService {
-    private themeSignal: WritableSignal<Theme> = signal(Theme.System);
+    private themeSignal = signal<Theme>(Theme.System);
 
     get theme(): Theme {
         return this.themeSignal();
     }
 
     constructor() {
+        console.log('ThemeService created');
         this.loadTheme();
     }
 
