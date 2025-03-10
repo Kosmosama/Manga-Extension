@@ -1,8 +1,8 @@
 import { Component, inject, signal } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { MangaFilters } from '../../shared/interfaces/filters.interface';
-import { Tag } from '../../shared/interfaces/tag.interface';
-import { TagService } from '../services/tag.service';
+import { TagService } from '../../../core/services/tag.service';
+import { Tag } from '../../../core/interfaces/tag.interface';
+import { MangaFilters } from '../../../core/interfaces/filters.interface';
 
 @Component({
     selector: 'app-filter-modal',
@@ -11,7 +11,7 @@ import { TagService } from '../services/tag.service';
     styleUrl: './filter-modal.component.css'
 })
 export class FilterModalComponent {
-    private tagService: TagService = inject(TagService);
+    private tagService = inject(TagService);
     private fb = inject(NonNullableFormBuilder);
     
     tags = signal<Tag[]>([]);

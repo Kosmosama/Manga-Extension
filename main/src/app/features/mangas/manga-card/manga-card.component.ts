@@ -1,16 +1,16 @@
 import { ChangeDetectorRef, Component, computed, DestroyRef, inject, model, output, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { Manga } from '../../shared/interfaces/manga.interface';
-import { MangaService } from '../services/manga.service';
 import { map, Subject } from 'rxjs';
-import { ThemeService } from '../../settings/services/theme.service';
-import { Theme } from '../../shared/interfaces/theme.interface';
+import { ThemeService } from '../../../core/services/theme.service';
+import { MangaService } from '../../../core/services/manga.service';
+import { Manga } from '../../../core/interfaces/manga.interface';
+import { Theme } from '../../../core/interfaces/theme.interface';
 
 @Component({
     selector: 'manga-card',
     imports: [],
-    templateUrl: './manga.component.html',
-    styleUrl: './manga.component.css'
+    templateUrl: './manga-card.component.html',
+    styleUrl: './manga-card.component.css'
 })
 export class MangaComponent {
     private mangaService = inject(MangaService);

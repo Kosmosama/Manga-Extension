@@ -1,7 +1,7 @@
 import { Component, inject, input, OnInit, output } from '@angular/core';
 import { FormsModule, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MangaService } from '../services/manga.service';
-import { Manga, MangaState, MangaType } from './../../shared/interfaces/manga.interface';
+import { MangaService } from '../../../core/services/manga.service';
+import { Manga, MangaState, MangaType } from '../../../core/interfaces/manga.interface';
 
 @Component({
     selector: 'manga-form',

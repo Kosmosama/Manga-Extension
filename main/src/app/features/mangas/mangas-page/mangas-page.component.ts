@@ -1,13 +1,10 @@
-import { MangaFilters } from './../../shared/interfaces/filters.interface';
 import { Component, effect, inject, OnInit, signal, viewChild } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { Manga } from '../../shared/interfaces/manga.interface';
-import { Tag } from '../../shared/interfaces/tag.interface';
-import { MangaService } from '../services/manga.service';
-import { TagService } from '../services/tag.service';
-import { MangaComponent } from '../manga/manga.component';
-import { ModalComponent } from '../../modal/modal.component';
 import { MangaFormComponent } from "../manga-form/manga-form.component";
+import { MangaComponent } from '../manga-card/manga-card.component';
+import { ModalComponent } from '../../../shared/modal/modal.component';
+import { MangaService } from '../../../core/services/manga.service';
+import { Manga } from '../../../core/interfaces/manga.interface';
 
 @Component({
     selector: 'mangas-page',

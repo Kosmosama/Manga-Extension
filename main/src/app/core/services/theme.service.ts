@@ -1,6 +1,6 @@
 import { Injectable, signal, WritableSignal } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Theme } from '../../shared/interfaces/theme.interface';
+import { Theme } from '../../core/interfaces/theme.interface';
 
 @Injectable({
     providedIn: 'root'

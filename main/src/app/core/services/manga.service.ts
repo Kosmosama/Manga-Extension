@@ -1,10 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { Collection } from 'dexie';
 import { from, map, Observable } from 'rxjs';
-import { MangaFilters, Range } from '../../shared/interfaces/filters.interface';
-import { DatabaseService } from '../../shared/services/database.service';
-import { Tag } from '../../shared/interfaces/tag.interface';
-import { Manga } from '../../shared/interfaces/manga.interface';
+import { MangaFilters, Range } from '../interfaces/filters.interface';
+import { Tag } from '../interfaces/tag.interface';
+import { Manga } from '../interfaces/manga.interface';
+import { DatabaseService } from './database.service';
 
 /**
  * Service for managing manga-related operations in the database.
@@ -13,7 +13,7 @@ import { Manga } from '../../shared/interfaces/manga.interface';
     providedIn: 'root'
 })
 export class MangaService {
-    private database: DatabaseService = inject(DatabaseService);
+    private database = inject(DatabaseService);
 
     /**
      * Retrieves a manga by its ID.

@@ -1,9 +1,8 @@
 import { inject, Injectable } from '@angular/core';
-import { PromiseExtended } from 'dexie';
 import { from, Observable } from 'rxjs';
-import { MangaService } from '../../manga/services/manga.service';
-import { Tag } from '../../shared/interfaces/tag.interface';
-import { DatabaseService } from '../../shared/services/database.service';
+import { Tag } from '../interfaces/tag.interface';
+import { DatabaseService } from './database.service';
+import { MangaService } from './manga.service';
 
 @Injectable({
     providedIn: 'root'
