@@ -1,1 +1,5 @@
-<p>tags-card works!</p>
+<div class="tag"> <!-- Change color depending on tag color (hex) -->
+    <h1>{{ tag().name }}</h1>
+    <button (click)="deleteTag()">Delete</button>
+    <button (click)="editTag()">Edit</button>
+</div>
