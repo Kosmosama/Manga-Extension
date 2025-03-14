@@ -10,3 +10,13 @@
         </div>
     }
 </div>
+
+<footer>
+    <button (click)="openForm()">
+        Add tag
+    </button>
+</footer>
+
+<app-modal #modal>
+    <tag-form [tag]="selectedTag()" (formSumbitted)="handleFormSumbission($event)"></tag-form>
+</app-modal>
