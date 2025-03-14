@@ -1,1 +1,12 @@
-<p>tags-page works!</p>
+<div class="tag-page">
+    @if (tagList().length) {
+        @for (tag of tagList(); track tag.id) {
+        <tag-card [tag]="tag" (deleted)="handleTagDeletion($event)"></tag-card>
+        }
+    }
+    @else {
+        <div>
+            No events found.
+        </div>
+    }
+</div>

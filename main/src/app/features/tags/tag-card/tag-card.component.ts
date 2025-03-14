@@ -4,12 +4,12 @@ import { TagService } from '../../../core/services/tag.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
-    selector: 'app-tags-card',
+    selector: 'tag-card',
     imports: [],
     templateUrl: './tag-card.component.html',
     styleUrl: './tag-card.component.css'
 })
-export class TagsCardComponent {
+export class TagCardComponent {
     private tagService = inject(TagService);
     private destroyRef = inject(DestroyRef);
     private cdr = inject(ChangeDetectorRef);
