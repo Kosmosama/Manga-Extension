@@ -5,6 +5,7 @@ export const routes: Routes = [
     
     { path: "mangas", loadChildren: () => import("./features/mangas/manga.routes").then(c => c.mangaRoutes) },
     { path: "settings", loadChildren: () => import("./features/settings/settings.routes").then(c => c.settingsRoutes) },
+    { path: "tags", loadChildren: () => import("./features/tags/tag.routes").then(c => c.tagRoutes) },
 
     { path: '**', redirectTo: '/mangas' },
 ];
