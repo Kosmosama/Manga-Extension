@@ -1,1 +1,13 @@
-<p>tag-form works!</p>
+<form [formGroup]="tagForm" (ngSubmit)="submit()">
+    <label for="name">Name:</label>
+    <input id="name" formControlName="name" required>
+    @if (tagForm.get('name')?.invalid && tagForm.get('name')?.touched) {
+    <div>Name is required (min 3 characters)</div>
+    }
+
+    <!-- #TODO Change to color wheel -->
+    <label for="color">Color:</label>
+    <input id="color" formControlName="color" required>
+
+    <button type="submit" [disabled]="tagForm.invalid">Submit</button>
+</form>
