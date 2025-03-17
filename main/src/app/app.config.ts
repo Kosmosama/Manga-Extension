@@ -1,7 +1,10 @@
-import { ApplicationConfig, inject, provideAppInitializer, provideExperimentalZonelessChangeDetection } from '@angular/core';
+import { ApplicationConfig, inject, provideAppInitializer, provideExperimentalZonelessChangeDetection, isDevMode } from '@angular/core';
 import { PreloadAllModules, provideRouter, withComponentInputBinding, withPreloading } from '@angular/router';
 import { routes } from './app.routes';
-import { ThemeService } from './core/services/theme.service'; 
+import { ThemeService } from './core/services/theme.service';
+import { provideHttpClient } from '@angular/common/http';
+import { TranslocoHttpLoader } from './transloco-loader';
+import { provideTransloco } from '@jsverse/transloco';
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -9,6 +12,24 @@ export const appConfig: ApplicationConfig = {
         provideRouter(routes, withComponentInputBinding(), withPreloading(PreloadAllModules)),
         provideAppInitializer(() => {
             inject(ThemeService);
+            // Get settings here too
+        }), provideHttpClient(), provideTransloco({
+            config: {
+                availableLangs: ['en', 'es'],
+                fallbackLang: 'en',
+                defaultLang: 'en',
+                reRenderOnLangChange: true,
+                prodMode: !isDevMode(),
+                missingHandler: {
+                    allowEmpty: false,
+                    useFallbackTranslation: true,
+                    logMissingKey: true, //#TODO Change to false in production
+                },
+                scopes: {
+                    keepCasing: true,
+                }
+            },
+            loader: TranslocoHttpLoader
         })
     ]
 };
