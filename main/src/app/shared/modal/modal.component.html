@@ -1,6 +1,6 @@
 @if (isVisible()) {
     <div class="modal-overlay" (click)="close()">
-        <div class="modal-content" #modalContainer>
+        <div class="modal-content" #modalContainer (click)="$event.stopPropagation()">
             <div class="modal-header">
                 <h2>{{ title() }}</h2>
                 @if (showCloseButton()) {
