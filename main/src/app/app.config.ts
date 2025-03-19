@@ -5,15 +5,14 @@ import { ThemeService } from './core/services/theme.service';
 import { provideHttpClient } from '@angular/common/http';
 import { TranslocoHttpLoader } from './transloco-loader';
 import { provideTransloco } from '@jsverse/transloco';
+import { SettingsService } from './core/services/settings.service';
 
 export const appConfig: ApplicationConfig = {
     providers: [
         provideExperimentalZonelessChangeDetection(),
         provideRouter(routes, withComponentInputBinding(), withPreloading(PreloadAllModules)),
-        provideAppInitializer(() => {
-            inject(ThemeService);
-            // Get settings here too
-        }), provideHttpClient(), provideTransloco({
+        provideHttpClient(), 
+        provideTransloco({
             config: {
                 availableLangs: ['en', 'es'],
                 fallbackLang: 'en',
@@ -30,6 +29,10 @@ export const appConfig: ApplicationConfig = {
                 }
             },
             loader: TranslocoHttpLoader
+        }),
+        provideAppInitializer(() => {
+            inject(ThemeService);
+            inject(SettingsService);
         })
     ]
 };
