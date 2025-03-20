@@ -2,7 +2,7 @@
 
 - [x] Fix resolution.
 - [x] Create reusable modal component (similar to what was done in legacy). - Done, but i should change the design xd
-- [ ] Minor CSS so everything can be seen properly.
+- [x] Minor CSS so everything can be seen properly.
 - [ ] Test whether databaseService's populate works or not.
 
 - **Main functionality**

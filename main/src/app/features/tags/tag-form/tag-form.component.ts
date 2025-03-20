@@ -23,6 +23,7 @@ export class TagFormComponent {
     });
 
     ngOnInit() {
+        
         if (this.tag()) {
             this.tagForm.patchValue({
                 name: this.tag()!.name,

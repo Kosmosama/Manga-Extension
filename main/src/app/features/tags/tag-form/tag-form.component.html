@@ -1,13 +1,16 @@
 <form [formGroup]="tagForm" (ngSubmit)="submit()">
-    <label for="name">Name:</label>
-    <input id="name" formControlName="name" required>
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input id="name" formControlName="name" required>
+    </div>
     @if (tagForm.get('name')?.invalid && tagForm.get('name')?.touched) {
     <div>Name is required (min 3 characters)</div>
     }
 
-    <!-- #TODO Change to color wheel -->
-    <label for="color">Color:</label>
-    <input id="color" formControlName="color" required>
+    <div class="form-group">
+        <label for="color">Color:</label>
+        <input id="color" type="color" formControlName="color" required>
+    </div>
 
     <button type="submit" [disabled]="tagForm.invalid">Submit</button>
 </form>
