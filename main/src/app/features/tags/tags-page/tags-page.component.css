@@ -1,0 +1,28 @@
+.tag-page {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+    padding: 20px;
+}
+
+.tag-page > div {
+    text-align: center;
+    color: #777;
+}
+
+.tag-page + footer {
+    padding: 10px 20px;
+    text-align: right;
+}
+
+.tag-page + footer button {
+    padding: 8px 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.tag-page + footer button:hover {
+    background-color: #eee;
+}

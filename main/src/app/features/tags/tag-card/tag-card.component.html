@@ -1,4 +1,4 @@
-<div class="tag"> <!-- Change color depending on tag color (hex) -->
+<div class="tag" [style.backgroundColor]="tag().color">
     <h1>{{ tag().name }}</h1>
     <button (click)="deleteTag()">Delete</button>
     <button (click)="editTag()">Edit</button>

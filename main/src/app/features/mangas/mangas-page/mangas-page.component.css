@@ -1,0 +1,102 @@
+div > header {
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+div > header button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+div > header h1 {
+    margin: 0;
+    font-size: 1.8em;
+}
+
+div > div:nth-child(2) {
+    padding: 20px;
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+div > div:nth-child(2) > button {
+    padding: 8px 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+div > div:nth-child(2) > button:hover {
+    background-color: #eee;
+}
+
+div > div:nth-child(2) > form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+div > div:nth-child(2) > form > input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+div > div:nth-child(2) > form > button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+
+div > div:nth-child(2) > button:last-child {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+div > div > main > div {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    padding: 0 20px;
+}
+
+div > div > main > div > div {
+    text-align: center;
+    color: #777;
+}
+
+div > footer {
+    padding: 10px 20px;
+    text-align: right;
+}
+
+div > footer button {
+    padding: 8px 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+div > footer button:hover {
+    background-color: #eee;
+}

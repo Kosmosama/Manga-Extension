@@ -1,0 +1,6 @@
+select#language-select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin: 20px;
+}
