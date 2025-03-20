@@ -19,11 +19,17 @@ export class TagsPageComponent {
     tagList = signal<Tag[]>([]);
     selectedTag = signal<Tag | null>(null);
 
+
+    /**
+     * 
+     * The effect() was deleted cuz it throws an error:
+     * RuntimeError: NG0203: effect() can only be used within an injection context such as a constructor, a factory function, a field initializer, or a function used with `runInInjectionContext`. Find more at https://angular.dev/errors/NG0203
+     * 
+     */
     ngOnInit() {
-        effect(() => {
-            this.tagService.getAllTags().subscribe(mangas => this.tagList.set(mangas));
-            console.log("Tags were fetched");
-        });
+        this.tagService.getAllTags().subscribe(tags => this.tagList.set(tags)); // tf 
+        console.log(this.tagList());
+        console.log("Tags were fetched");
     }
 
     /**
@@ -32,7 +38,7 @@ export class TagsPageComponent {
      * @param id The ID of the tag to delete.
      */
     handleTagDeletion(id: number) {
-        this.tagList.update((tags) => tags.filter(tag => tag.id !== id));
+        this.tagService.deleteTag(id).subscribe(() => this.tagList.update((tags) => tags.filter(tag => tag.id !== id)));
     }
 
     /**
