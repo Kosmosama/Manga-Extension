@@ -1,9 +1,21 @@
+:root {
+    --my-color: #fff;
+}
+
+[data-theme='dark'] {
+    --my-color: #000;
+}
+
+[data-theme='light'] {
+    --my-color: #fff;
+}
+
 body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
     height: 100%;
     width: 100%;
-    background-color: #f4f4f4;
+    background-color: var(--my-color);
     color: #333;
 }

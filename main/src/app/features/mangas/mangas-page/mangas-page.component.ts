@@ -5,6 +5,7 @@ import { MangaComponent } from '../manga-card/manga-card.component';
 import { ModalComponent } from '../../../shared/modal/modal.component';
 import { MangaService } from '../../../core/services/manga.service';
 import { Manga } from '../../../core/interfaces/manga.interface';
+import { themeChange } from 'theme-change'
 
 @Component({
     selector: 'mangas-page',
@@ -25,6 +26,11 @@ export class MangasPageComponent implements OnInit {
             this.mangaService.getAllMangas().subscribe(mangas => this.mangaList.set(mangas));
             console.log("Mangas were fetched");
         });
+    }
+
+    
+    themeChange() {
+        themeChange();
     }
 
     /**

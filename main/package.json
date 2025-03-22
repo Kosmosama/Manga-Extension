@@ -24,6 +24,7 @@
     "dexie": "^4.0.11",
     "reflect-metadata": "^0.2.2",
     "rxjs": "~7.8.0",
+    "theme-change": "^2.5.0",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
