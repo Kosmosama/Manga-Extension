@@ -27,7 +27,6 @@ export class MangasPageComponent implements OnInit {
             console.log("Mangas were fetched");
         });
     }
-
     
     themeChange() {
         themeChange();

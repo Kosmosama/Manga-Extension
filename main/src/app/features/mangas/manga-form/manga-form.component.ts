@@ -13,11 +13,11 @@ import { Manga, MangaState, MangaType } from '../../../core/interfaces/manga.int
 export class MangaFormComponent implements OnInit {
     private mangaService = inject(MangaService);
     private fb = inject(NonNullableFormBuilder);
-    
+
     manga = input<Manga | null>();
 
     formSumbitted = output<Manga>();
-    
+
     mangaForm = this.fb.group({
         title: ["", [Validators.required, Validators.minLength(3)]],
         link: [""],
@@ -44,6 +44,11 @@ export class MangaFormComponent implements OnInit {
         }
     }
 
+    /**
+     * Handles the form submission.
+     * If the manga is new, it will be added to the database.
+     * If the manga already exists, it will be updated.
+     */
     submit() {
         if (this.mangaForm.invalid) return;
 
@@ -56,12 +61,23 @@ export class MangaFormComponent implements OnInit {
             id: Number(`${Date.now()}${Math.floor(Math.random() * 10000)}`)
         };
 
-        this.mangaService.addManga(newManga).subscribe({
-            next: () => {
-                this.formSumbitted.emit(newManga);
-                console.log("Manga added successfully");
-            },
-            error: (err) => console.error("Errpr:", err)
-        });
+        if (this.manga()) {
+            this.mangaService.addManga(newManga).subscribe({
+                next: () => {
+                    this.formSumbitted.emit(newManga);
+                    console.log("Manga added successfully");
+                },
+                error: (err) => console.error("Errpr:", err)
+            });
+        }
+        else {
+            this.mangaService.updateManga(this.manga()!.id, newManga).subscribe({
+                next: () => {
+                    this.formSumbitted.emit(newManga);
+                    console.log("Manga updated successfully");
+                },
+                error: (err) => console.error("Errpr:", err)
+            });
+        }
     }
 }
