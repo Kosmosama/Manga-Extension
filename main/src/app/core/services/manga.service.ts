@@ -26,21 +26,21 @@ export class MangaService {
     getAllMangas(filters: MangaFilters = {}): Observable<Manga[]> {
         let query = this.database.mangas.toCollection();
 
-        if (filters.sortBy) {
-            query = this.database.mangas.orderBy(filters.sortBy);
-            if (filters.order === 'desc') query = query.reverse();
-        }
-
         if (filters.search) query = this.applySearchFilter(query, filters.search);
         if (filters.includeTags || filters.excludeTags) query = this.applyTagFilters(query, filters.includeTags, filters.excludeTags);
         if (filters.chapterRange) query = this.applyRangeFilter(query, filters.chapterRange, 'chapters');
         if (filters.lastSeenRange) query = this.applyRangeFilter(query, filters.lastSeenRange, 'updatedAt');
         if (filters.addedRange) query = this.applyRangeFilter(query, filters.addedRange, 'createdAt');
 
-        const limit = Math.max(filters.limit || 1, 1);
+        if (filters.sortBy) {
+            query = this.database.mangas.orderBy(filters.sortBy);
+            if (filters.order === 'desc') query = query.reverse();
+        }
 
-        return from((filters.random ? this.getRandomMangas(query, limit) : query.toArray())
-            .then(mangas => this.resolveTagsForMangas(mangas)));
+        const limit = Math.max(filters.limit || 1, 1);
+        const resultPromise = filters.random ? this.getRandomMangas(query, limit) : query.toArray();
+
+        return from(resultPromise.then(mangas => this.resolveTagsForMangas(mangas)));
     }
 
     /**
@@ -68,14 +68,14 @@ export class MangaService {
      * Toggles the favorite status of a manga.
      */
     toggleFavorite(mangaId: number, actualFavoriteStatus: boolean | undefined): Observable<void> {
-        return from(this.database.mangas.update(mangaId, { isFavorite: !actualFavoriteStatus })).pipe(map(() => {}));
+        return from(this.database.mangas.update(mangaId, { isFavorite: !actualFavoriteStatus })).pipe(map(() => { }));
     }
 
     /**
      * Updates the chapter count of a manga and modifies the updatedAt timestamp.
      */
     updateChapters(mangaId: number, chapters: number): Observable<void> {
-        return from(this.database.mangas.update(mangaId, { chapters, updatedAt: String(Date.now()) })).pipe(map(() => {}));
+        return from(this.database.mangas.update(mangaId, { chapters, updatedAt: String(Date.now()) })).pipe(map(() => { }));
     }
 
     /**
@@ -111,7 +111,7 @@ export class MangaService {
             .where('tags')
             .equals(tagId)
             .modify(manga => { manga.tags = manga.tags?.filter(t => t !== tagId); })
-            .then(() => {});
+            .then(() => { });
     }
 
     /**
@@ -170,7 +170,7 @@ export class MangaService {
     private async getRandomMangas(query: Collection<Manga, number, Manga>, limit: number): Promise<Manga[]> {
         const mangas = await query.toArray();
         if (!mangas.length) return [];
-        
+
         return mangas.sort(() => Math.random() - 0.5).slice(0, limit);
     }
 }
