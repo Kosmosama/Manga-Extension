@@ -24,6 +24,8 @@
 - [ ] Pick (and crop) image from page.
 - [ ] Save images as base64.
 - [X] Rename all mangas with x string in name/link. ex: replace all "mangadex7.com" for "mangadex.com"
+- [ ] If you start typing, it automatically selects and types in searchbar. (Should be able to turn on and off this function, or only work while pressing a key idk)
+- [ ] Button to update link to current page.
 
 ## MAYBE
 - Use analytics (https://ahrefs.com/web-analytics)
