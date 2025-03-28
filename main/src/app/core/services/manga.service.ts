@@ -6,9 +6,6 @@ import { Tag } from '../interfaces/tag.interface';
 import { Manga } from '../interfaces/manga.interface';
 import { DatabaseService } from './database.service';
 
-/**
- * Service for managing manga-related operations in the database.
- */
 @Injectable({ providedIn: 'root' })
 export class MangaService {
     private database = inject(DatabaseService);
@@ -172,5 +169,20 @@ export class MangaService {
         if (!mangas.length) return [];
 
         return mangas.sort(() => Math.random() - 0.5).slice(0, limit);
+    }
+
+    /**
+     * Updates manga links from the old link to the new link.
+     */
+    updateMangaLinks(oldLink: string, newLink: string): Observable<void> {
+        return from(this.database.mangas.toArray().then(mangas => {
+            const regex = new RegExp(oldLink, 'g');
+            const updatePromises = mangas
+                .filter(manga => manga.link && regex.test(manga.link))
+                .map(manga => {
+                    return this.database.mangas.update(manga.id, { link: manga.link?.replace(regex, newLink) });
+                });
+            return Promise.all(updatePromises).then(() => { });
+        }));
     }
 }

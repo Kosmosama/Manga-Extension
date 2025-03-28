@@ -23,7 +23,7 @@
 - [ ] Instead of using chrome's extension popup, use web based UI.
 - [ ] Pick (and crop) image from page.
 - [ ] Save images as base64.
-- [ ] Rename all mangas with x string in name/link. ex: replace all "mangadex7.com" for "mangadex.com"
+- [X] Rename all mangas with x string in name/link. ex: replace all "mangadex7.com" for "mangadex.com"
 
 ## MAYBE
 - Use analytics (https://ahrefs.com/web-analytics)
