@@ -1,4 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
 
 html { height: 1280px; width: 800px; } /* yup, it was this easy :v*/
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+:root {
+    --my-color: #fff;
+}
+
+[data-theme='dark'] {
+    --my-color: #000;
+}
+
+[data-theme='light'] {
+    --my-color: #666;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    height: 100%;
+    width: 100%;
+    background-color: var(--my-color);
+    color: #333;
+}

@@ -1,0 +1,6 @@
+<div>
+    <select (change)="themeChange($event)">
+        <option value="light" [selected]="themeService.theme === 'light'">Light</option>
+        <option value="dark" [selected]="themeService.theme === 'dark'">Dark</option>
+    </select>
+</div>

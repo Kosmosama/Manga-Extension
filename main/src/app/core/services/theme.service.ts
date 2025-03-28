@@ -13,7 +13,6 @@ export class ThemeService {
     }
 
     constructor() {
-        console.log('ThemeService created');
         this.loadTheme();
     }
 
@@ -38,7 +37,7 @@ export class ThemeService {
 
     setTheme(theme: Theme) {
         this.themeSignal.set(theme);
-        document.documentElement.classList.toggle('dark', theme === Theme.Dark || (theme === Theme.System && this.getSystemTheme() === Theme.Dark));
+        document.documentElement.setAttribute('data-theme', theme === Theme.Dark ? 'dark' : 'light');
         chrome.storage.local.set({ theme });
     }
 }

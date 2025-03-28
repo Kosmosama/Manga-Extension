@@ -22,10 +22,8 @@ export class MangasPageComponent implements OnInit {
     selectedManga = signal<Manga | null>(null);
 
     ngOnInit() {
-        effect(() => {
-            this.mangaService.getAllMangas().subscribe(mangas => this.mangaList.set(mangas));
-            console.log("Mangas were fetched");
-        });
+        this.mangaService.getAllMangas().subscribe(mangas => this.mangaList.set(mangas));
+        console.log("Mangas were fetched");
     }
     
     themeChange() {
