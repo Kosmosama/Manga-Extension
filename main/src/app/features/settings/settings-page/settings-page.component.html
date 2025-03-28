@@ -1,10 +1,4 @@
-<select name="language-select" id="language-select" (change)="onLanguageChange($event)">
-    @for (language of languages(); track $index) {
-        @if (language === activeLanguage()) {
-            <option value="{{ language }}" selected>{{ language }}</option>
-        }
-        @else {
-            <option value="{{ language }}">{{ language }}</option>
-        }
-    }
+<select (change)="themeChange($event)">
+    <option value="light" [selected]="theme() === 'light'">Light</option>
+    <option value="dark" [selected]="theme() === 'dark'">Dark</option>
 </select>

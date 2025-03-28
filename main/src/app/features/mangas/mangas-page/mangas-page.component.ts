@@ -6,6 +6,8 @@ import { ModalComponent } from '../../../shared/modal/modal.component';
 import { MangaService } from '../../../core/services/manga.service';
 import { Manga } from '../../../core/interfaces/manga.interface';
 import { themeChange } from 'theme-change'
+import { ThemeService } from '../../../core/services/theme.service';
+import { Theme } from '../../../core/interfaces/theme.interface';
 
 @Component({
     selector: 'mangas-page',
@@ -15,19 +17,17 @@ import { themeChange } from 'theme-change'
 })
 export class MangasPageComponent implements OnInit {
     private mangaService = inject(MangaService);
+    private themeService = inject(ThemeService);
 
     modal = viewChild.required<ModalComponent>('modal');
 
     mangaList = signal<Manga[]>([]);
     selectedManga = signal<Manga | null>(null);
+    theme = signal<Theme>(this.themeService.theme);
 
     ngOnInit() {
         this.mangaService.getAllMangas().subscribe(mangas => this.mangaList.set(mangas));
         console.log("Mangas were fetched");
-    }
-    
-    themeChange() {
-        themeChange();
     }
 
     /**

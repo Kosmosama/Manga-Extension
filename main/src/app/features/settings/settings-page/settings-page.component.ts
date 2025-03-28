@@ -1,5 +1,6 @@
-import { Component, inject } from '@angular/core';
-import { SettingsService } from '../../../core/services/settings.service';
+import { Component, inject, signal } from '@angular/core';
+import { Theme } from '../../../core/interfaces/theme.interface';
+import { ThemeService } from '../../../core/services/theme.service';
 
 @Component({
     selector: 'app-settings-page',
@@ -8,18 +9,13 @@ import { SettingsService } from '../../../core/services/settings.service';
     styleUrl: './settings-page.component.css'
 })
 export class SettingsPageComponent {
-    private settingsService = inject(SettingsService);
+    private themeService = inject(ThemeService);
 
-    languages = this.settingsService.languages;
-    activeLanguage = this.settingsService.activeLanguage;
+    theme = signal<Theme>(this.themeService.theme);
 
-    onLanguageChange(event: Event) {
-        const value = (event.target as HTMLSelectElement).value;
-
-        if (!value || value === this.activeLanguage()) {
-            return;
-        }
-
-        this.settingsService.changeLanguage(value);
+    themeChange(event: Event) {
+        const target = event.target as HTMLSelectElement;
+        const theme = target.value === 'light' ? Theme.Light : Theme.Dark;
+        this.themeService.setTheme(theme);
     }
 }
