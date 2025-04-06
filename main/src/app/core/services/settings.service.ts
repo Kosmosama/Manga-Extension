@@ -7,9 +7,12 @@ import { TranslocoService, getBrowserLang } from '@jsverse/transloco';
 export class SettingsService implements OnInit {
     private translocoService = inject(TranslocoService);
     private readonly STORAGE_KEY = 'preferredLanguage';
+    private readonly FOCUS_SEARCH_INPUT_KEY = 'focusSearchInput';
+    readonly focusSearchInput = signal(false);
 
     readonly languages = signal(this.translocoService.getAvailableLangs() as string[]);
     readonly activeLanguage = signal('');
+    
 
     constructor() {
         console.log('SettingsService created');
@@ -21,7 +24,7 @@ export class SettingsService implements OnInit {
         this.translocoService.langChanges$.subscribe(lang => {
             this.activeLanguage.set(lang);
         });
-
+        this.initializeFocusSearchInput();
         console.log(this.languages());
         console.log(this.activeLanguage());
     }
@@ -73,5 +76,22 @@ export class SettingsService implements OnInit {
 
         this.translocoService.setActiveLang(lang);
         this.activeLanguage.set(lang);
+    }
+
+    private initializeFocusSearchInput(): void {
+        chrome.storage.local.get(this.FOCUS_SEARCH_INPUT_KEY, (result) => {
+          const storedValue = result[this.FOCUS_SEARCH_INPUT_KEY] ?? true;
+          
+          this.focusSearchInput.set(storedValue);
+          console.log(`Focus loaded: ${storedValue}`);
+        });
+    }
+
+    toggleFocusSearchInput(value: boolean) {
+        chrome.storage.local.set({ [this.FOCUS_SEARCH_INPUT_KEY]: value }, () => {
+            console.log(`Focus saved: ${value}`);
+        });
+
+        this.focusSearchInput.set(value);
     }
 }

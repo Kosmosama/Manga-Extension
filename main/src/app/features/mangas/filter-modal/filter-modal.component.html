@@ -6,7 +6,7 @@
         </header>
         <form [formGroup]="filtersForm" (ngSubmit)="applyFilters()">
             <label for="search">Search:</label>
-            <input id="search" formControlName="search" type="text" />
+            <input id="search" #searchInput (focus)="inputHasFocus = true" (blur)="inputHasFocus = false" formControlName="search" type="text" />
 
             <label for="includeTags">Include Tags:</label>
             <select id="includeTags" formControlName="includeTags" multiple>
