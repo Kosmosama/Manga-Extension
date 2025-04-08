@@ -18,11 +18,12 @@ import { Theme } from '../../../core/interfaces/theme.interface';
 export class MangasPageComponent implements OnInit {
     private mangaService = inject(MangaService);
     private themeService = inject(ThemeService);
-
+    
     modal = viewChild.required<ModalComponent>('modal');
-
+    editModal = viewChild.required<ModalComponent>('editModal');
+    
+    selectedManga = signal<Manga | null>(null); 
     mangaList = signal<Manga[]>([]);
-    selectedManga = signal<Manga | null>(null);
     theme = signal<Theme>(this.themeService.theme);
 
     ngOnInit() {
@@ -45,6 +46,12 @@ export class MangasPageComponent implements OnInit {
     openForm(manga?: Manga) {
         this.selectedManga.set(manga || null);
         this.modal().open();
+    }
+
+    handleEdit = (manga: Manga) => {
+        console.log(' El manga es: ', manga)
+        this.selectedManga.set(manga);
+        this.editModal().open();
     }
 
     /**

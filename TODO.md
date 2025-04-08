@@ -30,3 +30,6 @@
 ## MAYBE
 - Use analytics (https://ahrefs.com/web-analytics)
 - Integration with MyAnimeList API and AniList API. (Add manga directly from profile)
+
+## **Fixes**
+- [ ] Fix image handling - routes seems to be wrong

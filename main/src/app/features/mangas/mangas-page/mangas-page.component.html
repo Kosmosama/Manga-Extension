@@ -54,7 +54,7 @@
         <div>
             @if (mangaList().length) {
                 @for (manga of mangaList(); track manga.id) {
-                <manga-card [manga]="manga" (deleted)="handleMangaDeletion($event)"></manga-card>
+                <manga-card [handleEdit]="handleEdit" [manga]="manga" (deleted)="handleMangaDeletion($event)"></manga-card>
                 }
             }
             @else {
@@ -79,5 +79,9 @@
 </footer>
 
 <app-modal #modal>
+    <manga-form [manga]="selectedManga()" (formSumbitted)="handleFormSumbission($event)"></manga-form>
+</app-modal>
+
+<app-modal #editModal>
     <manga-form [manga]="selectedManga()" (formSumbitted)="handleFormSumbission($event)"></manga-form>
 </app-modal>

@@ -1,4 +1,4 @@
-import { Component, inject, input, OnInit, output } from '@angular/core';
+import { Component, effect, inject, input, OnInit, output } from '@angular/core';
 import { FormsModule, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MangaService } from '../../../core/services/manga.service';
 import { Manga, MangaState, MangaType } from '../../../core/interfaces/manga.interface';
@@ -10,7 +10,7 @@ import { Manga, MangaState, MangaType } from '../../../core/interfaces/manga.int
     templateUrl: './manga-form.component.html',
     styleUrl: './manga-form.component.css'
 })
-export class MangaFormComponent implements OnInit {
+export class MangaFormComponent {
     private mangaService = inject(MangaService);
     private fb = inject(NonNullableFormBuilder);
 
@@ -28,8 +28,40 @@ export class MangaFormComponent implements OnInit {
         state: [MangaState.None],
         tags: [[] as number[]],
     });
-
-    ngOnInit() {
+    
+    constructor() {
+        effect(() => {
+            const currentManga = this.manga();
+            console.log('Effect triggered in MangaForm. New manga:', currentManga);
+ 
+            if (currentManga) {
+                this.mangaForm.patchValue({
+                    title: currentManga.title,
+                    link: currentManga.link || "",
+                    image: currentManga.image || "",
+                    chapters: currentManga.chapters,
+                    isFavorite: currentManga.isFavorite || false,
+                    type: currentManga.type || MangaType.Other,
+                    state: currentManga.state || MangaState.None,
+                    tags: currentManga.tags || []
+                });
+            } else {
+                this.mangaForm.reset();
+                this.mangaForm.patchValue({
+                    type: MangaType.Other,
+                    state: MangaState.None,
+                    isFavorite: false,
+                    chapters: 0,
+                    tags: []
+                });
+            }
+        });
+    }
+    
+    
+    // ESTO NO FUNCIONABA
+   /* ngOnInit() {
+        console.log('Hay manga?: ', this.manga())
         if (this.manga()) {
             this.mangaForm.patchValue({
                 title: this.manga()!.title,
@@ -42,7 +74,7 @@ export class MangaFormComponent implements OnInit {
             });
             this.mangaForm.markAllAsTouched();
         }
-    }
+    }*/
 
     /**
      * Handles the form submission.
@@ -51,7 +83,7 @@ export class MangaFormComponent implements OnInit {
      */
     submit() {
         if (this.mangaForm.invalid) return;
-
+        console.log('Manga form: ', this.mangaForm.getRawValue())
         const now: string = new Date().toISOString();
 
         const newManga: Manga = {
@@ -61,7 +93,7 @@ export class MangaFormComponent implements OnInit {
             id: Number(`${Date.now()}${Math.floor(Math.random() * 10000)}`)
         };
 
-        if (this.manga()) {
+        if (!this.manga()) {
             this.mangaService.addManga(newManga).subscribe({
                 next: () => {
                     this.formSumbitted.emit(newManga);

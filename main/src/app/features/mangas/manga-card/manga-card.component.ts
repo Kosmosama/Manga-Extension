@@ -1,10 +1,11 @@
-import { ChangeDetectorRef, Component, computed, DestroyRef, inject, model, output, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, computed, DestroyRef, inject, input, model, output, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { map, Subject } from 'rxjs';
 import { ThemeService } from '../../../core/services/theme.service';
 import { MangaService } from '../../../core/services/manga.service';
 import { Manga } from '../../../core/interfaces/manga.interface';
 import { Theme } from '../../../core/interfaces/theme.interface';
+import is from '@angular/common/locales/is';
 
 @Component({
     selector: 'manga-card',
@@ -18,20 +19,24 @@ export class MangaComponent {
     private cdr = inject(ChangeDetectorRef);
     private themeService = inject(ThemeService)
     
+
+    // Handle edit modal - maybe move it to mangas-page and pass the function as a prop? 
+
     manga = model.required<Manga>();
 
     private chapterChangeSubject = new Subject<number>();
     private pendingChapterChange = 0;
 
     deleted = output<number>(); // Emit the ID of the deleted manga
+    handleEdit = input.required<(manga: Manga) => void>();
 
     // #TODO Implement (error)="imageNotFound()" in the img tag in the template 
     isImageValid = signal<boolean>(true);
 
     fallbackImage = computed(() =>
         this.themeService.theme === Theme.Dark
-            ? 'public/fallback-images/dark-mode-fallback.png'
-            : 'public/fallback-images/light-mode-fallback.png'
+            ? 'public/fallback-images/dark-mode-fallback.svg'
+            : 'public/fallback-images/light-mode-fallback.svg' // #TODO check why this shit isn't working - it returns a 404
     );
 
     constructor() {
@@ -61,13 +66,7 @@ export class MangaComponent {
 
     // #TODO Create and implement modal to edit manga, open it here
     editManga() {
-        console.log(`Editing manga: ${this.manga().title}`);
-
-        const newTestManga: Manga = {
-            ...this.manga(),
-        };
-
-        this.manga.set(newTestManga);
+        this.handleEdit()(this.manga());
     }
 
     /**
@@ -78,8 +77,10 @@ export class MangaComponent {
             .toggleFavorite(this.manga().id, this.manga().isFavorite)
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe(() => {
-                this.manga().isFavorite = !this.manga().isFavorite;
-                // this.cdr.detectChanges(); In case favorite icon is not updated
+                this.manga.update(currentManga => ({
+                    ...currentManga,
+                    isFavorite: !currentManga.isFavorite
+                }));
             });
     }
 
@@ -89,17 +90,16 @@ export class MangaComponent {
      * @param change - The increment or decrement to chapter count.
      */
     updateChapters(change: number = 1) {
-        if (this.manga().chapters + change < 0) {
-            // #MAYBE Shake -chapter button
+        const currentChapters = this.manga().chapters; 
+        if (currentChapters + change < 0) {
             return;
         }
-
-        this.manga().chapters += change;
-        // this.cdr.detectChanges(); In case chapter count is not updated
-
-        this.pendingChapterChange += change;
-        this.chapterChangeSubject.next(this.pendingChapterChange);
-    }        
+    
+        this.manga.update(m => ({ ...m, chapters: m.chapters + change }));
+    
+        // this.pendingChapterChange += change; 
+        this.chapterChangeSubject.next(Date.now());
+    }       
 
     /**
      * Handles the event when an image is not found.
