@@ -1,10 +1,10 @@
 import { Component, computed, DestroyRef, inject, input, model, output, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { map, Subject } from 'rxjs';
-import { ThemeService } from '../../../core/services/theme.service';
-import { MangaService } from '../../../core/services/manga.service';
 import { Manga } from '../../../core/interfaces/manga.interface';
 import { Theme } from '../../../core/interfaces/theme.interface';
+import { MangaService } from '../../../core/services/manga.service';
+import { ThemeService } from '../../../core/services/theme.service';
 
 @Component({
     selector: 'manga-card',
@@ -15,9 +15,10 @@ import { Theme } from '../../../core/interfaces/theme.interface';
 export class MangaComponent {
     private mangaService = inject(MangaService);
     private destroyRef = inject(DestroyRef);
-    private themeService = inject(ThemeService);
+    private themeService = inject(ThemeService)
 
-    // Handle edit modal - maybe move it to mangas-page and pass the function as a prop? 
+    // #TODO Handle edit modal - maybe move it to mangas-page and pass the function as a prop? 
+
     manga = model.required<Manga>();
 
     private chapterChangeSubject = new Subject<number>();
@@ -31,8 +32,8 @@ export class MangaComponent {
 
     fallbackImage = computed(() =>
         this.themeService.theme === Theme.Dark
-            ? 'public/fallback-images/dark-mode-fallback.svg'
-            : 'public/fallback-images/light-mode-fallback.svg' // #TODO check why this shit isn't working - it returns a 404
+            ? 'assets/fallback-images/dark-mode-fallback.svg'
+            : 'assets/fallback-images/light-mode-fallback.svg'
     );
 
     constructor() {
@@ -54,8 +55,6 @@ export class MangaComponent {
      * Deletes the current manga by its ID and emits the deleted event.
      */
     deleteManga() {
-        if (!confirm('Delete this manga?')) return;
-
         this.mangaService
             .deleteManga(this.manga().id)
             .pipe(takeUntilDestroyed(this.destroyRef))
