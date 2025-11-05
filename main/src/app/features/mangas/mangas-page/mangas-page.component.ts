@@ -5,7 +5,6 @@ import { MangaComponent } from '../manga-card/manga-card.component';
 import { ModalComponent } from '../../../shared/modal/modal.component';
 import { MangaService } from '../../../core/services/manga.service';
 import { Manga } from '../../../core/interfaces/manga.interface';
-import { themeChange } from 'theme-change'
 import { ThemeService } from '../../../core/services/theme.service';
 import { Theme } from '../../../core/interfaces/theme.interface';
 
@@ -18,11 +17,11 @@ import { Theme } from '../../../core/interfaces/theme.interface';
 export class MangasPageComponent implements OnInit {
     private mangaService = inject(MangaService);
     private themeService = inject(ThemeService);
-    
+
     modal = viewChild.required<ModalComponent>('modal');
     editModal = viewChild.required<ModalComponent>('editModal');
-    
-    selectedManga = signal<Manga | null>(null); 
+
+    selectedManga = signal<Manga | null>(null);
     mangaList = signal<Manga[]>([]);
     theme = signal<Theme>(this.themeService.theme);
 

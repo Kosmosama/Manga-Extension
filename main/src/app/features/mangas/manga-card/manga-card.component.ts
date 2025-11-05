@@ -1,11 +1,10 @@
-import { ChangeDetectorRef, Component, computed, DestroyRef, inject, input, model, output, signal } from '@angular/core';
+import { Component, computed, DestroyRef, inject, input, model, output, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { map, Subject } from 'rxjs';
 import { ThemeService } from '../../../core/services/theme.service';
 import { MangaService } from '../../../core/services/manga.service';
 import { Manga } from '../../../core/interfaces/manga.interface';
 import { Theme } from '../../../core/interfaces/theme.interface';
-import is from '@angular/common/locales/is';
 
 @Component({
     selector: 'manga-card',
@@ -16,12 +15,9 @@ import is from '@angular/common/locales/is';
 export class MangaComponent {
     private mangaService = inject(MangaService);
     private destroyRef = inject(DestroyRef);
-    private cdr = inject(ChangeDetectorRef);
-    private themeService = inject(ThemeService)
-    
+    private themeService = inject(ThemeService);
 
     // Handle edit modal - maybe move it to mangas-page and pass the function as a prop? 
-
     manga = model.required<Manga>();
 
     private chapterChangeSubject = new Subject<number>();
@@ -45,19 +41,21 @@ export class MangaComponent {
                 map(() => {
                     const finalChapters = this.manga().chapters + this.pendingChapterChange;
                     const updateObservable = this.mangaService.updateChapters(this.manga().id, finalChapters);
-                    
+
                     this.pendingChapterChange = 0;
                     return updateObservable;
                 }),
                 takeUntilDestroyed(this.destroyRef)
             )
-            .subscribe(() => {});
+            .subscribe(() => { });
     }
 
     /**
      * Deletes the current manga by its ID and emits the deleted event.
      */
     deleteManga() {
+        if (!confirm('Delete this manga?')) return;
+
         this.mangaService
             .deleteManga(this.manga().id)
             .pipe(takeUntilDestroyed(this.destroyRef))
@@ -90,16 +88,16 @@ export class MangaComponent {
      * @param change - The increment or decrement to chapter count.
      */
     updateChapters(change: number = 1) {
-        const currentChapters = this.manga().chapters; 
+        const currentChapters = this.manga().chapters;
         if (currentChapters + change < 0) {
             return;
         }
-    
+
         this.manga.update(m => ({ ...m, chapters: m.chapters + change }));
-    
+
         // this.pendingChapterChange += change; 
         this.chapterChangeSubject.next(Date.now());
-    }       
+    }
 
     /**
      * Handles the event when an image is not found.

@@ -1,10 +1,10 @@
-import { inject, Injectable, OnInit, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { TranslocoService, getBrowserLang } from '@jsverse/transloco';
 
 @Injectable({
     providedIn: 'root'
 })
-export class SettingsService implements OnInit {
+export class SettingsService {
     private translocoService = inject(TranslocoService);
     private readonly STORAGE_KEY = 'preferredLanguage';
     private readonly FOCUS_SEARCH_INPUT_KEY = 'focusSearchInput';
@@ -12,21 +12,16 @@ export class SettingsService implements OnInit {
 
     readonly languages = signal(this.translocoService.getAvailableLangs() as string[]);
     readonly activeLanguage = signal('');
-    
 
     constructor() {
-        console.log('SettingsService created');
-    }
-
-    ngOnInit() {
+        // Initialize immediately when the service is created
         this.initializeLanguage();
 
         this.translocoService.langChanges$.subscribe(lang => {
             this.activeLanguage.set(lang);
         });
+
         this.initializeFocusSearchInput();
-        console.log(this.languages());
-        console.log(this.activeLanguage());
     }
 
     /**
@@ -71,7 +66,7 @@ export class SettingsService implements OnInit {
      */
     private setLanguage(lang: string) {
         chrome.storage.local.set({ [this.STORAGE_KEY]: lang }, () => {
-            console.log(`Language saved: ${lang}`);
+            // Language persisted
         });
 
         this.translocoService.setActiveLang(lang);
@@ -80,16 +75,14 @@ export class SettingsService implements OnInit {
 
     private initializeFocusSearchInput(): void {
         chrome.storage.local.get(this.FOCUS_SEARCH_INPUT_KEY, (result) => {
-          const storedValue = result[this.FOCUS_SEARCH_INPUT_KEY] ?? true;
-          
-          this.focusSearchInput.set(storedValue);
-          console.log(`Focus loaded: ${storedValue}`);
+            const storedValue = result[this.FOCUS_SEARCH_INPUT_KEY] ?? true;
+            this.focusSearchInput.set(storedValue);
         });
     }
 
     toggleFocusSearchInput(value: boolean) {
         chrome.storage.local.set({ [this.FOCUS_SEARCH_INPUT_KEY]: value }, () => {
-            console.log(`Focus saved: ${value}`);
+            // Preference persisted
         });
 
         this.focusSearchInput.set(value);
