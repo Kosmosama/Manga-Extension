@@ -11,7 +11,7 @@ export const appConfig: ApplicationConfig = {
     providers: [
         provideExperimentalZonelessChangeDetection(),
         provideRouter(routes, withComponentInputBinding(), withPreloading(PreloadAllModules)),
-        provideHttpClient(), 
+        provideHttpClient(),
         provideTransloco({
             config: {
                 availableLangs: ['en', 'es'],
@@ -22,7 +22,7 @@ export const appConfig: ApplicationConfig = {
                 missingHandler: {
                     allowEmpty: false,
                     useFallbackTranslation: true,
-                    logMissingKey: true, //#TODO Change to false in production
+                    logMissingKey: isDevMode(), // dev-only logging
                 },
                 scopes: {
                     keepCasing: true,

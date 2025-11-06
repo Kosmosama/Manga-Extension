@@ -1,3 +1,29 @@
 {
-    "example": "Example"
+    "app": { "title": "Manga Library" },
+    "actions": {
+        "add": "Add Manga",
+        "edit": "Edit",
+        "delete": "Delete",
+        "confirmDelete": "Confirm deletion",
+        "cancel": "Cancel",
+        "save": "Save",
+        "favorite": "Favorite",
+        "unfavorite": "Unfavorite"
+    },
+    "manga": {
+        "card": {
+            "chapters": "Chapters",
+            "updated": "Updated"
+        }
+    },
+    "settings": {
+        "title": "Settings",
+        "language": "Language",
+        "theme": "Theme",
+        "theme.light": "Light",
+        "theme.dark": "Dark",
+        "theme.system": "System",
+        "shortcuts": "Keyboard Shortcuts",
+        "focusSearch": "Auto-focus search on load"
+    }
 }
