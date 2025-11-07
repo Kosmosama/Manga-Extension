@@ -1,0 +1,20 @@
+<div class="missing-keys-overlay" aria-live="polite" aria-label="Missing i18n keys">
+    <div class="overlay-header">
+        <strong>i18n Missing Keys</strong>
+        <span class="dev-only">(dev only)</span>
+        <span class="count">{{ count() }}</span>
+
+        <button (click)="clear()">Clear</button>
+        <button (click)="toggleCollapse()">
+            {{ collapsed() ? 'Show' : 'Hide' }}
+        </button>
+    </div>
+
+    @if (!collapsed()) {
+    <ul class="key-list">
+        @for (k of keys(); track k) {
+        <li>{{ k }}</li>
+        }
+    </ul>
+    }
+</div>

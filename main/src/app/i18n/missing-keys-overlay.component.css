@@ -1,0 +1,45 @@
+.missing-keys-overlay {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        'Liberation Mono', 'Courier New', monospace;
+    background: rgba(0, 0, 0, 0.8);
+    color: #ffd54f;
+    max-width: 520px;
+    max-height: 40vh;
+    overflow: auto;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
+    border-radius: 6px;
+    margin: 8px;
+    padding: 8px 12px;
+}
+
+.overlay-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.overlay-header strong {
+    color: #fff;
+}
+
+.dev-only {
+    opacity: 0.7;
+    font-size: 12px;
+}
+
+.count {
+    margin-left: auto;
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+button {
+    margin-left: 8px;
+    font-size: 12px;
+}
+
+.key-list {
+    margin: 0;
+    padding-left: 16px;
+}
