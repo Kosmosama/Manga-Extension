@@ -25,5 +25,14 @@
         "theme.system": "Sistema",
         "shortcuts": "Atajos de teclado",
         "focusSearch": "Auto-enfocar búsqueda al cargar"
+    },
+    "dev": {
+        "missingKeys": {
+            "title": "Claves de traducción faltantes",
+            "none": "No hay claves faltantes",
+            "clear": "Limpiar",
+            "copied": "Copiado al portapapeles",
+            "devModeNotice": "Modo desarrollador: mostrando claves sin traducir."
+        }
     }
 }

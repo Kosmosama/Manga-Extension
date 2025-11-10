@@ -1,4 +1,30 @@
-<select (change)="themeChange($event)">
-    <option value="light" [selected]="theme() === 'light'">Light</option>
-    <option value="dark" [selected]="theme() === 'dark'">Dark</option>
-</select>
+<section>
+    <label>{{ 'settings.theme' | transloco }}</label>
+    <select (change)="themeChange($event)" [value]="theme()">
+        <option value="light">{{ 'settings.theme.light' | transloco }}</option>
+        <option value="dark">{{ 'settings.theme.dark' | transloco }}</option>
+        <option value="system">{{ 'settings.theme.system' | transloco }}</option>
+    </select>
+</section>
+
+<section>
+    <label>{{ 'settings.language' | transloco }}</label>
+    <select (change)="languageChange($event)" [value]="settings.activeLanguage()">
+        @for (lang of settings.languages(); track lang) {
+        <option [value]="lang">{{ lang }}</option>
+        }
+    </select>
+</section>
+
+<section>
+    <label>
+        <input type="checkbox" [checked]="settings.focusSearchInput()" (change)="onToggleFocus($event)" />
+        {{ 'settings.focusSearch' | transloco }}
+    </label>
+</section>
+
+@if (settings.activeLanguage() === 'dev') {
+<div style="margin-top:1rem; font-size: 0.85rem; opacity:0.8;">
+    {{ 'dev.missingKeys.devModeNotice' | transloco }}
+</div>
+}

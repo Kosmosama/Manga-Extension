@@ -6,6 +6,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
     selector: 'app-settings-page',
+    standalone: true,
     imports: [TranslocoPipe],
     templateUrl: './settings-page.component.html',
     styleUrl: './settings-page.component.css'
@@ -19,7 +20,12 @@ export class SettingsPageComponent {
     themeChange(event: Event) {
         const target = event.target as HTMLSelectElement;
         const value = target.value as 'light' | 'dark' | 'system';
-        const theme = value === 'light' ? Theme.Light : value === 'dark' ? Theme.Dark : Theme.System;
+        const theme = value === 'light'
+            ? Theme.Light
+            : value === 'dark'
+                ? Theme.Dark
+                : Theme.System;
+
         this.themeService.setTheme(theme);
         this.theme.set(theme);
     }

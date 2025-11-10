@@ -25,5 +25,14 @@
         "theme.system": "System",
         "shortcuts": "Keyboard Shortcuts",
         "focusSearch": "Auto-focus search on load"
+    },
+    "dev": {
+        "missingKeys": {
+            "title": "Missing translation keys",
+            "none": "No missing keys",
+            "clear": "Clear",
+            "copied": "Copied to clipboard",
+            "devModeNotice": "Developer mode: showing raw keys for untranslated entries."
+        }
     }
 }

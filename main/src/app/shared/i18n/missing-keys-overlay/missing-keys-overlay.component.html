@@ -1,0 +1,22 @@
+<aside class="missing-keys-overlay">
+    <header>
+        <strong>{{ 'dev.missingKeys.title' | transloco }}</strong>
+        <button type="button" (click)="onClear()">{{ 'dev.missingKeys.clear' | transloco }}</button>
+        <button type="button" (click)="onCopy()">
+            {{ copied() ? ('dev.missingKeys.copied' | transloco) : '⧉' }}
+        </button>
+    </header>
+
+    @if (count() === 0) {
+    <p>{{ 'dev.missingKeys.none' | transloco }}</p>
+    } @else {
+    <ul>
+        @for (item of missing(); track item.key + ':' + item.lang) {
+        <li>
+            <code>{{ item.key }}</code>
+            <span class="lang">({{ item.lang }})</span>
+        </li>
+        }
+    </ul>
+    }
+</aside>
