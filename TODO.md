@@ -6,21 +6,21 @@ Note: This list excludes translations/more languages and adding “System” to 
 
 ### Core integration
 
-- [ ] Replace hard‑coded UI strings in Angular templates with Transloco (pipe `{{ 'key' | transloco }}` or structural directive).
+- [ ] Replace hard‑coded UI strings in Angular templates with Transloco (pipe `{{ 'key' | transloco }}` or structural directive).  (Settings page converted; remaining views pending)
 - [x] Establish naming convention for keys (e.g., `manga.card.favorite`, `settings.theme.label`, `tags.list.empty`).
 - [x] Create/enrich base language files:
   - [x] en.json (complete baseline, migrate keys from legacy `translations.js`).
   - [x] es.json (synchronized with English).
 - [x] Implement a language selector component/page (integrate with `SettingsService.changeLanguage()`).
-- [ ] Ensure language selector persists choice and updates live (already partially covered by `SettingsService`, fix initialization issue—see Code Quality).
+- [x] Ensure language selector persists choice and updates live (improved initialization & storage sync in SettingsService).
 - [ ] Fallback behavior: Verify fallbackLang works when a key is missing in a non-default language.
 - [x] Missing key logging:
   - [x] Disable `logMissingKey` in production builds.
-  - [ ] Provide dev-only overlay or console grouping for missing keys.
-
+  - [x] Provide dev-only overlay or console grouping for missing keys (MissingKeysOverlay + CollectMissingHandler).
+  
 ### Expansion workflow
 
-- [ ] Add stub language files (e.g., `de.json`, `fr.json`) with identical structure but empty or auto-copied values.
+- [x] Add stub language files (e.g., `de.json`, `fr.json`) with identical structure but empty or auto-copied values.
 - [ ] Script: Extract all used translation keys (Transloco keys manager or custom scan) and diff against JSON files to detect drift.
 - [ ] Document translation contribution guidelines (key naming, pluralization if needed).
 - [ ] Optional: Introduce simple pluralization patterns or dynamic replacements (e.g., `chapters.read_count` -> “1 chapter” / “{value} chapters”).
@@ -31,13 +31,13 @@ Note: This list excludes translations/more languages and adding “System” to 
 - [ ] Toasts / notifications.
 - [ ] Form placeholders (title, link, image URL).
 - [ ] Empty states (no mangas, no tags).
-- [ ] Settings section labels.
+- [ ] Settings section labels. (Partially localized; full segmentation pending)
 - [ ] Keyboard shortcut help overlay entries.
 
 ### Quality checks
 
 - [ ] Add a pre-build script to validate that no untranslated hard-coded text remains (heuristic scan of templates).
-- [ ] Provide a “Developer language” toggle (shows key names instead of values) to spot incorrect mappings.
+- [ ] Provide a “Developer language” toggle (shows key names instead of values) to spot incorrect mappings. (Dev language exists, toggle not yet implemented)
 
 ---
 
@@ -252,7 +252,7 @@ Note: This list excludes translations/more languages and adding “System” to 
 
 ## 12. Developer / Diagnostic (Optional Future)
 
-- [ ] “Show keys instead of strings” developer mode for translation debugging.
+- [ ] “Show keys instead of strings” developer mode for translation debugging. (Dev language present; toggle mechanism pending)
 - [ ] Theme debug panel listing resolved variables and source of theme (user/system).
 - [ ] Shortcut conflict inspector.
 
@@ -325,7 +325,7 @@ Note: This list excludes translations/more languages and adding “System” to 
 
 ## Acceptance Criteria Examples
 
-- Internationalization: Switching language updates all visible strings without reload; missing key warnings absent in production.
+- Internationalization: Switching language updates all visible strings without reload; missing key overlay appears only in dev.
 - System theme: Selecting “System” changes automatically when OS theme flips.
 - Shortcuts: User can remap “Add Manga” from A to Ctrl+Shift+M; change persists and works after reload.
 - Fallback image: Broken cover shows themed fallback (verified in both light/dark).
