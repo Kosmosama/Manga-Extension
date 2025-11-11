@@ -21,8 +21,8 @@ Note: This list excludes translations/more languages and adding “System” to 
 ### Expansion workflow
 
 - [x] Add stub language files (e.g., `de.json`, `fr.json`) with identical structure but empty or auto-copied values.
-- [ ] Script: Extract all used translation keys (Transloco keys manager or custom scan) and diff against JSON files to detect drift.
-- [ ] Document translation contribution guidelines (key naming, pluralization if needed).
+- [x] Script: Extract all used translation keys (Transloco keys manager or custom scan) and diff against JSON files to detect drift.
+- [x] Document translation contribution guidelines (key naming, pluralization if needed).
 - [ ] Optional: Introduce simple pluralization patterns or dynamic replacements (e.g., `chapters.read_count` -> “1 chapter” / “{value} chapters”).
 
 ### UX localization coverage
@@ -36,8 +36,8 @@ Note: This list excludes translations/more languages and adding “System” to 
 
 ### Quality checks
 
-- [ ] Add a pre-build script to validate that no untranslated hard-coded text remains (heuristic scan of templates).
-- [ ] Provide a “Developer language” toggle (shows key names instead of values) to spot incorrect mappings. (Dev language exists, toggle not yet implemented)
+- [x] Add a pre-build script to validate that no untranslated hard-coded text remains (heuristic scan of templates).
+- [x] Provide a “Developer language” toggle (shows key names instead of values) to spot incorrect mappings. (Dev language exists, toggle component implemented; wire into Settings)
 
 ---
 
@@ -53,8 +53,8 @@ Note: This list excludes translations/more languages and adding “System” to 
 
 ### Visual fidelity
 
-- [ ] Introduce CSS variables for colors; reference them in component styles for simpler theme swapping.
-- [ ] Smooth transitions (short `transition: background-color .15s, color .15s`).
+- [x] Introduce CSS variables for colors; reference them in component styles for simpler theme swapping.
+- [x] Smooth transitions (short `transition: background-color .15s, color .15s`).
 - [ ] Verify fallback images and illustrations adapt (light/dark variants).
 - [ ] Ensure modals and overlays respect theme in high contrast.
 
@@ -252,7 +252,7 @@ Note: This list excludes translations/more languages and adding “System” to 
 
 ## 12. Developer / Diagnostic (Optional Future)
 
-- [ ] “Show keys instead of strings” developer mode for translation debugging. (Dev language present; toggle mechanism pending)
+- [ ] “Show keys instead of strings” developer mode for translation debugging. (Dev language present; toggle mechanism implemented as component; integrate in Settings)
 - [ ] Theme debug panel listing resolved variables and source of theme (user/system).
 - [ ] Shortcut conflict inspector.
 
@@ -299,7 +299,10 @@ Note: This list excludes translations/more languages and adding “System” to 
     "theme.dark": "Dark",
     "theme.system": "System",
     "shortcuts": "Keyboard Shortcuts",
-    "focusSearch": "Auto-focus search on load"
+    "focusSearch": "Auto-focus search on load",
+    "devLanguage": "Developer language (show keys)",
+    "devLanguage.hint": "Turn on to render keys instead of strings for debugging.",
+    "devLanguage.on": "Developer language is ON (keys are shown)."
   }
 }
 ```

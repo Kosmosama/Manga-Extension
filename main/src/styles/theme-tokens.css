@@ -1,0 +1,92 @@
+/* Light (default) */
+:root {
+    --color-bg: #ffffff;
+    --color-surface: #f7f7f9;
+    --color-text: #1f2328;
+    --color-muted: #6b7280;
+    --color-border: #e5e7eb;
+
+    --color-accent: #3b82f6;
+    --color-accent-contrast: #ffffff;
+
+    --color-danger: #ef4444;
+    --color-warning: #f59e0b;
+    --color-success: #10b981;
+
+    --card-bg: #ffffff;
+    --modal-bg: #ffffff;
+    --overlay-bg: rgba(0, 0, 0, 0.45);
+
+    --btn-bg: var(--color-accent);
+    --btn-text: var(--color-accent-contrast);
+    --input-bg: #ffffff;
+    --input-text: var(--color-text);
+    --input-border: var(--color-border);
+
+    --theme-transition: background-color .15s ease, color .15s ease, border-color .15s ease, box-shadow .15s ease;
+}
+
+/* Dark */
+:root[data-theme='dark'] {
+    --color-bg: #0b0f14;
+    --color-surface: #121821;
+    --color-text: #e5e7eb;
+    --color-muted: #9aa3af;
+    --color-border: #2b3440;
+
+    --color-accent: #60a5fa;
+    --color-accent-contrast: #0b0f14;
+
+    --color-danger: #f87171;
+    --color-warning: #fbbf24;
+    --color-success: #34d399;
+
+    --card-bg: #0f141b;
+    --modal-bg: #0f141b;
+    --overlay-bg: rgba(0, 0, 0, 0.6);
+
+    --btn-bg: var(--color-accent);
+    --btn-text: var(--color-accent-contrast);
+    --input-bg: #0b0f14;
+    --input-text: var(--color-text);
+    --input-border: #253041;
+}
+
+/* Global */
+html,
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    transition: var(--theme-transition);
+}
+
+.modal,
+.dialog,
+.overlay {
+    background-color: var(--modal-bg);
+    color: var(--color-text);
+    transition: var(--theme-transition);
+}
+
+.card {
+    background-color: var(--card-bg);
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    transition: var(--theme-transition);
+}
+
+button,
+.btn {
+    background-color: var(--btn-bg);
+    color: var(--btn-text);
+    transition: var(--theme-transition);
+}
+
+input,
+textarea,
+select {
+    background-color: var(--input-bg);
+    color: var(--input-text);
+    border: 1px solid var(--input-border);
+    transition: var(--theme-transition);
+}
