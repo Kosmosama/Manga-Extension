@@ -1,11 +1,11 @@
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
+import { Observable, defer } from 'rxjs';
 import { Theme } from '../../core/interfaces/theme.interface';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class ThemeService {
     private themeSignal = signal<Theme>(Theme.System);
+
     private mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     private mediaListener = (e: MediaQueryListEvent) => {
         if (this.themeSignal() === Theme.System) {
@@ -13,13 +13,13 @@ export class ThemeService {
         }
     };
 
-    get theme(): Theme {
-        return this.themeSignal();
+    constructor() {
+        this.loadTheme$().subscribe();
+        this.listenForExternalStorageChanges();
     }
 
-    constructor() {
-        this.loadTheme();
-        this.listenForExternalStorageChanges();
+    get theme(): Theme {
+        return this.themeSignal();
     }
 
     private get chromeAvailable(): boolean {
@@ -27,27 +27,27 @@ export class ThemeService {
         return typeof anyWin !== 'undefined' && !!anyWin.chrome?.storage?.local;
     }
 
-    private async loadTheme() {
-        const stored = await this.storageGet<'light' | 'dark' | 'system'>('theme', 'system');
-        const parsed = (stored as Theme) ?? Theme.System;
-        this.setTheme(parsed, /*persist*/ false);
-    }
-
-    private storageGet<T = unknown>(key: string, fallback: T): Promise<T> {
-        return new Promise<T>((resolve) => {
+    private storageGet$<T = unknown>(key: string, fallback: T): Observable<T> {
+        return defer(() => new Observable<T>(subscriber => {
             if (this.chromeAvailable) {
                 (window as any).chrome.storage.local.get(key, (result: Record<string, T>) => {
-                    resolve(result?.[key] ?? fallback);
+                    try {
+                        subscriber.next(result?.[key] ?? fallback);
+                    } finally {
+                        subscriber.complete();
+                    }
                 });
             } else {
                 try {
                     const raw = localStorage.getItem(key);
-                    resolve(raw ? JSON.parse(raw) as T : fallback);
+                    subscriber.next(raw ? JSON.parse(raw) as T : fallback);
                 } catch {
-                    resolve(fallback);
+                    subscriber.next(fallback);
+                } finally {
+                    subscriber.complete();
                 }
             }
-        });
+        }));
     }
 
     private storageSet<T = unknown>(key: string, value: T): void {
@@ -57,7 +57,6 @@ export class ThemeService {
         try {
             localStorage.setItem(key, JSON.stringify(value));
         } catch {
-            // ignore
         }
     }
 
@@ -70,21 +69,44 @@ export class ThemeService {
         document.documentElement.setAttribute('data-theme', resolved === Theme.Dark ? 'dark' : 'light');
     }
 
-    setTheme(theme: Theme, persist: boolean = true) {
-        if (this.themeSignal() === Theme.System && theme !== Theme.System) {
-            this.mediaQuery.removeEventListener?.('change', this.mediaListener);
-        }
+    /**
+     * Public API: set theme and persist (Observable side-effect).
+     */
+    setTheme(theme: Theme): Observable<void> {
+        return defer(() => new Observable<void>(subscriber => {
+            if (this.themeSignal() === Theme.System && theme !== Theme.System) {
+                this.mediaQuery.removeEventListener?.('change', this.mediaListener);
+            }
 
-        this.themeSignal.set(theme);
-        this.applyThemeAttribute(theme);
+            this.themeSignal.set(theme);
+            this.applyThemeAttribute(theme);
 
-        if (theme === Theme.System) {
-            this.mediaQuery.addEventListener?.('change', this.mediaListener);
-        }
+            if (theme === Theme.System) {
+                this.mediaQuery.addEventListener?.('change', this.mediaListener);
+            }
 
-        if (persist) {
             this.storageSet('theme', theme);
-        }
+            subscriber.next();
+            subscriber.complete();
+        }));
+    }
+
+    private loadTheme$(): Observable<void> {
+        return defer(() => new Observable<void>(subscriber => {
+            this.storageGet$<'light' | 'dark' | 'system'>('theme', 'system').subscribe(stored => {
+                const parsed = (stored as Theme) ?? Theme.System;
+                if (this.themeSignal() === Theme.System && parsed !== Theme.System) {
+                    this.mediaQuery.removeEventListener?.('change', this.mediaListener);
+                }
+                this.themeSignal.set(parsed);
+                this.applyThemeAttribute(parsed);
+                if (parsed === Theme.System) {
+                    this.mediaQuery.addEventListener?.('change', this.mediaListener);
+                }
+                subscriber.next();
+                subscriber.complete();
+            });
+        }));
     }
 
     private listenForExternalStorageChanges() {
@@ -94,7 +116,14 @@ export class ThemeService {
             if ('theme' in changes) {
                 const next = changes['theme'].newValue as Theme;
                 if (next && next !== this.themeSignal()) {
-                    this.setTheme(next, /*persist*/ false);
+                    if (this.themeSignal() === Theme.System && next !== Theme.System) {
+                        this.mediaQuery.removeEventListener?.('change', this.mediaListener);
+                    }
+                    this.themeSignal.set(next);
+                    this.applyThemeAttribute(next);
+                    if (next === Theme.System) {
+                        this.mediaQuery.addEventListener?.('change', this.mediaListener);
+                    }
                 }
             }
         });

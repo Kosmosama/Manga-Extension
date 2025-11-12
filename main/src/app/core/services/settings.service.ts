@@ -2,9 +2,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { TranslocoService, getBrowserLang } from '@jsverse/transloco';
 import { Observable, defer } from 'rxjs';
 
-@Injectable({
-    providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class SettingsService {
     private translocoService = inject(TranslocoService);
 
@@ -22,7 +20,6 @@ export class SettingsService {
 
         this.initializeLanguage$().subscribe();
         this.initializeFocusSearchInput$().subscribe();
-
         this.listenForExternalStorageChanges();
     }
 
@@ -87,9 +84,7 @@ export class SettingsService {
             this.storageGet$<string | null>(this.STORAGE_KEY, null).subscribe(storedLang => {
                 if (storedLang && this.languages().includes(storedLang)) {
                     this.setLanguage(storedLang);
-                    subscriber.next();
-                    subscriber.complete();
-                    return;
+                    subscriber.next(); subscriber.complete(); return;
                 }
 
                 const browserLang = getBrowserLang() || '';
@@ -98,8 +93,7 @@ export class SettingsService {
                 } else {
                     this.setLanguage(this.translocoService.getDefaultLang());
                 }
-                subscriber.next();
-                subscriber.complete();
+                subscriber.next(); subscriber.complete();
             });
         }));
     }
@@ -108,8 +102,7 @@ export class SettingsService {
         return defer(() => new Observable<void>(subscriber => {
             this.storageGet$<boolean>(this.FOCUS_SEARCH_INPUT_KEY, true).subscribe(value => {
                 this.focusSearchInput.set(value);
-                subscriber.next();
-                subscriber.complete();
+                subscriber.next(); subscriber.complete();
             });
         }));
     }

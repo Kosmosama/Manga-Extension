@@ -1,9 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { Collection } from 'dexie';
-import { from, map, Observable } from 'rxjs';
+import { from, map, Observable, of, switchMap } from 'rxjs';
 import { MangaFilters, Range } from '../interfaces/filters.interface';
 import { Tag } from '../interfaces/tag.interface';
-import { Manga } from '../interfaces/manga.interface';
+import { Manga, MangaState, MangaType } from '../interfaces/manga.interface';
 import { DatabaseService } from './database.service';
 
 @Injectable({ providedIn: 'root' })
@@ -11,23 +11,48 @@ export class MangaService {
     private database = inject(DatabaseService);
 
     /**
-     * Retrieves a manga by its ID.
+     * Generates a manga with defaults. Dexie will assign the real numeric id.
      */
+    private withDefaults(partial: Partial<Manga>): Manga {
+        const nowIso = new Date().toISOString();
+        return {
+            id: 0 as unknown as number,
+            title: partial.title ?? '',
+            updatedAt: partial.updatedAt ?? nowIso,
+            createdAt: partial.createdAt ?? nowIso,
+            link: partial.link,
+            image: partial.image,
+            chapters: partial.chapters ?? 0,
+            isFavorite: partial.isFavorite ?? false,
+            type: partial.type ?? MangaType.Manga,
+            state: partial.state ?? MangaState.None,
+            tags: partial.tags ?? [],
+            resolvedTags: partial.resolvedTags,
+        };
+    }
+
     getMangaById(id: number): Observable<Manga | undefined> {
         return from(this.database.mangas.get(id));
     }
 
-    /**
-     * Retrieves all mangas from the database based on provided filters.
-     */
     getAllMangas(filters: MangaFilters = {}): Observable<Manga[]> {
         let query = this.database.mangas.toCollection();
 
-        if (filters.search) query = this.applySearchFilter(query, filters.search);
-        if (filters.includeTags || filters.excludeTags) query = this.applyTagFilters(query, filters.includeTags, filters.excludeTags);
-        if (filters.chapterRange) query = this.applyRangeFilter(query, filters.chapterRange, 'chapters');
-        if (filters.lastSeenRange) query = this.applyRangeFilter(query, filters.lastSeenRange, 'updatedAt');
-        if (filters.addedRange) query = this.applyRangeFilter(query, filters.addedRange, 'createdAt');
+        if (filters.search) {
+            query = this.applySearchFilter(query, filters.search);
+        }
+        if (filters.includeTags || filters.excludeTags) {
+            query = this.applyTagFilters(query, filters.includeTags, filters.excludeTags);
+        }
+        if (filters.chapterRange) {
+            query = this.applyNumericRangeFilter(query, filters.chapterRange, 'chapters');
+        }
+        if (filters.lastSeenRange) {
+            query = this.applyDateRangeFilter(query, filters.lastSeenRange, 'updatedAt');
+        }
+        if (filters.addedRange) {
+            query = this.applyDateRangeFilter(query, filters.addedRange, 'createdAt');
+        }
 
         if (filters.sortBy) {
             query = this.database.mangas.orderBy(filters.sortBy);
@@ -35,154 +60,253 @@ export class MangaService {
         }
 
         const limit = Math.max(filters.limit || 1, 1);
-        const resultPromise = filters.random ? this.getRandomMangas(query, limit) : query.toArray();
+        const resultPromise = filters.random
+            ? this.getRandomMangas(query, limit)
+            : query.toArray();
 
         return from(resultPromise.then(mangas => this.resolveTagsForMangas(mangas)));
     }
 
     /**
-     * Adds a new manga to the database.
+     * Simple list usage for main page (title search + sort).
      */
+    listForMainPage(search: string, order: 'asc' | 'desc' = 'asc'): Observable<Manga[]> {
+        return this.getAllMangas({
+            search,
+            sortBy: 'title',
+            order
+        });
+    }
+
     addManga(manga: Manga): Observable<number> {
-        return from(this.database.mangas.add(manga));
+        const entity = this.withDefaults(manga);
+        return from(this.database.mangas.add(entity));
     }
 
-    /**
-     * Updates an existing manga in the database.
-     */
+    addMangaMinimal(input: {
+        title: string;
+        link?: string;
+        image?: string;
+        tags?: number[];
+        chapters?: number;
+    }): Observable<number> {
+        const entity = this.withDefaults({
+            title: input.title,
+            link: input.link,
+            image: input.image,
+            tags: input.tags ?? [],
+            chapters: input.chapters ?? 0
+        });
+        return from(this.database.mangas.add(entity));
+    }
+
     updateManga(id: number, changes: Partial<Manga>): Observable<number> {
-        return from(this.database.mangas.update(id, changes));
+        return from(this.database.mangas.update(id, {
+            ...changes,
+            updatedAt: new Date().toISOString()
+        }));
     }
 
-    /**
-     * Deletes a manga from the database.
-     */
     deleteManga(id: number): Observable<void> {
-        return from(this.database.mangas.delete(id));
+        return from(this.database.mangas.delete(id)).pipe(map(() => { }));
     }
 
-    /**
-     * Toggles the favorite status of a manga.
-     */
-    toggleFavorite(mangaId: number, actualFavoriteStatus: boolean | undefined): Observable<void> {
-        return from(this.database.mangas.update(mangaId, { isFavorite: !actualFavoriteStatus })).pipe(map(() => { }));
+    toggleFavorite(mangaId: number, actualFavoriteStatus?: boolean): Observable<void> {
+        if (typeof actualFavoriteStatus === 'boolean') {
+            return from(this.database.mangas.update(mangaId, {
+                isFavorite: !actualFavoriteStatus,
+                updatedAt: new Date().toISOString()
+            })).pipe(map(() => { }));
+        }
+        return this.getMangaById(mangaId).pipe(
+            switchMap(m => {
+                if (!m) return of(void 0);
+                return from(this.database.mangas.update(mangaId, {
+                    isFavorite: !m.isFavorite,
+                    updatedAt: new Date().toISOString()
+                })).pipe(map(() => { }));
+            })
+        );
     }
 
-    /**
-     * Updates the chapter count of a manga and modifies the updatedAt timestamp.
-     */
     updateChapters(mangaId: number, chapters: number): Observable<void> {
-        return from(this.database.mangas.update(mangaId, { chapters, updatedAt: String(Date.now()) })).pipe(map(() => { }));
+        return from(this.database.mangas.update(mangaId, {
+            chapters,
+            updatedAt: new Date().toISOString()
+        })).pipe(map(() => { }));
     }
 
-    /**
-     * Adds tags to a manga after validating them.
-     */
+    incrementChapters(mangaId: number): Observable<void> {
+        return this.getMangaById(mangaId).pipe(
+            switchMap(m => {
+                if (!m) return of(void 0);
+                return this.updateChapters(mangaId, (m.chapters ?? 0) + 1);
+            })
+        );
+    }
+
+    decrementChapters(mangaId: number): Observable<void> {
+        return this.getMangaById(mangaId).pipe(
+            switchMap(m => {
+                if (!m) return of(void 0);
+                return this.updateChapters(mangaId, Math.max((m.chapters ?? 0) - 1, 0));
+            })
+        );
+    }
+
     addTagToManga(mangaId: number, tagIds: number[]): Observable<number> {
-        return from(this.database.mangas.get(mangaId).then(async manga => {
+        const op = this.database.mangas.get(mangaId).then(async manga => {
             if (!manga) throw new Error('Manga not found');
 
-            const validTags = await Promise.all(tagIds.map(async id => (await this.tagExists(id)) ? id : null));
-            const updatedTags = [...new Set([...(manga.tags ?? []), ...validTags.filter((tag): tag is number => tag !== null)])];
-
-            return this.database.mangas.update(mangaId, { tags: updatedTags });
-        }));
+            const validTags = await Promise.all(
+                tagIds.map(async id => (await this.tagExists(id)) ? id : null)
+            );
+            const updatedTags = [
+                ...new Set([
+                    ...(manga.tags ?? []),
+                    ...validTags.filter((t): t is number => t !== null)
+                ])
+            ];
+            return this.database.mangas.update(mangaId, {
+                tags: updatedTags,
+                updatedAt: new Date().toISOString()
+            });
+        });
+        return from(op);
     }
 
-    /**
-     * Removes a specific tag from a manga.
-     */
     removeTagFromManga(mangaId: number, tagId: number): Observable<number> {
-        return from(this.database.mangas.get(mangaId).then(manga => {
+        const op = this.database.mangas.get(mangaId).then(manga => {
             if (!manga) throw new Error('Manga not found');
-
-            return this.database.mangas.update(mangaId, { tags: (manga.tags ?? []).filter(id => id !== tagId) });
-        }));
+            const next = (manga.tags ?? []).filter(id => id !== tagId);
+            return this.database.mangas.update(mangaId, {
+                tags: next,
+                updatedAt: new Date().toISOString()
+            });
+        });
+        return from(op);
     }
 
-    /**
-     * Removes a tag from all mangas in the database.
-     */
-    removeTagFromAllMangas(tagId: number): Promise<void> {
-        return this.database.mangas
+    removeTagFromAllMangas(tagId: number): Observable<void> {
+        const op = this.database.mangas
             .where('tags')
             .equals(tagId)
-            .modify(manga => { manga.tags = manga.tags?.filter(t => t !== tagId); })
-            .then(() => { });
+            .modify(m => { m.tags = m.tags?.filter(t => t !== tagId); });
+
+        return from(op).pipe(map(() => { }));
     }
 
-    /**
-     * Checks if a tag exists in the database, removes it from mangas if not.
-     */
+    updateMangaLinks(oldLink: string, newLink: string): Observable<void> {
+        const op = this.database.mangas.toArray().then(mangas => {
+            const regex = new RegExp(oldLink, 'g');
+            const updates = mangas
+                .filter(m => m.link && regex.test(m.link))
+                .map(m =>
+                    this.database.mangas.update(m.id, {
+                        link: m.link?.replace(regex, newLink),
+                        updatedAt: new Date().toISOString()
+                    })
+                );
+            return Promise.all(updates).then(() => { });
+        });
+        return from(op);
+    }
+
+    isTitleTaken(title: string, excludeId?: number): Observable<boolean> {
+        const needle = title.trim().toLowerCase();
+        return from(this.database.mangas.toArray()).pipe(
+            map(all => {
+                const found = all.find(m => m.title.trim().toLowerCase() === needle);
+                if (!found) return false;
+                if (excludeId != null && found.id === excludeId) return false;
+                return true;
+            })
+        );
+    }
+
     private async tagExists(tagId: number): Promise<boolean> {
         const tag = await this.database.tags.get(tagId);
-        if (!tag) await this.removeTagFromAllMangas(tagId);
+        if (!tag) {
+            await this.database.mangas
+                .where('tags')
+                .equals(tagId)
+                .modify(m => { m.tags = m.tags?.filter(t => t !== tagId); });
+        }
         return !!tag;
     }
 
-    /**
-     * Resolves tags for each manga by fetching tag details from the database.
-     */
     private resolveTagsForMangas(mangas: Manga[]): Promise<Manga[]> {
         const tagIds = [...new Set(mangas.flatMap(m => m.tags || []))];
         return this.database.tags.bulkGet(tagIds).then(tags => {
             const tagMap = new Map(tags.filter(Boolean).map(t => [t!.id, t!]));
             return mangas.map(m => ({
                 ...m,
-                resolvedTags: (m.tags || []).map(tagId => tagMap.get(tagId)).filter((tag): tag is Tag => tag !== undefined)
+                resolvedTags: (m.tags || [])
+                    .map(tid => tagMap.get(tid))
+                    .filter((t): t is Tag => t !== undefined)
             }));
         });
     }
 
-    /**
-     * Filters mangas based on search criteria.
-     */
-    private applySearchFilter(query: Collection<Manga, number, Manga>, search: string): Collection<Manga, number, Manga> {
-        return query.filter(manga => manga.title.toLowerCase().includes(search.toLowerCase()));
+    private applySearchFilter(
+        query: Collection<Manga, number, Manga>,
+        search: string
+    ): Collection<Manga, number, Manga> {
+        const needle = search.toLowerCase();
+        return query.filter(m => m.title.toLowerCase().includes(needle));
     }
 
-    /**
-     * Filters mangas based on included and excluded tags.
-     */
-    private applyTagFilters(query: Collection<Manga, number, Manga>, includeTags: number[] = [], excludeTags: number[] = []): Collection<Manga, number, Manga> {
+    private applyTagFilters(
+        query: Collection<Manga, number, Manga>,
+        includeTags: number[] = [],
+        excludeTags: number[] = []
+    ): Collection<Manga, number, Manga> {
         return query.filter(manga => {
             const tagSet = new Set(manga.tags ?? []);
-            return includeTags.every(tagSet.has.bind(tagSet)) && !excludeTags.some(tagSet.has.bind(tagSet));
+            return includeTags.every(tagSet.has.bind(tagSet)) &&
+                !excludeTags.some(tagSet.has.bind(tagSet));
         });
     }
 
     /**
-     * Filters mangas based on a numeric or date range.
+     * Numeric range filter (chapters).
      */
-    private applyRangeFilter<T extends number | Date>(query: Collection<Manga, number, Manga>, range: Range<T>, field: keyof Manga): Collection<Manga, number, Manga> {
-        return query.filter(manga => {
-            const value = manga[field];
+    private applyNumericRangeFilter(
+        query: Collection<Manga, number, Manga>,
+        range: Range<number>,
+        field: 'chapters'
+    ): Collection<Manga, number, Manga> {
+        return query.filter(m => {
+            const value = m[field];
             return value !== undefined && value >= range.min && value <= range.max;
         });
     }
 
     /**
-     * Retrieves a random selection of mangas from the query.
+     * Date range filter for ISO string fields (updatedAt / createdAt).
+     * Converts stored ISO to timestamp and compares against Date range.
      */
-    private async getRandomMangas(query: Collection<Manga, number, Manga>, limit: number): Promise<Manga[]> {
-        const mangas = await query.toArray();
-        if (!mangas.length) return [];
-
-        return mangas.sort(() => Math.random() - 0.5).slice(0, limit);
+    private applyDateRangeFilter(
+        query: Collection<Manga, number, Manga>,
+        range: Range<Date>,
+        field: 'updatedAt' | 'createdAt'
+    ): Collection<Manga, number, Manga> {
+        const min = range.min.getTime();
+        const max = range.max.getTime();
+        return query.filter(manga => {
+            const iso = manga[field];
+            if (!iso) return false;
+            const ts = Date.parse(iso);
+            return !isNaN(ts) && ts >= min && ts <= max;
+        });
     }
 
-    /**
-     * Updates manga links from the old link to the new link.
-     */
-    updateMangaLinks(oldLink: string, newLink: string): Observable<void> {
-        return from(this.database.mangas.toArray().then(mangas => {
-            const regex = new RegExp(oldLink, 'g');
-            const updatePromises = mangas
-                .filter(manga => manga.link && regex.test(manga.link))
-                .map(manga => {
-                    return this.database.mangas.update(manga.id, { link: manga.link?.replace(regex, newLink) });
-                });
-            return Promise.all(updatePromises).then(() => { });
-        }));
+    private async getRandomMangas(
+        query: Collection<Manga, number, Manga>,
+        limit: number = 1
+    ): Promise<Manga[]> {
+        const mangas = await query.toArray();
+        if (!mangas.length) return [];
+        return mangas.sort(() => Math.random() - 0.5).slice(0, limit);
     }
 }
