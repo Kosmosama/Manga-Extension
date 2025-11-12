@@ -1,19 +1,18 @@
 <div class="tag-page">
     @if (tagList().length) {
-        @for (tag of tagList(); track tag.id) {
-        <tag-card [tag]="tag" (deleted)="handleTagDeletion($event)"></tag-card>
-        }
+    @for (tag of tagList(); track tag.id) {
+    <tag-card [tag]="tag" (deleted)="handleTagDeletion($event)"></tag-card>
     }
-    @else {
-        <div>
-            No events found.
-        </div>
+    } @else {
+    <div>
+        {{ 'tags.list.empty' | transloco }}
+    </div>
     }
 </div>
 
 <footer>
     <button (click)="openForm()">
-        Add tag
+        {{ 'tags.actions.add' | transloco }}
     </button>
 </footer>
 
