@@ -1,5 +1,5 @@
 <section>
-    <label>{{ 'settings.theme' | transloco }}</label>
+    <label>{{ 'settings.themeLabel' | transloco }}</label>
     <select (change)="themeChange($event)" [value]="theme()">
         <option value="light">{{ 'settings.theme.light' | transloco }}</option>
         <option value="dark">{{ 'settings.theme.dark' | transloco }}</option>
@@ -8,7 +8,7 @@
 </section>
 
 <section>
-    <label>{{ 'settings.language' | transloco }}</label>
+    <label>{{ 'settings.languageLabel' | transloco }}</label>
     <select (change)="languageChange($event)" [value]="settings.activeLanguage()">
         @for (lang of settings.languages(); track lang) {
         <option [value]="lang">{{ lang }}</option>
