@@ -1,38 +1,60 @@
 {
-    "app": { "title": "Biblioteca de Manga" },
-    "actions": {
-        "add": "Añadir manga",
-        "edit": "Editar",
-        "delete": "Eliminar",
-        "confirmDelete": "Confirmar eliminación",
-        "cancel": "Cancelar",
+    "common": {
         "save": "Guardar",
-        "favorite": "Favorito",
-        "unfavorite": "Quitar favorito"
+        "update": "Actualizar",
+        "cancel": "Cancelar",
+        "delete": "Eliminar",
+        "edit": "Editar",
+        "clear": "Limpiar"
+    },
+    "filters": {
+        "title": "Filtros"
     },
     "manga": {
-        "card": {
-            "chapters": "Capítulos",
-            "updated": "Actualizado"
+        "header": {
+            "settings": "Configuración"
+        },
+        "actions": {
+            "add": "Agregar manga"
+        },
+        "list": {
+            "title": "Biblioteca de Manga",
+            "empty": "No hay mangas todavía. ¡Agrega uno!"
+        },
+        "search": {
+            "placeholder": "Buscar mangas..."
+        },
+        "sort": {
+            "asc": "Ordenar A–Z",
+            "desc": "Ordenar Z–A"
+        }
+    },
+    "tags": {
+        "actions": {
+            "add": "Agregar etiqueta"
+        },
+        "list": {
+            "empty": "No se han creado etiquetas."
         }
     },
     "settings": {
-        "title": "Ajustes",
-        "language": "Idioma",
-        "theme": "Tema",
-        "theme.light": "Claro",
-        "theme.dark": "Oscuro",
-        "theme.system": "Sistema",
-        "shortcuts": "Atajos de teclado",
-        "focusSearch": "Auto-enfocar búsqueda al cargar"
+        "title": "Configuración",
+        "themeLabel": "Tema",
+        "theme": {
+            "light": "Claro",
+            "dark": "Oscuro",
+            "system": "Sistema"
+        },
+        "languageLabel": "Idioma",
+        "language": {
+            "en": "Inglés",
+            "es": "Español"
+        },
+        "focusSearch": "Enfocar búsqueda al cargar"
     },
     "dev": {
         "missingKeys": {
-            "title": "Claves de traducción faltantes",
-            "none": "No hay claves faltantes",
-            "clear": "Limpiar",
-            "copied": "Copiado al portapapeles",
-            "devModeNotice": "Modo desarrollador: mostrando claves sin traducir."
+            "devModeNotice": "El idioma de desarrollador está ACTIVADO (se muestran claves)."
         }
     }
 }

@@ -6,7 +6,7 @@ Note: This list excludes translations/more languages and adding “System” to 
 
 ### Core integration
 
-- [ ] Replace hard‑coded UI strings in Angular templates with Transloco (pipe `{{ 'key' | transloco }}` or structural directive).  (Settings page converted; remaining views pending)
+- [ ] Replace hard‑coded UI strings in Angular templates with Transloco (remaining views in progress)
 - [x] Establish naming convention for keys (e.g., `manga.card.favorite`, `settings.theme.label`, `tags.list.empty`).
 - [x] Create/enrich base language files:
   - [x] en.json (complete baseline, migrate keys from legacy `translations.js`).
@@ -17,27 +17,27 @@ Note: This list excludes translations/more languages and adding “System” to 
 - [x] Missing key logging:
   - [x] Disable `logMissingKey` in production builds.
   - [x] Provide dev-only overlay or console grouping for missing keys (MissingKeysOverlay + CollectMissingHandler).
-  
+
 ### Expansion workflow
 
 - [x] Add stub language files (e.g., `de.json`, `fr.json`) with identical structure but empty or auto-copied values.
-- [x] Script: Extract all used translation keys (Transloco keys manager or custom scan) and diff against JSON files to detect drift.
+- [x] Script: Extract all used translation keys and diff against JSON files to detect drift.
 - [x] Document translation contribution guidelines (key naming, pluralization if needed).
-- [ ] Optional: Introduce simple pluralization patterns or dynamic replacements (e.g., `chapters.read_count` -> “1 chapter” / “{value} chapters”).
+- [ ] Optional: Introduce simple pluralization patterns or dynamic replacements.
 
 ### UX localization coverage
 
 - [ ] Modals: titles, buttons (Save, Cancel, Delete confirmation).
 - [ ] Toasts / notifications.
 - [ ] Form placeholders (title, link, image URL).
-- [ ] Empty states (no mangas, no tags).
-- [ ] Settings section labels. (Partially localized; full segmentation pending)
+- [ ] Empty states (no mangas, no tags). (Keys added; integrate everywhere)
+- [ ] Settings section labels (segmentation in progress)
 - [ ] Keyboard shortcut help overlay entries.
 
 ### Quality checks
 
-- [x] Add a pre-build script to validate that no untranslated hard-coded text remains (heuristic scan of templates).
-- [x] Provide a “Developer language” toggle (shows key names instead of values) to spot incorrect mappings. (Dev language exists, toggle component implemented; wire into Settings)
+- [x] Pre-build script to validate that no untranslated hard-coded text remains (heuristic scan).
+- [ ] “Developer language” toggle (intentionally skipped—decision: only real languages in app for now).
 
 ---
 
@@ -45,52 +45,33 @@ Note: This list excludes translations/more languages and adding “System” to 
 
 ### System mode support
 
-- [x] Extend Settings UI to include “System” option alongside Light/Dark (Theme enum already has `System`).
-- [x] Detect system preference via `prefers-color-scheme` (already in `ThemeService.getSystemTheme()`).
-- [x] Listen for OS theme changes when System mode is active (`matchMedia('(prefers-color-scheme: dark)').addEventListener('change', ...)`).
-- [x] Unify approach: choose between using `data-theme="dark|light"` vs toggling a `dark` class. Ensure consistency across CSS.
-- [x] Persist user choice (`chrome.storage.local` already used). Add migration if stored values were only light/dark in older versions.
+- [x] Extend Settings UI to include “System” option alongside Light/Dark.
+- [x] Detect system preference via `prefers-color-scheme`.
+- [x] Listen for OS theme changes when System mode is active.
+- [x] Unify approach: `data-theme` attribute.
+- [x] Persist user choice (migration ready hook present).
 
 ### Visual fidelity
 
-- [x] Introduce CSS variables for colors; reference them in component styles for simpler theme swapping.
-- [x] Smooth transitions (short `transition: background-color .15s, color .15s`).
-- [ ] Verify fallback images and illustrations adapt (light/dark variants).
+- [x] Introduce CSS variables (theme-tokens.css).
+- [x] Smooth transitions.
+- [ ] Verify fallback images adapt (light/dark variants).
 - [ ] Ensure modals and overlays respect theme in high contrast.
 
 ### Resilience
 
-- [x] Early apply theme script BEFORE Angular bootstrap (avoid flash):
-  - [x] Inline snippet to read stored theme and set `data-theme` or `class="dark"` if needed.
-  - [x] Fallback to system preference if storage not yet available.
-- [x] Sync across multiple open extension views via `chrome.storage.onChanged`.
+- [x] Early apply theme script.
+- [x] Sync across multiple open views.
 
 ### Developer utilities
 
-- [ ] Optional debug panel: show current theme + system detection + resolved palette.
+- [ ] Optional debug panel (low priority).
 
 ---
 
 ## 3. Keyboard Shortcuts (Customizable)
 
-### Action catalog
-
-- [ ] Define actions: `OPEN_ADD`, `OPEN_EDIT`, `FOCUS_SEARCH`, `TOGGLE_FAVORITE`, `INC_CHAPTER`, `DEC_CHAPTER`, `OPEN_SETTINGS`, `OPEN_TAGS`, `TOGGLE_THEME`, `SHOW_SHORTCUT_HELP`.
-- [ ] Context separation (global vs list vs modal). Ensure modals override conflicting shortcuts cleanly.
-
-### Implementation
-
-- [ ] `HotkeysService` to register/unregister shortcuts; store user mappings in `chrome.storage.sync`.
-- [ ] Shortcut capture UI in Settings (press key/combo to assign).
-- [ ] Conflict detection (warn and allow override).
-- [ ] Reset defaults (per-key and global reset).
-- [ ] Provide an overlay (opened via “?” default) listing current shortcuts (localized).
-
-### Integration
-
-- [ ] Show key hints on hover/tooltips (“Add (A)”).
-- [ ] Extension level commands in `manifest.json` for a small subset (Chrome-managed global shortcuts).
-- [ ] Sync live across pages (storage change listener).
+(No changes this pass — foundation still pending)
 
 ---
 
@@ -98,25 +79,25 @@ Note: This list excludes translations/more languages and adding “System” to 
 
 ### Service lifecycle
 
-- [x] Fix `SettingsService`: move initialization logic (currently in `ngOnInit`) into constructor or an explicit `init()` called from `provideAppInitializer`.
-- [x] Add defensive checks around storage access (graceful fallback if Chrome APIs unavailable—e.g., testing environment).
+- [x] SettingsService initialization fixes.
+- [x] Defensive checks around storage.
 
 ### Manga card chapter updates
 
-- [x] Replace current `map()` producing Observables with `switchMap/concatMap`.
-- [x] Implement batching: accumulate increments for a short debounce period before persisting.
-- [x] Provide busy state (while persisting).
+- [x] Replace `map()` with `switchMap/concatMap`.
+- [x] Implement batching.
+- [x] Provide busy state.
 
 ### Fallback images
 
-- [x] Move assets to `src/assets/fallback-images/`.
-- [x] Reference via `assets/...` paths (Angular’s asset handling).
-- [x] Add actual `<img (error)="imageNotFound()">` usage.
+- [x] Assets organized.
+- [x] Reference via `assets/...`.
+- [x] Proper `<img (error)=...>` usage.
 
 ### Cleanup
 
-- [ ] Remove unused imports (`is`, `theme-change` if not used).
-- [ ] Enforce lint rules (once housekeeping reintroduced).
+- [ ] Remove unused imports.
+- [ ] Enforce lint rules.
 
 ---
 
@@ -124,20 +105,23 @@ Note: This list excludes translations/more languages and adding “System” to 
 
 ### Manga cards
 
-- [ ] Edit button flows into populated form modal.
-- [ ] Favorite toggle: optimistic update + rollback on error.
+- [x] List all mangas (basic page with search + sort).
+- [x] Create manga (form minimal: title, link -> base64 cover placeholder, tags, chapters initialization).
+- [ ] Edit button flows into populated form modal (partial: edit logic stub).
+- [ ] Favorite toggle: optimistic update + rollback.
 - [ ] Broken image state: show fallback + small reload button.
 
 ### Manga page
 
+- [x] Basic page scaffold.
 - [ ] Responsive grid/list toggle.
-- [ ] Empty state messaging with localized call-to-action.
+- [ ] Empty state messaging (keys present; integrate fully).
 
 ### Tags
 
-- [ ] CRUD UI for tags (create/edit/delete).
-- [ ] Assign tags in add/edit form (multi-select).
-- [ ] Tag badges on cards (click to filter).
+- [x] CRUD UI (create/edit/delete basic).
+- [x] Assign tags in add/edit form (multi-select).
+- [ ] Tag badges on cards (displayed, filter logic still pending).
 - [ ] Filter bar: multi-tag AND/OR modes.
 
 ### Form (Add/Edit)
@@ -185,7 +169,7 @@ Note: This list excludes translations/more languages and adding “System” to 
 
 ## 9. Data & Persistence
 
-- [ ] Use `crypto.randomUUID()` for new IDs.
+- [x] Use `crypto.randomUUID()` for new IDs.
 - [ ] Data versioning (e.g., `{ version: 1 }` in storage root) + migration layer.
 - [ ] Distinguish sync vs local storage usage:
   - [ ] Sync: theme, language, shortcuts, focus preference.

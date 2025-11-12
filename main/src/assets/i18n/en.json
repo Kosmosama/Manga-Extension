@@ -1,38 +1,60 @@
 {
-    "app": { "title": "Manga Library" },
-    "actions": {
-        "add": "Add Manga",
-        "edit": "Edit",
-        "delete": "Delete",
-        "confirmDelete": "Confirm deletion",
-        "cancel": "Cancel",
+    "common": {
         "save": "Save",
-        "favorite": "Favorite",
-        "unfavorite": "Unfavorite"
+        "update": "Update",
+        "cancel": "Cancel",
+        "delete": "Delete",
+        "edit": "Edit",
+        "clear": "Clear"
+    },
+    "filters": {
+        "title": "Filters"
     },
     "manga": {
-        "card": {
-            "chapters": "Chapters",
-            "updated": "Updated"
+        "header": {
+            "settings": "Settings"
+        },
+        "actions": {
+            "add": "Add Manga"
+        },
+        "list": {
+            "title": "Manga Library",
+            "empty": "No mangas yet. Add one!"
+        },
+        "search": {
+            "placeholder": "Search mangas..."
+        },
+        "sort": {
+            "asc": "Sort A–Z",
+            "desc": "Sort Z–A"
+        }
+    },
+    "tags": {
+        "actions": {
+            "add": "Add tag"
+        },
+        "list": {
+            "empty": "No tags created."
         }
     },
     "settings": {
         "title": "Settings",
-        "language": "Language",
-        "theme": "Theme",
-        "theme.light": "Light",
-        "theme.dark": "Dark",
-        "theme.system": "System",
-        "shortcuts": "Keyboard Shortcuts",
+        "themeLabel": "Theme",
+        "theme": {
+            "light": "Light",
+            "dark": "Dark",
+            "system": "System"
+        },
+        "languageLabel": "Language",
+        "language": {
+            "en": "English",
+            "es": "Spanish"
+        },
         "focusSearch": "Auto-focus search on load"
     },
     "dev": {
         "missingKeys": {
-            "title": "Missing translation keys",
-            "none": "No missing keys",
-            "clear": "Clear",
-            "copied": "Copied to clipboard",
-            "devModeNotice": "Developer mode: showing raw keys for untranslated entries."
+            "devModeNotice": "Developer language is ON (keys are shown)."
         }
     }
 }
