@@ -1,57 +1,69 @@
-<form [formGroup]="mangaForm" (ngSubmit)="submit()">
-    <div class="form-group">
-      <label for="title">Title:</label>
-      <input id="title" formControlName="title" required>
+<form [formGroup]="mangaForm" (ngSubmit)="submit()" novalidate>
+  <div class="form-group">
+    <label for="title">{{ 'form.title.label' | transloco }}</label>
+    <input id="title" formControlName="title" [placeholder]="'form.title.placeholder' | transloco" required
+      autocomplete="off" />
+    @if (mangaForm.get('title')?.touched && mangaForm.get('title')?.invalid) {
+    <div class="error">
+      @if (mangaForm.get('title')?.errors?.['required']) {
+      {{ 'errors.title.required' | transloco }}
+      }
+      @if (mangaForm.get('title')?.errors?.['minlength']) {
+      {{ 'errors.title.minLength' | transloco }}
+      }
     </div>
-    @if (mangaForm.get('title')?.invalid && mangaForm.get('title')?.touched) {
-      <div>Title is required (min 3 characters)</div>
     }
-  
-    <div class="form-group">
-      <label for="link">Link:</label>
-      <input id="link" formControlName="link">
+  </div>
+
+  <div class="form-group">
+    <label for="link">{{ 'form.link.label' | transloco }}</label>
+    <input id="link" formControlName="link" [placeholder]="'form.link.placeholder' | transloco" autocomplete="off" />
+  </div>
+
+  <div class="form-group">
+    <label for="image">{{ 'form.image.label' | transloco }}</label>
+    <input id="image" formControlName="image" [placeholder]="'form.image.placeholder' | transloco" autocomplete="off" />
+  </div>
+
+  <div class="form-group">
+    <label for="chapters">{{ 'form.chapters.label' | transloco }}</label>
+    <input id="chapters" type="number" formControlName="chapters" required min="0" />
+    @if (mangaForm.get('chapters')?.touched && mangaForm.get('chapters')?.invalid) {
+    <div class="error">
+      {{ 'errors.chapters.invalid' | transloco }}
     </div>
-  
-    <div class="form-group">
-      <label for="image">Image URL:</label>
-      <input id="image" formControlName="image">
-    </div>
-  
-    <div class="form-group">
-      <label for="chapters">Chapters:</label>
-      <input id="chapters" type="number" formControlName="chapters" required>
-    </div>
-    @if (mangaForm.get('chapters')?.invalid && mangaForm.get('chapters')?.touched) {
-      <div>Must be a non-negative number</div>
     }
-  
-    <div class="form-group favorite-container">
-      <label for="isFavorite">Favorite:</label>
-      <input type="checkbox" formControlName="isFavorite">
-    </div>
-  
-    <div class="form-group">
-      <label for="type">Type:</label>
-      <select id="type" formControlName="type">
-        <option value="manga">Manga</option>
-        <option value="manhwa">Manhwa</option>
-        <option value="manhua">Manhua</option>
-        </select>
-    </div>
-  
-    <div class="form-group">
-      <label for="state">State:</label>
-      <select id="state" formControlName="state">
-        <option value="reading">Reading</option>
-        <option value="completed">Completed</option>
-        <option value="on-hold">On-Hold</option>
-        </select>
-    </div>
-  
-    <div class="form-group">
-      <label for="tags">Tags:</label>
-      <input id="tags" formControlName="tags">
-    </div>
-  
-    <button type="submit" [disabled]="mangaForm.invalid">Submit</button>
-  </form>
+  </div>
+
+  <div class="form-group favorite-container">
+    <label for="isFavorite">{{ 'form.favorite.label' | transloco }}</label>
+    <input id="isFavorite" type="checkbox" formControlName="isFavorite" />
+  </div>
+
+  <div class="form-group">
+    <label for="type">{{ 'form.type.label' | transloco }}</label>
+    <select id="type" formControlName="type">
+      <option value="manga">Manga</option>
+      <option value="manhwa">Manhwa</option>
+      <option value="manhua">Manhua</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="state">{{ 'form.state.label' | transloco }}</label>
+    <select id="state" formControlName="state">
+      <option value="reading">Reading</option>
+      <option value="completed">Completed</option>
+      <option value="on-hold">On-Hold</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="tags">{{ 'form.tags.label' | transloco }}</label>
+    <input id="tags" formControlName="tags" />
+  </div>
+
+  <button type="submit" [disabled]="mangaForm.invalid">
+    {{ 'common.save' | transloco }}
+  </button>
+</form>

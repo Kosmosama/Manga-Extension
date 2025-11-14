@@ -1,6 +1,7 @@
 <div class="manga-card">
-    <img [src]="isImageValid() ? manga().image : fallbackImage()" alt="{{ manga().title }}" (error)="imageNotFound()"
-        loading="lazy" class="manga-cover" />
+    <img [src]="isImageValid() ? manga().image : fallbackImage()"
+        [attr.alt]="isImageValid() ? manga().title : ('accessibility.image.altFallback' | transloco)"
+        (error)="imageNotFound()" loading="lazy" class="manga-cover" />
 
     <div class="manga-info">
         <h2>{{ manga().title }}</h2>
@@ -8,14 +9,25 @@
         <p>{{ 'manga.card.updated' | transloco }}: {{ manga().updatedAt }}</p>
 
         <div class="actions">
-            <button (click)="updateChapters(-1)" [disabled]="saving() || manga().chapters <= 0">-</button>
-            <button (click)="updateChapters(1)" [disabled]="saving()">+</button>
-            <button (click)="toggleFavorite()" [class.favorited]="manga().isFavorite">
+            <button (click)="updateChapters(-1)" [disabled]="saving() || manga().chapters <= 0"
+                aria-label="- {{ 'manga.card.chapters' | transloco }}">
+                -
+            </button>
+            <button (click)="updateChapters(1)" [disabled]="saving()"
+                aria-label="+ {{ 'manga.card.chapters' | transloco }}">
+                +
+            </button>
+            <button (click)="toggleFavorite()" [class.favorited]="manga().isFavorite"
+                [attr.aria-label]="manga().isFavorite ? ('actions.unfavorite' | transloco) : ('actions.favorite' | transloco)">
                 {{ manga().isFavorite ? '★' : '☆' }}
             </button>
-            <button (click)="deleteManga()">🗑️</button>
+            <button (click)="deleteManga()" aria-label="{{ 'common.delete' | transloco }}">
+                🗑️
+            </button>
         </div>
 
-        <button (click)="editManga()">{{ 'actions.edit' | transloco }}</button>
+        <button (click)="editManga()" aria-label="{{ 'common.edit' | transloco }}">
+            {{ 'common.edit' | transloco }}
+        </button>
     </div>
 </div>

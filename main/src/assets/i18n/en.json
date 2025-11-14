@@ -7,6 +7,12 @@
         "edit": "Edit",
         "clear": "Clear"
     },
+    "actions": {
+        "favorite": "Favorite",
+        "unfavorite": "Unfavorite",
+        "confirmDelete": "Confirm deletion",
+        "submit": "Submit"
+    },
     "filters": {
         "title": "Filters"
     },
@@ -27,6 +33,10 @@
         "sort": {
             "asc": "Sort A–Z",
             "desc": "Sort Z–A"
+        },
+        "card": {
+            "chapters": "Chapters",
+            "updated": "Updated"
         }
     },
     "tags": {
@@ -36,6 +46,32 @@
         "list": {
             "empty": "No tags created."
         }
+    },
+    "form": {
+        "title.label": "Title",
+        "title.placeholder": "Leave blank to use page title",
+        "image.label": "Image URL",
+        "image.placeholder": "Provide the image URL (optional)",
+        "link.label": "Link",
+        "link.placeholder": "Leave blank to use current page URL",
+        "chapters.label": "Chapters",
+        "favorite.label": "Favorite",
+        "type.label": "Type",
+        "state.label": "State",
+        "tags.label": "Tags"
+    },
+    "errors": {
+        "title.required": "Title is required.",
+        "title.minLength": "Title must be at least 3 characters.",
+        "chapters.invalid": "Must be a non-negative number.",
+        "file.invalidType": "Invalid file type.",
+        "file.invalid": "Invalid file.",
+        "file.parseError": "Could not parse file.",
+        "import.partial": "Some entries were invalid and skipped."
+    },
+    "modal": {
+        "delete.title": "Confirm deletion",
+        "delete.message": "Are you sure you want to delete “{title}”?"
     },
     "settings": {
         "title": "Settings",
@@ -51,6 +87,11 @@
             "es": "Spanish"
         },
         "focusSearch": "Auto-focus search on load"
+    },
+    "accessibility": {
+        "image": {
+            "altFallback": "No image available"
+        }
     },
     "dev": {
         "missingKeys": {

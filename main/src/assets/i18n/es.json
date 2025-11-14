@@ -7,6 +7,12 @@
         "edit": "Editar",
         "clear": "Limpiar"
     },
+    "actions": {
+        "favorite": "Favorito",
+        "unfavorite": "Quitar favorito",
+        "confirmDelete": "Confirmar eliminación",
+        "submit": "Enviar"
+    },
     "filters": {
         "title": "Filtros"
     },
@@ -27,6 +33,10 @@
         "sort": {
             "asc": "Ordenar A–Z",
             "desc": "Ordenar Z–A"
+        },
+        "card": {
+            "chapters": "Capítulos",
+            "updated": "Actualizado"
         }
     },
     "tags": {
@@ -36,6 +46,32 @@
         "list": {
             "empty": "No se han creado etiquetas."
         }
+    },
+    "form": {
+        "title.label": "Título",
+        "title.placeholder": "Dejar vacío para usar el título de la página",
+        "image.label": "URL de la imagen",
+        "image.placeholder": "Proporciona la URL de la imagen (opcional)",
+        "link.label": "Enlace",
+        "link.placeholder": "Dejar vacío para usar la URL actual",
+        "chapters.label": "Capítulos",
+        "favorite.label": "Favorito",
+        "type.label": "Tipo",
+        "state.label": "Estado",
+        "tags.label": "Etiquetas"
+    },
+    "errors": {
+        "title.required": "El título es obligatorio.",
+        "title.minLength": "El título debe tener al menos 3 caracteres.",
+        "chapters.invalid": "Debe ser un número no negativo.",
+        "file.invalidType": "Tipo de archivo inválido.",
+        "file.invalid": "Archivo inválido.",
+        "file.parseError": "No se pudo analizar el archivo.",
+        "import.partial": "Algunas entradas eran inválidas y se omitieron."
+    },
+    "modal": {
+        "delete.title": "Confirmar eliminación",
+        "delete.message": "¿Seguro que deseas eliminar “{title}”?"
     },
     "settings": {
         "title": "Configuración",
@@ -51,6 +87,11 @@
             "es": "Español"
         },
         "focusSearch": "Enfocar búsqueda al cargar"
+    },
+    "accessibility": {
+        "image": {
+            "altFallback": "No hay imagen disponible"
+        }
     },
     "dev": {
         "missingKeys": {

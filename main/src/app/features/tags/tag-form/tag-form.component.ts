@@ -2,10 +2,11 @@ import { Component, inject, input, output } from '@angular/core';
 import { Tag } from '../../../core/interfaces/tag.interface';
 import { TagService } from '../../../core/services/tag.service';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
     selector: 'tag-form',
-    imports: [ReactiveFormsModule],
+    imports: [ReactiveFormsModule, TranslocoPipe],
     templateUrl: './tag-form.component.html',
     styleUrl: './tag-form.component.css'
 })

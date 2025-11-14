@@ -1,15 +1,19 @@
 @if (isVisible()) {
-    <div class="modal-overlay" (click)="close()">
-        <div class="modal-content" #modalContainer (click)="$event.stopPropagation()">
-            <div class="modal-header">
-                <h2>{{ title() }}</h2>
-                @if (showCloseButton()) {
-                    <button (click)="close()">X</button>
-                }
-            </div>
-            <div class="modal-body">
-                <ng-content></ng-content>
-            </div>
-        </div>
+<div class="modal-overlay" (click)="close()" aria-hidden="true"></div>
+<div class="modal-content" #modalContainer role="dialog" aria-modal="true"
+    [attr.aria-label]="title() ? (title() | transloco) : null" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+        @if (title()) {
+        <h2>{{ title() | transloco }}</h2>
+        }
+        @if (showCloseButton()) {
+        <button type="button" (click)="close()" aria-label="{{ 'common.cancel' | transloco }}">
+            ✕
+        </button>
+        }
     </div>
+    <div class="modal-body">
+        <ng-content></ng-content>
+    </div>
+</div>
 }

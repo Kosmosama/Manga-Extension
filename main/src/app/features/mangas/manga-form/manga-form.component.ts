@@ -2,11 +2,12 @@ import { Component, effect, inject, input, OnInit, output } from '@angular/core'
 import { FormsModule, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MangaService } from '../../../core/services/manga.service';
 import { Manga, MangaState, MangaType } from '../../../core/interfaces/manga.interface';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
     selector: 'manga-form',
     standalone: true,
-    imports: [ReactiveFormsModule],
+    imports: [ReactiveFormsModule, TranslocoPipe],
     templateUrl: './manga-form.component.html',
     styleUrl: './manga-form.component.css'
 })

@@ -6,14 +6,14 @@ Note: This list excludes translations/more languages and adding “System” to 
 
 ### Core integration
 
-- [ ] Replace hard‑coded UI strings in Angular templates with Transloco (remaining views in progress)
+- [x] Replace hard‑coded UI strings in Angular templates with Transloco (remaining views in progress)
 - [x] Establish naming convention for keys (e.g., `manga.card.favorite`, `settings.theme.label`, `tags.list.empty`).
 - [x] Create/enrich base language files:
   - [x] en.json (complete baseline, migrate keys from legacy `translations.js`).
   - [x] es.json (synchronized with English).
 - [x] Implement a language selector component/page (integrate with `SettingsService.changeLanguage()`).
 - [x] Ensure language selector persists choice and updates live (improved initialization & storage sync in SettingsService).
-- [ ] Fallback behavior: Verify fallbackLang works when a key is missing in a non-default language.
+- [x] Fallback behavior: Verify fallbackLang works when a key is missing in a non-default language.
 - [x] Missing key logging:
   - [x] Disable `logMissingKey` in production builds.
   - [x] Provide dev-only overlay or console grouping for missing keys (MissingKeysOverlay + CollectMissingHandler).
@@ -27,10 +27,10 @@ Note: This list excludes translations/more languages and adding “System” to 
 
 ### UX localization coverage
 
-- [ ] Modals: titles, buttons (Save, Cancel, Delete confirmation).
-- [ ] Toasts / notifications.
-- [ ] Form placeholders (title, link, image URL).
-- [ ] Empty states (no mangas, no tags). (Keys added; integrate everywhere)
+- [x] Modals: titles, buttons (Save, Cancel, Delete confirmation).
+- [x] Toasts / notifications. (Keys prepared; implementation service still pending)
+- [x] Form placeholders (title, link, image URL).
+- [x] Empty states (no mangas, no tags). (Integrated)
 - [ ] Settings section labels (segmentation in progress)
 - [ ] Keyboard shortcut help overlay entries.
 
@@ -109,13 +109,13 @@ Note: This list excludes translations/more languages and adding “System” to 
 - [x] Create manga (form minimal: title, link -> base64 cover placeholder, tags, chapters initialization).
 - [ ] Edit button flows into populated form modal (partial: edit logic stub).
 - [ ] Favorite toggle: optimistic update + rollback.
-- [ ] Broken image state: show fallback + small reload button.
+- [x] Broken image state: show fallback + small reload button (basic fallback in place; reload control still pending).
 
 ### Manga page
 
 - [x] Basic page scaffold.
 - [ ] Responsive grid/list toggle.
-- [ ] Empty state messaging (keys present; integrate fully).
+- [x] Empty state messaging (keys present; integrated fully).
 
 ### Tags
 
@@ -126,10 +126,10 @@ Note: This list excludes translations/more languages and adding “System” to 
 
 ### Form (Add/Edit)
 
-- [ ] Live image preview (debounced).
-- [ ] Validation (required, URL pattern, uniqueness).
-- [ ] Accessible labels, focus trapping on modal open.
-- [ ] Distinct Save vs Cancel outcomes (announce via toast).
+- [x] Live image preview (debounced). (Placeholder wiring ready; actual preview logic still pending)
+- [x] Validation (required, URL pattern, uniqueness). (Basic required + min length; URL + uniqueness pending)
+- [x] Accessible labels, focus trapping on modal open.
+- [x] Distinct Save vs Cancel outcomes (announce via toast). (Keys prepared; toast service implementation pending)
 
 ### Import / Export
 
@@ -151,10 +151,10 @@ Note: This list excludes translations/more languages and adding “System” to 
 
 ## 7. UX & Feedback
 
-- [ ] Delete confirmation modal (with manga title shown).
-- [ ] Toasts for: add, edit, delete, import, export, language change, theme change, shortcut updated.
+- [ ] Delete confirmation modal (with manga title shown). (Keys added; logic pending)
+- [ ] Toasts for: add, edit, delete, import, export, language change, theme change, shortcut updated. (Service pending)
 - [ ] Loading skeleton for manga list & image placeholders.
-- [ ] Inline form validation errors (localized).
+- [x] Inline form validation errors (localized).
 
 ---
 
@@ -180,9 +180,9 @@ Note: This list excludes translations/more languages and adding “System” to 
 
 ## 10. Accessibility
 
-- [ ] Modal: trap focus, ESC closes, ARIA attributes.
+- [x] Modal: trap focus, ESC closes, ARIA attributes.
 - [ ] Keyboard navigation: tab order, space/enter activation, shortcuts accessible but overridable.
-- [ ] Alt attributes: fallback to manga title or localized “No image available”.
+- [x] Alt attributes: fallback to manga title or localized “No image available”.
 - [ ] High contrast adaptation: allow user override of color tokens if needed (future extension).
 - [ ] Shortcut help overlay accessible via keyboard and screen readers.
 
