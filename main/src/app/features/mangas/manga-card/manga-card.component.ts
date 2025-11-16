@@ -7,6 +7,8 @@ import { Manga } from '../../../core/interfaces/manga.interface';
 import { Theme } from '../../../core/interfaces/theme.interface';
 import { MangaService } from '../../../core/services/manga.service';
 import { ThemeService } from '../../../core/services/theme.service';
+import { ConfirmService } from '../../../core/services/confirm.service';
+import { ToastService } from '../../../core/services/toast.service';
 
 @Component({
     selector: 'manga-card',
@@ -18,6 +20,8 @@ export class MangaComponent {
     private mangaService = inject(MangaService);
     private destroyRef = inject(DestroyRef);
     private themeService = inject(ThemeService);
+    private confirmService = inject(ConfirmService);
+    private toastService = inject(ToastService);
 
     manga = model.required<Manga>();
 
@@ -53,32 +57,53 @@ export class MangaComponent {
     }
 
     deleteManga() {
-        this.mangaService
-            .deleteManga(this.manga().id)
+        const m = this.manga();
+        this.confirmService
+            .confirm$('modal.delete.title', 'modal.delete.message', { title: m.title }, 'common.delete', 'common.cancel')
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe(() => this.deleted.emit(this.manga().id));
+            .subscribe((confirmed) => {
+                if (!confirmed) return;
+                this.mangaService
+                    .deleteManga(m.id)
+                    .pipe(takeUntilDestroyed(this.destroyRef))
+                    .subscribe({
+                        next: () => {
+                            this.toastService.success('toasts.manga.deleted', { title: m.title });
+                            this.deleted.emit(m.id);
+                        },
+                        error: () => this.toastService.error('toasts.error.generic')
+                    });
+            });
     }
 
-    // #TODO Create and implement modal to edit manga, open it here
+    // Open edit modal through parent handler
     editManga() {
         this.handleEdit()(this.manga());
     }
 
+    // Optimistic toggle + rollback on error
     toggleFavorite() {
+        const current = this.manga();
+        const prev = current.isFavorite;
+        this.manga.update(c => ({ ...c, isFavorite: !c.isFavorite }));
         this.mangaService
-            .toggleFavorite(this.manga().id, this.manga().isFavorite)
+            .toggleFavorite(current.id, prev)
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe(() => {
-                this.manga.update(currentManga => ({
-                    ...currentManga,
-                    isFavorite: !currentManga.isFavorite
-                }));
+            .subscribe({
+                next: () => {
+                    const nowFav = this.manga().isFavorite;
+                    this.toastService.info(nowFav ? 'toasts.manga.favorited' : 'toasts.manga.unfavorited', { title: current.title });
+                },
+                error: () => {
+                    this.manga.update(c => ({ ...c, isFavorite: prev }));
+                    this.toastService.error('toasts.error.generic');
+                }
             });
     }
 
     /**
      * Updates the chapters of the current manga.
-     * 
+     *
      * @param change - The increment or decrement to chapter count.
      */
     updateChapters(change: number = 1) {

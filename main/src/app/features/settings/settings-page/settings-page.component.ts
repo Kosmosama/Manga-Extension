@@ -3,6 +3,7 @@ import { Theme } from '../../../core/interfaces/theme.interface';
 import { ThemeService } from '../../../core/services/theme.service';
 import { SettingsService } from '../../../core/services/settings.service';
 import { TranslocoPipe } from '@jsverse/transloco';
+import { ToastService } from '../../../core/services/toast.service';
 
 @Component({
     selector: 'app-settings-page',
@@ -13,8 +14,9 @@ import { TranslocoPipe } from '@jsverse/transloco';
 })
 export class SettingsPageComponent {
     private themeService = inject(ThemeService);
+    private settings = inject(SettingsService);
+    private toastService = inject(ToastService);
 
-    settings = inject(SettingsService);
     theme = signal<Theme>(this.themeService.theme);
 
     /**
@@ -30,9 +32,13 @@ export class SettingsPageComponent {
 
         const result: any = (this.themeService as any).setTheme(theme);
         if (result && typeof result.subscribe === 'function') {
-            result.subscribe(() => this.theme.set(theme));
+            result.subscribe(() => {
+                this.theme.set(theme);
+                this.toastService.info('toasts.settings.themeChanged');
+            });
         } else {
             this.theme.set(theme);
+            this.toastService.info('toasts.settings.themeChanged');
         }
     }
 
@@ -44,6 +50,7 @@ export class SettingsPageComponent {
     languageChange(event: Event) {
         const target = event.target as HTMLSelectElement;
         this.settings.changeLanguage(target.value);
+        this.toastService.info('toasts.settings.languageChanged');
     }
 
     /**

@@ -67,7 +67,8 @@
         "file.invalidType": "Tipo de archivo inválido.",
         "file.invalid": "Archivo inválido.",
         "file.parseError": "No se pudo analizar el archivo.",
-        "import.partial": "Algunas entradas eran inválidas y se omitieron."
+        "import.partial": "Algunas entradas eran inválidas y se omitieron.",
+        "generic": "Algo salió mal."
     },
     "modal": {
         "delete.title": "Confirmar eliminación",
@@ -91,6 +92,27 @@
     "accessibility": {
         "image": {
             "altFallback": "No hay imagen disponible"
+        }
+    },
+    "toasts": {
+        "manga": {
+            "added": "Manga agregado",
+            "updated": "Manga actualizado",
+            "deleted": "Manga eliminado: {title}",
+            "favorited": "Añadido a favoritos: {title}",
+            "unfavorited": "Quitado de favoritos: {title}"
+        },
+        "tag": {
+            "added": "Etiqueta agregada",
+            "updated": "Etiqueta actualizada",
+            "deleted": "Etiqueta eliminada"
+        },
+        "settings": {
+            "languageChanged": "Idioma cambiado",
+            "themeChanged": "Tema cambiado"
+        },
+        "error": {
+            "generic": "Algo salió mal."
         }
     },
     "dev": {

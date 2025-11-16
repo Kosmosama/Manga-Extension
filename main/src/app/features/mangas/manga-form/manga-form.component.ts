@@ -1,19 +1,20 @@
-import { Component, effect, inject, input, OnInit, output } from '@angular/core';
-import { FormsModule, NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component, effect, inject, input, output } from '@angular/core';
+import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MangaService } from '../../../core/services/manga.service';
 import { Manga, MangaState, MangaType } from '../../../core/interfaces/manga.interface';
-import { TranslocoPipe } from '@jsverse/transloco';
+import { ToastService } from '../../../core/services/toast.service';
 
 @Component({
     selector: 'manga-form',
     standalone: true,
-    imports: [ReactiveFormsModule, TranslocoPipe],
+    imports: [ReactiveFormsModule],
     templateUrl: './manga-form.component.html',
     styleUrl: './manga-form.component.css'
 })
 export class MangaFormComponent {
     private mangaService = inject(MangaService);
     private fb = inject(NonNullableFormBuilder);
+    private toastService = inject(ToastService);
 
     manga = input<Manga | null>();
 
@@ -29,12 +30,10 @@ export class MangaFormComponent {
         state: [MangaState.None],
         tags: [[] as number[]],
     });
-    
+
     constructor() {
         effect(() => {
             const currentManga = this.manga();
-            console.log('Effect triggered in MangaForm. New manga:', currentManga);
- 
             if (currentManga) {
                 this.mangaForm.patchValue({
                     title: currentManga.title,
@@ -58,33 +57,10 @@ export class MangaFormComponent {
             }
         });
     }
-    
-    
-    // ESTO NO FUNCIONABA
-   /* ngOnInit() {
-        console.log('Hay manga?: ', this.manga())
-        if (this.manga()) {
-            this.mangaForm.patchValue({
-                title: this.manga()!.title,
-                image: this.manga()!.image || "",
-                chapters: this.manga()!.chapters,
-                isFavorite: this.manga()!.isFavorite || false,
-                type: this.manga()!.type || MangaType.Other,
-                state: this.manga()!.state || MangaState.None,
-                tags: this.manga()!.tags || []
-            });
-            this.mangaForm.markAllAsTouched();
-        }
-    }*/
 
-    /**
-     * Handles the form submission.
-     * If the manga is new, it will be added to the database.
-     * If the manga already exists, it will be updated.
-     */
     submit() {
         if (this.mangaForm.invalid) return;
-        console.log('Manga form: ', this.mangaForm.getRawValue())
+
         const now: string = new Date().toISOString();
 
         const newManga: Manga = {
@@ -98,18 +74,18 @@ export class MangaFormComponent {
             this.mangaService.addManga(newManga).subscribe({
                 next: () => {
                     this.formSumbitted.emit(newManga);
-                    console.log("Manga added successfully");
+                    this.toastService.success('toasts.manga.added', { title: newManga.title });
                 },
-                error: (err) => console.error("Errpr:", err)
+                error: () => this.toastService.error('toasts.error.generic')
             });
         }
         else {
             this.mangaService.updateManga(this.manga()!.id, newManga).subscribe({
                 next: () => {
                     this.formSumbitted.emit(newManga);
-                    console.log("Manga updated successfully");
+                    this.toastService.success('toasts.manga.updated', { title: newManga.title });
                 },
-                error: (err) => console.error("Errpr:", err)
+                error: () => this.toastService.error('toasts.error.generic')
             });
         }
     }

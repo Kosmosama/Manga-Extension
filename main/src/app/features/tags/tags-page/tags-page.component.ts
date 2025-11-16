@@ -5,6 +5,7 @@ import { TagCardComponent } from '../tag-card/tag-card.component';
 import { ModalComponent } from '../../../shared/modal/modal.component';
 import { TagFormComponent } from '../tag-form/tag-form.component';
 import { TranslocoPipe } from '@jsverse/transloco';
+import { ToastService } from '../../../core/services/toast.service';
 
 @Component({
     selector: 'tags-page',
@@ -15,6 +16,7 @@ import { TranslocoPipe } from '@jsverse/transloco';
 })
 export class TagsPageComponent {
     private tagService = inject(TagService);
+    private toastService = inject(ToastService);
 
     modal = viewChild.required<ModalComponent>('modal');
 
@@ -26,8 +28,12 @@ export class TagsPageComponent {
     }
 
     handleTagDeletion(id: number) {
-        this.tagService.deleteTag(id).subscribe(() => {
-            this.tagList.update((tags) => tags.filter((t) => t.id !== id));
+        this.tagService.deleteTag(id).subscribe({
+            next: () => {
+                this.tagList.update((tags) => tags.filter((t) => t.id !== id));
+                this.toastService.success('toasts.tag.deleted');
+            },
+            error: () => this.toastService.error('toasts.error.generic')
         });
     }
 

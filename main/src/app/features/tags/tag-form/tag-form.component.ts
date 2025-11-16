@@ -2,17 +2,18 @@ import { Component, inject, input, output } from '@angular/core';
 import { Tag } from '../../../core/interfaces/tag.interface';
 import { TagService } from '../../../core/services/tag.service';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TranslocoPipe } from '@jsverse/transloco';
+import { ToastService } from '../../../core/services/toast.service';
 
 @Component({
     selector: 'tag-form',
-    imports: [ReactiveFormsModule, TranslocoPipe],
+    imports: [ReactiveFormsModule],
     templateUrl: './tag-form.component.html',
     styleUrl: './tag-form.component.css'
 })
 export class TagFormComponent {
     private tagService = inject(TagService);
     private fb = inject(NonNullableFormBuilder);
+    private toastService = inject(ToastService);
 
     tag = input<Tag | null>();
 
@@ -24,7 +25,6 @@ export class TagFormComponent {
     });
 
     ngOnInit() {
-        
         if (this.tag()) {
             this.tagForm.patchValue({
                 name: this.tag()!.name,
@@ -34,11 +34,6 @@ export class TagFormComponent {
         }
     }
 
-    /**
-     * Handles the form submission.
-     * If the tag is new, it will be added to the database.
-     * If the tag already exists, it will be updated.
-     */
     submit() {
         if (this.tagForm.invalid) return;
 
@@ -47,22 +42,21 @@ export class TagFormComponent {
             id: Number(`${Date.now()}${Math.floor(Math.random() * 10000)}`)
         };
 
-        if(this.tag()) {
+        if (!this.tag()) {
             this.tagService.addTag(newTag).subscribe({
                 next: () => {
                     this.formSumbitted.emit(newTag);
-                    console.log("Tag added successfully");
+                    this.toastService.success('toasts.tag.added', { name: newTag.name });
                 },
-                error: (err) => console.error("Errpr:", err)
+                error: () => this.toastService.error('toasts.error.generic')
             });
-        }
-        else {
+        } else {
             this.tagService.updateTag(this.tag()!.id, newTag).subscribe({
                 next: () => {
                     this.formSumbitted.emit(newTag);
-                    console.log("Tag updated successfully");
+                    this.toastService.success('toasts.tag.updated', { name: newTag.name });
                 },
-                error: (err) => console.error("Errpr:", err)
+                error: () => this.toastService.error('toasts.error.generic')
             });
         }
     }

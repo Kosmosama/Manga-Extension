@@ -67,7 +67,8 @@
         "file.invalidType": "Invalid file type.",
         "file.invalid": "Invalid file.",
         "file.parseError": "Could not parse file.",
-        "import.partial": "Some entries were invalid and skipped."
+        "import.partial": "Some entries were invalid and skipped.",
+        "generic": "Something went wrong."
     },
     "modal": {
         "delete.title": "Confirm deletion",
@@ -91,6 +92,27 @@
     "accessibility": {
         "image": {
             "altFallback": "No image available"
+        }
+    },
+    "toasts": {
+        "manga": {
+            "added": "Manga added",
+            "updated": "Manga updated",
+            "deleted": "Manga deleted: {title}",
+            "favorited": "Added to favorites: {title}",
+            "unfavorited": "Removed from favorites: {title}"
+        },
+        "tag": {
+            "added": "Tag added",
+            "updated": "Tag updated",
+            "deleted": "Tag deleted"
+        },
+        "settings": {
+            "languageChanged": "Language changed",
+            "themeChanged": "Theme changed"
+        },
+        "error": {
+            "generic": "Something went wrong."
         }
     },
     "dev": {

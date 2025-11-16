@@ -2,11 +2,13 @@ import { Component, computed, inject, isDevMode } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MissingKeysOverlayComponent } from './shared/i18n/missing-keys-overlay/missing-keys-overlay.component';
 import { MissingKeysService } from './shared/i18n/missing-keys.service';
+import { ToastComponent } from './shared/toast/toast.component';
+import { ConfirmComponent } from './shared/confirm/confirm.component';
 
 @Component({
     selector: 'app-root',
     standalone: true,
-    imports: [RouterOutlet, MissingKeysOverlayComponent],
+    imports: [RouterOutlet, MissingKeysOverlayComponent, ToastComponent, ConfirmComponent],
     templateUrl: './app.component.html',
     styleUrl: './app.component.css'
 })
