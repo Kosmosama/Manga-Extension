@@ -3,7 +3,7 @@
         <button title="{{ 'manga.header.settings' | transloco }}">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
                 <path
-                    d="M262 192a64 64 0 1 0 58 58 64 64 0 0 0-58-58zm154 64a154 154 0 0 1-1 21l45 35a11 11 0 0 1 3 14l-43 74a11 11 0 0 1-13 5l-45-18a16 16 0 0 0-15 1 164 164 0 0 1-22 13 16 16 0 0 0-9 12l-7 48a11 11 0 0 1-10 9h-86a11 11 0 0 1-10-9l-7-48a16 16 0 0 0-9-12 155 155 0 0 1-22-12 16 16 0 0 0-15-2l-45 18a11 11 0 0 1-13-5l-43-74a11 11 0 0 1 3-13l38-30a16 16 0 0 0 6-15v-24a16 16 0 0 0-6-14l-38-30a11 11 0 0 1-3-14l43-74a11 11 0 0 1 13-5l45 18a16 16 0 0 0 15-1 164 164 0 0 1 22-13 16 16 0 0 0 9-12l7-48a11 11 0 0 1 10-9h86a11 11 0 0 1 10 9l7 48a16 16 0 0 0 9 12 155 155 0 0 1 22 12 16 16 0 0 0 15 2l45-18a11 11 0 0 1 13 5l43 74a11 11 0 0 1-3 13l-38 30a16 16 0 0 0-6 15v12z"
+                    d="M262 192a64 64 0 1 0 58 58 64 64 0 0 0-58-58zm154 64a154 154 0 0 1-1 21l45 35a11 11 0 0 1 3 14l-43 74a11 11 0 0 1-13 5l-45-18a16 16 0 0 0-15 1 164 164 0 0 1-22 13 16 16 0 0 0..."
                     fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                     stroke-width="32" />
             </svg>
@@ -12,11 +12,11 @@
         <h1>{{ 'manga.list.title' | transloco }}</h1>
     </header>
 
-    <div>
+    <div class="toolbar">
         <button title="{{ 'filters.title' | transloco }}">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                class="lucide lucide-filter mr-2 h-4 w-4" data-id="23">
+                class="lucide lucide-filter mr-2 h-4 w-4">
                 <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
             </svg>
             <span>{{ 'filters.title' | transloco }}</span>
@@ -29,7 +29,7 @@
             <button type="button" (click)="clearSearch()" [title]="'common.clear' | transloco">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd"
-                        d="M10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414L10 8.586z"
+                        d="M10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414..."
                         clip-rule="evenodd" />
                 </svg>
             </button>
@@ -40,7 +40,7 @@
             <div>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="icon icon-tabler icons-tabler-outline icon-tabler-arrows-sort">
+                    class="icon icon-tabler icon-tabler-arrows-sort">
                     <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                     <path d="M3 15l4 4l4 -4m-4 4v-14" />
                     <path d="M21 9l-4 -4l-4 4m4 -4v14" />
@@ -52,13 +52,13 @@
 
 <div>
     <main>
-        <div>
+        <div class="manga-list">
             @if (mangaList().length) {
             @for (manga of mangaList(); track manga.id) {
             <manga-card [handleEdit]="handleEdit" [manga]="manga" (deleted)="handleMangaDeletion($event)"></manga-card>
             }
             } @else {
-            <div>
+            <div class="empty">
                 {{ 'manga.list.empty' | transloco }}
             </div>
             }
@@ -78,10 +78,10 @@
     </button>
 </footer>
 
-<app-modal #modal>
+<modal #modal>
     <manga-form [manga]="selectedManga()" (formSumbitted)="handleFormSumbission($event)"></manga-form>
-</app-modal>
+</modal>
 
-<app-modal #editModal>
+<modal #editModal>
     <manga-form [manga]="selectedManga()" (formSumbitted)="handleFormSumbission($event)"></manga-form>
-</app-modal>
+</modal>

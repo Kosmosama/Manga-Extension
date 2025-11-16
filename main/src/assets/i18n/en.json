@@ -17,35 +17,19 @@
         "title": "Filters"
     },
     "manga": {
-        "header": {
-            "settings": "Settings"
-        },
-        "actions": {
-            "add": "Add Manga"
-        },
+        "header": { "settings": "Settings" },
+        "actions": { "add": "Add Manga" },
         "list": {
             "title": "Manga Library",
             "empty": "No mangas yet. Add one!"
         },
-        "search": {
-            "placeholder": "Search mangas..."
-        },
-        "sort": {
-            "asc": "Sort A–Z",
-            "desc": "Sort Z–A"
-        },
-        "card": {
-            "chapters": "Chapters",
-            "updated": "Updated"
-        }
+        "search": { "placeholder": "Search mangas..." },
+        "sort": { "asc": "Sort A–Z", "desc": "Sort Z–A" },
+        "card": { "chapters": "Chapters", "updated": "Updated" }
     },
     "tags": {
-        "actions": {
-            "add": "Add tag"
-        },
-        "list": {
-            "empty": "No tags created."
-        }
+        "actions": { "add": "Add tag" },
+        "list": { "empty": "No tags created." }
     },
     "form": {
         "title.label": "Title",
@@ -63,6 +47,7 @@
     "errors": {
         "title.required": "Title is required.",
         "title.minLength": "Title must be at least 3 characters.",
+        "title.duplicate": "Title must be unique.",
         "chapters.invalid": "Must be a non-negative number.",
         "file.invalidType": "Invalid file type.",
         "file.invalid": "Invalid file.",
@@ -77,22 +62,13 @@
     "settings": {
         "title": "Settings",
         "themeLabel": "Theme",
-        "theme": {
-            "light": "Light",
-            "dark": "Dark",
-            "system": "System"
-        },
+        "theme": { "light": "Light", "dark": "Dark", "system": "System" },
         "languageLabel": "Language",
-        "language": {
-            "en": "English",
-            "es": "Spanish"
-        },
+        "language": { "en": "English", "es": "Spanish" },
         "focusSearch": "Auto-focus search on load"
     },
     "accessibility": {
-        "image": {
-            "altFallback": "No image available"
-        }
+        "image": { "altFallback": "No image available" }
     },
     "toasts": {
         "manga": {
@@ -111,9 +87,7 @@
             "languageChanged": "Language changed",
             "themeChanged": "Theme changed"
         },
-        "error": {
-            "generic": "Something went wrong."
-        }
+        "error": { "generic": "Something went wrong." }
     },
     "dev": {
         "missingKeys": {

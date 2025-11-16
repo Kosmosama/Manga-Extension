@@ -17,35 +17,19 @@
         "title": "Filtros"
     },
     "manga": {
-        "header": {
-            "settings": "Configuración"
-        },
-        "actions": {
-            "add": "Agregar manga"
-        },
+        "header": { "settings": "Configuración" },
+        "actions": { "add": "Agregar manga" },
         "list": {
             "title": "Biblioteca de Manga",
             "empty": "No hay mangas todavía. ¡Agrega uno!"
         },
-        "search": {
-            "placeholder": "Buscar mangas..."
-        },
-        "sort": {
-            "asc": "Ordenar A–Z",
-            "desc": "Ordenar Z–A"
-        },
-        "card": {
-            "chapters": "Capítulos",
-            "updated": "Actualizado"
-        }
+        "search": { "placeholder": "Buscar mangas..." },
+        "sort": { "asc": "Ordenar A–Z", "desc": "Ordenar Z–A" },
+        "card": { "chapters": "Capítulos", "updated": "Actualizado" }
     },
     "tags": {
-        "actions": {
-            "add": "Agregar etiqueta"
-        },
-        "list": {
-            "empty": "No se han creado etiquetas."
-        }
+        "actions": { "add": "Agregar etiqueta" },
+        "list": { "empty": "No se han creado etiquetas." }
     },
     "form": {
         "title.label": "Título",
@@ -63,6 +47,7 @@
     "errors": {
         "title.required": "El título es obligatorio.",
         "title.minLength": "El título debe tener al menos 3 caracteres.",
+        "title.duplicate": "El título debe ser único.",
         "chapters.invalid": "Debe ser un número no negativo.",
         "file.invalidType": "Tipo de archivo inválido.",
         "file.invalid": "Archivo inválido.",
@@ -77,22 +62,13 @@
     "settings": {
         "title": "Configuración",
         "themeLabel": "Tema",
-        "theme": {
-            "light": "Claro",
-            "dark": "Oscuro",
-            "system": "Sistema"
-        },
+        "theme": { "light": "Claro", "dark": "Oscuro", "system": "Sistema" },
         "languageLabel": "Idioma",
-        "language": {
-            "en": "Inglés",
-            "es": "Español"
-        },
+        "language": { "en": "Inglés", "es": "Español" },
         "focusSearch": "Enfocar búsqueda al cargar"
     },
     "accessibility": {
-        "image": {
-            "altFallback": "No hay imagen disponible"
-        }
+        "image": { "altFallback": "No hay imagen disponible" }
     },
     "toasts": {
         "manga": {
@@ -111,9 +87,7 @@
             "languageChanged": "Idioma cambiado",
             "themeChanged": "Tema cambiado"
         },
-        "error": {
-            "generic": "Algo salió mal."
-        }
+        "error": { "generic": "Algo salió mal." }
     },
     "dev": {
         "missingKeys": {

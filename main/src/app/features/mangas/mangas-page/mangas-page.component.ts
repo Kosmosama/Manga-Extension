@@ -1,4 +1,4 @@
-import { Component, inject, signal, viewChild } from '@angular/core';
+import { Component, inject, signal, viewChild, effect } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { MangaFormComponent } from '../manga-form/manga-form.component';
 import { MangaComponent } from '../manga-card/manga-card.component';
@@ -7,6 +7,9 @@ import { MangaService } from '../../../core/services/manga.service';
 import { Manga } from '../../../core/interfaces/manga.interface';
 import { ThemeService } from '../../../core/services/theme.service';
 import { Theme } from '../../../core/interfaces/theme.interface';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
     selector: 'mangas-page',
@@ -18,6 +21,8 @@ import { Theme } from '../../../core/interfaces/theme.interface';
 export class MangasPageComponent {
     private mangaService = inject(MangaService);
     private themeService = inject(ThemeService);
+    private router = inject(Router);
+    private route = inject(ActivatedRoute);
 
     modal = viewChild.required<ModalComponent>('modal');
     editModal = viewChild.required<ModalComponent>('editModal');
@@ -28,83 +33,71 @@ export class MangasPageComponent {
     searchQuery = signal<string>('');
     sortOrder = signal<'asc' | 'desc'>('asc');
 
-    /**
-     * Lifecycle hook called on component initialization.
-     * Loads initial manga list.
-     */
-    ngOnInit() {
+    private searchInput$ = new Subject<string>();
+
+    constructor() {
+        const qp = this.route.snapshot.queryParamMap;
+        const initialQ = qp.get('q') || '';
+        const initialSort = (qp.get('sort') === 'desc' ? 'desc' : 'asc') as 'asc' | 'desc';
+        this.searchQuery.set(initialQ);
+        this.sortOrder.set(initialSort);
+
+        this.searchInput$
+            .pipe(
+                debounceTime(300),
+                distinctUntilChanged()
+            )
+            .subscribe(value => {
+                this.searchQuery.set(value);
+                this.reload();
+                this.syncQueryParams();
+            });
+
+        effect(() => {
+            this.sortOrder();
+            this.reload();
+            this.syncQueryParams();
+        });
+
         this.reload();
     }
 
-    /**
-     * Reloads the manga list from the service based on the search query and sort order.
-     */
     private reload(): void {
         this.mangaService
             .listForMainPage(this.searchQuery(), this.sortOrder())
-            .subscribe((mangas) => this.mangaList.set(mangas));
+            .subscribe(mangas => this.mangaList.set(mangas));
     }
 
-    /**
-     * Handles input changes in the search field and reloads the manga list.
-     * @param value The new search term.
-     */
     onSearchInput(value: string) {
-        this.searchQuery.set(value);
-        this.reload();
+        this.searchInput$.next(value);
     }
 
-    /**
-     * Clears the search input and reloads the manga list if a query was present.
-     */
     clearSearch() {
         if (!this.searchQuery()) return;
-        this.searchQuery.set('');
-        this.reload();
+        this.searchInput$.next('');
     }
 
-    /**
-     * Toggles the sorting order (ascending/descending) for manga titles and reloads the list.
-     */
     toggleSort() {
-        this.sortOrder.update((o) => (o === 'asc' ? 'desc' : 'asc'));
-        this.reload();
+        this.sortOrder.update(o => (o === 'asc' ? 'desc' : 'asc'));
     }
 
-    /**
-     * Removes a manga from the displayed list after deletion.
-     * @param id ID of the deleted manga.
-     */
     handleMangaDeletion(id: number) {
-        this.mangaList.update((mangas) => mangas.filter((m) => m.id !== id));
+        this.mangaList.update(mangas => mangas.filter(m => m.id !== id));
     }
 
-    /**
-     * Opens the manga creation or edit form modal.
-     * @param manga Optional manga to prefill the form for editing.
-     */
     openForm(manga?: Manga) {
         this.selectedManga.set(manga || null);
         this.modal().open();
     }
 
-    /**
-     * Opens the edit modal for the provided manga.
-     * @param manga Manga to edit.
-     */
     handleEdit = (manga: Manga) => {
         this.selectedManga.set(manga);
         this.editModal().open();
     };
 
-    /**
-     * Updates the manga list after a form submission.
-     * If the manga exists, it is updated; otherwise, it is added.
-     * @param manga Submitted manga data.
-     */
     handleFormSumbission(manga: Manga) {
-        this.mangaList.update((mangas) => {
-            const index = mangas.findIndex((m) => m.id === manga.id);
+        this.mangaList.update(mangas => {
+            const index = mangas.findIndex(m => m.id === manga.id);
             if (index === -1) {
                 return [...mangas, manga];
             } else {
@@ -112,6 +105,17 @@ export class MangasPageComponent {
                 next[index] = manga;
                 return next;
             }
+        });
+    }
+
+    private syncQueryParams() {
+        this.router.navigate([], {
+            relativeTo: this.route,
+            queryParams: {
+                q: this.searchQuery() || null,
+                sort: this.sortOrder()
+            },
+            queryParamsHandling: 'merge'
         });
     }
 }

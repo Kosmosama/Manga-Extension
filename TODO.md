@@ -126,8 +126,8 @@ Note: This list excludes translations/more languages and adding “System” to 
 
 ### Form (Add/Edit)
 
-- [ ] Live image preview (debounced).
-- [x] Validation (required, URL pattern, uniqueness) (basic required + min length; URL + uniqueness pending).
+- [x] Live image preview (debounced).
+- [x] Validation (required, URL pattern, uniqueness). (Uniqueness + basic; URL pattern pending)
 - [x] Accessible labels, focus trapping on modal open.
 - [x] Distinct Save vs Cancel outcomes (announce via toast).
 
@@ -161,7 +161,7 @@ Note: This list excludes translations/more languages and adding “System” to 
 ## 8. Performance
 
 - [ ] Virtual scroll (CDK) for large lists.
-- [ ] Debounced search (URL query param for sharable state).
+- [x] Debounced search (URL query param for sharable state).
 - [ ] Lazy-load images + IntersectionObserver prefetch near viewport.
 - [x] Chapter update batching (see Code Quality).
 
@@ -174,7 +174,7 @@ Note: This list excludes translations/more languages and adding “System” to 
 - [ ] Distinguish sync vs local storage usage:
   - [ ] Sync: theme, language, shortcuts, focus preference.
   - [ ] Local: manga library, cover images metadata cache.
-- [ ] Unique title enforcement with immediate feedback and translation key `errors.title.duplicate`.
+- [x] Unique title enforcement with immediate feedback and translation key `errors.title.duplicate`.
 
 ---
 

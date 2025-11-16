@@ -1,13 +1,16 @@
-import { Component, effect, inject, input, output } from '@angular/core';
+import { Component, effect, inject, input, output, signal } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MangaService } from '../../../core/services/manga.service';
 import { Manga, MangaState, MangaType } from '../../../core/interfaces/manga.interface';
+import { debounceTime, distinctUntilChanged, filter } from 'rxjs';
 import { ToastService } from '../../../core/services/toast.service';
+import { uniqueTitleValidator } from '../../../core/validators/unique-title.validator';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
     selector: 'manga-form',
     standalone: true,
-    imports: [ReactiveFormsModule],
+    imports: [ReactiveFormsModule, TranslocoPipe],
     templateUrl: './manga-form.component.html',
     styleUrl: './manga-form.component.css'
 })
@@ -20,8 +23,15 @@ export class MangaFormComponent {
 
     formSumbitted = output<Manga>();
 
+    imagePreviewUrl = signal<string | null>(null);
+    imageLoading = signal<boolean>(false);
+    imageError = signal<boolean>(false);
+
     mangaForm = this.fb.group({
-        title: ["", [Validators.required, Validators.minLength(3)]],
+        title: ["", {
+            validators: [Validators.required, Validators.minLength(3)],
+            asyncValidators: [uniqueTitleValidator(this.mangaService, () => this.manga()?.id)]
+        }],
         link: [""],
         image: [""],
         chapters: [0, [Validators.required, Validators.min(0)]],
@@ -44,7 +54,9 @@ export class MangaFormComponent {
                     type: currentManga.type || MangaType.Other,
                     state: currentManga.state || MangaState.None,
                     tags: currentManga.tags || []
-                });
+                }, { emitEvent: false });
+                this.mangaForm.get('title')?.updateValueAndValidity();
+                this.imagePreviewUrl.set(currentManga.image || null);
             } else {
                 this.mangaForm.reset();
                 this.mangaForm.patchValue({
@@ -53,8 +65,25 @@ export class MangaFormComponent {
                     isFavorite: false,
                     chapters: 0,
                     tags: []
-                });
+                }, { emitEvent: false });
+                this.imagePreviewUrl.set(null);
             }
+        });
+
+        this.mangaForm.get('image')?.valueChanges.pipe(
+            debounceTime(300),
+            distinctUntilChanged(),
+            filter(v => v !== null)
+        ).subscribe(value => {
+            const url = (value ?? '').trim();
+            if (!url) {
+                this.imagePreviewUrl.set(null);
+                this.imageError.set(false);
+                return;
+            }
+            this.imageLoading.set(true);
+            this.imageError.set(false);
+            this.imagePreviewUrl.set(url);
         });
     }
 
@@ -88,5 +117,14 @@ export class MangaFormComponent {
                 error: () => this.toastService.error('toasts.error.generic')
             });
         }
+    }
+
+    onPreviewLoad() {
+        this.imageLoading.set(false);
+        this.imageError.set(false);
+    }
+    onPreviewError() {
+        this.imageLoading.set(false);
+        this.imageError.set(true);
     }
 }
