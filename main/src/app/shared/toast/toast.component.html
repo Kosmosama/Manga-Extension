@@ -1,0 +1,11 @@
+<div class="toast-container" aria-live="polite" aria-atomic="true">
+    @for (t of toastService.toasts(); track t.id) {
+    <div class="toast" [class.success]="t.type==='success'" [class.error]="t.type==='error'"
+        [class.info]="t.type==='info'" [class.warning]="t.type==='warning'" role="status">
+        <div class="toast-message">
+            {{ t.key | transloco : t.params }}
+        </div>
+        <button type="button" class="toast-close" (click)="dismiss(t.id)" aria-label="Close">✕</button>
+    </div>
+    }
+</div>

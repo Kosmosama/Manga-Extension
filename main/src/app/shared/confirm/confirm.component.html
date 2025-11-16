@@ -1,0 +1,14 @@
+<modal #modal [title]="confirmService.request()?.titleKey ?? null">
+    <p style="margin-bottom: 1rem;">
+        {{ (confirmService.request()?.messageKey ?? '') | transloco : (confirmService.request()?.params || {}) }}
+    </p>
+
+    <div style="display:flex; gap: .5rem; justify-content: flex-end;">
+        <button type="button" (click)="onCancel()">
+            {{ (confirmService.request()?.cancelKey || 'common.cancel') | transloco }}
+        </button>
+        <button type="button" (click)="onConfirm()">
+            {{ (confirmService.request()?.confirmKey || 'common.delete') | transloco }}
+        </button>
+    </div>
+</modal>

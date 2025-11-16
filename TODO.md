@@ -28,7 +28,7 @@ Note: This list excludes translations/more languages and adding “System” to 
 ### UX localization coverage
 
 - [x] Modals: titles, buttons (Save, Cancel, Delete confirmation).
-- [x] Toasts / notifications. (Keys prepared; implementation service still pending)
+- [x] Toasts / notifications.
 - [x] Form placeholders (title, link, image URL).
 - [x] Empty states (no mangas, no tags). (Integrated)
 - [ ] Settings section labels (segmentation in progress)
@@ -108,14 +108,14 @@ Note: This list excludes translations/more languages and adding “System” to 
 - [x] List all mangas (basic page with search + sort).
 - [x] Create manga (form minimal: title, link -> base64 cover placeholder, tags, chapters initialization).
 - [ ] Edit button flows into populated form modal (partial: edit logic stub).
-- [ ] Favorite toggle: optimistic update + rollback.
-- [x] Broken image state: show fallback + small reload button (basic fallback in place; reload control still pending).
+- [x] Favorite toggle: optimistic update + rollback.
+- [ ] Broken image state: show fallback + small reload button.
 
 ### Manga page
 
 - [x] Basic page scaffold.
 - [ ] Responsive grid/list toggle.
-- [x] Empty state messaging (keys present; integrated fully).
+- [x] Empty state messaging (keys present; integrate fully).
 
 ### Tags
 
@@ -126,10 +126,10 @@ Note: This list excludes translations/more languages and adding “System” to 
 
 ### Form (Add/Edit)
 
-- [x] Live image preview (debounced). (Placeholder wiring ready; actual preview logic still pending)
-- [x] Validation (required, URL pattern, uniqueness). (Basic required + min length; URL + uniqueness pending)
+- [ ] Live image preview (debounced).
+- [x] Validation (required, URL pattern, uniqueness) (basic required + min length; URL + uniqueness pending).
 - [x] Accessible labels, focus trapping on modal open.
-- [x] Distinct Save vs Cancel outcomes (announce via toast). (Keys prepared; toast service implementation pending)
+- [x] Distinct Save vs Cancel outcomes (announce via toast).
 
 ### Import / Export
 
@@ -151,8 +151,8 @@ Note: This list excludes translations/more languages and adding “System” to 
 
 ## 7. UX & Feedback
 
-- [ ] Delete confirmation modal (with manga title shown). (Keys added; logic pending)
-- [ ] Toasts for: add, edit, delete, import, export, language change, theme change, shortcut updated. (Service pending)
+- [x] Delete confirmation modal (with manga title shown).
+- [x] Toasts for: add, edit, delete, language change, theme change, shortcut updated (partial; shortcut toasts ready when engine exists).
 - [ ] Loading skeleton for manga list & image placeholders.
 - [x] Inline form validation errors (localized).
 
