@@ -1,81 +1,38 @@
 <div>
     <header>
-        <button title="{{ 'manga.header.settings' | transloco }}">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-                <path
-                    d="M262 192a64 64 0 1 0 58 58 64 64 0 0 0-58-58zm154 64a154 154 0 0 1-1 21l45 35a11 11 0 0 1 3 14l-43 74a11 11 0 0 1-13 5l-45-18a16 16 0 0 0-15 1 164 164 0 0 1-22 13 16 16 0 0 0..."
-                    fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                    stroke-width="32" />
-            </svg>
-        </button>
-
         <h1>{{ 'manga.list.title' | transloco }}</h1>
     </header>
 
     <div class="toolbar">
-        <button title="{{ 'filters.title' | transloco }}">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                class="lucide lucide-filter mr-2 h-4 w-4">
-                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
-            </svg>
-            <span>{{ 'filters.title' | transloco }}</span>
-        </button>
-
         <form (submit)="$event.preventDefault()">
             <input [value]="searchQuery() || ''" (input)="onSearchInput($any($event.target)?.value)"
                 [placeholder]="'manga.search.placeholder' | transloco" />
-
-            <button type="button" (click)="clearSearch()" [title]="'common.clear' | transloco">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd"
-                        d="M10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 011.414-1.414..."
-                        clip-rule="evenodd" />
-                </svg>
-            </button>
+            <button type="button" (click)="clearSearch()" [title]="'common.clear' | transloco">×</button>
         </form>
 
         <button (click)="toggleSort()"
             [title]="(sortOrder() === 'asc' ? 'manga.sort.asc' : 'manga.sort.desc') | transloco">
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="icon icon-tabler icon-tabler-arrows-sort">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                    <path d="M3 15l4 4l4 -4m-4 4v-14" />
-                    <path d="M21 9l-4 -4l-4 4m4 -4v14" />
-                </svg>
-            </div>
+            {{ (sortOrder() === 'asc' ? 'manga.sort.asc' : 'manga.sort.desc') | transloco }}
         </button>
     </div>
+
+    <tag-filter-bar (filterChanged)="onFilterChanged($event)"></tag-filter-bar>
 </div>
 
-<div>
-    <main>
-        <div class="manga-list">
-            @if (mangaList().length) {
-            @for (manga of mangaList(); track manga.id) {
-            <manga-card [handleEdit]="handleEdit" [manga]="manga" (deleted)="handleMangaDeletion($event)"></manga-card>
-            }
-            } @else {
-            <div class="empty">
-                {{ 'manga.list.empty' | transloco }}
-            </div>
-            }
-        </div>
-    </main>
-</div>
+<main>
+    <div class="manga-list">
+        @if (filteredMangas().length) {
+        @for (manga of filteredMangas(); track manga.id) {
+        <manga-card [handleEdit]="handleEdit" [manga]="manga" (deleted)="handleMangaDeletion($event)"></manga-card>
+        }
+        } @else {
+        <div class="empty">{{ 'manga.list.empty' | transloco }}</div>
+        }
+    </div>
+</main>
 
 <footer>
-    <button (click)="openForm()">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <path d="M12 5l0 14" />
-            <path d="M5 12l14 0" />
-        </svg>
-        <span>{{ 'manga.actions.add' | transloco }}</span>
-    </button>
+    <button (click)="openForm()">{{ 'manga.actions.add' | transloco }}</button>
 </footer>
 
 <modal #modal>

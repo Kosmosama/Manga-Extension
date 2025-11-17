@@ -1,0 +1,48 @@
+.tag-filter-bar {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    padding: .5rem .75rem;
+    border: 1px solid var(--filter-border, #333);
+    border-radius: 6px;
+    background: var(--filter-bg, #141414);
+}
+
+.mode-switch {
+    display: flex;
+    gap: .5rem;
+}
+
+.mode-switch button {
+    padding: .35rem .6rem;
+    background: #222;
+    color: #eee;
+    border: 1px solid #333;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.mode-switch button.active {
+    background: #2563eb;
+    border-color: #1d4ed8;
+}
+
+.tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .4rem;
+}
+
+.tag-chip {
+    padding: .25rem .55rem;
+    font-size: .65rem;
+    border-radius: 12px;
+    border: 1px solid #333;
+    cursor: pointer;
+    user-select: none;
+    transition: background .15s;
+}
+
+.tag-chip.selected {
+    outline: 1px solid #000;
+}

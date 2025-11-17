@@ -8,26 +8,27 @@
         <p>{{ 'manga.card.chapters' | transloco }}: {{ manga().chapters }}</p>
         <p>{{ 'manga.card.updated' | transloco }}: {{ manga().updatedAt }}</p>
 
+        @if (manga().resolvedTags?.length) {
+        <div class="tag-badges">
+            @for (tag of manga().resolvedTags; track tag.id) {
+            <span class="tag-badge" [style.background]="tag.color">{{ tag.name }}</span>
+            }
+        </div>
+        }
+
         <div class="actions">
             <button (click)="updateChapters(-1)" [disabled]="saving() || manga().chapters <= 0"
-                aria-label="- {{ 'manga.card.chapters' | transloco }}">
-                -
-            </button>
+                aria-label="- {{ 'manga.card.chapters' | transloco }}">-</button>
             <button (click)="updateChapters(1)" [disabled]="saving()"
-                aria-label="+ {{ 'manga.card.chapters' | transloco }}">
-                +
-            </button>
+                aria-label="+ {{ 'manga.card.chapters' | transloco }}">+</button>
             <button (click)="toggleFavorite()" [class.favorited]="manga().isFavorite"
                 [attr.aria-label]="manga().isFavorite ? ('actions.unfavorite' | transloco) : ('actions.favorite' | transloco)">
                 {{ manga().isFavorite ? '★' : '☆' }}
             </button>
-            <button (click)="deleteManga()" aria-label="{{ 'common.delete' | transloco }}">
-                🗑️
-            </button>
+            <button (click)="deleteManga()" aria-label="{{ 'common.delete' | transloco }}">🗑️</button>
         </div>
 
-        <button (click)="editManga()" aria-label="{{ 'common.edit' | transloco }}">
-            {{ 'common.edit' | transloco }}
-        </button>
+        <button (click)="editManga()" aria-label="{{ 'common.edit' | transloco }}">{{ 'common.edit' | transloco
+            }}</button>
     </div>
 </div>

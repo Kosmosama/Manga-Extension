@@ -1,25 +1,25 @@
 .toolbar {
     display: flex;
-    gap: 0.75rem;
+    gap: .75rem;
     align-items: center;
     flex-wrap: wrap;
-    margin-bottom: 0.75rem;
+    margin-bottom: .75rem;
 }
 
 .toolbar form {
     display: flex;
-    gap: 0.4rem;
+    gap: .35rem;
     align-items: center;
 }
 
 .manga-list {
     display: grid;
-    gap: 0.75rem;
+    gap: .75rem;
 }
 
 .empty {
-    opacity: 0.7;
-    font-size: 0.9rem;
+    opacity: .7;
+    font-size: .9rem;
     padding: 1rem;
     text-align: center;
 }

@@ -121,13 +121,13 @@ Note: This list excludes translations/more languages and adding “System” to 
 
 - [x] CRUD UI (create/edit/delete basic).
 - [x] Assign tags in add/edit form (multi-select).
-- [ ] Tag badges on cards (displayed, filter logic still pending).
-- [ ] Filter bar: multi-tag AND/OR modes.
+- [x] Tag badges on cards (displayed + styled).
+- [x] Filter bar: multi-tag AND/OR modes.
 
 ### Form (Add/Edit)
 
 - [x] Live image preview (debounced).
-- [x] Validation (required, URL pattern, uniqueness). (Uniqueness + basic; URL pattern pending)
+- [x] Validation (required, URL pattern, uniqueness).
 - [x] Accessible labels, focus trapping on modal open.
 - [x] Distinct Save vs Cancel outcomes (announce via toast).
 

@@ -5,6 +5,7 @@ import { Manga, MangaState, MangaType } from '../../../core/interfaces/manga.int
 import { debounceTime, distinctUntilChanged, filter } from 'rxjs';
 import { ToastService } from '../../../core/services/toast.service';
 import { uniqueTitleValidator } from '../../../core/validators/unique-title.validator';
+import { optionalUrlValidator } from '../../../core/validators/optional-url.validator';
 import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
@@ -20,7 +21,6 @@ export class MangaFormComponent {
     private toastService = inject(ToastService);
 
     manga = input<Manga | null>();
-
     formSumbitted = output<Manga>();
 
     imagePreviewUrl = signal<string | null>(null);
@@ -28,12 +28,12 @@ export class MangaFormComponent {
     imageError = signal<boolean>(false);
 
     mangaForm = this.fb.group({
-        title: ["", {
+        title: ['', {
             validators: [Validators.required, Validators.minLength(3)],
             asyncValidators: [uniqueTitleValidator(this.mangaService, () => this.manga()?.id)]
         }],
-        link: [""],
-        image: [""],
+        link: ['', [optionalUrlValidator()]],
+        image: ['', [optionalUrlValidator()]],
         chapters: [0, [Validators.required, Validators.min(0)]],
         isFavorite: [false],
         type: [MangaType.Other],
@@ -47,16 +47,16 @@ export class MangaFormComponent {
             if (currentManga) {
                 this.mangaForm.patchValue({
                     title: currentManga.title,
-                    link: currentManga.link || "",
-                    image: currentManga.image || "",
+                    link: currentManga.link || '',
+                    image: currentManga.image || '',
                     chapters: currentManga.chapters,
                     isFavorite: currentManga.isFavorite || false,
                     type: currentManga.type || MangaType.Other,
                     state: currentManga.state || MangaState.None,
                     tags: currentManga.tags || []
                 }, { emitEvent: false });
-                this.mangaForm.get('title')?.updateValueAndValidity();
                 this.imagePreviewUrl.set(currentManga.image || null);
+                this.mangaForm.get('title')?.updateValueAndValidity();
             } else {
                 this.mangaForm.reset();
                 this.mangaForm.patchValue({
@@ -89,16 +89,13 @@ export class MangaFormComponent {
 
     submit() {
         if (this.mangaForm.invalid) return;
-
-        const now: string = new Date().toISOString();
-
+        const now = new Date().toISOString();
         const newManga: Manga = {
             ...this.mangaForm.getRawValue(),
             createdAt: now,
             updatedAt: now,
             id: Number(`${Date.now()}${Math.floor(Math.random() * 10000)}`)
         };
-
         if (!this.manga()) {
             this.mangaService.addManga(newManga).subscribe({
                 next: () => {
@@ -107,8 +104,7 @@ export class MangaFormComponent {
                 },
                 error: () => this.toastService.error('toasts.error.generic')
             });
-        }
-        else {
+        } else {
             this.mangaService.updateManga(this.manga()!.id, newManga).subscribe({
                 next: () => {
                     this.formSumbitted.emit(newManga);

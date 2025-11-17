@@ -1,0 +1,17 @@
+<div class="tag-filter-bar">
+    <div class="mode-switch">
+        <button type="button" (click)="setMode('AND')" [class.active]="mode() === 'AND'">AND</button>
+        <button type="button" (click)="setMode('OR')" [class.active]="mode() === 'OR'">OR</button>
+        <button type="button" (click)="clear()" [disabled]="!count()">Clear</button>
+    </div>
+
+    <div class="tag-list">
+        @for (tag of tags(); track tag.id) {
+        <button type="button" class="tag-chip" [class.selected]="isSelected(tag.id)" (click)="toggleTag(tag.id)"
+            [style.background]="isSelected(tag.id) ? tag.color : '#222'"
+            [style.color]="isSelected(tag.id) ? '#000' : '#ccc'" aria-pressed="{{ isSelected(tag.id) }}">
+            {{ tag.name }}
+        </button>
+        }
+    </div>
+</div>
