@@ -3,10 +3,9 @@ import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angula
 import { MangaService } from '../../../core/services/manga.service';
 import { Manga, MangaState, MangaType } from '../../../core/interfaces/manga.interface';
 import { debounceTime, distinctUntilChanged, filter } from 'rxjs';
+import { TranslocoPipe } from '@jsverse/transloco';
 import { ToastService } from '../../../core/services/toast.service';
 import { uniqueTitleValidator } from '../../../core/validators/unique-title.validator';
-import { optionalUrlValidator } from '../../../core/validators/optional-url.validator';
-import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
     selector: 'manga-form',
@@ -21,6 +20,7 @@ export class MangaFormComponent {
     private toastService = inject(ToastService);
 
     manga = input<Manga | null>();
+
     formSumbitted = output<Manga>();
 
     imagePreviewUrl = signal<string | null>(null);
@@ -28,12 +28,12 @@ export class MangaFormComponent {
     imageError = signal<boolean>(false);
 
     mangaForm = this.fb.group({
-        title: ['', {
+        title: ["", {
             validators: [Validators.required, Validators.minLength(3)],
             asyncValidators: [uniqueTitleValidator(this.mangaService, () => this.manga()?.id)]
         }],
-        link: ['', [optionalUrlValidator()]],
-        image: ['', [optionalUrlValidator()]],
+        link: [""],
+        image: [""],
         chapters: [0, [Validators.required, Validators.min(0)]],
         isFavorite: [false],
         type: [MangaType.Other],
@@ -47,16 +47,16 @@ export class MangaFormComponent {
             if (currentManga) {
                 this.mangaForm.patchValue({
                     title: currentManga.title,
-                    link: currentManga.link || '',
-                    image: currentManga.image || '',
+                    link: currentManga.link || "",
+                    image: currentManga.image || "",
                     chapters: currentManga.chapters,
                     isFavorite: currentManga.isFavorite || false,
                     type: currentManga.type || MangaType.Other,
                     state: currentManga.state || MangaState.None,
                     tags: currentManga.tags || []
                 }, { emitEvent: false });
-                this.imagePreviewUrl.set(currentManga.image || null);
                 this.mangaForm.get('title')?.updateValueAndValidity();
+                this.imagePreviewUrl.set(currentManga.image || null);
             } else {
                 this.mangaForm.reset();
                 this.mangaForm.patchValue({
@@ -89,26 +89,42 @@ export class MangaFormComponent {
 
     submit() {
         if (this.mangaForm.invalid) return;
+
         const now = new Date().toISOString();
-        const newManga: Manga = {
-            ...this.mangaForm.getRawValue(),
-            createdAt: now,
-            updatedAt: now,
-            id: Number(`${Date.now()}${Math.floor(Math.random() * 10000)}`)
-        };
+
         if (!this.manga()) {
-            this.mangaService.addManga(newManga).subscribe({
-                next: () => {
-                    this.formSumbitted.emit(newManga);
-                    this.toastService.success('toasts.manga.added', { title: newManga.title });
+            const createPayload: Manga = {
+                id: 0 as unknown as number,
+                ...this.mangaForm.getRawValue(),
+                createdAt: now,
+                updatedAt: now
+            } as unknown as Manga;
+
+            this.mangaService.addManga(createPayload).subscribe({
+                next: (id) => {
+                    const emitted: Manga = {
+                        ...createPayload,
+                        id,
+                    };
+                    this.formSumbitted.emit(emitted);
+                    this.toastService.success('toasts.manga.added', { title: emitted.title });
                 },
                 error: () => this.toastService.error('toasts.error.generic')
             });
         } else {
-            this.mangaService.updateManga(this.manga()!.id, newManga).subscribe({
+            const changes = {
+                ...this.mangaForm.getRawValue(),
+                updatedAt: now
+            } as Partial<Manga>;
+
+            this.mangaService.updateManga(this.manga()!.id, changes).subscribe({
                 next: () => {
-                    this.formSumbitted.emit(newManga);
-                    this.toastService.success('toasts.manga.updated', { title: newManga.title });
+                    const emitted: Manga = {
+                        ...(this.manga() as Manga),
+                        ...changes
+                    } as Manga;
+                    this.formSumbitted.emit(emitted);
+                    this.toastService.success('toasts.manga.updated', { title: emitted.title });
                 },
                 error: () => this.toastService.error('toasts.error.generic')
             });

@@ -10,12 +10,11 @@ import { Theme } from '../../../core/interfaces/theme.interface';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { TagFilterBarComponent } from '../../tags/tag-filter-bar/tag-filter-bar.component';
 
 @Component({
     selector: 'mangas-page',
     standalone: true,
-    imports: [TranslocoPipe, ModalComponent, MangaComponent, MangaFormComponent, TagFilterBarComponent],
+    imports: [TranslocoPipe, ModalComponent, MangaComponent, MangaFormComponent],
     templateUrl: './mangas-page.component.html',
     styleUrl: './mangas-page.component.css',
 })
@@ -29,14 +28,10 @@ export class MangasPageComponent {
     editModal = viewChild.required<ModalComponent>('editModal');
 
     selectedManga = signal<Manga | null>(null);
-    allMangas = signal<Manga[]>([]);
-    filteredMangas = signal<Manga[]>([]);
+    mangaList = signal<Manga[]>([]);
     theme = signal<Theme>(this.themeService.theme);
     searchQuery = signal<string>('');
     sortOrder = signal<'asc' | 'desc'>('asc');
-
-    selectedTagIds = signal<number[]>([]);
-    tagMode = signal<'AND' | 'OR'>('AND');
 
     private searchInput$ = new Subject<string>();
 
@@ -61,36 +56,13 @@ export class MangasPageComponent {
             this.syncQueryParams();
         });
 
-        effect(() => {
-            this.applyTagFilter();
-        });
+        this.reload();
     }
 
     private reload(): void {
         this.mangaService
             .listForMainPage(this.searchQuery(), this.sortOrder())
-            .subscribe(mangas => {
-                this.allMangas.set(mangas);
-                this.applyTagFilter();
-            });
-    }
-
-    private applyTagFilter() {
-        const tags = this.selectedTagIds();
-        const mode = this.tagMode();
-        if (!tags.length) {
-            this.filteredMangas.set(this.allMangas());
-            return;
-        }
-        const result = this.allMangas().filter(m => {
-            const mangaTags = m.tags || [];
-            if (mode === 'AND') {
-                return tags.every(t => mangaTags.includes(t));
-            } else {
-                return tags.some(t => mangaTags.includes(t));
-            }
-        });
-        this.filteredMangas.set(result);
+            .subscribe(mangas => this.mangaList.set(mangas));
     }
 
     onSearchInput(value: string) {
@@ -107,8 +79,7 @@ export class MangasPageComponent {
     }
 
     handleMangaDeletion(id: number) {
-        this.allMangas.update(mangas => mangas.filter(m => m.id !== id));
-        this.applyTagFilter();
+        this.mangaList.update(mangas => mangas.filter(m => m.id !== id));
     }
 
     openForm(manga?: Manga) {
@@ -122,20 +93,16 @@ export class MangasPageComponent {
     };
 
     handleFormSumbission(manga: Manga) {
-        this.allMangas.update(mangas => {
+        this.mangaList.update(mangas => {
             const index = mangas.findIndex(m => m.id === manga.id);
-            if (index === -1) return [...mangas, manga];
-            const next = [...mangas];
-            next[index] = manga;
-            return next;
+            if (index === -1) {
+                return [...mangas, manga];
+            } else {
+                const next = [...mangas];
+                next[index] = manga;
+                return next;
+            }
         });
-        this.applyTagFilter();
-    }
-
-    onFilterChanged(event: { tagIds: number[]; mode: 'AND' | 'OR' }) {
-        this.selectedTagIds.set(event.tagIds);
-        this.tagMode.set(event.mode);
-        this.applyTagFilter();
     }
 
     private syncQueryParams() {

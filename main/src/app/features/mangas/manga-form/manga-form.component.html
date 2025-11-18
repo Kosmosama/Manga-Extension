@@ -5,9 +5,15 @@
             autocomplete="off" />
         @if (mangaForm.get('title')?.touched && mangaForm.get('title')?.invalid) {
         <div class="error">
-            @if (mangaForm.get('title')?.errors?.['required']) { {{ 'errors.title.required' | transloco }} }
-            @if (mangaForm.get('title')?.errors?.['minlength']) { {{ 'errors.title.minLength' | transloco }} }
-            @if (mangaForm.get('title')?.errors?.['titleTaken']) { {{ 'errors.title.duplicate' | transloco }} }
+            @if (mangaForm.get('title')?.errors?.['required']) {
+            {{ 'errors.title.required' | transloco }}
+            }
+            @if (mangaForm.get('title')?.errors?.['minlength']) {
+            {{ 'errors.title.minLength' | transloco }}
+            }
+            @if (mangaForm.get('title')?.errors?.['titleTaken']) {
+            {{ 'errors.title.duplicate' | transloco }}
+            }
         </div>
         }
     </div>
@@ -16,18 +22,12 @@
         <label for="link">{{ 'form.link.label' | transloco }}</label>
         <input id="link" formControlName="link" [placeholder]="'form.link.placeholder' | transloco"
             autocomplete="off" />
-        @if (mangaForm.get('link')?.touched && mangaForm.get('link')?.errors?.['urlInvalid']) {
-        <div class="error">{{ 'errors.link.invalid' | transloco }}</div>
-        }
     </div>
 
     <div class="form-group">
         <label for="image">{{ 'form.image.label' | transloco }}</label>
         <input id="image" formControlName="image" [placeholder]="'form.image.placeholder' | transloco"
             autocomplete="off" />
-        @if (mangaForm.get('image')?.touched && mangaForm.get('image')?.errors?.['urlInvalid']) {
-        <div class="error">{{ 'errors.image.invalid' | transloco }}</div>
-        }
     </div>
 
     @if (imagePreviewUrl()) {
@@ -36,9 +36,14 @@
         <div class="preview-box" [class.loading]="imageLoading()" [class.error]="imageError()">
             <img [src]="imagePreviewUrl()" (load)="onPreviewLoad()" (error)="onPreviewError()"
                 [attr.alt]="imageError() ? ('accessibility.image.altFallback' | transloco) : (mangaForm.get('title')?.value || 'Image preview')" />
-            @if (imageLoading()) { <div class="preview-status">Loading...</div> }
-            @if (imageError()) { <div class="preview-status error-text">{{ 'accessibility.image.altFallback' | transloco
-                }}</div> }
+            @if (imageLoading()) {
+            <div class="preview-status">Loading...</div>
+            }
+            @if (imageError()) {
+            <div class="preview-status error-text">
+                {{ 'accessibility.image.altFallback' | transloco }}
+            </div>
+            }
         </div>
     </div>
     }
@@ -47,7 +52,9 @@
         <label for="chapters">{{ 'form.chapters.label' | transloco }}</label>
         <input id="chapters" type="number" formControlName="chapters" required min="0" />
         @if (mangaForm.get('chapters')?.touched && mangaForm.get('chapters')?.invalid) {
-        <div class="error">{{ 'errors.chapters.invalid' | transloco }}</div>
+        <div class="error">
+            {{ 'errors.chapters.invalid' | transloco }}
+        </div>
         }
     </div>
 
@@ -79,5 +86,7 @@
         <input id="tags" formControlName="tags" />
     </div>
 
-    <button type="submit" [disabled]="mangaForm.invalid">{{ 'common.save' | transloco }}</button>
+    <button type="submit" [disabled]="mangaForm.invalid">
+        {{ 'common.save' | transloco }}
+    </button>
 </form>

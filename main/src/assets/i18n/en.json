@@ -49,8 +49,6 @@
         "title.minLength": "Title must be at least 3 characters.",
         "title.duplicate": "Title must be unique.",
         "chapters.invalid": "Must be a non-negative number.",
-        "link.invalid": "Link must be a valid URL (http/https).",
-        "image.invalid": "Image must be a valid URL (http/https).",
         "file.invalidType": "Invalid file type.",
         "file.invalid": "Invalid file.",
         "file.parseError": "Could not parse file.",
@@ -69,7 +67,9 @@
         "language": { "en": "English", "es": "Spanish" },
         "focusSearch": "Auto-focus search on load"
     },
-    "accessibility": { "image": { "altFallback": "No image available" } },
+    "accessibility": {
+        "image": { "altFallback": "No image available" }
+    },
     "toasts": {
         "manga": {
             "added": "Manga added",
