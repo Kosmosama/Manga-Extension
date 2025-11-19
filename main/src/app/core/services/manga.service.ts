@@ -11,7 +11,10 @@ export class MangaService {
     private database = inject(DatabaseService);
 
     /**
-     * Creates a Manga object with default values applied.
+     * Applies default values to a manga object before storage.
+     *
+     * @param partial A partial manga object to fill with defaults
+     * @returns A fully populated `Manga` instance
      */
     private withDefaults(partial: Partial<Manga>): Manga {
         const nowIso = new Date().toISOString();
@@ -33,6 +36,9 @@ export class MangaService {
 
     /**
      * Retrieves a manga by its ID.
+     *
+     * @param id Manga database ID
+     * @returns Observable emitting the found manga or `undefined`
      */
     getMangaById(id: number): Observable<Manga | undefined> {
         return from(this.database.mangas.get(id));
@@ -40,6 +46,9 @@ export class MangaService {
 
     /**
      * Retrieves all mangas matching the provided filters.
+     *
+     * @param filters Filter rules such as tags, ranges, sorting, and search
+     * @returns Observable emitting the filtered manga list
      */
     getAllMangas(filters: MangaFilters = {}): Observable<Manga[]> {
         let query = this.database.mangas.toCollection();
@@ -75,6 +84,10 @@ export class MangaService {
 
     /**
      * Retrieves mangas for main page display (search + sorting).
+     *
+     * @param search Search input for title filtering
+     * @param order Sort order, defaults to ascending
+     * @returns Observable emitting the filtered list
      */
     listForMainPage(search: string, order: 'asc' | 'desc' = 'asc'): Observable<Manga[]> {
         return this.getAllMangas({
@@ -85,7 +98,10 @@ export class MangaService {
     }
 
     /**
-     * Adds a manga to the database.
+     * Inserts a new manga into the database.
+     *
+     * @param manga Full manga object to insert
+     * @returns Observable emitting the new ID
      */
     addManga(manga: Manga): Observable<number> {
         const entity = this.withDefaults(manga);
@@ -93,7 +109,10 @@ export class MangaService {
     }
 
     /**
-     * Adds a manga using minimal input fields.
+     * Inserts a manga with minimal input fields.
+     *
+     * @param input Minimal required manga fields
+     * @returns Observable emitting the new ID
      */
     addMangaMinimal(input: {
         title: string;
@@ -113,7 +132,11 @@ export class MangaService {
     }
 
     /**
-     * Updates a manga with the provided changes.
+     * Updates a manga's fields.
+     *
+     * @param id Manga ID
+     * @param changes Partial update patch
+     * @returns Observable emitting the number of updated entries
      */
     updateManga(id: number, changes: Partial<Manga>): Observable<number> {
         return from(this.database.mangas.update(id, {
@@ -123,7 +146,10 @@ export class MangaService {
     }
 
     /**
-     * Removes a manga from the database.
+     * Deletes a manga permanently.
+     *
+     * @param id Manga ID
+     * @returns Observable emitting `void`
      */
     deleteManga(id: number): Observable<void> {
         return from(this.database.mangas.delete(id)).pipe(map(() => { }));
@@ -131,6 +157,10 @@ export class MangaService {
 
     /**
      * Toggles the favorite status of a manga.
+     *
+     * @param mangaId Manga ID
+     * @param actualFavoriteStatus Optional known favorite value to skip a lookup
+     * @returns Observable emitting `void`
      */
     toggleFavorite(mangaId: number, actualFavoriteStatus?: boolean): Observable<void> {
         if (typeof actualFavoriteStatus === 'boolean') {
@@ -151,7 +181,11 @@ export class MangaService {
     }
 
     /**
-     * Updates the chapter count for a manga.
+     * Sets the chapter count for a manga.
+     *
+     * @param mangaId Manga ID
+     * @param chapters New chapter count
+     * @returns Observable emitting `void`
      */
     updateChapters(mangaId: number, chapters: number): Observable<void> {
         return from(this.database.mangas.update(mangaId, {
@@ -161,7 +195,10 @@ export class MangaService {
     }
 
     /**
-     * Increments the chapter count of a manga by 1.
+     * Increments the chapter count by one.
+     *
+     * @param mangaId Manga ID
+     * @returns Observable emitting `void`
      */
     incrementChapters(mangaId: number): Observable<void> {
         return this.getMangaById(mangaId).pipe(
@@ -173,7 +210,10 @@ export class MangaService {
     }
 
     /**
-     * Decrements the chapter count of a manga by 1 (min 0).
+     * Decrements the chapter count by one without going below zero.
+     *
+     * @param mangaId Manga ID
+     * @returns Observable emitting `void`
      */
     decrementChapters(mangaId: number): Observable<void> {
         return this.getMangaById(mangaId).pipe(
@@ -186,6 +226,10 @@ export class MangaService {
 
     /**
      * Adds one or more tags to a manga.
+     *
+     * @param mangaId Manga ID
+     * @param tagIds Tag IDs to add
+     * @returns Observable emitting update result
      */
     addTagToManga(mangaId: number, tagIds: number[]): Observable<number> {
         const op = this.database.mangas.get(mangaId).then(async manga => {
@@ -209,7 +253,11 @@ export class MangaService {
     }
 
     /**
-     * Removes a tag from a manga.
+     * Removes a single tag from a manga.
+     *
+     * @param mangaId Manga ID
+     * @param tagId Tag ID to remove
+     * @returns Observable emitting update result
      */
     removeTagFromManga(mangaId: number, tagId: number): Observable<number> {
         const op = this.database.mangas.get(mangaId).then(manga => {
@@ -224,7 +272,10 @@ export class MangaService {
     }
 
     /**
-     * Removes a tag from all mangas that contain it.
+     * Removes a tag from all mangas containing it.
+     *
+     * @param tagId Tag ID to remove
+     * @returns Observable emitting `void`
      */
     removeTagFromAllMangas(tagId: number): Observable<void> {
         const op = this.database.mangas
@@ -236,7 +287,11 @@ export class MangaService {
     }
 
     /**
-     * Updates manga links matching an old pattern to a new one.
+     * Rewrites manga link values matching a pattern.
+     *
+     * @param oldLink Old URL segment or pattern
+     * @param newLink Replacement URL segment
+     * @returns Observable emitting `void`
      */
     updateMangaLinks(oldLink: string, newLink: string): Observable<void> {
         const op = this.database.mangas.toArray().then(mangas => {
@@ -255,7 +310,11 @@ export class MangaService {
     }
 
     /**
-     * Checks if a title already exists, optionally excluding a specific ID.
+     * Checks whether a title already exists, optionally excluding a specific ID.
+     *
+     * @param title Title to check
+     * @param excludeId Optional manga ID to ignore during comparison
+     * @returns Observable emitting `true` if the title exists
      */
     isTitleTaken(title: string, excludeId?: number): Observable<boolean> {
         const needle = title.trim().toLowerCase();
@@ -270,7 +329,10 @@ export class MangaService {
     }
 
     /**
-     * Checks whether a tag exists and cleans up dangling references.
+     * Validates if a tag exists; if not, dangling tag references are cleaned up.
+     *
+     * @param tagId Tag ID to verify
+     * @returns Promise resolving with `true` if the tag exists
      */
     private async tagExists(tagId: number): Promise<boolean> {
         const tag = await this.database.tags.get(tagId);
@@ -284,7 +346,10 @@ export class MangaService {
     }
 
     /**
-     * Resolves tag objects for an array of mangas.
+     * Resolves numerical tag IDs to full `Tag` objects for a manga list.
+     *
+     * @param mangas List of mangas with `tags` fields
+     * @returns Promise resolving to the same list with `resolvedTags` populated
      */
     private resolveTagsForMangas(mangas: Manga[]): Promise<Manga[]> {
         const tagIds = [...new Set(mangas.flatMap(m => m.tags || []))];
@@ -300,7 +365,11 @@ export class MangaService {
     }
 
     /**
-     * Applies a case-insensitive title search filter.
+     * Applies a case-insensitive text search to mangas by title.
+     *
+     * @param query Dexie collection to filter
+     * @param search Search text
+     * @returns Filtered Dexie collection
      */
     private applySearchFilter(
         query: Collection<Manga, number, Manga>,
@@ -311,7 +380,12 @@ export class MangaService {
     }
 
     /**
-     * Applies tag inclusion and exclusion filters.
+     * Filters mangas by required and excluded tags.
+     *
+     * @param query Dexie collection to filter
+     * @param includeTags Tags that must be present
+     * @param excludeTags Tags that must not be present
+     * @returns Filtered Dexie collection
      */
     private applyTagFilters(
         query: Collection<Manga, number, Manga>,
@@ -326,7 +400,12 @@ export class MangaService {
     }
 
     /**
-     * Filters mangas by a numeric range on a given field.
+     * Filters mangas by a numeric range.
+     *
+     * @param query Dexie collection to filter
+     * @param range Minimum and maximum allowed values
+     * @param field Numeric field to evaluate
+     * @returns Filtered Dexie collection
      */
     private applyNumericRangeFilter(
         query: Collection<Manga, number, Manga>,
@@ -340,7 +419,12 @@ export class MangaService {
     }
 
     /**
-     * Filters mangas by a date range for ISO string date fields.
+     * Filters mangas by a date range.
+     *
+     * @param query Dexie collection to filter
+     * @param range Date range to match
+     * @param field ISO date string field to evaluate
+     * @returns Filtered Dexie collection
      */
     private applyDateRangeFilter(
         query: Collection<Manga, number, Manga>,
@@ -358,7 +442,11 @@ export class MangaService {
     }
 
     /**
-     * Returns a random subset of mangas from the query.
+     * Returns a random subset of results from the collection.
+     *
+     * @param query Dexie collection to sample from
+     * @param limit Number of results desired
+     * @returns Promise resolving to a randomly selected array
      */
     private async getRandomMangas(
         query: Collection<Manga, number, Manga>,

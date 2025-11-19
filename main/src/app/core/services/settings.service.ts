@@ -23,11 +23,22 @@ export class SettingsService {
         this.listenForExternalStorageChanges();
     }
 
+    /**
+     * Indicates whether Chrome extension storage APIs are available.
+     */
     private get chromeAvailable(): boolean {
         const anyWin = window as any;
         return typeof anyWin !== 'undefined' && !!anyWin.chrome?.storage?.local;
     }
 
+    /**
+     * Retrieves a value from storage or returns the fallback.
+     *
+     * @typeParam T The expected stored value type
+     * @param key Storage key
+     * @param fallback Value returned if the key is missing or inaccessible
+     * @returns Observable emitting the retrieved value
+     */
     private storageGet$<T = unknown>(key: string, fallback: T): Observable<T> {
         return defer(() => new Observable<T>(subscriber => {
             if (this.chromeAvailable) {
@@ -51,6 +62,13 @@ export class SettingsService {
         }));
     }
 
+    /**
+     * Stores a value locally or in Chrome extension storage.
+     *
+     * @typeParam T The type of value to store
+     * @param key Storage key
+     * @param value Value to store
+     */
     private storageSet<T = unknown>(key: string, value: T): void {
         if (this.chromeAvailable) {
             (window as any).chrome.storage.local.set({ [key]: value });
@@ -62,7 +80,11 @@ export class SettingsService {
         }
     }
 
-    private listenForExternalStorageChanges() {
+    /**
+     * Listens for changes in external storage (e.g., another browser tab)
+     * and synchronizes relevant settings into the application.
+     */
+    private listenForExternalStorageChanges(): void {
         if (!this.chromeAvailable) return;
         (window as any).chrome.storage.onChanged.addListener((changes: any, areaName: string) => {
             if (areaName !== 'local') return;
@@ -79,6 +101,11 @@ export class SettingsService {
         });
     }
 
+    /**
+     * Initializes stored or fallback language at startup.
+     *
+     * @returns Observable emitting when initialization is complete
+     */
     private initializeLanguage$(): Observable<void> {
         return defer(() => new Observable<void>(subscriber => {
             this.storageGet$<string | null>(this.STORAGE_KEY, null).subscribe(storedLang => {
@@ -98,6 +125,11 @@ export class SettingsService {
         }));
     }
 
+    /**
+     * Initializes stored setting determining whether search input should auto-focus.
+     *
+     * @returns Observable emitting when initialization is complete
+     */
     private initializeFocusSearchInput$(): Observable<void> {
         return defer(() => new Observable<void>(subscriber => {
             this.storageGet$<boolean>(this.FOCUS_SEARCH_INPUT_KEY, true).subscribe(value => {
@@ -107,7 +139,12 @@ export class SettingsService {
         }));
     }
 
-    changeLanguage(value: string) {
+    /**
+     * Changes the application's active language if valid.
+     *
+     * @param value New language code
+     */
+    changeLanguage(value: string): void {
         if (this.languages().includes(value)) {
             this.setLanguage(value);
         } else {
@@ -115,13 +152,24 @@ export class SettingsService {
         }
     }
 
-    private setLanguage(lang: string) {
+    /**
+     * Applies the new language by updating storage, the localization service,
+     * and the reactive signal.
+     *
+     * @param lang Language code to activate
+     */
+    private setLanguage(lang: string): void {
         this.storageSet(this.STORAGE_KEY, lang);
         this.translocoService.setActiveLang(lang);
         this.activeLanguage.set(lang);
     }
 
-    toggleFocusSearchInput(value: boolean) {
+    /**
+     * Updates whether the search input should auto-focus and persists the value.
+     *
+     * @param value Whether to enable auto-focus
+     */
+    toggleFocusSearchInput(value: boolean): void {
         this.storageSet(this.FOCUS_SEARCH_INPUT_KEY, value);
         this.focusSearchInput.set(value);
     }

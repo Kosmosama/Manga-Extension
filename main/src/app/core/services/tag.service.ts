@@ -11,20 +11,28 @@ export class TagService {
 
     /**
      * Retrieves a tag by its ID.
+     *
+     * @param id The unique tag identifier
+     * @returns Observable emitting the tag or `undefined` if not found
      */
     getTagById(id: number): Observable<Tag | undefined> {
         return from(this.database.tags.get(id));
     }
 
     /**
-     * Retrieves all tags.
+     * Retrieves all existing tags.
+     *
+     * @returns Observable emitting the list of all tags
      */
     getAllTags(): Observable<Tag[]> {
         return from(this.database.tags.toArray());
     }
 
     /**
-     * Adds a new tag.
+     * Adds a new tag to the database.
+     *
+     * @param tag The tag entity to insert
+     * @returns Observable emitting the new tag's ID
      */
     addTag(tag: Tag): Observable<number> {
         const nowIso = new Date().toISOString();
@@ -38,14 +46,20 @@ export class TagService {
 
     /**
      * Updates an existing tag.
+     *
+     * @param id The tag ID to update
+     * @param changes Partial changes to apply
+     * @returns Observable emitting the number of modified entries (0 or 1)
      */
     updateTag(id: number, changes: Partial<Tag>): Observable<number> {
         return from(this.database.tags.update(id, changes));
     }
 
     /**
-     * Deletes a tag and removes it from all mangas (observable-based sequencing).
-     * Using observable chaining avoids mixing Promise and Observable at the public API boundary.
+     * Deletes a tag and removes it from all mangas that reference it.
+     *
+     * @param id The tag ID to delete
+     * @returns Observable emitting `void` when the operation completes
      */
     deleteTag(id: number): Observable<void> {
         return this.mangaService.removeTagFromAllMangas(id).pipe(
