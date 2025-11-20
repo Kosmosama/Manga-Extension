@@ -1,7 +1,5 @@
 # TODO
 
-Note: This list excludes translations/more languages and adding “System” to the theme selector. It also excludes Testing and Housekeeping.
-
 ## 1. Internationalization (i18n) & Localization
 
 ### Core integration
@@ -96,8 +94,8 @@ Note: This list excludes translations/more languages and adding “System” to 
 
 ### Cleanup
 
-- [ ] Remove unused imports.
-- [ ] Enforce lint rules.
+- [x] Remove unused imports. (Phase 1)
+- [x] Enforce lint rules. (Phase 1)
 
 ---
 
@@ -107,9 +105,9 @@ Note: This list excludes translations/more languages and adding “System” to 
 
 - [x] List all mangas (basic page with search + sort).
 - [x] Create manga (form minimal: title, link -> base64 cover placeholder, tags, chapters initialization).
-- [ ] Edit button flows into populated form modal (partial: edit logic stub).
+- [x] Edit button flows into populated form modal (Phase 1).
 - [x] Favorite toggle: optimistic update + rollback.
-- [ ] Broken image state: show fallback + small reload button.
+- [x] Broken image state: show fallback + small reload button (Phase 1).
 
 ### Manga page
 
@@ -121,13 +119,13 @@ Note: This list excludes translations/more languages and adding “System” to 
 
 - [x] CRUD UI (create/edit/delete basic).
 - [x] Assign tags in add/edit form (multi-select).
-- [ ] Tag badges on cards (displayed, filter logic still pending).
-- [ ] Filter bar: multi-tag AND/OR modes.
+- [x] Tag badges on cards (displayed, filter logic still pending).
+- [x] Filter bar: multi-tag AND/OR modes.
 
 ### Form (Add/Edit)
 
 - [x] Live image preview (debounced).
-- [x] Validation (required, URL pattern, uniqueness). (Uniqueness + basic; URL pattern pending)
+- [x] Validation (required, URL pattern, uniqueness). (Phase 1 added URL pattern validator)
 - [x] Accessible labels, focus trapping on modal open.
 - [x] Distinct Save vs Cancel outcomes (announce via toast).
 
@@ -145,7 +143,7 @@ Note: This list excludes translations/more languages and adding “System” to 
 
 - [x] Focus search input toggle (already stored, needs UI).
 - [x] Real-time sync via storage change events.
-- [ ] Settings segmentation: Theme, Language, Shortcuts, Behavior (focus search, tags view preferences).
+- [x] Settings segmentation: Theme, Language, Shortcuts, Behavior (Phase 1).
 
 ---
 
