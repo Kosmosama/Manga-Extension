@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Collection } from 'dexie';
 import { from, map, Observable, of, switchMap } from 'rxjs';
-import { MangaFilters, Range } from '../interfaces/filters.interface';
+import { MangaFilters, Range, TagIncludeMode } from '../interfaces/filters.interface';
 import { Tag } from '../interfaces/tag.interface';
 import { Manga, MangaState, MangaType } from '../interfaces/manga.interface';
 import { DatabaseService } from './database.service';
@@ -56,8 +56,13 @@ export class MangaService {
         if (filters.search) {
             query = this.applySearchFilter(query, filters.search);
         }
-        if (filters.includeTags || filters.excludeTags) {
-            query = this.applyTagFilters(query, filters.includeTags, filters.excludeTags);
+        if ((filters.includeTags && filters.includeTags.length) || (filters.excludeTags && filters.excludeTags.length)) {
+            query = this.applyTagFilters(
+                query,
+                filters.includeTags ?? [],
+                filters.excludeTags ?? [],
+                filters.includeTagsMode ?? 'AND'
+            );
         }
         if (filters.chapterRange) {
             query = this.applyNumericRangeFilter(query, filters.chapterRange, 'chapters');
@@ -380,22 +385,38 @@ export class MangaService {
     }
 
     /**
-     * Filters mangas by required and excluded tags.
+     * Filters mangas by required and excluded tags supporting AND / OR semantics for includeTags.
      *
      * @param query Dexie collection to filter
-     * @param includeTags Tags that must be present
+     * @param includeTags Tags that must be present (AND = all, OR = any)
      * @param excludeTags Tags that must not be present
+     * @param includeMode Evaluation mode for includeTags
      * @returns Filtered Dexie collection
      */
     private applyTagFilters(
         query: Collection<Manga, number, Manga>,
         includeTags: number[] = [],
-        excludeTags: number[] = []
+        excludeTags: number[] = [],
+        includeMode: TagIncludeMode = 'AND'
     ): Collection<Manga, number, Manga> {
+        if (!includeTags.length && !excludeTags.length) return query;
+
         return query.filter(manga => {
             const tagSet = new Set(manga.tags ?? []);
-            return includeTags.every(tagSet.has.bind(tagSet)) &&
-                !excludeTags.some(tagSet.has.bind(tagSet));
+
+            const includePass = !includeTags.length
+                ? true
+                : includeMode === 'AND'
+                    ? includeTags.every(t => tagSet.has(t))
+                    : includeTags.some(t => tagSet.has(t));
+
+            if (!includePass) return false;
+
+            if (excludeTags.length) {
+                const excluded = excludeTags.some(t => tagSet.has(t));
+                if (excluded) return false;
+            }
+            return true;
         });
     }
 

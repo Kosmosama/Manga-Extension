@@ -35,10 +35,9 @@ export class TagService {
      * @returns Observable emitting the new tag's ID
      */
     addTag(tag: Tag): Observable<number> {
-        const nowIso = new Date().toISOString();
         const entity: Tag = {
             ...tag,
-            name: tag.name,
+            name: tag.name.trim(),
             color: tag.color,
         };
         return from(this.database.tags.add(entity));
