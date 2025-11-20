@@ -1,17 +1,29 @@
-<div class="tag-filter-bar">
-    <div class="mode-switch">
-        <button type="button" (click)="setMode('AND')" [class.active]="mode() === 'AND'">AND</button>
-        <button type="button" (click)="setMode('OR')" [class.active]="mode() === 'OR'">OR</button>
-        <button type="button" (click)="clear()" [disabled]="!count()">Clear</button>
-    </div>
-
-    <div class="tag-list">
+<div class="filter-container">
+    <div class="tags">
+        @if (tags().length === 0) {
+        <span class="empty">{{ 'tags.empty' | transloco }}</span>
+        } @else {
         @for (tag of tags(); track tag.id) {
-        <button type="button" class="tag-chip" [class.selected]="isSelected(tag.id)" (click)="toggleTag(tag.id)"
-            [style.background]="isSelected(tag.id) ? tag.color : '#222'"
-            [style.color]="isSelected(tag.id) ? '#000' : '#ccc'" aria-pressed="{{ isSelected(tag.id) }}">
+        <button class="tag-pill" [class.active]="isSelected(tag.id)" (click)="toggle(tag.id)"
+            [style.--tag-color]="tag.color || '#666'" [attr.aria-pressed]="isSelected(tag.id)">
+            <span class="color-dot" [style.background]="tag.color || '#666'"></span>
             {{ tag.name }}
         </button>
         }
+        }
+    </div>
+
+    <div class="mode-row">
+        <label>
+            <input type="radio" name="tagMode" value="AND" (change)="setMode('AND')" [checked]="mode() === 'AND'">
+            {{ 'tags.filter.mode.and' | transloco }}
+        </label>
+        <label>
+            <input type="radio" name="tagMode" value="OR" (change)="setMode('OR')" [checked]="mode() === 'OR'">
+            {{ 'tags.filter.mode.or' | transloco }}
+        </label>
+        <button class="clear-btn" type="button" (click)="clear()" [disabled]="selectedIds().length === 0">
+            {{ 'tags.filter.clear' | transloco }}
+        </button>
     </div>
 </div>

@@ -1,25 +1,67 @@
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
 .toolbar {
     display: flex;
-    gap: 0.75rem;
-    align-items: center;
     flex-wrap: wrap;
-    margin-bottom: 0.75rem;
-}
-
-.toolbar form {
-    display: flex;
-    gap: 0.4rem;
+    gap: .75rem;
     align-items: center;
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    padding: .5rem .75rem;
+    border-radius: 8px;
 }
 
-.manga-list {
+.search-group {
+    display: flex;
+    align-items: center;
+    gap: .4rem;
+    flex: 1 1 200px;
+}
+
+.search-input {
+    flex: 1;
+    padding: .4rem .6rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    background: var(--surface);
+    font-size: .8rem;
+    color: var(--text);
+}
+
+.sort-btn,
+.add-btn {
+    padding: .45rem .7rem;
+    font-size: .7rem;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    border-radius: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+}
+
+.sort-btn:hover,
+.add-btn:hover {
+    background: var(--accent);
+    color: #fff;
+}
+
+.manga-grid {
     display: grid;
-    gap: 0.75rem;
+    gap: .75rem;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
 }
 
-.empty {
-    opacity: 0.7;
-    font-size: 0.9rem;
-    padding: 1rem;
+.empty-state {
+    opacity: .6;
+    font-style: italic;
+    font-size: .8rem;
     text-align: center;
+    padding: 1.5rem 0;
 }

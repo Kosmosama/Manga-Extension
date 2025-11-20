@@ -1,53 +1,53 @@
-import { Component, inject, output, signal, computed, effect } from '@angular/core';
-import { TagService } from '../../../core/services/tag.service';
-import { Tag } from '../../../core/interfaces/tag.interface';
+import { Component, inject } from '@angular/core';
+import { TagFilterService } from '../../../core/services/tag-filter.service';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
     selector: 'tag-filter-bar',
     standalone: true,
-    imports: [],
+    imports: [TranslocoPipe],
     templateUrl: './tag-filter-bar.component.html',
     styleUrl: './tag-filter-bar.component.css'
 })
 export class TagFilterBarComponent {
-    private tagService = inject(TagService);
+    private tagFilterService = inject(TagFilterService);
 
-    tags = signal<Tag[]>([]);
-    selectedTagIds = signal<Set<number>>(new Set());
-    mode = signal<'AND' | 'OR'>('AND');
+    tags = () => this.tagFilterService.tags();
+    mode = this.tagFilterService.includeMode;
+    selectedIds = this.tagFilterService.selectedTagIds;
 
-    filterChanged = output<{ tagIds: number[]; mode: 'AND' | 'OR' }>();
-
-    constructor() {
-        this.tagService.getAllTags().subscribe(all => this.tags.set(all));
-        effect(() => {
-            this.filterChanged.emit({
-                tagIds: Array.from(this.selectedTagIds()),
-                mode: this.mode()
-            });
-        });
-    }
-
-    toggleTag(id: number) {
-        this.selectedTagIds.update(set => {
-            const next = new Set(set);
-            if (next.has(id)) next.delete(id);
-            else next.add(id);
-            return next;
-        });
-    }
-
-    setMode(next: 'AND' | 'OR') {
-        this.mode.set(next);
-    }
-
+    /**
+     * Determines if a tag ID is currently selected.
+     *
+     * @param id Tag ID
+     * @returns True if selected
+     */
     isSelected(id: number): boolean {
-        return this.selectedTagIds().has(id);
+        return this.selectedIds().includes(id);
     }
 
-    clear() {
-        this.selectedTagIds.set(new Set());
+    /**
+     * Toggles selection for the given tag ID.
+     *
+     * @param id Tag ID
+     */
+    toggle(id: number): void {
+        this.tagFilterService.toggleTag(id);
     }
 
-    count = computed(() => this.selectedTagIds().size);
+    /**
+     * Sets the AND / OR filtering mode.
+     *
+     * @param mode New mode
+     */
+    setMode(mode: 'AND' | 'OR'): void {
+        this.tagFilterService.setMode(mode);
+    }
+
+    /**
+     * Clears all selected tag IDs.
+     */
+    clear(): void {
+        this.tagFilterService.clear();
+    }
 }
