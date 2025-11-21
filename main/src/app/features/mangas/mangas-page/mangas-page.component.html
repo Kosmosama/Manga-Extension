@@ -2,17 +2,23 @@
     <div class="toolbar">
         <div class="search-group">
             <input type="search" [value]="searchQuery()"
-                (input)="onSearchInput($any($event.target)?.value)"
+                (input)="onSearchInput(($any($event.target)).value)"
                 placeholder="{{ 'search.placeholder' | transloco }}" class="search-input" />
             @if (searchQuery()) {
             <button (click)="clearSearch()" aria-label="{{ 'search.clear' | transloco }}">✕</button>
             }
         </div>
+
         <button (click)="toggleSort()" class="sort-btn">
             {{ 'manga.sort.label' | transloco }}:
             <strong>{{ sortOrder() === 'asc' ? ('manga.sort.asc' | transloco) : ('manga.sort.desc' | transloco)
                 }}</strong>
         </button>
+
+        <button (click)="toggleViewMode()" class="view-btn">
+            {{ viewMode() === 'grid' ? ('manga.view.list' | transloco) : ('manga.view.grid' | transloco) }}
+        </button>
+
         <button (click)="openForm()" class="add-btn">
             {{ 'actions.add' | transloco }}
         </button>
@@ -20,14 +26,23 @@
 
     <tag-filter-bar />
 
-    @if (mangaList().length === 0) {
-    <p class="empty-state">{{ 'manga.empty' | transloco }}</p>
-    } @else {
-    <div class="manga-grid">
-        @for (m of mangaList(); track m.id) {
-        <manga-card [manga]="m" [handleEdit]="handleEdit" (deleted)="handleMangaDeletion($event)" />
+    @if (loading()) {
+    <div class="skeleton-container" [class.list-mode]="viewMode() === 'list'">
+        @for (item of [1,2,3,4,5,6]; track item) {
+        <skeleton kind="card" />
         }
     </div>
+    } @else {
+    @if (!hasResults()) {
+    <p class="empty-state">{{ 'manga.empty' | transloco }}</p>
+    } @else {
+    <div class="manga-collection" [class.list-mode]="viewMode() === 'list'">
+        @for (m of mangaList(); track m.id) {
+        <manga-card [manga]="m" [handleEdit]="handleEdit" (deleted)="handleMangaDeletion($event)"
+            [class.list-item]="viewMode() === 'list'" />
+        }
+    </div>
+    }
     }
 
     <modal #modal>

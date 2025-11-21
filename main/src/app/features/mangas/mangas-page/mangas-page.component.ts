@@ -1,4 +1,4 @@
-import { Component, inject, signal, viewChild, effect, DestroyRef } from '@angular/core';
+import { Component, inject, signal, viewChild, effect, DestroyRef, computed } from '@angular/core';
 import { TranslocoPipe } from '@jsverse/transloco';
 import { MangaFormComponent } from '../manga-form/manga-form.component';
 import { MangaComponent } from '../manga-card/manga-card.component';
@@ -13,11 +13,19 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { TagFilterBarComponent } from '../../tags/tag-filter-bar/tag-filter-bar.component';
 import { TagFilterService } from '../../../core/services/tag-filter.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { SkeletonComponent } from '../../../shared/skeleton/skeleton.component';
 
 @Component({
     selector: 'mangas-page',
     standalone: true,
-    imports: [TranslocoPipe, ModalComponent, MangaComponent, MangaFormComponent, TagFilterBarComponent],
+    imports: [
+        TranslocoPipe,
+        ModalComponent,
+        MangaComponent,
+        MangaFormComponent,
+        TagFilterBarComponent,
+        SkeletonComponent
+    ],
     templateUrl: './mangas-page.component.html',
     styleUrl: './mangas-page.component.css',
 })
@@ -35,10 +43,16 @@ export class MangasPageComponent {
     selectedManga = signal<Manga | null>(null);
     mangaList = signal<Manga[]>([]);
     theme = signal<Theme>(this.themeService.theme);
+
     searchQuery = signal<string>('');
     sortOrder = signal<'asc' | 'desc'>('asc');
+    viewMode = signal<'grid' | 'list'>('grid');
+
+    loading = signal<boolean>(false);
 
     private searchInput$ = new Subject<string>();
+
+    readonly hasResults = computed(() => this.mangaList().length > 0);
 
     constructor() {
         const qp = this.route.snapshot.queryParamMap;
@@ -47,27 +61,23 @@ export class MangasPageComponent {
         this.searchQuery.set(initialQ);
         this.sortOrder.set(initialSort);
 
-        // Debounced search input
+        // Debounced search
         this.searchInput$
-            .pipe(
-                debounceTime(300),
-                distinctUntilChanged(),
-                takeUntilDestroyed(this.destroyRef)
-            )
+            .pipe(debounceTime(300), distinctUntilChanged(), takeUntilDestroyed(this.destroyRef))
             .subscribe(value => {
                 this.searchQuery.set(value);
                 this.reload();
                 this.syncQueryParams();
             });
 
-        // React to sort changes
+        // Sort effect
         effect(() => {
             this.sortOrder();
             this.reload();
             this.syncQueryParams();
         });
 
-        // React to tag filter changes (selected tags or mode)
+        // Tag filter effect
         effect(() => {
             this.tagFilterService.selectedTagIds();
             this.tagFilterService.includeMode();
@@ -78,9 +88,11 @@ export class MangasPageComponent {
     }
 
     /**
-     * Re-fetches mangas based on current search, sort, and tag filters.
+     * Fetches mangas applying search, tags, mode, and sort signals.
+     * Sets loading state while awaiting results.
      */
     private reload(): void {
+        this.loading.set(true);
         this.mangaService
             .getAllMangas({
                 search: this.searchQuery(),
@@ -90,20 +102,21 @@ export class MangasPageComponent {
                 includeTagsMode: this.tagFilterService.includeMode()
             })
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe(mangas => this.mangaList.set(mangas));
+            .subscribe({
+                next: mangas => this.mangaList.set(mangas),
+                complete: () => this.loading.set(false)
+            });
     }
 
     /**
-     * Handles input events from search box (debounced pipeline).
-     *
-     * @param value New raw search string
+     * Handles raw search input (debounced pipeline).
      */
     onSearchInput(value: string) {
         this.searchInput$.next(value);
     }
 
     /**
-     * Clears current search query.
+     * Clears current search query if present.
      */
     clearSearch() {
         if (!this.searchQuery()) return;
@@ -111,25 +124,28 @@ export class MangasPageComponent {
     }
 
     /**
-     * Toggles sort order between ascending and descending.
+     * Toggles sort order.
      */
     toggleSort() {
         this.sortOrder.update(o => (o === 'asc' ? 'desc' : 'asc'));
     }
 
     /**
-     * Removes a deleted manga from local list state.
-     *
-     * @param id Manga ID
+     * Switches between grid and list layout view modes.
+     */
+    toggleViewMode() {
+        this.viewMode.update(m => (m === 'grid' ? 'list' : 'grid'));
+    }
+
+    /**
+     * Removes deleted manga from local signal state.
      */
     handleMangaDeletion(id: number) {
         this.mangaList.update(mangas => mangas.filter(m => m.id !== id));
     }
 
     /**
-     * Opens creation form (modal).
-     *
-     * @param manga Optional existing manga to prefill (ignored here for creation)
+     * Opens add/edit form in main modal (add when null).
      */
     openForm(manga?: Manga) {
         this.selectedManga.set(manga || null);
@@ -137,7 +153,7 @@ export class MangasPageComponent {
     }
 
     /**
-     * Triggers the edit modal for the given manga.
+     * Called by card to open edit modal.
      */
     handleEdit = (manga: Manga) => {
         this.selectedManga.set(manga);
@@ -145,9 +161,7 @@ export class MangasPageComponent {
     };
 
     /**
-     * Updates local list after form submission (add or edit).
-     *
-     * @param manga The upserted manga entity
+     * Upserts a manga into the current displayed list after form submission.
      */
     handleFormSumbission(manga: Manga) {
         this.mangaList.update(mangas => {
@@ -163,7 +177,7 @@ export class MangasPageComponent {
     }
 
     /**
-     * Syncs query params (search & sort) to the current route.
+     * Synchronizes query params for search & sort.
      */
     private syncQueryParams() {
         this.router.navigate([], {

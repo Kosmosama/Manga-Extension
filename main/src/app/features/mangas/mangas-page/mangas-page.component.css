@@ -33,29 +33,41 @@
 }
 
 .sort-btn,
-.add-btn {
+.add-btn,
+.view-btn {
     padding: .45rem .7rem;
     font-size: .7rem;
     border: 1px solid var(--border);
     background: var(--surface);
     border-radius: 4px;
     cursor: pointer;
-    white-space: nowrap;
     display: inline-flex;
     align-items: center;
     gap: .35rem;
+    white-space: nowrap;
 }
 
 .sort-btn:hover,
-.add-btn:hover {
+.add-btn:hover,
+.view-btn:hover {
     background: var(--accent);
     color: #fff;
 }
 
-.manga-grid {
+.manga-collection {
     display: grid;
     gap: .75rem;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+}
+
+.manga-collection.list-mode {
+    display: flex;
+    flex-direction: column;
+}
+
+.list-item {
+    max-width: 720px;
+    width: 100%;
 }
 
 .empty-state {
@@ -64,4 +76,31 @@
     font-size: .8rem;
     text-align: center;
     padding: 1.5rem 0;
+}
+
+.skeleton-container {
+    display: grid;
+    gap: .75rem;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+}
+
+.skeleton-container.list-mode {
+    display: flex;
+    flex-direction: column;
+}
+
+@media (forced-colors: active),
+(prefers-contrast: more) {
+
+    .toolbar,
+    .manga-collection,
+    .skeleton-container {
+        border-color: CanvasText;
+    }
+
+    .sort-btn,
+    .add-btn,
+    .view-btn {
+        border-color: CanvasText;
+    }
 }

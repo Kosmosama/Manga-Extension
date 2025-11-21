@@ -28,10 +28,11 @@ export class MangaComponent {
     private chapterChangeSubject = new Subject<void>();
     saving = signal(false);
 
-    deleted = output<number>(); // Emit the ID of the deleted manga
+    deleted = output<number>();
     handleEdit = input.required<(manga: Manga) => void>();
 
     isImageValid = signal<boolean>(true);
+    imageLoading = signal<boolean>(true);
 
     fallbackImage = computed(() => {
         return this.themeService.theme === Theme.Dark
@@ -40,7 +41,6 @@ export class MangaComponent {
     });
 
     constructor() {
-        // Batch chapter updates and persist after a short debounce
         this.chapterChangeSubject
             .pipe(
                 debounceTime(250),
@@ -76,12 +76,10 @@ export class MangaComponent {
             });
     }
 
-    // Open edit modal through parent handler
     editManga() {
         this.handleEdit()(this.manga());
     }
 
-    // Optimistic toggle + rollback on error
     toggleFavorite() {
         const current = this.manga();
         const prev = current.isFavorite;
@@ -104,21 +102,36 @@ export class MangaComponent {
     /**
      * Updates the chapters of the current manga.
      *
-     * @param change - The increment or decrement to chapter count.
+     * @param change The increment or decrement to chapter count.
      */
     updateChapters(change: number = 1) {
         const currentChapters = this.manga().chapters;
-        if (currentChapters + change < 0) {
-            return;
-        }
+        if (currentChapters + change < 0) return;
         this.manga.update(m => ({ ...m, chapters: m.chapters + change }));
         this.chapterChangeSubject.next();
     }
 
     /**
-     * On image error, first fall back to themed image.
+     * Called when the main cover image fails to load.
+     * Switches to themed fallback.
      */
     imageNotFound() {
         this.isImageValid.set(false);
+        this.imageLoading.set(false);
+    }
+
+    /**
+     * Called when the image finishes loading successfully.
+     */
+    imageLoaded() {
+        this.imageLoading.set(false);
+    }
+
+    /**
+     * Retries loading the original image (only if it previously failed).
+     */
+    retryImage() {
+        if (!this.isImageValid()) return;
+        this.imageLoading.set(true);
     }
 }

@@ -1,7 +1,13 @@
 <div class="manga-card">
-    <img [src]="isImageValid() ? manga().image : fallbackImage()"
-        [attr.alt]="isImageValid() ? manga().title : ('accessibility.image.altFallback' | transloco)"
-        (error)="imageNotFound()" loading="lazy" class="manga-cover" />
+    <div class="cover-wrapper">
+        @if (imageLoading()) {
+        <div class="image-skeleton" aria-hidden="true"></div>
+        }
+        <img [src]="isImageValid() ? manga().image : fallbackImage()"
+            [attr.alt]="isImageValid() ? manga().title : ('accessibility.image.altFallback' | transloco)"
+            (error)="imageNotFound()" (load)="imageLoaded()" loading="lazy" class="manga-cover"
+            [class.hidden]="imageLoading()" />
+    </div>
 
     <div class="manga-info">
         <h2>{{ manga().title }}</h2>
@@ -28,7 +34,8 @@
             <button (click)="deleteManga()" aria-label="{{ 'common.delete' | transloco }}">🗑️</button>
         </div>
 
-        <button (click)="editManga()" aria-label="{{ 'common.edit' | transloco }}">{{ 'common.edit' | transloco
-            }}</button>
+        <button (click)="editManga()" aria-label="{{ 'common.edit' | transloco }}">
+            {{ 'common.edit' | transloco }}
+        </button>
     </div>
 </div>
