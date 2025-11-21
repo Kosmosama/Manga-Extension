@@ -53,8 +53,8 @@
 
 - [x] Introduce CSS variables (theme-tokens.css).
 - [x] Smooth transitions.
-- [ ] Verify fallback images adapt (light/dark variants).
-- [ ] Ensure modals and overlays respect theme in high contrast.
+- [x] Verify fallback images adapt (light/dark variants).
+- [x] Ensure modals and overlays respect theme in high contrast.
 
 ### Resilience
 
@@ -112,7 +112,7 @@
 ### Manga page
 
 - [x] Basic page scaffold.
-- [ ] Responsive grid/list toggle.
+- [x] Responsive grid/list toggle.
 - [x] Empty state messaging (keys present; integrate fully).
 
 ### Tags
@@ -151,7 +151,7 @@
 
 - [x] Delete confirmation modal (with manga title shown).
 - [x] Toasts for: add, edit, delete, language change, theme change, shortcut updated (partial; shortcut toasts ready when engine exists).
-- [ ] Loading skeleton for manga list & image placeholders.
+- [x] Loading skeleton for manga list & image placeholders.
 - [x] Inline form validation errors (localized).
 
 ---
@@ -181,7 +181,7 @@
 - [x] Modal: trap focus, ESC closes, ARIA attributes.
 - [ ] Keyboard navigation: tab order, space/enter activation, shortcuts accessible but overridable.
 - [x] Alt attributes: fallback to manga title or localized “No image available”.
-- [ ] High contrast adaptation: allow user override of color tokens if needed (future extension).
+- [x] High contrast adaptation: allow user override of color tokens if needed (future extension).
 - [ ] Shortcut help overlay accessible via keyboard and screen readers.
 
 ---
