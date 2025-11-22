@@ -1,0 +1,98 @@
+<div class="import-export-wrapper">
+    <h1>{{ 'import.title' | transloco }}</h1>
+
+    <section class="actions">
+        <div class="import-block">
+            <h2>{{ 'import.json.section' | transloco }}</h2>
+            <label class="file-select">
+                <input type="file" accept="application/json"
+                    (change)="onFileSelected($any($event.target).files?.[0] || null)"
+                    aria-label="{{ 'import.json.choose' | transloco }}" />
+                <span>{{ fileName() || ('import.json.placeholder' | transloco) }}</span>
+            </label>
+
+            <div class="strategy">
+                <p>{{ 'import.strategy.label' | transloco }}</p>
+                <label>
+                    <input type="radio" name="collisionMode" value="prompt" [checked]="collisionMode() === 'prompt'"
+                        (change)="collisionMode.set('prompt')" />
+                    {{ 'import.strategy.prompt' | transloco }}
+                </label>
+                <label>
+                    <input type="radio" name="collisionMode" value="mergeAll" [checked]="collisionMode() === 'mergeAll'"
+                        (change)="collisionMode.set('mergeAll')" />
+                    {{ 'import.strategy.mergeAll' | transloco }}
+                </label>
+                <label>
+                    <input type="radio" name="collisionMode" value="skipAll" [checked]="collisionMode() === 'skipAll'"
+                        (change)="collisionMode.set('skipAll')" />
+                    {{ 'import.strategy.skipAll' | transloco }}
+                </label>
+            </div>
+
+            @if (importing()) {
+            <p class="status">{{ 'import.status.importing' | transloco }}...</p>
+            }
+        </div>
+
+        <div class="export-block">
+            <h2>{{ 'export.section' | transloco }}</h2>
+            <button (click)="exportLibrary()" [disabled]="exporting()">
+                {{ exporting() ? ('export.status.exporting' | transloco) : ('export.start' | transloco) }}
+            </button>
+        </div>
+
+        <div class="bookmarks-block">
+            <h2>{{ 'import.bookmarks.section' | transloco }}</h2>
+            <button (click)="importBookmarks()" [disabled]="bookmarksImporting()">
+                {{ bookmarksImporting() ? ('import.bookmarks.status' | transloco) : ('import.bookmarks.start' |
+                transloco) }}
+            </button>
+        </div>
+    </section>
+
+    @if (lastResult()) {
+    <section class="result">
+        <h3>{{ 'import.result.title' | transloco }}</h3>
+        <p>
+            {{ 'import.result.imported' | transloco }}: <strong>{{ lastResult()!.imported }}</strong> |
+            {{ 'import.result.skipped' | transloco }}: <strong>{{ lastResult()!.skipped }}</strong>
+        </p>
+
+        @if (lastResult()!.errors.length) {
+        <ul class="errors">
+            @for (e of lastResult()!.errors; track e) {
+            <li>{{ e | transloco }}</li>
+            }
+        </ul>
+        }
+
+        @if (hasCollisions()) {
+        <div class="collisions">
+            <h4>{{ 'import.collisions.title' | transloco }}</h4>
+            <p>{{ 'import.collisions.help' | transloco }}</p>
+            <ul>
+                @for (c of lastResult()!.collisions; track c.title; let i = $index) {
+                <li class="collision-item">
+                    <span class="collision-title">{{ c.title }}</span>
+                    <label>
+                        <input type="radio" [name]="'decision-' + i" (change)="setCollisionDecision(i, 'merge')"
+                            [checked]="c.decision === 'merge'" />
+                        {{ 'import.collisions.merge' | transloco }}
+                    </label>
+                    <label>
+                        <input type="radio" [name]="'decision-' + i" (change)="setCollisionDecision(i, 'skip')"
+                            [checked]="c.decision === 'skip'" />
+                        {{ 'import.collisions.skip' | transloco }}
+                    </label>
+                </li>
+                }
+            </ul>
+            <button (click)="applyDecisions()">
+                {{ 'import.collisions.apply' | transloco }}
+            </button>
+        </div>
+        }
+    </section>
+    }
+</div>

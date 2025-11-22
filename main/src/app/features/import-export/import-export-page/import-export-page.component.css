@@ -1,0 +1,114 @@
+.import-export-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    max-width: 800px;
+}
+
+.actions {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.import-block,
+.export-block,
+.bookmarks-block {
+    padding: .75rem .9rem;
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+}
+
+.file-select {
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
+    font-size: .75rem;
+}
+
+.file-select input[type=file] {
+    font-size: .7rem;
+}
+
+.strategy {
+    display: flex;
+    flex-direction: column;
+    gap: .35rem;
+    font-size: .65rem;
+}
+
+.status {
+    font-size: .65rem;
+    opacity: .75;
+}
+
+.result {
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: .9rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+}
+
+.errors {
+    margin: 0;
+    padding-left: 1.1rem;
+    font-size: .65rem;
+    color: #c0392b;
+}
+
+.collisions {
+    display: flex;
+    flex-direction: column;
+    gap: .6rem;
+}
+
+.collision-item {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    font-size: .65rem;
+    flex-wrap: wrap;
+    padding: .35rem .5rem;
+    border: 1px dashed var(--border);
+    border-radius: 6px;
+}
+
+.collision-title {
+    font-weight: 600;
+}
+
+button {
+    padding: .45rem .7rem;
+    font-size: .7rem;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: var(--accent);
+    color: #fff;
+}
+
+@media (forced-colors: active),
+(prefers-contrast: more) {
+
+    .import-block,
+    .export-block,
+    .bookmarks-block,
+    .result {
+        border-color: CanvasText;
+    }
+
+    button {
+        border-color: CanvasText;
+    }
+}

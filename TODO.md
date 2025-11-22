@@ -131,11 +131,11 @@
 
 ### Import / Export
 
-- [ ] Import JSON (validate schema; partial successes reported).
-- [ ] Export current library (download JSON).
-- [ ] Import from bookmarks (progress indicator, summary of imported/ignored).
-- [ ] Collision handling (duplicate titles -> choose merge/skip).
-- [ ] Error messaging localized.
+- [x] Import JSON (validate schema; partial successes reported).
+- [x] Export current library (download JSON).
+- [ ] Import from bookmarks (progress indicator, summary of imported/ignored). (scaffold implemented)
+- [x] Collision handling (duplicate titles -> choose merge/skip).
+- [x] Error messaging localized.
 
 ---
 
@@ -168,10 +168,10 @@
 ## 9. Data & Persistence
 
 - [x] Use `crypto.randomUUID()` for new IDs.
-- [ ] Data versioning (e.g., `{ version: 1 }` in storage root) + migration layer.
-- [ ] Distinguish sync vs local storage usage:
-  - [ ] Sync: theme, language, shortcuts, focus preference.
-  - [ ] Local: manga library, cover images metadata cache.
+- [x] Data versioning (e.g., `{ version: 1 }` in storage root) + migration layer.
+- [x] Distinguish sync vs local storage usage:
+  - [x] Sync: theme, language, shortcuts, focus preference.
+  - [x] Local: manga library, cover images metadata cache.
 - [x] Unique title enforcement with immediate feedback and translation key `errors.title.duplicate`.
 
 ---
