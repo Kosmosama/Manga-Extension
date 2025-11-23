@@ -25,6 +25,10 @@ export class MangaComponent {
 
     manga = model.required<Manga>();
 
+    // Accessibility / focus inputs
+    tabIndexValue = input<number>(-1);
+    focused = input<boolean>(false);
+
     private chapterChangeSubject = new Subject<void>();
     saving = signal(false);
 
@@ -111,27 +115,40 @@ export class MangaComponent {
         this.chapterChangeSubject.next();
     }
 
-    /**
-     * Called when the main cover image fails to load.
-     * Switches to themed fallback.
-     */
     imageNotFound() {
         this.isImageValid.set(false);
         this.imageLoading.set(false);
     }
 
-    /**
-     * Called when the image finishes loading successfully.
-     */
     imageLoaded() {
         this.imageLoading.set(false);
     }
 
-    /**
-     * Retries loading the original image (only if it previously failed).
-     */
     retryImage() {
         if (!this.isImageValid()) return;
         this.imageLoading.set(true);
+    }
+
+    /**
+     * Handles custom keyboard action events dispatched from parent container.
+     */
+    onCardAction(ev: CustomEvent<'enter' | 'favorite' | 'increment' | 'decrement' | 'delete'>) {
+        switch (ev.detail) {
+            case 'enter':
+                this.editManga();
+                break;
+            case 'favorite':
+                this.toggleFavorite();
+                break;
+            case 'increment':
+                this.updateChapters(1);
+                break;
+            case 'decrement':
+                this.updateChapters(-1);
+                break;
+            case 'delete':
+                this.deleteManga();
+                break;
+        }
     }
 }

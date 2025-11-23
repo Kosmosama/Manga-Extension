@@ -58,6 +58,7 @@
     display: grid;
     gap: .75rem;
     grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    outline: none;
 }
 
 .manga-collection.list-mode {
@@ -89,6 +90,12 @@
     flex-direction: column;
 }
 
+.manga-collection :focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 6px;
+}
+
 @media (forced-colors: active),
 (prefers-contrast: more) {
 
@@ -102,5 +109,9 @@
     .add-btn,
     .view-btn {
         border-color: CanvasText;
+    }
+
+    .manga-collection :focus-visible {
+        outline: 2px solid CanvasText;
     }
 }

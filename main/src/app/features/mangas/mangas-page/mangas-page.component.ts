@@ -49,10 +49,12 @@ export class MangasPageComponent {
     viewMode = signal<'grid' | 'list'>('grid');
 
     loading = signal<boolean>(false);
-
     private searchInput$ = new Subject<string>();
 
     readonly hasResults = computed(() => this.mangaList().length > 0);
+
+    focusIndex = signal<number>(-1); // -1 means none focused yet
+    readonly effectiveCollectionRole = computed(() => this.viewMode() === 'grid' ? 'grid' : 'list');
 
     constructor() {
         const qp = this.route.snapshot.queryParamMap;
@@ -70,18 +72,24 @@ export class MangasPageComponent {
                 this.syncQueryParams();
             });
 
-        // Sort effect
+        // Sort changes
         effect(() => {
             this.sortOrder();
             this.reload();
             this.syncQueryParams();
         });
 
-        // Tag filter effect
+        // Tag filter changes
         effect(() => {
             this.tagFilterService.selectedTagIds();
             this.tagFilterService.includeMode();
             this.reload();
+        });
+
+        // Reset focus index when view mode changes
+        effect(() => {
+            this.viewMode();
+            this.resetFocus();
         });
 
         this.reload();
@@ -103,66 +111,55 @@ export class MangasPageComponent {
             })
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe({
-                next: mangas => this.mangaList.set(mangas),
+                next: mangas => {
+                    this.mangaList.set(mangas);
+                    // Keep focusIndex within bounds
+                    if (this.focusIndex() >= mangas.length) {
+                        this.focusIndex.set(mangas.length - 1);
+                    }
+                },
                 complete: () => this.loading.set(false)
             });
     }
 
-    /**
-     * Handles raw search input (debounced pipeline).
-     */
     onSearchInput(value: string) {
         this.searchInput$.next(value);
     }
 
-    /**
-     * Clears current search query if present.
-     */
     clearSearch() {
         if (!this.searchQuery()) return;
         this.searchInput$.next('');
     }
 
-    /**
-     * Toggles sort order.
-     */
     toggleSort() {
         this.sortOrder.update(o => (o === 'asc' ? 'desc' : 'asc'));
     }
 
-    /**
-     * Switches between grid and list layout view modes.
-     */
     toggleViewMode() {
         this.viewMode.update(m => (m === 'grid' ? 'list' : 'grid'));
     }
 
-    /**
-     * Removes deleted manga from local signal state.
-     */
     handleMangaDeletion(id: number) {
         this.mangaList.update(mangas => mangas.filter(m => m.id !== id));
+        const list = this.mangaList();
+        if (!list.length) {
+            this.focusIndex.set(-1);
+        } else if (this.focusIndex() >= list.length) {
+            this.focusIndex.set(list.length - 1);
+            this.focusCard(this.focusIndex());
+        }
     }
 
-    /**
-     * Opens add/edit form in main modal (add when null).
-     */
     openForm(manga?: Manga) {
         this.selectedManga.set(manga || null);
         this.modal().open();
     }
 
-    /**
-     * Called by card to open edit modal.
-     */
     handleEdit = (manga: Manga) => {
         this.selectedManga.set(manga);
         this.editModal().open();
     };
 
-    /**
-     * Upserts a manga into the current displayed list after form submission.
-     */
     handleFormSumbission(manga: Manga) {
         this.mangaList.update(mangas => {
             const index = mangas.findIndex(m => m.id === manga.id);
@@ -176,9 +173,6 @@ export class MangasPageComponent {
         });
     }
 
-    /**
-     * Synchronizes query params for search & sort.
-     */
     private syncQueryParams() {
         this.router.navigate([], {
             relativeTo: this.route,
@@ -188,5 +182,123 @@ export class MangasPageComponent {
             },
             queryParamsHandling: 'merge'
         });
+    }
+
+    /**
+     * Keyboard navigation handler attached to collection container.
+     * Supports Arrow navigation, Home/End, Enter/F/+/-/Delete forwarded to card via dispatch.
+     */
+    onCollectionKeydown(ev: KeyboardEvent) {
+        if (!this.hasResults() || this.loading()) return;
+
+        const total = this.mangaList().length;
+        let idx = this.focusIndex();
+
+        if (idx === -1 && ['ArrowRight', 'ArrowDown', 'ArrowLeft', 'ArrowUp', 'Home', 'End'].includes(ev.key)) {
+            idx = 0;
+            this.focusIndex.set(idx);
+            this.focusCard(idx);
+            ev.preventDefault();
+            return;
+        }
+
+        const isGrid = this.viewMode() === 'grid';
+        const columns = isGrid ? this.computeApproxColumns() : 1;
+
+        switch (ev.key) {
+            case 'ArrowRight':
+                if (isGrid) {
+                    if (idx + 1 < total) { this.moveFocus(idx + 1); ev.preventDefault(); }
+                } else {
+                }
+                break;
+            case 'ArrowLeft':
+                if (isGrid && idx - 1 >= 0) { this.moveFocus(idx - 1); ev.preventDefault(); }
+                break;
+            case 'ArrowDown':
+                if (isGrid) {
+                    const next = idx + columns;
+                    if (next < total) { this.moveFocus(next); ev.preventDefault(); }
+                } else {
+                    if (idx + 1 < total) { this.moveFocus(idx + 1); ev.preventDefault(); }
+                }
+                break;
+            case 'ArrowUp':
+                if (isGrid) {
+                    const prev = idx - columns;
+                    if (prev >= 0) { this.moveFocus(prev); ev.preventDefault(); }
+                } else {
+                    if (idx - 1 >= 0) { this.moveFocus(idx - 1); ev.preventDefault(); }
+                }
+                break;
+            case 'Home':
+                this.moveFocus(0);
+                ev.preventDefault();
+                break;
+            case 'End':
+                this.moveFocus(total - 1);
+                ev.preventDefault();
+                break;
+            case 'Enter':
+                this.dispatchCardAction(idx, 'enter');
+                ev.preventDefault();
+                break;
+            case 'f':
+            case 'F':
+                this.dispatchCardAction(idx, 'favorite');
+                ev.preventDefault();
+                break;
+            case '+':
+            case '=':
+                this.dispatchCardAction(idx, 'increment');
+                ev.preventDefault();
+                break;
+            case '-':
+                this.dispatchCardAction(idx, 'decrement');
+                ev.preventDefault();
+                break;
+            case 'Delete':
+                this.dispatchCardAction(idx, 'delete');
+                ev.preventDefault();
+                break;
+            default:
+                break;
+        }
+    }
+
+    /**
+     * Approximate number of columns for grid navigation based on card width.
+     * Simplistic: calculates container width / 260 (min card width).
+     */
+    private computeApproxColumns(): number {
+        const container = document.querySelector('.manga-collection');
+        if (!container) return 1;
+        const width = container.clientWidth;
+        return Math.max(1, Math.floor(width / 260));
+    }
+
+    private moveFocus(nextIndex: number) {
+        this.focusIndex.set(nextIndex);
+        this.focusCard(nextIndex);
+    }
+
+    private focusCard(index: number) {
+        const el = document.querySelector<HTMLElement>(`.manga-collection [data-card-index="${index}"]`);
+        el?.focus();
+    }
+
+    private resetFocus() {
+        this.focusIndex.set(-1);
+    }
+
+    /**
+     * Dispatches an action to a focused manga card by sending a custom event the card listens to.
+     * Card implements key-based actions internally.
+     */
+    private dispatchCardAction(index: number, action: 'enter' | 'favorite' | 'increment' | 'decrement' | 'delete') {
+        if (index < 0) return;
+        const el = document.querySelector<HTMLElement>(`.manga-collection [data-card-index="${index}"]`);
+        if (!el) return;
+        el.dispatchEvent(new CustomEvent('cardAction', { detail: action, bubbles: true }));
     }
 }

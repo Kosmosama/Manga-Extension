@@ -1,4 +1,5 @@
-<div class="manga-card">
+<div class="manga-card" role="listitem" [attr.tabindex]="tabIndexValue()" (cardAction)="onCardAction($any($event))"
+    [class.focused]="focused()" aria-label="{{ manga().title }}">
     <div class="cover-wrapper">
         @if (imageLoading()) {
         <div class="image-skeleton" aria-hidden="true"></div>
@@ -10,7 +11,7 @@
     </div>
 
     <div class="manga-info">
-        <h2>{{ manga().title }}</h2>
+        <h2 class="title">{{ manga().title }}</h2>
         <p>{{ 'manga.card.chapters' | transloco }}: {{ manga().chapters }}</p>
         <p>{{ 'manga.card.updated' | transloco }}: {{ manga().updatedAt }}</p>
 
@@ -22,19 +23,19 @@
         </div>
         }
 
-        <div class="actions">
+        <div class="actions" aria-label="{{ 'accessibility.mangaCard.favoriteToggle' | transloco }}">
             <button (click)="updateChapters(-1)" [disabled]="saving() || manga().chapters <= 0"
-                aria-label="- {{ 'manga.card.chapters' | transloco }}">-</button>
+                aria-label="{{ 'accessibility.mangaCard.decrementChapters' | transloco }}">-</button>
             <button (click)="updateChapters(1)" [disabled]="saving()"
-                aria-label="+ {{ 'manga.card.chapters' | transloco }}">+</button>
+                aria-label="{{ 'accessibility.mangaCard.incrementChapters' | transloco }}">+</button>
             <button (click)="toggleFavorite()" [class.favorited]="manga().isFavorite"
                 [attr.aria-label]="manga().isFavorite ? ('actions.unfavorite' | transloco) : ('actions.favorite' | transloco)">
                 {{ manga().isFavorite ? '★' : '☆' }}
             </button>
-            <button (click)="deleteManga()" aria-label="{{ 'common.delete' | transloco }}">🗑️</button>
+            <button (click)="deleteManga()" aria-label="{{ 'accessibility.mangaCard.delete' | transloco }}">🗑️</button>
         </div>
 
-        <button (click)="editManga()" aria-label="{{ 'common.edit' | transloco }}">
+        <button (click)="editManga()" class="edit-btn" aria-label="{{ 'accessibility.mangaCard.edit' | transloco }}">
             {{ 'common.edit' | transloco }}
         </button>
     </div>
