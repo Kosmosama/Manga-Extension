@@ -9,7 +9,7 @@ export class SettingsStorageService {
     /**
      * Reads a key from sync storage (or localStorage fallback) as Observable.
      */
-    getSync$<T>(key: string, fallback: T): Observable<T> {
+    getSync<T>(key: string, fallback: T): Observable<T> {
         return defer(() => new Observable<T>(subscriber => {
             if (this.syncAvailable) {
                 (window as any).chrome.storage.sync.get(key, (result: Record<string, T>) => {

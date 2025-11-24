@@ -1,0 +1,25 @@
+<div class="shortcut-help-wrapper" role="dialog" aria-modal="true" aria-label="{{ 'shortcut.help.title' | transloco }}">
+    <h1>{{ 'shortcut.help.title' | transloco }}</h1>
+    <p class="hint">{{ 'shortcut.help.hint' | transloco }}</p>
+
+    <table class="shortcut-table">
+        <thead>
+            <tr>
+                <th>{{ 'shortcut.help.action' | transloco }}</th>
+                <th>{{ 'shortcut.help.keys' | transloco }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (b of bindings(); track b.action) {
+            <tr>
+                <td>{{ actionLabels[b.action] | transloco }}</td>
+                <td>
+                    <code class="combo">{{ b.combo }}</code>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+
+    <p class="close-info">{{ 'shortcut.help.close' | transloco }}</p>
+</div>

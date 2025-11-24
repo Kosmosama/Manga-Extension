@@ -1,0 +1,53 @@
+.shortcut-help-wrapper {
+    max-width: 680px;
+    margin: 1rem auto;
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: .9rem;
+}
+
+.hint,
+.close-info {
+    font-size: .7rem;
+    opacity: .75;
+    margin: 0;
+}
+
+.shortcut-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .75rem;
+}
+
+.shortcut-table th,
+.shortcut-table td {
+    padding: .4rem .5rem;
+    border-bottom: 1px solid var(--border);
+    text-align: left;
+    vertical-align: top;
+}
+
+.combo {
+    display: inline-block;
+    padding: .2rem .4rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: .65rem;
+    line-height: 1;
+}
+
+@media (forced-colors: active),
+(prefers-contrast: more) {
+    .shortcut-help-wrapper {
+        border-color: CanvasText;
+    }
+
+    .combo {
+        border-color: CanvasText;
+    }
+}
