@@ -1,0 +1,20 @@
+<div class="vs-viewport" (scroll)="onScroll($event)" #viewportRef>
+    <div class="vs-spacer" [style.height.px]="totalHeight()"></div>
+    <div class="vs-items">
+        @for (item of visibleItems(); track item.index) {
+        @let tpl = itemTemplate();
+        <div class="vs-item" [style.transform]="'translateY(' + item.index * itemHeight() + 'px)'">
+            @if (tpl) {
+            <ng-container [ngTemplateOutlet]="tpl"
+                [ngTemplateOutletContext]="{ $implicit: item.value, index: item.index }">
+            </ng-container>
+            } @else {
+            <div class="vs-default">
+                {{ item.index }}: {{ item.value | json }}
+            </div>
+            }
+        </div>
+        }
+
+    </div>
+</div>
