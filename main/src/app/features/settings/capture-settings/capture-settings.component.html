@@ -1,0 +1,21 @@
+<div class="capture-settings">
+    <h3>{{ 'capture.settings.title' | transloco }}</h3>
+    <p class="desc">{{ 'capture.settings.desc' | transloco }}</p>
+
+    <label>
+        <input type="checkbox" [checked]="flags().enabled" (change)="toggleEnabled($event)" />
+        {{ 'capture.settings.enabled' | transloco }}
+    </label>
+
+    <label>
+        <input type="checkbox" [checked]="flags().quickCaptureEnabled" (change)="toggleQuickCapture($event)"
+            [disabled]="!flags().enabled" />
+        {{ 'capture.settings.quickCapture' | transloco }}
+    </label>
+
+    <label>
+        <input type="checkbox" [checked]="flags().fabEnabled" (change)="toggleFab($event)"
+            [disabled]="!flags().enabled" />
+        {{ 'capture.settings.fab' | transloco }}
+    </label>
+</div>

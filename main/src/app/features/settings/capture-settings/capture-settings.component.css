@@ -1,0 +1,18 @@
+.capture-settings {
+    display: flex;
+    flex-direction: column;
+    gap: .6rem;
+}
+
+.desc {
+    font-size: .65rem;
+    opacity: .7;
+    margin: 0;
+}
+
+label {
+    display: flex;
+    gap: .4rem;
+    align-items: center;
+    font-size: .7rem;
+}
