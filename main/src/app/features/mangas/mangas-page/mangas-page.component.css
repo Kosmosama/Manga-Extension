@@ -61,6 +61,10 @@
     outline: none;
 }
 
+.manga-collection.virtual {
+    position: relative;
+}
+
 .manga-collection.list-mode {
     display: flex;
     flex-direction: column;

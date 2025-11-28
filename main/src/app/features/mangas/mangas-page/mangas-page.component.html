@@ -1,7 +1,7 @@
 <div class="page-wrapper">
     <div class="toolbar" aria-label="Manga controls">
         <div class="search-group">
-            <input type="search" [value]="searchQuery()" (input)="onSearchInput($any($event.target).value || '')"
+            <input type="search" [value]="searchQuery()" (input)="onSearchInput($any($event.target)?.value)"
                 placeholder="{{ 'search.placeholder' | transloco }}" class="search-input"
                 aria-label="{{ 'search.placeholder' | transloco }}" />
             @if (searchQuery()) {
@@ -37,16 +37,29 @@
     @if (!hasResults()) {
     <p class="empty-state" role="status">{{ 'manga.empty' | transloco }}</p>
     } @else {
+    @if (useVirtualScroll()) {
+    <virtual-scroll-container [items]="mangaList()" [itemHeight]="260">
+        <div class="manga-collection virtual" [attr.role]="effectiveCollectionRole()" tabindex="0"
+            (keydown)="onCollectionKeydown($event)">
+            @for (m of mangaList(); track m.id; let i = $index) {
+            <manga-card [manga]="m" [handleEdit]="handleEdit" (deleted)="handleMangaDeletion($event)"
+                [attr.data-card-index]="i" [tabIndexValue]="focusIndex() === i ? 0 : -1"
+                [focused]="focusIndex() === i" />
+            }
+        </div>
+    </virtual-scroll-container>
+    } @else {
     <div class="manga-collection" [class.list-mode]="viewMode() === 'list'" [attr.role]="effectiveCollectionRole()"
         tabindex="0" (keydown)="onCollectionKeydown($event)" aria-label="{{ viewMode() === 'grid'
-                    ? ('accessibility.mangaCard.gridNavigationInfo' | transloco)
-                    : ('accessibility.mangaCard.listNavigationInfo' | transloco) }}">
+                        ? ('accessibility.mangaCard.gridNavigationInfo' | transloco)
+                        : ('accessibility.mangaCard.listNavigationInfo' | transloco) }}">
         @for (m of mangaList(); track m.id; let i = $index) {
         <manga-card [manga]="m" [handleEdit]="handleEdit" (deleted)="handleMangaDeletion($event)"
             [class.list-item]="viewMode() === 'list'" [attr.data-card-index]="i"
-            [attr.tabindex]="focusIndex() === i ? 0 : -1" [class.focused]="focusIndex() === i" />
+            [tabIndexValue]="focusIndex() === i ? 0 : -1" [focused]="focusIndex() === i" />
         }
     </div>
+    }
     }
     }
 

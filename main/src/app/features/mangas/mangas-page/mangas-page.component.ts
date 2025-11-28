@@ -14,6 +14,9 @@ import { TagFilterBarComponent } from '../../tags/tag-filter-bar/tag-filter-bar.
 import { TagFilterService } from '../../../core/services/tag-filter.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SkeletonComponent } from '../../../shared/skeleton/skeleton.component';
+import { ShortcutEngineService } from '../../../core/services/shortcut-engine.service';
+import { ShortcutAction } from '../../../core/interfaces/shortcut.interface';
+import { VirtualScrollContainerComponent } from '../../../shared/virtual-scroll-container/virtual-scroll-container.component';
 
 @Component({
     selector: 'mangas-page',
@@ -24,7 +27,8 @@ import { SkeletonComponent } from '../../../shared/skeleton/skeleton.component';
         MangaComponent,
         MangaFormComponent,
         TagFilterBarComponent,
-        SkeletonComponent
+        SkeletonComponent,
+        VirtualScrollContainerComponent
     ],
     templateUrl: './mangas-page.component.html',
     styleUrl: './mangas-page.component.css',
@@ -36,6 +40,7 @@ export class MangasPageComponent {
     private route = inject(ActivatedRoute);
     private tagFilterService = inject(TagFilterService);
     private destroyRef = inject(DestroyRef);
+    private shortcutEngineService = inject(ShortcutEngineService);
 
     modal = viewChild.required<ModalComponent>('modal');
     editModal = viewChild.required<ModalComponent>('editModal');
@@ -48,22 +53,26 @@ export class MangasPageComponent {
     sortOrder = signal<'asc' | 'desc'>('asc');
     viewMode = signal<'grid' | 'list'>('grid');
 
+    useVirtualScroll = signal<boolean>(false);
     loading = signal<boolean>(false);
     private searchInput$ = new Subject<string>();
-
     readonly hasResults = computed(() => this.mangaList().length > 0);
 
-    focusIndex = signal<number>(-1); // -1 means none focused yet
+    focusIndex = signal<number>(-1);
+
     readonly effectiveCollectionRole = computed(() => this.viewMode() === 'grid' ? 'grid' : 'list');
 
+    private VIRTUAL_THRESHOLD = 150;
+
     constructor() {
+        // Initialize from query params
         const qp = this.route.snapshot.queryParamMap;
         const initialQ = qp.get('q') || '';
         const initialSort = (qp.get('sort') === 'desc' ? 'desc' : 'asc') as 'asc' | 'desc';
         this.searchQuery.set(initialQ);
         this.sortOrder.set(initialSort);
 
-        // Debounced search
+        /** Debounced search flow */
         this.searchInput$
             .pipe(debounceTime(300), distinctUntilChanged(), takeUntilDestroyed(this.destroyRef))
             .subscribe(value => {
@@ -72,27 +81,50 @@ export class MangasPageComponent {
                 this.syncQueryParams();
             });
 
-        // Sort changes
+        /** Sort changes automatically reload the list */
         effect(() => {
             this.sortOrder();
             this.reload();
             this.syncQueryParams();
         });
 
-        // Tag filter changes
+        /** Tag filter changes automatically reload results */
         effect(() => {
             this.tagFilterService.selectedTagIds();
             this.tagFilterService.includeMode();
             this.reload();
         });
 
-        // Reset focus index when view mode changes
+        /**
+         * When view mode changes:
+         * - Reset keyboard focus
+         * - Recalculate whether virtual scroll should be enabled
+         */
         effect(() => {
             this.viewMode();
             this.resetFocus();
+            this.assessVirtualScroll();
         });
 
+        /**
+         * Global keyboard shortcuts:
+         * Triggered actions include: add manga, toggle view, open settings, etc.
+         */
+        this.shortcutEngineService.triggered$
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe(t => this.handleShortcut(t.action));
+
+        // Initial load
         this.reload();
+    }
+
+    /**
+     * Determines whether virtual scrolling should be enabled.
+     * Only applies to grid mode with large collections.
+     */
+    private assessVirtualScroll() {
+        const count = this.mangaList().length;
+        this.useVirtualScroll.set(this.viewMode() === 'grid' && count > this.VIRTUAL_THRESHOLD);
     }
 
     /**
@@ -113,10 +145,14 @@ export class MangasPageComponent {
             .subscribe({
                 next: mangas => {
                     this.mangaList.set(mangas);
-                    // Keep focusIndex within bounds
+
+                    // Keeping focusIndex within bounds after reload
                     if (this.focusIndex() >= mangas.length) {
                         this.focusIndex.set(mangas.length - 1);
                     }
+
+                    // Reevaluate virtual scrolling after load
+                    this.assessVirtualScroll();
                 },
                 complete: () => this.loading.set(false)
             });
@@ -139,27 +175,38 @@ export class MangasPageComponent {
         this.viewMode.update(m => (m === 'grid' ? 'list' : 'grid'));
     }
 
+    /**
+     * Updates the list after deletion and adjusts focused index.
+     */
     handleMangaDeletion(id: number) {
         this.mangaList.update(mangas => mangas.filter(m => m.id !== id));
+
         const list = this.mangaList();
         if (!list.length) {
             this.focusIndex.set(-1);
         } else if (this.focusIndex() >= list.length) {
             this.focusIndex.set(list.length - 1);
-            this.focusCard(this.focusIndex());
         }
+
+        this.assessVirtualScroll();
     }
 
+    /** Opens create form or edit form based on argument. */
     openForm(manga?: Manga) {
         this.selectedManga.set(manga || null);
         this.modal().open();
     }
 
+    /** Opens edit form for a specific manga. */
     handleEdit = (manga: Manga) => {
         this.selectedManga.set(manga);
         this.editModal().open();
     };
 
+    /**
+     * Applies new or updated manga into the list.
+     * Keeps list stable and re-evaluates virtual scroll.
+     */
     handleFormSumbission(manga: Manga) {
         this.mangaList.update(mangas => {
             const index = mangas.findIndex(m => m.id === manga.id);
@@ -171,8 +218,10 @@ export class MangasPageComponent {
                 return next;
             }
         });
+        this.assessVirtualScroll();
     }
 
+    /** Syncs URL query params with current search/sort signals. */
     private syncQueryParams() {
         this.router.navigate([], {
             relativeTo: this.route,
@@ -186,7 +235,7 @@ export class MangasPageComponent {
 
     /**
      * Keyboard navigation handler attached to collection container.
-     * Supports Arrow navigation, Home/End, Enter/F/+/-/Delete forwarded to card via dispatch.
+     * Supports Arrow navigation, Home/End, and grid row/column movement.
      */
     onCollectionKeydown(ev: KeyboardEvent) {
         if (!this.hasResults() || this.loading()) return;
@@ -194,6 +243,7 @@ export class MangasPageComponent {
         const total = this.mangaList().length;
         let idx = this.focusIndex();
 
+        // If nothing is focused yet and navigation keys are pressed → focus first item
         if (idx === -1 && ['ArrowRight', 'ArrowDown', 'ArrowLeft', 'ArrowUp', 'Home', 'End'].includes(ev.key)) {
             idx = 0;
             this.focusIndex.set(idx);
@@ -207,60 +257,39 @@ export class MangasPageComponent {
 
         switch (ev.key) {
             case 'ArrowRight':
-                if (isGrid) {
-                    if (idx + 1 < total) { this.moveFocus(idx + 1); ev.preventDefault(); }
-                } else {
-                }
+                if (isGrid && idx + 1 < total) { this.moveFocus(idx + 1); ev.preventDefault(); }
                 break;
+
             case 'ArrowLeft':
                 if (isGrid && idx - 1 >= 0) { this.moveFocus(idx - 1); ev.preventDefault(); }
                 break;
+
             case 'ArrowDown':
                 if (isGrid) {
                     const next = idx + columns;
                     if (next < total) { this.moveFocus(next); ev.preventDefault(); }
-                } else {
-                    if (idx + 1 < total) { this.moveFocus(idx + 1); ev.preventDefault(); }
+                } else if (idx + 1 < total) {
+                    this.moveFocus(idx + 1); ev.preventDefault();
                 }
                 break;
+
             case 'ArrowUp':
                 if (isGrid) {
                     const prev = idx - columns;
                     if (prev >= 0) { this.moveFocus(prev); ev.preventDefault(); }
-                } else {
-                    if (idx - 1 >= 0) { this.moveFocus(idx - 1); ev.preventDefault(); }
+                } else if (idx - 1 >= 0) {
+                    this.moveFocus(idx - 1); ev.preventDefault();
                 }
                 break;
+
             case 'Home':
-                this.moveFocus(0);
-                ev.preventDefault();
+                this.moveFocus(0); ev.preventDefault();
                 break;
+
             case 'End':
-                this.moveFocus(total - 1);
-                ev.preventDefault();
+                this.moveFocus(total - 1); ev.preventDefault();
                 break;
-            case 'Enter':
-                this.dispatchCardAction(idx, 'enter');
-                ev.preventDefault();
-                break;
-            case 'f':
-            case 'F':
-                this.dispatchCardAction(idx, 'favorite');
-                ev.preventDefault();
-                break;
-            case '+':
-            case '=':
-                this.dispatchCardAction(idx, 'increment');
-                ev.preventDefault();
-                break;
-            case '-':
-                this.dispatchCardAction(idx, 'decrement');
-                ev.preventDefault();
-                break;
-            case 'Delete':
-                this.dispatchCardAction(idx, 'delete');
-                ev.preventDefault();
-                break;
+
             default:
                 break;
         }
@@ -268,7 +297,7 @@ export class MangasPageComponent {
 
     /**
      * Approximate number of columns for grid navigation based on card width.
-     * Simplistic: calculates container width / 260 (min card width).
+     * Uses container width / 260px as rough estimate.
      */
     private computeApproxColumns(): number {
         const container = document.querySelector('.manga-collection');
@@ -282,23 +311,73 @@ export class MangasPageComponent {
         this.focusCard(nextIndex);
     }
 
+    /** Focuses a given card via index and ensures it receives keyboard focus. */
     private focusCard(index: number) {
         const el = document.querySelector<HTMLElement>(`.manga-collection [data-card-index="${index}"]`);
         el?.focus();
     }
 
+    /** Resets keyboard focus to "none selected". */
     private resetFocus() {
         this.focusIndex.set(-1);
     }
 
     /**
-     * Dispatches an action to a focused manga card by sending a custom event the card listens to.
-     * Card implements key-based actions internally.
+     * Handles global application shortcut actions.
+     * Some actions operate on the list; others dispatch events to the currently focused card.
      */
-    private dispatchCardAction(index: number, action: 'enter' | 'favorite' | 'increment' | 'decrement' | 'delete') {
-        if (index < 0) return;
-        const el = document.querySelector<HTMLElement>(`.manga-collection [data-card-index="${index}"]`);
-        if (!el) return;
-        el.dispatchEvent(new CustomEvent('cardAction', { detail: action, bubbles: true }));
+    private handleShortcut(action: ShortcutAction) {
+        switch (action) {
+            case ShortcutAction.AddManga:
+                this.openForm();
+                break;
+
+            case ShortcutAction.OpenSettings:
+                this.router.navigate(['/settings']);
+                break;
+
+            case ShortcutAction.OpenImportExport:
+                this.router.navigate(['/import-export']);
+                break;
+
+            case ShortcutAction.ToggleViewMode:
+                this.toggleViewMode();
+                break;
+
+            case ShortcutAction.FocusSearch: {
+                const input = document.querySelector<HTMLInputElement>('.search-input');
+                input?.focus();
+                break;
+            }
+
+            case ShortcutAction.OpenShortcutHelp:
+                this.router.navigate(['/shortcuts-help']);
+                break;
+
+            default:
+                // Actions applied to the currently focused card
+                if (this.focusIndex() >= 0) {
+                    const cardEl = document.querySelector<HTMLElement>(`.manga-collection [data-card-index="${this.focusIndex()}"]`);
+                    if (!cardEl) return;
+
+                    switch (action) {
+                        case ShortcutAction.ToggleFavorite:
+                            cardEl.dispatchEvent(new CustomEvent('cardAction', { detail: 'favorite', bubbles: true }));
+                            break;
+                        case ShortcutAction.IncrementChapters:
+                            cardEl.dispatchEvent(new CustomEvent('cardAction', { detail: 'increment', bubbles: true }));
+                            break;
+                        case ShortcutAction.DecrementChapters:
+                            cardEl.dispatchEvent(new CustomEvent('cardAction', { detail: 'decrement', bubbles: true }));
+                            break;
+                        case ShortcutAction.DeleteManga:
+                            cardEl.dispatchEvent(new CustomEvent('cardAction', { detail: 'delete', bubbles: true }));
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                break;
+        }
     }
 }
