@@ -4,10 +4,9 @@
         @if (imageLoading()) {
         <div class="image-skeleton" aria-hidden="true"></div>
         }
-        <img [src]="isImageValid() ? manga().image : fallbackImage()"
+        <img lazySrc="{{ isImageValid() ? manga().image : fallbackImage() }}"
             [attr.alt]="isImageValid() ? manga().title : ('accessibility.image.altFallback' | transloco)"
-            (error)="imageNotFound()" (load)="imageLoaded()" loading="lazy" class="manga-cover"
-            [class.hidden]="imageLoading()" />
+            (error)="imageNotFound()" (load)="imageLoaded()" class="manga-cover" [class.hidden]="imageLoading()" />
     </div>
 
     <div class="manga-info">
