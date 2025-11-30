@@ -1,30 +1,24 @@
-<section>
-    <label>{{ 'settings.themeLabel' | transloco }}</label>
-    <select (change)="themeChange($event)" [value]="theme()">
-        <option value="light">{{ 'settings.theme.light' | transloco }}</option>
-        <option value="dark">{{ 'settings.theme.dark' | transloco }}</option>
-        <option value="system">{{ 'settings.theme.system' | transloco }}</option>
-    </select>
-</section>
-
-<section>
-    <label>{{ 'settings.languageLabel' | transloco }}</label>
-    <select (change)="languageChange($event)" [value]="settings.activeLanguage()">
-        @for (lang of settings.languages(); track lang) {
-        <option [value]="lang">{{ lang }}</option>
+<div class="settings-wrapper">
+    <aside class="sidebar" aria-label="{{ 'settings.sidebar' | transloco }}">
+        @for (s of sections(); track s) {
+        <button (click)="setActive(s)" [class.active]="active() === s" class="section-tab" type="button"
+            aria-label="{{ sectionLabel(s) | transloco }}" [attr.aria-current]="active() === s ? 'page' : null">
+            {{ sectionLabel(s) | transloco }}
+        </button>
         }
-    </select>
-</section>
+    </aside>
 
-<section>
-    <label>
-        <input type="checkbox" [checked]="settings.focusSearchInput()" (change)="onToggleFocus($event)" />
-        {{ 'settings.focusSearch' | transloco }}
-    </label>
-</section>
-
-@if (settings.activeLanguage() === 'dev') {
-<div style="margin-top:1rem; font-size: 0.85rem; opacity:0.8;">
-    {{ 'dev.missingKeys.devModeNotice' | transloco }}
+    <section class="content" role="region" [attr.aria-label]="ariaLabelActive() | transloco">
+        @if (active() === 'theme') {
+        <theme-settings />
+        } @else if (active() === 'language') {
+        <language-settings />
+        } @else if (active() === 'shortcuts') {
+        <shortcuts-settings />
+        } @else if (active() === 'capture') {
+        <capture-settings />
+        } @else if (active() === 'behavior') {
+        <behavior-settings />
+        }
+    </section>
 </div>
-}

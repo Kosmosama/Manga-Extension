@@ -1,6 +1,49 @@
-select#language-select {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin: 20px;
+.settings-wrapper {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 1rem;
+    align-items: start;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.section-tab {
+    padding: .55rem .75rem;
+    font-size: .75rem;
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    text-align: left;
+    transition: background .15s, color .15s;
+}
+
+.section-tab.active {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+}
+
+.content {
+    background: var(--surface-alt);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem .9rem 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    min-height: 420px;
+}
+
+@media (forced-colors: active),
+(prefers-contrast: more) {
+
+    .section-tab,
+    .content {
+        border-color: CanvasText;
+    }
 }
