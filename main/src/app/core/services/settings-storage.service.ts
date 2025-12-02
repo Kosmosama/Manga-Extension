@@ -1,81 +1,96 @@
-import { Injectable, signal } from '@angular/core';
-import { Observable, defer } from 'rxjs';
+import { computed, effect, Injectable, signal } from '@angular/core';
+import { AppSettings, DEFAULT_SETTINGS, SETTINGS_VERSION } from '../interfaces/settings.model';
 
-@Injectable({ providedIn: 'root' })
+const LOCAL_STORAGE_KEY = 'app.settings';
+
+@Injectable({
+    providedIn: 'root'
+})
 export class SettingsStorageService {
-    private syncAvailable = typeof (window as any).chrome?.storage?.sync !== 'undefined';
-    private localAvailable = typeof (window as any).chrome?.storage?.local !== 'undefined';
+    private readonly raw = signal<AppSettings>(this.loadInitial());
 
-    /**
-     * Reads a key from sync storage (or localStorage fallback) as Observable.
-     */
-    getSync<T>(key: string, fallback: T): Observable<T> {
-        return defer(() => new Observable<T>(subscriber => {
-            if (this.syncAvailable) {
-                (window as any).chrome.storage.sync.get(key, (result: Record<string, T>) => {
-                    subscriber.next(result?.[key] ?? fallback);
-                    subscriber.complete();
-                });
-            } else {
-                try {
-                    const raw = localStorage.getItem(`sync:${key}`);
-                    subscriber.next(raw ? JSON.parse(raw) as T : fallback);
-                } catch {
-                    subscriber.next(fallback);
-                } finally {
-                    subscriber.complete();
-                }
-            }
-        }));
+    readonly settings = computed(() => this.raw());
+    readonly language = computed(() => this.raw().language);
+    readonly themeMode = computed(() => this.raw().themeMode);
+    readonly shortcuts = computed(() => this.raw().shortcuts);
+    readonly capture = computed(() => this.raw().capture);
+
+    constructor() {
+        effect(() => {
+            const value = this.raw();
+            this.persist(value);
+        });
     }
 
     /**
-     * Writes a value to sync storage (or localStorage fallback).
+     * Loads the initial settings from `localStorage`.
+     * 
+     * @returns The initial settings object, or default settings if none exist or are invalid
      */
-    setSync<T>(key: string, value: T): void {
-        if (this.syncAvailable) {
-            (window as any).chrome.storage.sync.set({ [key]: value });
-        }
+    private loadInitial(): AppSettings {
         try {
-            localStorage.setItem(`sync:${key}`, JSON.stringify(value));
-        } catch {
-            // ignore
-        }
-    }
-
-    /**
-     * Reads a key from local storage (extension local or localStorage) as Observable.
-     */
-    getLocal$<T>(key: string, fallback: T): Observable<T> {
-        return defer(() => new Observable<T>(subscriber => {
-            if (this.localAvailable) {
-                (window as any).chrome.storage.local.get(key, (result: Record<string, T>) => {
-                    subscriber.next(result?.[key] ?? fallback);
-                    subscriber.complete();
-                });
-            } else {
-                try {
-                    const raw = localStorage.getItem(`local:${key}`);
-                    subscriber.next(raw ? JSON.parse(raw) as T : fallback);
-                } catch {
-                    subscriber.next(fallback);
-                } finally {
-                    subscriber.complete();
-                }
+            const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
+            if (!stored) return DEFAULT_SETTINGS;
+            const parsed = JSON.parse(stored) as AppSettings;
+            if (parsed.version !== SETTINGS_VERSION) {
+                return this.migrate(parsed);
             }
-        }));
+            return { ...DEFAULT_SETTINGS, ...parsed };
+        } catch {
+            return DEFAULT_SETTINGS;
+        }
     }
 
     /**
-     * Writes a value to local storage (extension local or localStorage).
+     * Migrates old settings to the current version format.
+     * 
+     * @param old - The old settings to be migrated
+     * @returns The migrated settings object
      */
-    setLocal<T>(key: string, value: T): void {
-        if (this.localAvailable) {
-            (window as any).chrome.storage.local.set({ [key]: value });
-        }
+    private migrate(old: AppSettings): AppSettings {
+        // Placeholder for migration logic between versions.
+        return {
+            ...DEFAULT_SETTINGS,
+            ...old,
+            version: SETTINGS_VERSION
+        };
+    }
+
+    /**
+     * Persists the current settings to `localStorage`.
+     * 
+     * @param value - The settings object to persist
+     */
+    private persist(value: AppSettings) {
         try {
-            localStorage.setItem(`local:${key}`, JSON.stringify(value));
+            localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(value));
         } catch {
+            // Silent fail
         }
+    }
+
+    /**
+     * Updates the settings with a partial set of new values.
+     * 
+     * @param partial - The partial settings to update
+     */
+    update(partial: Partial<AppSettings>) {
+        this.raw.set({
+            ...this.raw(),
+            ...partial
+        });
+    }
+
+    /**
+     * Updates a specific section of the settings.
+     * 
+     * @param section - The section of the settings to update
+     * @param value - The new value for the section
+     */
+    updateSection<K extends keyof AppSettings>(section: K, value: AppSettings[K]) {
+        this.raw.set({
+            ...this.raw(),
+            [section]: value
+        });
     }
 }

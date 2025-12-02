@@ -1,223 +1,157 @@
-import { Injectable, inject, signal, effect } from '@angular/core';
-import { Observable, Subject, defer } from 'rxjs';
+import { Injectable, inject, signal, computed, effect } from '@angular/core';
 import { SettingsStorageService } from './settings-storage.service';
-import { ShortcutAction, ShortcutBinding, ShortcutProfile, TriggeredShortcut } from '../interfaces/shortcut.interface';
+import { ShortcutBinding } from '../interfaces/settings.model';
+import { fromEvent, Observable, of } from 'rxjs';
+import { RegisteredAction } from '../interfaces/shortcuts.interface';
 
 @Injectable({ providedIn: 'root' })
 export class ShortcutEngineService {
-    private settingsStorageService = inject(SettingsStorageService);
+    private readonly storage = inject(SettingsStorageService);
 
-    private readonly STORAGE_KEY = 'shortcutsProfile';
-    private readonly PROFILE_VERSION = 1;
-
-    private profileSignal = signal<ShortcutProfile>({
-        version: this.PROFILE_VERSION,
-        bindings: this.defaultBindings()
-    });
-
-    private triggerSubject = new Subject<TriggeredShortcut>();
-
-    readonly triggered$: Observable<TriggeredShortcut> = this.triggerSubject.asObservable();
-    readonly bindings = () => this.profileSignal().bindings;
-
-    // For UI conflict display
-    private conflictSignal = signal<Record<string, string[]>>({}); // combo -> actions[]
+    private readonly registeredActions = signal<Record<string, RegisteredAction>>({});
+    private readonly shortcutsDisabled = computed(() => this.storage.shortcuts().disabled);
+    private readonly bindings = computed(() => this.storage.shortcuts().bindings);
 
     constructor() {
-        this.loadProfile$().subscribe();
-        effect(() => {
-            // Recompute conflicts whenever bindings change
-            const map: Record<string, string[]> = {};
-            for (const b of this.bindings()) {
-                map[b.combo] = map[b.combo] ? [...map[b.combo], b.action] : [b.action];
-            }
-            const conflicts: Record<string, string[]> = {};
-            Object.entries(map).forEach(([combo, acts]) => {
-                if (acts.length > 1) conflicts[combo] = acts;
-            });
-            this.conflictSignal.set(conflicts);
+        // Listen to keydown globally
+        fromEvent<KeyboardEvent>(document, 'keydown').subscribe(ev => {
+            if (this.shortcutsDisabled()) return;
+            this.processKey(ev);
         });
 
-        // Global key listener
-        window.addEventListener('keydown', ev => {
-            if (ev.defaultPrevented) return;
-            const combo = this.normalizeEvent(ev);
-            if (!combo) return;
-            const binding = this.bindings().find(b => b.combo === combo);
-            if (!binding) return;
-            if (!(ev.target instanceof HTMLInputElement) &&
-                !(ev.target instanceof HTMLTextAreaElement) &&
-                !(ev.target as HTMLElement)?.isContentEditable) {
-                ev.preventDefault();
-            }
-            this.triggerSubject.next({ action: binding.action, combo, originalEvent: ev });
+        // #TODO
+        // Example registrations
+        this.registerAction('openSettings', () => {
+            // navigation handled externally; expose event or callback
+            const event = new CustomEvent('shortcut:openSettings');
+            window.dispatchEvent(event);
+        });
+        this.registerAction('quickCapture', () => {
+            const event = new CustomEvent('shortcut:quickCapture');
+            window.dispatchEvent(event);
         });
     }
 
     /**
-     * Returns conflict map: combo -> array of actions bound.
+     * Registers a new action to be triggered by a keyboard shortcut.
+     * 
+     * @param id - The unique identifier for the action
+     * @param handler - The function to call when the action is triggered
+     * @param description - An optional description for the action
      */
-    get conflicts(): Record<string, string[]> {
-        return this.conflictSignal();
-    }
-
-    /**
-     * Emits observable completing after profile loaded (or default).
-     */
-    private loadProfile$(): Observable<void> {
-        return defer(() => new Observable<void>(subscriber => {
-            this.settingsStorageService.getSync<ShortcutProfile>(this.STORAGE_KEY, {
-                version: this.PROFILE_VERSION,
-                bindings: this.defaultBindings()
-            }).subscribe(profile => {
-                // If version mismatch, migrate
-                if (profile.version !== this.PROFILE_VERSION) {
-                    profile = this.migrateProfile(profile);
-                }
-                this.profileSignal.set(profile);
-                subscriber.next();
-                subscriber.complete();
-            });
+    registerAction(id: string, handler: () => void, description?: string) {
+        this.registeredActions.update(curr => ({
+            ...curr,
+            [id]: { id, handler, description }
         }));
     }
 
     /**
-     * Persists current profile.
+     * Lists all the registered actions.
+     * 
+     * @returns An array of registered actions
      */
-    private saveProfile() {
-        this.settingsStorageService.setSync(this.STORAGE_KEY, this.profileSignal());
+    listRegistered(): RegisteredAction[] {
+        return Object.values(this.registeredActions());
     }
 
     /**
-     * Updates a binding for an action.
+     * Retrieves the current shortcut bindings.
+     * 
+     * @returns A record of action names to their corresponding shortcut bindings
      */
-    updateBinding(action: ShortcutAction, combo: string): void {
-        const normalized = this.normalizeComboString(combo);
-        if (!normalized) return;
-        const existing = this.bindings();
-        const next = existing.map(b => b.action === action ? { ...b, combo: normalized } : b);
-        this.profileSignal.set({ ...this.profileSignal(), bindings: next });
-        this.saveProfile();
+    getBindings(): Record<string, ShortcutBinding> {
+        return this.bindings();
     }
 
     /**
-     * Resets a single action to default binding.
+     * Toggles whether shortcuts are enabled or disabled.
+     * 
+     * @param disabled - The new state of the shortcuts (true to disable, false to enable)
      */
-    resetBinding(action: ShortcutAction) {
-        const def = this.defaultBindings();
-        const fallback = def.find(d => d.action === action);
-        if (!fallback) return;
-        this.updateBinding(action, fallback.combo);
-    }
-
-    /**
-     * Restores all defaults.
-     */
-    restoreDefaults() {
-        this.profileSignal.set({
-            version: this.PROFILE_VERSION,
-            bindings: this.defaultBindings()
+    toggleDisabled(disabled: boolean) {
+        const current = this.storage.shortcuts();
+        this.storage.updateSection('shortcuts', {
+            ...current,
+            disabled
         });
-        this.saveProfile();
     }
 
     /**
-     * Returns a binding for an action.
+     * Updates the binding for a specific action.
+     * 
+     * @param action - The action ID to update
+     * @param binding - The new shortcut binding for the action
      */
-    getBinding(action: ShortcutAction): ShortcutBinding | undefined {
-        return this.bindings().find(b => b.action === action);
+    updateBinding(action: string, binding: ShortcutBinding) {
+        const current = this.storage.shortcuts();
+        this.storage.updateSection('shortcuts', {
+            ...current,
+            bindings: {
+                ...current.bindings,
+                [action]: binding
+            }
+        });
     }
 
     /**
-     * Normalizes a combo from a keyboard event.
+     * Processes a keydown event and triggers the corresponding action if a match is found.
+     * 
+     * @param ev - The keyboard event to process
      */
-    private normalizeEvent(ev: KeyboardEvent): string | null {
-        // Ignore modifier-only
-        if (['Shift', 'Control', 'Alt', 'Meta'].includes(ev.key)) return null;
-
-        const parts: string[] = [];
-        if (ev.ctrlKey) parts.push('Ctrl');
-        if (ev.metaKey) parts.push('Meta');
-        if (ev.altKey) parts.push('Alt');
-        if (ev.shiftKey) parts.push('Shift');
-
-        // Key normalization letters -> uppercase; space, slash
-        let key = ev.key;
-        if (key.length === 1) key = key.toUpperCase();
-        if (key === ' ') key = 'Space';
-        if (key === 'ArrowUp' || key === 'ArrowDown' || key === 'ArrowLeft' || key === 'ArrowRight') {
-            key = key.replace('Arrow', '');
+    private processKey(ev: KeyboardEvent) {
+        const pressed = this.normalize(ev);
+        const bindings = this.bindings();
+        for (const binding of Object.values(bindings)) {
+            if (!binding.enabled) continue;
+            const sequence = binding.keys.map(k => k.toLowerCase());
+            if (this.matches(pressed, sequence)) {
+                const action = this.registeredActions()[binding.action];
+                if (action) {
+                    ev.preventDefault();
+                    action.handler();
+                }
+            }
         }
+    }
 
-        // Avoid duplicates for modifiers embedded in key label
-        if (!['Ctrl', 'Meta', 'Alt', 'Shift'].includes(key)) {
+    /**
+     * Normalizes the keyboard event to extract modifier keys and the main key.
+     * 
+     * @param ev - The keyboard event to normalize
+     * @returns An array of pressed keys (e.g., ['ctrl', 'shift', 'a'])
+     */
+    private normalize(ev: KeyboardEvent): string[] {
+        const parts: string[] = [];
+        if (ev.ctrlKey) parts.push('ctrl');
+        if (ev.metaKey) parts.push('meta');
+        if (ev.altKey) parts.push('alt');
+        if (ev.shiftKey) parts.push('shift');
+        const key = ev.key.toLowerCase();
+        if (!['control', 'shift', 'alt', 'meta'].includes(key)) {
             parts.push(key);
         }
-        return parts.join('+');
+        return parts;
     }
 
     /**
-     * Ensures canonical ordering: Ctrl, Meta, Alt, Shift, Key.
+     * Checks if the pressed keys match a given key sequence.
+     * 
+     * @param pressed - The array of pressed keys
+     * @param sequence - The sequence of keys to match
+     * @returns True if the pressed keys match the sequence, otherwise false
      */
-    private normalizeComboString(raw: string): string | null {
-        if (!raw) return null;
-        const rawParts = raw
-            .split('+')
-            .map(p => p.trim())
-            .filter(p => !!p);
-
-        const mods: string[] = [];
-        let keyPart: string | null = null;
-
-        for (const p of rawParts) {
-            const upper = p[0].toUpperCase() + p.slice(1);
-            switch (upper) {
-                case 'Ctrl':
-                case 'Meta':
-                case 'Alt':
-                case 'Shift':
-                    if (!mods.includes(upper)) mods.push(upper);
-                    break;
-                default:
-                    if (!keyPart) {
-                        keyPart = upper.length === 1 ? upper.toUpperCase() : upper;
-                    }
-                    break;
-            }
-        }
-        if (!keyPart) return null;
-        return [...mods, keyPart].join('+');
+    private matches(pressed: string[], sequence: string[]): boolean {
+        if (pressed.length !== sequence.length) return false;
+        return sequence.every((s, i) => pressed[i] === s);
     }
 
     /**
-     * Provides default bindings.
+     * Returns the current shortcut bindings as an observable.
+     * 
+     * @returns An observable emitting the current shortcut bindings
      */
-    private defaultBindings(): ShortcutBinding[] {
-        return [
-            { action: ShortcutAction.AddManga, combo: 'Ctrl+Shift+A' },
-            { action: ShortcutAction.OpenSettings, combo: 'Ctrl+,' },
-            { action: ShortcutAction.ToggleFavorite, combo: 'F' },
-            { action: ShortcutAction.IncrementChapters, combo: '+' },
-            { action: ShortcutAction.DecrementChapters, combo: '-' },
-            { action: ShortcutAction.DeleteManga, combo: 'Delete' },
-            { action: ShortcutAction.FocusSearch, combo: '/' },
-            { action: ShortcutAction.OpenImportExport, combo: 'Ctrl+Shift+I' },
-            { action: ShortcutAction.ToggleViewMode, combo: 'V' },
-            { action: ShortcutAction.OpenShortcutHelp, combo: 'Shift+/' },
-            { action: ShortcutAction.QuickCapture, combo: 'Shift+Q' }
-        ];
-    }
-
-    /**
-     * Migrate old profile versions to current.
-     */
-    private migrateProfile(old: ShortcutProfile): ShortcutProfile {
-        const defaults = this.defaultBindings();
-        const existingMap = new Map(old.bindings.map(b => [b.action, b.combo]));
-        const merged: ShortcutBinding[] = defaults.map(d => ({
-            action: d.action,
-            combo: existingMap.get(d.action) ?? d.combo
-        }));
-        return { version: this.PROFILE_VERSION, bindings: merged };
+    toObservable(): Observable<Record<string, ShortcutBinding>> {
+        return of(this.bindings());
     }
 }

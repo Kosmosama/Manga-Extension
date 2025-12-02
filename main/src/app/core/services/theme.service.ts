@@ -1,112 +1,62 @@
-import { inject, Injectable, signal } from '@angular/core';
-import { Observable, defer } from 'rxjs';
-import { Theme } from '../../core/interfaces/theme.interface';
+import { Injectable, signal, effect, computed, inject } from '@angular/core';
 import { SettingsStorageService } from './settings-storage.service';
+import { ThemeMode } from '../interfaces/settings.model';
+
+const THEME_CLASS_LIGHT = 'theme-light';
+const THEME_CLASS_DARK = 'theme-dark';
 
 @Injectable({ providedIn: 'root' })
 export class ThemeService {
-    private settingsStorageService = inject(SettingsStorageService);
-    private themeSignal = signal<Theme>(Theme.System);
+    private readonly storage = inject(SettingsStorageService);
 
-    private mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-    private mediaListener = (e: MediaQueryListEvent) => {
-        if (this.themeSignal() === Theme.System) {
-            this.applyThemeAttribute(e.matches ? Theme.Dark : Theme.Light);
+    private readonly systemDarkQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    private readonly mode = signal<ThemeMode>(this.storage.themeMode());
+    readonly effectiveMode = computed(() => {
+        const m = this.mode();
+        if (m === 'system') {
+            return this.systemDarkQuery.matches ? 'dark' : 'light';
         }
-    };
+        return m;
+    });
 
     constructor() {
-        this.loadTheme$().subscribe();
-        this.listenForExternalStorageChanges();
-    }
-
-    /**
-     * Current theme preference.
-     */
-    get theme(): Theme {
-        return this.themeSignal();
-    }
-
-    private getSystemTheme(): Theme {
-        return this.mediaQuery.matches ? Theme.Dark : Theme.Light;
-    }
-
-    private applyThemeAttribute(theme: Theme) {
-        const resolved = theme === Theme.System ? this.getSystemTheme() : theme;
-        document.documentElement.setAttribute('data-theme', resolved === Theme.Dark ? 'dark' : 'light');
-    }
-
-    /**
-     * Sets a new theme preference and persists to sync storage.
-     */
-    setTheme(theme: Theme): Observable<void> {
-        return defer(() => new Observable<void>(subscriber => {
-            if (this.themeSignal() === Theme.System && theme !== Theme.System) {
-                this.mediaQuery.removeEventListener?.('change', this.mediaListener);
+        effect(() => {
+            const storedMode = this.storage.themeMode();
+            if (storedMode !== this.mode()) {
+                this.mode.set(storedMode);
             }
+        });
 
-            this.themeSignal.set(theme);
-            this.applyThemeAttribute(theme);
-
-            if (theme === Theme.System) {
-                this.mediaQuery.addEventListener?.('change', this.mediaListener);
+        this.systemDarkQuery.addEventListener('change', () => {
+            if (this.mode() === 'system') {
+                this.applyThemeClass(this.effectiveMode());
             }
+        });
 
-            this.settingsStorageService.setSync('theme', theme);
-            subscriber.next();
-            subscriber.complete();
-        }));
+        effect(() => {
+            const eff = this.effectiveMode();
+            this.applyThemeClass(eff);
+        });
     }
 
     /**
-     * Loads stored theme preference from sync storage.
+     * Sets the theme mode to a specific value and updates the settings.
+     * 
+     * @param mode - The theme mode to set (e.g., 'light', 'dark', 'system')
      */
-    private loadTheme$(): Observable<void> {
-        return defer(() => new Observable<void>(subscriber => {
-            this.settingsStorageService.getSync$<'light' | 'dark' | 'system'>('theme', 'system').subscribe(stored => {
-                const parsed = (stored as Theme) ?? Theme.System;
-
-                if (this.themeSignal() === Theme.System && parsed !== Theme.System) {
-                    this.mediaQuery.removeEventListener?.('change', this.mediaListener);
-                }
-
-                this.themeSignal.set(parsed);
-                this.applyThemeAttribute(parsed);
-
-                if (parsed === Theme.System) {
-                    this.mediaQuery.addEventListener?.('change', this.mediaListener);
-                }
-
-                subscriber.next();
-                subscriber.complete();
-            });
-        }));
+    setMode(mode: ThemeMode) {
+        this.mode.set(mode);
+        this.storage.updateSection('themeMode', mode);
     }
 
     /**
-     * Re-applies theme on external sync storage change.
+     * Applies the appropriate theme class (`theme-light` or `theme-dark`) to the document root.
+     * 
+     * @param effective - The effective theme mode to apply ('light' or 'dark')
      */
-    private listenForExternalStorageChanges() {
-        const chromeObj = (window as any).chrome;
-        if (!chromeObj?.storage?.onChanged) return;
-
-        chromeObj.storage.onChanged.addListener(
-            (changes: Record<string, chrome.storage.StorageChange>, areaName: string) => {
-                if (areaName !== 'sync') return;
-                if ('theme' in changes) {
-                    const next = changes['theme'].newValue as Theme;
-                    if (next && next !== this.themeSignal()) {
-                        if (this.themeSignal() === Theme.System && next !== Theme.System) {
-                            this.mediaQuery.removeEventListener?.('change', this.mediaListener);
-                        }
-                        this.themeSignal.set(next);
-                        this.applyThemeAttribute(next);
-                        if (next === Theme.System) {
-                            this.mediaQuery.addEventListener?.('change', this.mediaListener);
-                        }
-                    }
-                }
-            }
-        );
+    private applyThemeClass(effective: 'light' | 'dark') {
+        const root = document.documentElement;
+        root.classList.remove(THEME_CLASS_LIGHT, THEME_CLASS_DARK);
+        root.classList.add(effective === 'dark' ? THEME_CLASS_DARK : THEME_CLASS_LIGHT);
     }
 }
