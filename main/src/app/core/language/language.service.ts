@@ -1,6 +1,7 @@
 import { Injectable, signal, computed, inject } from '@angular/core';
 import { LanguageCode } from './language.types';
 import { TranslocoService } from '@jsverse/transloco';
+import { StorageService } from '../services/storage.service';
 
 const STORAGE_KEY = 'language';
 
