@@ -1,24 +1,32 @@
-<div class="settings-wrapper">
-    <aside class="sidebar" aria-label="{{ 'settings.sidebar' | transloco }}">
-        @for (s of sections(); track s) {
-        <button (click)="setActive(s)" [class.active]="active() === s" class="section-tab" type="button"
-            aria-label="{{ sectionLabel(s) | transloco }}" [attr.aria-current]="active() === s ? 'page' : null">
-            {{ sectionLabel(s) | transloco }}
-        </button>
-        }
-    </aside>
+<div class="settings-page">
+    <h1 class="page-title">Settings</h1>
 
-    <section class="content" role="region" [attr.aria-label]="ariaLabelActive() | transloco">
-        @if (active() === 'theme') {
-        <theme-settings />
-        } @else if (active() === 'language') {
-        <language-settings />
-        } @else if (active() === 'shortcuts') {
-        <shortcuts-settings />
-        } @else if (active() === 'capture') {
-        <capture-settings />
-        } @else if (active() === 'behavior') {
-        <behavior-settings />
-        }
+    <section class="settings-section">
+        <h2 class="section-title">Language</h2>
+        <app-language-settings />
     </section>
+
+    <section class="settings-section">
+        <h2 class="section-title">Theme</h2>
+        <app-theme-settings />
+    </section>
+
+    <section class="settings-section">
+        <h2 class="section-title">Shortcuts</h2>
+        <app-shortcut-settings />
+    </section>
+
+    <section class="settings-section">
+        <h2 class="section-title">Capture</h2>
+        <app-capture-settings />
+    </section>
+
+    <section class="settings-section">
+        <h2 class="section-title">Import / Export</h2>
+        <app-import-export-settings />
+    </section>
+
+    <nav class="settings-nav">
+        <a routerLink="/" class="btn btn-link">Back to Manga</a>
+    </nav>
 </div>

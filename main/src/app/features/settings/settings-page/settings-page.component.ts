@@ -1,34 +1,12 @@
-import { Component, inject, signal, computed } from '@angular/core';
-import { TranslocoPipe } from '@jsverse/transloco';
-import { ShortcutsSettingsComponent } from '../shortcuts-settings/shortcuts-settings.component';
-import { CaptureSettingsComponent } from '../capture-settings/capture-settings.component';
+import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { LanguageSettingsComponent } from '../language-settings/language-settings.component';
 
 @Component({
-    selector: 'settings-page',
+    selector: 'app-settings-page',
     standalone: true,
-    imports: [ TranslocoPipe, ThemeSettingsComponent, LanguageSettingsComponent, ShortcutsSettingsComponent, CaptureSettingsComponent, BehaviorSettingsComponent ],
+    imports: [RouterLink, LanguageSettingsComponent, ThemeSettingsComponent, ShortcutSettingsComponent, CaptureSettingsComponent, ImportExportSettingsComponent],
     templateUrl: './settings-page.component.html',
     styleUrl: './settings-page.component.css'
 })
-export class SettingsPageComponent {
-    private sectionsOrder = ['theme', 'language', 'shortcuts', 'capture', 'behavior'] as const;
-    readonly sections = signal<string[]>([...this.sectionsOrder]);
-    readonly active = signal<string>('theme');
-
-    /**
-     * Returns a translated label key for a section.
-     */
-    sectionLabel(section: string): string {
-        return 'settings.section.' + section;
-    }
-
-    setActive(id: string) {
-        if (this.sections().includes(id)) {
-            this.active.set(id);
-        }
-    }
-
-    readonly ariaLabelActive = computed(
-        () => 'settings.section.' + this.active()
-    );
-}
+export class SettingsPageComponent { }

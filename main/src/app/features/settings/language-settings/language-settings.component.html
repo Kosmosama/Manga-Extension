@@ -1,0 +1,8 @@
+<div class="settings-group">
+    <label for="lang" class="label">Language</label>
+    <select id="lang" class="select" [value]="current()" (change)="onChange($event)">
+        @for (lang of available(); track lang) {
+        <option [value]="lang">{{ lang }}</option>
+        }
+    </select>
+</div>
