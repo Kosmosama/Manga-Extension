@@ -1,0 +1,13 @@
+<div class="import-export">
+    <div class="actions">
+        <button class="btn btn-primary" (click)="onExport()">{{ 'importExport.export' | transloco }}</button>
+        <label class="file-input">
+            <input type="file" accept="application/json" (change)="onImport($event)" />
+            <span class="btn btn-outline">{{ 'importExport.import' | transloco }}</span>
+        </label>
+    </div>
+
+    @if (lastExport) {
+    <pre class="export-output">{{ lastExport }}</pre>
+    }
+</div>

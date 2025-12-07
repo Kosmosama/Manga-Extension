@@ -1,21 +1,22 @@
-<div class="capture-settings">
-    <h3>{{ 'capture.settings.title' | transloco }}</h3>
-    <p class="desc">{{ 'capture.settings.desc' | transloco }}</p>
-
-    <label>
-        <input type="checkbox" [checked]="flags().enabled" (change)="toggleEnabled($event)" />
-        {{ 'capture.settings.enabled' | transloco }}
+<div class="settings-group-row">
+    <label class="checkbox">
+        <input type="checkbox" [checked]="state().autoCapture" (change)="onAutoCapture($event)" />
+        <span>{{ 'capture.autoCapture' | transloco }}</span>
     </label>
+</div>
 
-    <label>
-        <input type="checkbox" [checked]="flags().quickCaptureEnabled" (change)="toggleQuickCapture($event)"
-            [disabled]="!flags().enabled" />
-        {{ 'capture.settings.quickCapture' | transloco }}
-    </label>
+<div class="settings-group">
+    <label for="quality" class="label">{{ 'capture.quality' | transloco }}</label>
+    <select id="quality" class="select" [value]="state().captureQuality" (change)="onQuality($event)">
+        <option value="low">{{ 'capture.qualityLow' | transloco }}</option>
+        <option value="medium">{{ 'capture.qualityMedium' | transloco }}</option>
+        <option value="high">{{ 'capture.qualityHigh' | transloco }}</option>
+    </select>
+</div>
 
-    <label>
-        <input type="checkbox" [checked]="flags().fabEnabled" (change)="toggleFab($event)"
-            [disabled]="!flags().enabled" />
-        {{ 'capture.settings.fab' | transloco }}
+<div class="settings-group-row">
+    <label class="checkbox">
+        <input type="checkbox" [checked]="state().includeMetadata" (change)="onIncludeMetadata($event)" />
+        <span>{{ 'capture.includeMetadata' | transloco }}</span>
     </label>
 </div>

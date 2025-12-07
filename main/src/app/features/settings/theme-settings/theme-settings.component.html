@@ -1,0 +1,8 @@
+<div class="settings-group">
+    <label for="theme" class="label">{{ 'settings.theme' | transloco }}</label>
+    <select id="theme" class="select" [value]="mode()" (change)="onChange($event)">
+        <option value="system">{{ 'theme.system' | transloco }}</option>
+        <option value="light">{{ 'theme.light' | transloco }}</option>
+        <option value="dark">{{ 'theme.dark' | transloco }}</option>
+    </select>
+</div>

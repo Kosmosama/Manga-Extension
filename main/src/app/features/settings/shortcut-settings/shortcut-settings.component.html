@@ -1,0 +1,20 @@
+<div class="settings-group-row">
+    <label class="checkbox">
+        <input type="checkbox" [checked]="enabled()" (change)="toggleEnabled($event)" />
+        <span>{{ 'shortcuts.enable' | transloco }}</span>
+    </label>
+</div>
+
+@if (enabled()) {
+<div class="shortcut-list">
+    @for (binding of bindings(); track binding.action) {
+    <div class="shortcut-item">
+        <span class="shortcut-action">{{ ('shortcuts.actions.' + binding.action) | transloco : { defaultValue:
+            binding.action } }}</span>
+        <input type="text" class="input" [value]="binding.keys" (change)="updateBinding(binding.action, $event)"
+            [placeholder]="'shortcuts.placeholder' | transloco" />
+        <button class="btn btn-outline" (click)="clearBinding(binding.action)">{{ 'common.clear' | transloco }}</button>
+    </div>
+    }
+</div>
+}

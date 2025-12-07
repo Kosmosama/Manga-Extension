@@ -1,9 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { LanguageService } from '../../../core/language/language.service';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
-    selector: 'app-language-settings',
+    selector: 'language-settings',
     standalone: true,
+    imports: [TranslocoPipe],
     templateUrl: './language-settings.component.html',
     styleUrls: ['./language-settings.component.css'],
 })

@@ -1,32 +1,32 @@
 <div class="settings-page">
-    <h1 class="page-title">Settings</h1>
+    <h1 class="page-title">{{ 'settings.title' | transloco }}</h1>
 
     <section class="settings-section">
-        <h2 class="section-title">Language</h2>
-        <app-language-settings />
+        <h2 class="section-title">{{ 'settings.language' | transloco }}</h2>
+        <language-settings />
     </section>
 
     <section class="settings-section">
-        <h2 class="section-title">Theme</h2>
-        <app-theme-settings />
+        <h2 class="section-title">{{ 'settings.theme' | transloco }}</h2>
+        <theme-settings />
     </section>
 
     <section class="settings-section">
-        <h2 class="section-title">Shortcuts</h2>
-        <app-shortcut-settings />
+        <h2 class="section-title">{{ 'settings.shortcuts' | transloco }}</h2>
+        <shortcut-settings />
     </section>
 
     <section class="settings-section">
-        <h2 class="section-title">Capture</h2>
-        <app-capture-settings />
+        <h2 class="section-title">{{ 'settings.capture' | transloco }}</h2>
+        <capture-settings />
     </section>
 
     <section class="settings-section">
-        <h2 class="section-title">Import / Export</h2>
-        <app-import-export-settings />
+        <h2 class="section-title">{{ 'settings.importExport' | transloco }}</h2>
+        <import-export-settings />
     </section>
 
     <nav class="settings-nav">
-        <a routerLink="/" class="btn btn-link">Back to Manga</a>
+        <a routerLink="/" class="btn btn-link">{{ 'settings.back' | transloco }}</a>
     </nav>
 </div>

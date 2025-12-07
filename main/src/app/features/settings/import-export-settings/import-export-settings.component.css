@@ -1,0 +1,40 @@
+.import-export .actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.btn {
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: var(--primary, #4b7bec);
+    color: #fff;
+    border: 1px solid transparent;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid var(--border, #ddd);
+    color: var(--fg, #111);
+}
+
+.file-input input[type="file"] {
+    display: none;
+}
+
+.export-output {
+    margin-top: 12px;
+    padding: 12px;
+    border: 1px solid var(--border, #ddd);
+    border-radius: 6px;
+    background: var(--bg-alt, #f5f5f5);
+    max-height: 240px;
+    overflow: auto;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+    font-size: 12px;
+    line-height: 1.4;
+}

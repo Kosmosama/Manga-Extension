@@ -1,8 +1,8 @@
 <div class="settings-group">
-    <label for="lang" class="label">Language</label>
+    <label for="lang" class="label">{{ 'settings.language' | transloco }}</label>
     <select id="lang" class="select" [value]="current()" (change)="onChange($event)">
         @for (lang of available(); track lang) {
-        <option [value]="lang">{{ lang }}</option>
+        <option [value]="lang">{{ ('languages.' + lang) | transloco : { defaultValue: lang } }}</option>
         }
     </select>
 </div>
