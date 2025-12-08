@@ -1,22 +1,20 @@
-import { Component, inject, signal, viewChild, effect, DestroyRef, computed } from '@angular/core';
-import { TranslocoPipe } from '@jsverse/transloco';
-import { MangaFormComponent } from '../manga-form/manga-form.component';
-import { MangaComponent } from '../manga-card/manga-card.component';
-import { ModalComponent } from '../../../shared/modal/modal.component';
-import { MangaService } from '../../../core/services/manga.service';
-import { Manga } from '../../../core/interfaces/manga.interface';
-import { ThemeService } from '../../../core/services/theme.service';
-import { Theme } from '../../../core/interfaces/theme.interface';
+import { Component, DestroyRef, computed, effect, inject, signal, viewChild } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TranslocoPipe } from '@jsverse/transloco';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { TagFilterBarComponent } from '../../tags/tag-filter-bar/tag-filter-bar.component';
+import { Manga } from '../../../core/interfaces/manga.interface';
+import { MangaService } from '../../../core/services/manga.service';
 import { TagFilterService } from '../../../core/services/tag-filter.service';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ShortcutEngineService } from '../../../core/shortcut/shortcut-engine.service';
+import { ThemeService } from '../../../core/theme/theme.service';
+import { ModalComponent } from '../../../shared/modal/modal.component';
 import { SkeletonComponent } from '../../../shared/skeleton/skeleton.component';
-import { ShortcutEngineService } from '../../../core/services/shortcut-engine.service';
-import { ShortcutAction } from '../../../core/interfaces/shortcut.interface';
 import { VirtualScrollContainerComponent } from '../../../shared/virtual-scroll-container/virtual-scroll-container.component';
+import { TagFilterBarComponent } from '../../tags/tag-filter-bar/tag-filter-bar.component';
+import { MangaComponent } from '../manga-card/manga-card.component';
+import { MangaFormComponent } from '../manga-form/manga-form.component';
 
 @Component({
     selector: 'mangas-page',
@@ -28,10 +26,10 @@ import { VirtualScrollContainerComponent } from '../../../shared/virtual-scroll-
         MangaFormComponent,
         TagFilterBarComponent,
         SkeletonComponent,
-        VirtualScrollContainerComponent
+        VirtualScrollContainerComponent,
     ],
     templateUrl: './mangas-page.component.html',
-    styleUrl: './mangas-page.component.css',
+    styleUrls: ['./mangas-page.component.css'],
 })
 export class MangasPageComponent {
     private mangaService = inject(MangaService);
@@ -47,7 +45,9 @@ export class MangasPageComponent {
 
     selectedManga = signal<Manga | null>(null);
     mangaList = signal<Manga[]>([]);
-    theme = signal<Theme>(this.themeService.theme);
+
+    // Adapted to new ThemeService API: mode signal indicates current theme mode
+    themeMode = this.themeService.mode;
 
     searchQuery = signal<string>('');
     sortOrder = signal<'asc' | 'desc'>('asc');
@@ -60,11 +60,14 @@ export class MangasPageComponent {
 
     focusIndex = signal<number>(-1);
 
-    readonly effectiveCollectionRole = computed(() => this.viewMode() === 'grid' ? 'grid' : 'list');
+    readonly effectiveCollectionRole = computed(() => (this.viewMode() === 'grid' ? 'grid' : 'list'));
 
     private VIRTUAL_THRESHOLD = 150;
 
     constructor() {
+        // Register local shortcut handlers with the engine
+        this.registerShortcuts();
+
         // Initialize from query params
         const qp = this.route.snapshot.queryParamMap;
         const initialQ = qp.get('q') || '';
@@ -106,16 +109,54 @@ export class MangasPageComponent {
             this.assessVirtualScroll();
         });
 
-        /**
-         * Global keyboard shortcuts:
-         * Triggered actions include: add manga, toggle view, open settings, etc.
-         */
-        this.shortcutEngineService.triggered$
-            .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe(t => this.handleShortcut(t.action));
-
         // Initial load
         this.reload();
+    }
+
+    /**
+     * Registers shortcut actions with ShortcutEngineService
+     * so they can be triggered by keyboard.
+     */
+    private registerShortcuts() {
+        // Navigation to settings
+        this.shortcutEngineService.registerAction('openSettings', () => this.router.navigate(['/settings']), 'Open Settings');
+
+        // Import/Export lives inside Settings page; navigate there as well
+        this.shortcutEngineService.registerAction(
+            'openImportExport',
+            () => this.router.navigate(['/settings']),
+            'Open Import/Export'
+        );
+
+        // Toggle view mode
+        this.shortcutEngineService.registerAction('toggleViewMode', () => this.toggleViewMode(), 'Toggle View Mode');
+
+        // Focus search input
+        this.shortcutEngineService.registerAction('focusSearch', () => {
+            const input = document.querySelector<HTMLInputElement>('.search-input');
+            input?.focus();
+        }, 'Focus Search');
+
+        // Shortcut help route (if exists)
+        this.shortcutEngineService.registerAction(
+            'openShortcutHelp',
+            () => this.router.navigate(['/shortcuts-help']),
+            'Open Shortcut Help'
+        );
+
+        // Card-scoped actions
+        this.shortcutEngineService.registerAction('toggleFavorite', () => this.dispatchToFocusedCard('favorite'), 'Toggle Favorite');
+        this.shortcutEngineService.registerAction('incrementChapters', () => this.dispatchToFocusedCard('increment'), 'Increment Chapters');
+        this.shortcutEngineService.registerAction('decrementChapters', () => this.dispatchToFocusedCard('decrement'), 'Decrement Chapters');
+        this.shortcutEngineService.registerAction('deleteManga', () => this.dispatchToFocusedCard('delete'), 'Delete Manga');
+    }
+
+    private dispatchToFocusedCard(detail: string) {
+        const cardEl = document.querySelector<HTMLElement>(
+            `.manga-collection [data-card-index="${this.focusIndex()}"]`
+        );
+        if (!cardEl) return;
+        cardEl.dispatchEvent(new CustomEvent('cardAction', { detail, bubbles: true }));
     }
 
     /**
@@ -139,7 +180,7 @@ export class MangasPageComponent {
                 sortBy: 'title',
                 order: this.sortOrder(),
                 includeTags: this.tagFilterService.selectedTagIds(),
-                includeTagsMode: this.tagFilterService.includeMode()
+                includeTagsMode: this.tagFilterService.includeMode(),
             })
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe({
@@ -154,7 +195,7 @@ export class MangasPageComponent {
                     // Reevaluate virtual scrolling after load
                     this.assessVirtualScroll();
                 },
-                complete: () => this.loading.set(false)
+                complete: () => this.loading.set(false),
             });
     }
 
@@ -227,9 +268,9 @@ export class MangasPageComponent {
             relativeTo: this.route,
             queryParams: {
                 q: this.searchQuery() || null,
-                sort: this.sortOrder()
+                sort: this.sortOrder(),
             },
-            queryParamsHandling: 'merge'
+            queryParamsHandling: 'merge',
         });
     }
 
@@ -257,37 +298,53 @@ export class MangasPageComponent {
 
         switch (ev.key) {
             case 'ArrowRight':
-                if (isGrid && idx + 1 < total) { this.moveFocus(idx + 1); ev.preventDefault(); }
+                if (isGrid && idx + 1 < total) {
+                    this.moveFocus(idx + 1);
+                    ev.preventDefault();
+                }
                 break;
 
             case 'ArrowLeft':
-                if (isGrid && idx - 1 >= 0) { this.moveFocus(idx - 1); ev.preventDefault(); }
+                if (isGrid && idx - 1 >= 0) {
+                    this.moveFocus(idx - 1);
+                    ev.preventDefault();
+                }
                 break;
 
             case 'ArrowDown':
                 if (isGrid) {
                     const next = idx + columns;
-                    if (next < total) { this.moveFocus(next); ev.preventDefault(); }
+                    if (next < total) {
+                        this.moveFocus(next);
+                        ev.preventDefault();
+                    }
                 } else if (idx + 1 < total) {
-                    this.moveFocus(idx + 1); ev.preventDefault();
+                    this.moveFocus(idx + 1);
+                    ev.preventDefault();
                 }
                 break;
 
             case 'ArrowUp':
                 if (isGrid) {
                     const prev = idx - columns;
-                    if (prev >= 0) { this.moveFocus(prev); ev.preventDefault(); }
+                    if (prev >= 0) {
+                        this.moveFocus(prev);
+                        ev.preventDefault();
+                    }
                 } else if (idx - 1 >= 0) {
-                    this.moveFocus(idx - 1); ev.preventDefault();
+                    this.moveFocus(idx - 1);
+                    ev.preventDefault();
                 }
                 break;
 
             case 'Home':
-                this.moveFocus(0); ev.preventDefault();
+                this.moveFocus(0);
+                ev.preventDefault();
                 break;
 
             case 'End':
-                this.moveFocus(total - 1); ev.preventDefault();
+                this.moveFocus(total - 1);
+                ev.preventDefault();
                 break;
 
             default:
@@ -320,64 +377,5 @@ export class MangasPageComponent {
     /** Resets keyboard focus to "none selected". */
     private resetFocus() {
         this.focusIndex.set(-1);
-    }
-
-    /**
-     * Handles global application shortcut actions.
-     * Some actions operate on the list; others dispatch events to the currently focused card.
-     */
-    private handleShortcut(action: ShortcutAction) {
-        switch (action) {
-            case ShortcutAction.AddManga:
-                this.openForm();
-                break;
-
-            case ShortcutAction.OpenSettings:
-                this.router.navigate(['/settings']);
-                break;
-
-            case ShortcutAction.OpenImportExport:
-                this.router.navigate(['/import-export']);
-                break;
-
-            case ShortcutAction.ToggleViewMode:
-                this.toggleViewMode();
-                break;
-
-            case ShortcutAction.FocusSearch: {
-                const input = document.querySelector<HTMLInputElement>('.search-input');
-                input?.focus();
-                break;
-            }
-
-            case ShortcutAction.OpenShortcutHelp:
-                this.router.navigate(['/shortcuts-help']);
-                break;
-
-            default:
-                // Actions applied to the currently focused card
-                if (this.focusIndex() >= 0) {
-                    const cardEl = document.querySelector<HTMLElement>(`.manga-collection [data-card-index="${this.focusIndex()}"]`);
-                    if (!cardEl) return;
-
-                    switch (action) {
-                        case ShortcutAction.ToggleFavorite:
-                            cardEl.dispatchEvent(new CustomEvent('cardAction', { detail: 'favorite', bubbles: true }));
-                            break;
-                        case ShortcutAction.IncrementChapters:
-                            cardEl.dispatchEvent(new CustomEvent('cardAction', { detail: 'increment', bubbles: true }));
-                            break;
-                        case ShortcutAction.DecrementChapters:
-                            cardEl.dispatchEvent(new CustomEvent('cardAction', { detail: 'decrement', bubbles: true }));
-                            break;
-                        case ShortcutAction.DeleteManga:
-                            cardEl.dispatchEvent(new CustomEvent('cardAction', { detail: 'delete', bubbles: true }));
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                break;
-        }
     }
 }

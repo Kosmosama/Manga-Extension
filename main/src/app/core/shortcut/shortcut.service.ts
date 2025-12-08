@@ -6,6 +6,14 @@ const STORAGE_KEY = 'shortcuts';
 
 const DEFAULT_BINDINGS: ShortcutBinding[] = [
     { action: 'openSettings', keys: 'Ctrl+,' },
+    { action: 'openImportExport', keys: 'Ctrl+Shift+I' },
+    { action: 'toggleViewMode', keys: 'Ctrl+Shift+V' },
+    { action: 'focusSearch', keys: '/' },
+    { action: 'openShortcutHelp', keys: 'Ctrl+/' },
+    { action: 'toggleFavorite', keys: 'F' },
+    { action: 'incrementChapters', keys: 'Shift++' },
+    { action: 'decrementChapters', keys: 'Shift+-' },
+    { action: 'deleteManga', keys: 'Delete' },
     { action: 'nextChapter', keys: 'Alt+Right' },
     { action: 'prevChapter', keys: 'Alt+Left' },
     { action: 'toggleTheme', keys: 'Ctrl+Shift+T' },
@@ -36,7 +44,13 @@ export class ShortcutService {
     }
 
     setBinding(action: ShortcutAction, keys: string) {
-        const bindings = this.stateSignal().bindings.map(b => b.action === action ? { ...b, keys } : b);
+        const bindings = this.stateSignal().bindings.map(b => (b.action === action ? { ...b, keys } : b));
+        this.stateSignal.set({ ...this.stateSignal(), bindings });
+        this.persist();
+    }
+
+    setBindingEnabled(action: ShortcutAction, enabled: boolean) {
+        const bindings = this.stateSignal().bindings.map(b => (b.action === action ? { ...b, enabled } : b));
         this.stateSignal.set({ ...this.stateSignal(), bindings });
         this.persist();
     }

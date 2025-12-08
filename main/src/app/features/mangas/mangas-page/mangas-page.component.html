@@ -11,8 +11,9 @@
 
         <button (click)="toggleSort()" class="sort-btn" aria-label="{{ 'manga.sort.label' | transloco }}">
             {{ 'manga.sort.label' | transloco }}:
-            <strong>{{ sortOrder() === 'asc' ? ('manga.sort.asc' | transloco) : ('manga.sort.desc' | transloco)
-                }}</strong>
+            <strong>
+                {{ sortOrder() === 'asc' ? ('manga.sort.asc' | transloco) : ('manga.sort.desc' | transloco) }}
+            </strong>
         </button>
 
         <button (click)="toggleViewMode()" class="view-btn"
@@ -51,8 +52,8 @@
     } @else {
     <div class="manga-collection" [class.list-mode]="viewMode() === 'list'" [attr.role]="effectiveCollectionRole()"
         tabindex="0" (keydown)="onCollectionKeydown($event)" aria-label="{{ viewMode() === 'grid'
-                        ? ('accessibility.mangaCard.gridNavigationInfo' | transloco)
-                        : ('accessibility.mangaCard.listNavigationInfo' | transloco) }}">
+            ? ('accessibility.mangaCard.gridNavigationInfo' | transloco)
+            : ('accessibility.mangaCard.listNavigationInfo' | transloco) }}">
         @for (m of mangaList(); track m.id; let i = $index) {
         <manga-card [manga]="m" [handleEdit]="handleEdit" (deleted)="handleMangaDeletion($event)"
             [class.list-item]="viewMode() === 'list'" [attr.data-card-index]="i"
