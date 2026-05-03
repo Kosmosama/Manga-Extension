@@ -1,5 +1,5 @@
 import { LanguageSettings } from '../language/language.types';
-import { ThemeSettings } from '../theme/theme.types';
+import { ThemeSettings } from '../interfaces/settings.model';
 import { ShortcutSettings } from '../shortcut/shortcut.types';
 import { CaptureSettings } from '../capture/capture.type';
 

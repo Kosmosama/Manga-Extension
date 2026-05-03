@@ -6,7 +6,7 @@
     "start": "ng serve",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "transloco:optimize": "transloco-optimize dist/my-app/assets/i18n",
+    "transloco:optimize": "transloco-optimize dist/main/browser/assets/i18n",
     "build": "ng build && npm run transloco:optimize"
   },
   "private": true,

@@ -1,5 +1,10 @@
 export type ThemeMode = 'light' | 'dark' | 'system';
 
+/** Shape used in settings export DTOs (separate from `AppSettings.themeMode`). */
+export interface ThemeSettings {
+    mode: ThemeMode;
+}
+
 export interface ShortcutBinding {
     action: string;
     keys: string[];      // ['ctrl', 'shift', 'O']

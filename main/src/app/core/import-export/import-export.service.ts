@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { SettingsExportDTO } from './import-export.types';
 import { LanguageService } from '../language/language.service';
-import { ThemeService } from '../theme/theme.service';
+import { ThemeService } from '../services/theme.service';
 import { ShortcutService } from '../shortcut/shortcut.service';
 import { CaptureService } from '../capture/capture.service';
 

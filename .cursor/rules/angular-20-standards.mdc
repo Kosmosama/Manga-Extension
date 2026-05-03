@@ -1,0 +1,49 @@
+---
+description: Angular 20+ (next.angular.dev), control flow templates, zoneless, RxJS, and forms
+globs: main/**/*.ts,main/**/*.html
+alwaysApply: false
+---
+
+# Angular 20+ — mandatory standards
+
+Official reference: [next.angular.dev](https://next.angular.dev).
+
+## Syntax and components
+
+- Modern control flow in templates: `@if`, `@for`, `@switch` / `@case`. **Do not** use legacy structural directives (`*ngIf`, `*ngFor`, `*ngSwitch`, etc.).
+- Dependency injection: **only** `inject()` from functions or class fields. **Do not** inject via the constructor.
+- Components: `@Component({ standalone: true, ... })` (plus any other metadata the project uses).
+- Reactive state: use `signal`, `computed`, and `effect` when they improve clarity or performance; do not force signals where an Observable-based flow is a better fit.
+
+## Zoneless
+
+- The app runs **without Zone.js**: do not assume automatic change detection from zone patching. Prefer `ChangeDetectionStrategy.OnPush`, signals, the `async` pipe, or other explicit triggers consistent with the project.
+
+## Asynchrony
+
+- **Always Observables (RxJS)** in services and components: do not use Promises as the public contract or `async`/`await` to orchestrate business flows. If an external API only returns a Promise, adapt it at the boundary with RxJS operators (e.g. `from`, `defer`) and expose an Observable to the rest of the app.
+
+## Forms
+
+- `ngModel` / template-driven forms: only for **small or quick** forms.
+- **Large or complex** forms: **Reactive Forms** (`FormControl`, `FormGroup`, `FormArray`, validators, etc.).
+
+## Quick examples
+
+```typescript
+// ❌ Avoid
+constructor(private svc: MyService) {}
+
+// ✅ Prefer
+private readonly svc = inject(MyService);
+```
+
+```html
+<!-- ❌ Avoid -->
+<div *ngIf="visible()">...</div>
+
+<!-- ✅ Prefer -->
+@if (visible()) {
+  <div>...</div>
+}
+```

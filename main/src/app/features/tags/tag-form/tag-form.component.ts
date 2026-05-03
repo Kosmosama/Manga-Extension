@@ -3,10 +3,12 @@ import { Tag } from '../../../core/interfaces/tag.interface';
 import { TagService } from '../../../core/services/tag.service';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ToastService } from '../../../core/services/toast.service';
+import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({
     selector: 'tag-form',
-    imports: [ReactiveFormsModule],
+    standalone: true,
+    imports: [ReactiveFormsModule, TranslocoPipe],
     templateUrl: './tag-form.component.html',
     styleUrl: './tag-form.component.css'
 })

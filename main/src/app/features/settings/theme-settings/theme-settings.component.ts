@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { ThemeService } from '../../../core/theme/theme.service';
+import { ThemeService } from '../../../core/services/theme.service';
 import { TranslocoPipe } from '@jsverse/transloco';
 
 @Component({

@@ -1,5 +1,5 @@
 <div class="manga-card" role="listitem" [attr.tabindex]="tabIndexValue()" (cardAction)="onCardAction($any($event))"
-    [class.focused]="focused()" aria-label="{{ manga().title }}">
+    [class.focused]="focused()" [attr.aria-label]="manga().title">
     <div class="cover-wrapper">
         @if (imageLoading()) {
         <div class="image-skeleton" aria-hidden="true"></div>
@@ -22,19 +22,19 @@
         </div>
         }
 
-        <div class="actions" aria-label="{{ 'accessibility.mangaCard.favoriteToggle' | transloco }}">
+        <div class="actions" [attr.aria-label]="'accessibility.mangaCard.favoriteToggle' | transloco">
             <button (click)="updateChapters(-1)" [disabled]="saving() || manga().chapters <= 0"
-                aria-label="{{ 'accessibility.mangaCard.decrementChapters' | transloco }}">-</button>
+                [attr.aria-label]="'accessibility.mangaCard.decrementChapters' | transloco">-</button>
             <button (click)="updateChapters(1)" [disabled]="saving()"
-                aria-label="{{ 'accessibility.mangaCard.incrementChapters' | transloco }}">+</button>
+                [attr.aria-label]="'accessibility.mangaCard.incrementChapters' | transloco">+</button>
             <button (click)="toggleFavorite()" [class.favorited]="manga().isFavorite"
                 [attr.aria-label]="manga().isFavorite ? ('actions.unfavorite' | transloco) : ('actions.favorite' | transloco)">
                 {{ manga().isFavorite ? '★' : '☆' }}
             </button>
-            <button (click)="deleteManga()" aria-label="{{ 'accessibility.mangaCard.delete' | transloco }}">🗑️</button>
+            <button (click)="deleteManga()" [attr.aria-label]="'accessibility.mangaCard.delete' | transloco">🗑️</button>
         </div>
 
-        <button (click)="editManga()" class="edit-btn" aria-label="{{ 'accessibility.mangaCard.edit' | transloco }}">
+        <button (click)="editManga()" class="edit-btn" [attr.aria-label]="'accessibility.mangaCard.edit' | transloco">
             {{ 'common.edit' | transloco }}
         </button>
     </div>

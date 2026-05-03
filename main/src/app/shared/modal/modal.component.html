@@ -7,7 +7,7 @@
         <h2>{{ title() | transloco }}</h2>
         }
         @if (showCloseButton()) {
-        <button type="button" (click)="close()" aria-label="{{ 'common.cancel' | transloco }}">
+        <button type="button" (click)="close()" [attr.aria-label]="'common.cancel' | transloco">
             ✕
         </button>
         }

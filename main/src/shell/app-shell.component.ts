@@ -7,10 +7,7 @@ import { ThemeService } from '../app/core/services/theme.service';
     selector: 'app-shell',
     standalone: true,
     imports: [RouterOutlet],
-    template: `
-        <link rel="stylesheet" href="/styles/theme.css" />
-        <router-outlet></router-outlet>
-    `,
+    template: `<router-outlet></router-outlet>`,
 })
 export class AppShellComponent {
     private themeService = inject(ThemeService);

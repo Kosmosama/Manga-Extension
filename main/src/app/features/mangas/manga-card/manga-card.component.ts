@@ -4,7 +4,6 @@ import { TranslocoPipe } from '@jsverse/transloco';
 import { finalize } from 'rxjs/operators';
 import { LazyImageDirective } from '../../../core/directives/lazy-image.directive';
 import { Manga } from '../../../core/interfaces/manga.interface';
-import { Theme } from '../../../core/interfaces/theme.interface';
 import { ConfirmService } from '../../../core/services/confirm.service';
 import { MangaService } from '../../../core/services/manga.service';
 import { ThemeService } from '../../../core/services/theme.service';
@@ -12,6 +11,7 @@ import { ToastService } from '../../../core/services/toast.service';
 
 @Component({
     selector: 'manga-card',
+    standalone: true,
     imports: [TranslocoPipe, LazyImageDirective],
     templateUrl: './manga-card.component.html',
     styleUrl: './manga-card.component.css'
@@ -37,7 +37,7 @@ export class MangaComponent {
     private chapterUpdateTimer: any = null;
 
     fallbackImage = computed(() =>
-        this.themeService.theme === Theme.Dark
+        this.themeService.effectiveMode() === 'dark'
             ? 'assets/fallback-images/dark-mode-fallback.svg'
             : 'assets/fallback-images/light-mode-fallback.svg'
     );

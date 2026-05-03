@@ -8,7 +8,7 @@ import { Manga } from '../../../core/interfaces/manga.interface';
 import { MangaService } from '../../../core/services/manga.service';
 import { TagFilterService } from '../../../core/services/tag-filter.service';
 import { ShortcutEngineService } from '../../../core/shortcut/shortcut-engine.service';
-import { ThemeService } from '../../../core/theme/theme.service';
+import { ThemeService } from '../../../core/services/theme.service';
 import { ModalComponent } from '../../../shared/modal/modal.component';
 import { SkeletonComponent } from '../../../shared/skeleton/skeleton.component';
 import { VirtualScrollContainerComponent } from '../../../shared/virtual-scroll-container/virtual-scroll-container.component';

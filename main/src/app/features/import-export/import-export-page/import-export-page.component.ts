@@ -33,16 +33,8 @@ export class ImportExportPageComponent {
             this.hasCollisions.set((res?.collisions.length ?? 0) > 0);
         });
         effect(() => {
-            const t = this.themeService.theme;
-            const n = Number(t);
-            const s = String(t).toLowerCase();
-            let name = 'unknown';
-            if (!Number.isNaN(n)) {
-                name = n === 0 ? 'system' : n === 1 ? 'light' : n === 2 ? 'dark' : 'unknown';
-            } else {
-                name = s === 'system' || s === '0' ? 'system' : s === 'light' || s === '1' ? 'light' : s === 'dark' || s === '2' ? 'dark' : 'unknown';
-            }
-            this.themeName.set(name);
+            const m = this.themeService.mode();
+            this.themeName.set(m === 'light' || m === 'dark' || m === 'system' ? m : 'system');
         });
     }
 
